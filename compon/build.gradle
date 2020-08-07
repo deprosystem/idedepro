@@ -85,3 +85,29 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
 }
+
+ext {
+    bintrayRepo = 'compon'
+    bintrayName = 'idedepro'
+    publishedGroupId = 'github.com/deprosystem/idedepro'
+    libraryName = 'compon'
+    artifact = 'idedepro'
+
+    libraryDescription = 'IDE for declarative programming of mobile applications'
+
+    siteUrl = 'https://github.com/deprosystem/idedepro'
+    gitUrl = 'https://github.com/deprosystem/idedepro.git'
+
+    libraryVersion = '3.0.2'
+
+    developerId = 'deprosystem'
+    developerName = 'deprosystem'
+    developerEmail = 'deprosyst@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

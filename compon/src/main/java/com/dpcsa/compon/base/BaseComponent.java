@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.dpcsa.compon.components.PagerVComponent;
 import com.dpcsa.compon.custom_components.PlusMinus;
-import com.dpcsa.compon.interfaces_classes.ActionsAfterError;
 import com.dpcsa.compon.interfaces_classes.ActionsAfterResponse;
 import com.dpcsa.compon.interfaces_classes.ActivityResult;
 import com.dpcsa.compon.interfaces_classes.Animate;
@@ -54,9 +53,6 @@ import com.dpcsa.compon.single.Injector;
 import com.dpcsa.compon.tools.Constants;
 import com.dpcsa.compon.single.ComponPrefTool;
 import com.dpcsa.compon.tools.phone_picker.GetCountryCode;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Collections;
 import java.util.Comparator;

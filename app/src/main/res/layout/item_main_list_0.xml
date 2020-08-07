@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="wrap_content"
     android:paddingRight="@dimen/dim_12"
 >
     <ImageView
@@ -16,25 +16,27 @@
         android:id="@+id/asdfg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/qwert"
         android:layout_marginLeft="@dimen/dim_12"
         android:layout_marginTop="@dimen/dim_16"
+        android:layout_below="@+id/qwert"
+        android:text="hjkjkl"
         android:textSize="@dimen/dim_14"
     />
     <TextView
         android:id="@+id/zxcvb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/qwert"
         android:layout_below="@id/asdfg"
         android:layout_marginLeft="@dimen/dim_12"
         android:layout_marginTop="10dp"
+        android:text="hjkjkl"
         android:textSize="@dimen/dim_14"
     />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/grey"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/zxcvb"
     />
 </RelativeLayout>

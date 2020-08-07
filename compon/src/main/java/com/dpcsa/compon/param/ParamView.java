@@ -26,6 +26,8 @@ public class ParamView {
     public int maxItemSelect;
     public String selectNameField = "", selectValueField = "";
     public List<Expanded> expandedList;
+    public boolean horizontal;
+    public int spanCount;
 
     public ParamView(int viewId) {
         this(viewId, "", null, null);
@@ -125,6 +127,16 @@ public class ParamView {
         furtherSkip = skip;
         furtherNext = next;
         furtherStart = stert;
+        return this;
+    }
+
+    public ParamView horizontal() {
+        horizontal = true;
+        return this;
+    }
+
+    public ParamView spanCount(int count) {
+        spanCount = count;
         return this;
     }
 

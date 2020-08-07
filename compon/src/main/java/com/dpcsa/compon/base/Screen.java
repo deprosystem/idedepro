@@ -1,7 +1,5 @@
 package com.dpcsa.compon.base;
 
-import android.util.Log;
-
 import com.dpcsa.compon.components.BarcodeComponent;
 import com.dpcsa.compon.components.CalendarComponent;
 import com.dpcsa.compon.components.ContainerComponent;
@@ -15,7 +13,6 @@ import com.dpcsa.compon.components.MenuBComponent;
 import com.dpcsa.compon.components.MenuBottomComponent;
 import com.dpcsa.compon.components.MenuComponent;
 import com.dpcsa.compon.components.ModelComponent;
-//import com.dpcsa.compon.components.MultiPanelComponent;
 import com.dpcsa.compon.components.PagerFComponent;
 import com.dpcsa.compon.components.PagerVComponent;
 import com.dpcsa.compon.components.PanelComponent;
@@ -62,6 +59,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 
 import static com.dpcsa.compon.param.ParamComponent.TC.CUSTOM;
+import static com.dpcsa.compon.param.ParamComponent.TC.RECYCLER;
 
 public class Screen<T>{
     public String nameComponent;
@@ -136,6 +134,14 @@ public class Screen<T>{
         return this;
     }
 
+    public Screen list(ParamModel paramModel, ParamView paramView) {
+        return component(RECYCLER, paramModel, paramView, null);
+    }
+
+    public Screen list(ParamModel paramModel, ParamView paramView, Navigator navigator) {
+        return component(RECYCLER, paramModel, paramView, navigator);
+    }
+
     public Screen component(ParamComponent.TC type, ParamModel paramModel,
                                ParamView paramView) {
         return component(type, paramModel, paramView, null);
@@ -145,32 +151,10 @@ public class Screen<T>{
         return component(type, paramModel, null, null);
     }
 
-//    public Screen component(ParamComponent.TC type, ParamModel paramModel,
-//                               ParamView paramView,
-//                               Navigator navigator) {
-//        return component(type, paramModel, paramView, navigator);
-//    }
-
     public Screen component(ParamComponent.TC type,
                                ParamView paramView) {
         return component(type, null, paramView, null);
     }
-
-//    public Screen component(ParamComponent.TC type, ParamModel paramModel,
-//                               ParamView paramView) {
-//        return component(type, paramModel, paramView, null, null);
-//    }
-
-//    public Screen component(ParamComponent.TC type, ParamModel paramModel) {
-//        return component(type, paramModel, null, null, null);
-//    }
-
-//    public Screen component(ParamComponent.TC type, ParamModel paramModel,
-//                               ParamView paramView,
-//                               Navigator navigator) {
-//        return component(type, paramModel, paramView, navigator, null);
-//    }
-
 
     public Screen component(ParamComponent.TC type, ParamModel paramModel,
                                ParamView paramView,
@@ -180,9 +164,7 @@ public class Screen<T>{
         paramComponent.paramModel = paramModel;
         paramComponent.paramView = paramView;
         paramComponent.navigator = navigator;
-//        paramComponent.eventComponent = eventComponent;
         listComponents.add(paramComponent);
-//        paramComponent.additionalWork = additionalWork;
         return this;
     }
 
@@ -195,9 +177,7 @@ public class Screen<T>{
         paramComponent.paramModel = paramModel;
         paramComponent.paramView = paramView;
         paramComponent.navigator = navigator;
-//        paramComponent.eventComponent = eventComponent;
         listComponents.add(paramComponent);
-//        paramComponent.additionalWork = additionalWork;
         return this;
     }
 
@@ -262,14 +242,6 @@ public class Screen<T>{
         listComponents.add(paramComponent);
         return this;
     }
-//
-//    public Screen menuBottom(int viewId, Menu menu) {
-//        ParamComponent paramComponent = new ParamComponent();
-//        paramComponent.type = ParamComponent.TC.MENU_BOTTOM;
-//        paramComponent.paramView = new ParamView(viewId);
-//        listComponents.add(paramComponent);
-//        return this;
-//    }
 
     public Screen componentMap(int viewId, ParamModel paramModel, ParamMap paramMap,
                                   Navigator navigator) {
@@ -278,7 +250,6 @@ public class Screen<T>{
         paramComponent.paramView = new ParamView(viewId);
         paramComponent.paramModel = paramModel;
         paramComponent.navigator = navigator;
-//        paramComponent.eventComponent = eventComponent;
         paramComponent.paramMap = paramMap;
         listComponents.add(paramComponent);
         return this;
@@ -331,10 +302,6 @@ public class Screen<T>{
         pv.selectNameField = param; //  Назва параметру для зберігання дати
         return component(ParamComponent.TC.CALENDAR, pv);
     }
-
-//    public Screen componentBarcode(int viewId, int viewCode, int repeat) {
-//        return component(ParamComponent.TC.BARCODE, new ParamView(viewId, viewCode, repeat));
-//    }
 
     public Screen componentBarcode(int ... view) {
         return component(ParamComponent.TC.BARCODE, new ParamView(view[0], view));
@@ -489,16 +456,6 @@ public class Screen<T>{
         return this;
     }
 
-//    public Screen toolBar(ToolMenu menu, int viewId) {
-//        ParamComponent paramComponent = new ParamComponent();
-//        paramComponent.type = ParamComponent.TC.TOOL;
-//        paramComponent.paramModel = null;
-//        paramComponent.paramView = new ParamView(viewId);
-//        paramComponent.toolMenu = menu;
-//        listComponents.add(paramComponent);
-//        return this;
-//    }
-
     public Screen toolBar(int viewId) {
         ParamComponent paramComponent = new ParamComponent();
         paramComponent.type = ParamComponent.TC.TOOL;
@@ -599,11 +556,6 @@ public class Screen<T>{
         return this;
     }
 
-//    public Screen add(Navigator navigator) {
-//        this.navigator = navigator;
-//        return this;
-//    }
-
     public Screen setDataParam(int viewId, String nameParam, int source) {
         if (listSetData == null) {
             listSetData = new ArrayList<>();
@@ -667,20 +619,17 @@ public class Screen<T>{
                 case PANEL :
                     new PanelComponent(iBase, cMV, this);
                     break;
-//                case PANEL_MULTI :
-//                    new MultiPanelComponent(iBase, cMV, this);
-//                    break;
                 case PANEL_ENTER:
                     new PanelEnterComponent(iBase, cMV, this);
                     break;
                 case SPINNER :
                     new SpinnerComponent(iBase, cMV, this);
                     break;
-                case RECYCLER_EXPANDED:
-                case RECYCLER_STICKY:
+//                case RECYCLER_EXPANDED:
+//                case RECYCLER_STICKY:
+//                case RECYCLER_HORIZONTAL :
+//                case RECYCLER_GRID :
                 case RECYCLER :
-                case RECYCLER_HORIZONTAL :
-                case RECYCLER_GRID :
                     new RecyclerComponent(iBase, cMV, this);
                     break;
                 case SEQUENCE :
@@ -781,12 +730,7 @@ public class Screen<T>{
                         e.printStackTrace();
                     }
                     break;
-
-//                case PHONE:
-//                    new EditPhoneComponent(iBase, cMV);
-//                    break;
             }
-//            cMV.setMultiComponent(this);
             cMV.baseComponent.init();
         }
     }
@@ -841,19 +785,6 @@ public class Screen<T>{
     }
 
     public String getParamTitle() {
-//        String st = "";
-//        if (args != null) {
-//            String[] ar = args.split(",");
-//            int ik = ar.length;
-//            String sep = "";
-//            if (ik > 0) {
-//                for (int i = 0; i < ik; i++) {
-//                    st += sep + ar[i];
-//                    sep = ",";
-//                }
-//            }
-//        }
-//        return st;
         if (args != null) {
             return args;
         } else {
