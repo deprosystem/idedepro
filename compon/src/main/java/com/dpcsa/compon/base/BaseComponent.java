@@ -1160,14 +1160,17 @@ public abstract class BaseComponent {
                 }
                 workWithRecordsAndViews.RecordToView(rec, v, this, click);
             }
+        } else {
+
         }
     }
 
-    IPresenterListener listener_send_back_screen = new IPresenterListener() {
+    public IPresenterListener listener_send_back_screen = new IPresenterListener() {
         @Override
         public void onResponse(Field response) {
             if (selectViewHandler != null && selectViewHandler.afterResponse != null) {
                 afterHandler(response, selectViewHandler.afterResponse.viewHandlers);
+                afterAfter();
             }
         }
 
@@ -1176,6 +1179,10 @@ public abstract class BaseComponent {
             onErrorModel(statusCode, message, click);
         }
     };
+
+    public void afterAfter() {
+
+    }
 
     public void afterHandler(Field response, List<ViewHandler> viewHandlers) {
         Record rec;

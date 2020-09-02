@@ -1,2 +1,2 @@
-include ':app', ':compon'
+include ':app', ':compon', ':htkz'
 rootProject.name='idedepro'

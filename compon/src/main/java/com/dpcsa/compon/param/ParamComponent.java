@@ -13,7 +13,7 @@ public class ParamComponent <T>{
     public static enum TC {PANEL, PANEL_ENTER,
         SPINNER, DRAWER, PLUS_MINUS, CALENDAR, SWITCH, SUBSCRIBE,
         RECYCLER, //        RECYCLER_HORIZONTAL, RECYCLER_GRID, RECYCLER_EXPANDED, RECYCLER_STICKY,
-        TOOL, MODIFY_TOOL,
+        TOOL, MODIFY_TOOL, AUTO_AUTCH,
         MENU, MENU_B, MENU_BOTTOM, CONTAINER, MAP, SEQUENCE, BUTTON, PHONE, TOTAL, SEARCH, PHOTO, RECOGNIZE_VOICE,
         STATIC_LIST, MODEL, PAGER_V, PAGER_F, INTRO, POP_UP, DATE_DIAPASON, BARCODE, LOAD_DB, CUSTOM,
         ENABLED, YOU_TUBE};
@@ -33,6 +33,7 @@ public class ParamComponent <T>{
     public ParamView paramView;
     public ParamMap paramMap;
     public Navigator navigator, navigatorOff;
+    public Navigator[] arrNavigator;
     public ActionsAfterResponse after;
     public String intro, auth, main, paramForPathFoto;
     public int[] mustValid;

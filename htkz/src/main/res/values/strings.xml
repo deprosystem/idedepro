@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">htkz</string>
+
+    <string name="auto_autch">{\"platform\":1,\"deviceName\": \"\",\"fcmKey\":\"ea7604df1394e6f1229f81c9716079d9\"}</string>
+
+    <string name="search_t">Поиск тура</string>
+    <string name="burning_t">Горящие</string>
+
+    <string name="search">Поиск</string>
+    <string name="hanter">Хантер</string>
+    <string name="my_tour">Мой тур</string>
+    <string name="help">Помощь</string>
+
+    <string name="tour_hanter">Турхантер</string>
+    <string name="info_hanter_1">Турхантер — инструмент для отслеживания цен на интересующие вас туры.</string>
+    <string name="info_hanter_2">Отмечайте их с помощью </string>
+    <string name="info_hanter_3">- и не упустите свой шанс отдохнуть по лучшей цене.</string>
+    <string name="info_hanter_4">Чтобы пользоваться Турхантером\nавторизуйтесь в приложении.</string>
+    <string name="autch">Авторизоваться</string>
+
+    <string name="my_tour_1">Мой тур</string>
+    <string name="info_my_tour_1">Здесь будут ваши будущие заказы</string>
+    <string name="info_my_tour_2">Уже заказали тур в турагентстве или через оператора? Введите номер телефона и мы отобразим ваш тур здесь.</string>
+
+    <string name="departure_city_hot">Город вылета</string>
+    <string name="country_city">Страна, курорт, отель</string>
+    <string name="select">Выбрать</string>
+
+
+    <string name="hot_test">[{\"img\":\"https://bipbap.ru/wp-content/uploads/2017/04/4-2.jpg\",\"cost\":\"от 123 345 Т\",\"country\":\"Египет\"},{\"img\":\"https://bipbap.ru/wp-content/uploads/2017/04/81074043_lovelylandscapes101.jpg\",\"cost\":\"от 345 543 Т\",\"country\":\"ОАЕ\"},{\"img\":\"https://bipbap.ru/wp-content/uploads/2017/04/132638948_beautiful_nature_9_5.jpg\",\"cost\":\"от 123 345 Т\",\"country\":\"Украина\"}]</string>
+    <string name="ins_test">[{\"img\":\"https://ht.kz/fls/post/1578308176bfab8958.jpg\",\"discont\":\"-33%\",\"no_time\":\"Осталось 3 дня\",\"cost\":\"от 123 345 Т\",\"title\":\"Лучшие отели Пхукета\nна первой линии!\",\"txt\":\"Предлагаем Вашему вниманию ТОП лучших отелей находящихся на первой линии!\nОтели с прекрасным сервисом и прямым доступом к морю! Виза оформляется по прилету!\"},{\"img\":\"https://ht.kz/fls/post/15753685459eb50ca8.jpg\",\"discont\":\"-33%\",\"no_time\":\"Осталось 4 дня\",\"cost\":\"от 123 345 Т\",\"title\":\"Новинка! Маврикий\nиз Алматы!\",\"txt\":\"Маврикий — звезда Индийского океана!\nПляжи с белоснежным песком, разнообразный подводный мир, а так же все возможности для морской рыбалки!\"}]</string>
+    <string name="dep_city_test">[{\"flag_country_hot\":\"https://ht.kz/fls/page/1352713745eccd5ee1.gif\",\"cityId_hot\":\"\",\"cityName_hot\":\"Казахстан\",\"sel\":2},{\"flag_country_hot\":\"https://ht.kz/fls/page/1352713745eccd5ee1.gif\",\"cityId_hot\":\"1\",\"cityName_hot\":\"Нур-Султан (Астана)\",\"sel\":0},{\"flag_country_hot\":\"https://ht.kz/fls/page/1352713745eccd5ee1.gif\",\"cityId_hot\":\"2\",\"cityName_hot\":\"Алматы\",\"sel\":0},{\"flag_country_hot\":\"https://ht.kz/fls/page/15923688442f08bd41.png\",\"cityId_hot\":\"\",\"cityName_hot\":\"Киргизия\",\"sel\":2},{\"flag_country_hot\":\"https://ht.kz/fls/page/15923688442f08bd41.png\",\"cityId_hot\":\"4\",\"cityName_hot\":\"Бешкек\",\"sel\":0}]</string>
+
+    <string name="ok_error">Обновить</string>
+
+    <string name="no_connect">Проверьте подключение и попробуйте\nповторить действие снова</string>
+    <string name="no_connect_title">Нет соединения\nс интернетом</string>
+</resources>

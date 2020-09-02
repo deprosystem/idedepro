@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/tool"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/primary">
+        <LinearLayout
+            android:id="@+id/marsh"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="44dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:lineSpacingExtra="6sp"
+                android:text="@string/my_tour_1"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp">
+        <ImageView
+            android:id="@+id/hant_img"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/my_tour_a" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txt_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="4sp"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/black"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:text="@string/info_my_tour_1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="@dimen/d_20"
+        android:layout_above="@+id/txt_4"
+        android:background="@color/progress_grad"/>
+
+    <TextView
+        android:id="@+id/txt_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/autch"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/sp_14"
+        android:lineSpacingExtra="4sp"
+        android:textColor="@color/black"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="@dimen/d_20"
+        android:text="@string/info_my_tour_2"/>
+
+    <TextView
+        android:id="@+id/autch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h_button"
+        style="@style/st_button"
+        android:text="@string/autch"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/d_20"/>
+
+</RelativeLayout>

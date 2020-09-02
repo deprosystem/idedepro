@@ -13,6 +13,7 @@ import androidx.dynamicanimation.animation.SpringAnimation;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -45,6 +46,7 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
     private IBase iBase;
     private SheetBottom thisSheet;
     private int showTime;
+    private boolean noSwipeHide, viewMatch;
 
     public SheetBottom(Context context) {
         super(context);
@@ -70,7 +72,9 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
             negativeViewId = a.getResourceId(R.styleable.Simple_negativeViewId, 0);
             positiveViewId = a.getResourceId(R.styleable.Simple_positiveViewId, 0);
             showTime = a.getInt(R.styleable.Simple_showTime, 0);
+            viewMatch = a.getBoolean(R.styleable.Simple_viewMatch, false);
             fadedScreenColor = a.getColor(R.styleable.Simple_fadedScreenColor, fadedScreenColorDefault);
+            noSwipeHide = a.getBoolean(R.styleable.Simple_noSwipeHide, false);
             a.recycle();
         }
         fadedScreen = new LinearLayout(context);
@@ -78,7 +82,9 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
                 ViewGroup.LayoutParams.MATCH_PARENT);
         fadedScreen.setLayoutParams(lpFadedScreen);
         fadedScreen.setGravity(Gravity.BOTTOM);
-        fadedScreen.setBackgroundColor(fadedScreenColor);
+        if ( ! noSwipeHide) {
+            fadedScreen.setBackgroundColor(fadedScreenColor);
+        }
         addView(fadedScreen);
         panel = new SwipeY(context);
         LinearLayout.LayoutParams lpPanel = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -86,8 +92,13 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
         panel.setLayoutParams(lpPanel);
         fadedScreen.addView(panel);
         sheetContainer = new FrameLayout(context);
-        LayoutParams lpContainer = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+        int hh;
+        if (viewMatch) {
+            hh = ViewGroup.LayoutParams.MATCH_PARENT;
+        } else {
+            hh = ViewGroup.LayoutParams.WRAP_CONTENT;
+        }
+        LayoutParams lpContainer = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, hh);
         sheetContainer.setLayoutParams(lpContainer);
         panel.addView(sheetContainer);
         LayoutInflater.from(context).inflate(viewId, sheetContainer);
@@ -96,16 +107,15 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
 
     public void open() {
         super.setVisibility(VISIBLE);
-        fadedScreen.setAlpha(0.0f);
-//        fadedScreen.setBackgroundResource(fadedColor);
-        fadedScreen.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hide();
-//                fadedScreenClose(true, null);
-            }
-        });
-//        LayoutInflater.from(context).inflate(viewId, sheetContainer);
+        if ( ! noSwipeHide) {
+            fadedScreen.setAlpha(0.0f);
+            fadedScreen.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    hide();
+                }
+            });
+        }
         if (negativeViewId != 0) {
             final View hide = sheetContainer.findViewById(negativeViewId);
             hide.setOnClickListener(new OnClickListener() {
@@ -121,14 +131,9 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
                 @Override
                 public void onClick(View v) {
                     listenerForView.proceedChanges(null);
-//                    fadedScreenClose(false, null);
                 }
             });
         }
-//        EditText ed = (EditText) sheetContainer.findViewById(R.id.edit);
-//        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(
-//                Context.INPUT_METHOD_SERVICE);
-//        inputMethodManager.showSoftInput(ed, 0);
         startAnim.run();
     }
 
@@ -256,7 +261,7 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
 
     @Override
     public void hide() {
-        if (getVisibility() == VISIBLE) {
+        if (getVisibility() == VISIBLE && iBase != null) {
             fadedScreenClose(true, null);
             iBase.delAnimatePanel(this);
         }
@@ -305,6 +310,7 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
+            if (noSwipeHide) return true;
             float tY;
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:

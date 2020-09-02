@@ -8,12 +8,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +24,9 @@ import com.dpcsa.compon.components.MenuComponent;
 import com.dpcsa.compon.components.PagerFComponent;
 import com.dpcsa.compon.components.RecyclerComponent;
 import com.dpcsa.compon.components.ToolBarComponent;
+import com.dpcsa.compon.custom_components.ComponImageView;
+import com.dpcsa.compon.glide.GlideApp;
+import com.dpcsa.compon.glide.GlideRequest;
 import com.dpcsa.compon.interfaces_classes.ActionsAfterResponse;
 import com.dpcsa.compon.interfaces_classes.ActivityResult;
 import com.dpcsa.compon.interfaces_classes.Animate;
@@ -29,6 +34,8 @@ import com.dpcsa.compon.interfaces_classes.IComponent;
 import com.dpcsa.compon.interfaces_classes.IPresenterListener;
 import com.dpcsa.compon.interfaces_classes.ItemSetValue;
 import com.dpcsa.compon.interfaces_classes.PushHandler;
+import com.dpcsa.compon.interfaces_classes.SpringScale;
+import com.dpcsa.compon.interfaces_classes.SpringY;
 import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.json_simple.WorkWithRecordsAndViews;
 import com.dpcsa.compon.single.Injector;
@@ -51,6 +58,11 @@ import com.dpcsa.compon.tools.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
+import static com.bumptech.glide.request.RequestOptions.circleCropTransform;
+import static com.bumptech.glide.request.RequestOptions.placeholderOf;
+import static com.dpcsa.compon.interfaces_classes.ItemSetValue.TYPE_SOURCE.GROUPP_PARAM;
+import static com.dpcsa.compon.interfaces_classes.ItemSetValue.TYPE_SOURCE.PARAM;
 import static com.dpcsa.compon.param.ParamModel.GET;
 import static com.dpcsa.compon.param.ParamModel.POST;
 import static com.dpcsa.compon.param.ParamModel.POST_DB;
@@ -134,6 +146,7 @@ public class BaseFragment extends Fragment implements IBase {
             parentLayout = inflater.inflate(mComponent.fragmentLayoutId, null, false);
         }
         if (mComponent != null) {
+            animatePanelList = new ArrayList<>();
             if ((mComponent.title != null && mComponent.title.length() > 0)|| mComponent.titleId != 0) {
                 setTitle();
             }
@@ -171,7 +184,6 @@ public class BaseFragment extends Fragment implements IBase {
         }
         initView(savedInstanceState);
         setValue();
-        animatePanelList = new ArrayList<>();
         return parentLayout;
     }
 
@@ -207,15 +219,48 @@ public class BaseFragment extends Fragment implements IBase {
     public void setValue() {
         if (mComponent != null && mComponent.itemSetValues != null) {
             for (ItemSetValue sv : mComponent.itemSetValues) {
+                if (sv.type == GROUPP_PARAM) {
+                    setValueParam(sv.viewId);
+                    continue;
+                }
                 View v = parentLayout.findViewById(sv.viewId);
                 if (v != null && v instanceof TextView) {
                     switch (sv.type) {
                         case PARAM:
-                            ((TextView) v).setText(componGlob.getParamValue(sv.name));
+                            String name = sv.name;
+                            if (name == null) {
+                                name = getResources().getResourceEntryName(sv.viewId);
+                            }
+                            if (v instanceof TextView) {
+                                ((TextView) v).setText(componGlob.getParamValue(name));
+                            } else if (v instanceof IComponent) {
+                                ((IComponent) v).setData(componGlob.getParamValue(name));
+                            }
                             break;
                         case LOCALE:
                             ((TextView) v).setText(preferences.getLocale());
                             break;
+                    }
+                } else if (v != null && v instanceof ImageView) {
+                    if (sv.type == PARAM) {
+                        String name = sv.name;
+                        if (name == null) {
+                            name = getResources().getResourceEntryName(sv.viewId);
+                        }
+                        GlideRequest gr = GlideApp.with(this).load(componGlob.getParamValue(name));
+                        if (v instanceof ComponImageView) {
+                            ComponImageView simg = (ComponImageView) v;
+                            if (simg.getBlur() > 0) {
+                                gr.apply(bitmapTransform(new BlurTransformation(simg.getBlur())));
+                            }
+                            if (simg.getPlaceholder() > 0) {
+                                gr.apply(placeholderOf(simg.getPlaceholder()));
+                            }
+                            if (simg.isOval()) {
+                                gr.apply(circleCropTransform());
+                            }
+                        }
+                        gr.into((ImageView) v);
                     }
                 }
             }
@@ -241,6 +286,14 @@ public class BaseFragment extends Fragment implements IBase {
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mComponent.startNavig != null) {
+            clickNavigat(null, 0, mComponent.startNavig.viewHandlers);
         }
     }
 
@@ -387,160 +440,248 @@ public class BaseFragment extends Fragment implements IBase {
     View.OnClickListener navigatorClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            if (mComponent.navigator == null) {
+                return;
+            }
             int id = view.getId();
-            for (ViewHandler vh : mComponent.navigator.viewHandlers) {
-                if (vh.viewId == id) {
-                    switch (vh.type) {
-                        case NAME_SCREEN:
-                            int requestCode = -1;
-                            if (vh.afterResponse != null) {
-                                requestCode = activity.addForResult(vh.afterResponse, activityResult);
-                            }
-                            if (vh.blocked) {
+            clickNavigat(view, id, mComponent.navigator.viewHandlers);
+        }
+    };
+
+    public void clickNavigat(View view, int id, List<ViewHandler> viewHandlers) {
+        for (ViewHandler vh : viewHandlers) {
+            if (vh.viewId == id) {
+                switch (vh.type) {
+                    case NAME_SCREEN:
+                        int requestCode = -1;
+                        if (vh.afterResponse != null) {
+                            requestCode = activity.addForResult(vh.afterResponse, activityResult);
+                        }
+                        if (vh.blocked) {
+                            if (view != null) {
                                 view.setEnabled(false);
                             }
-                            switch (vh.paramForScreen) {
-                                case RECORD:
-                                    startScreen(vh.screen, false, paramScreen, requestCode);
-                                    break;
-                                case RECORD_COMPONENT:
-                                    BaseComponent bc = mComponent.getComponent(vh.componId);
-                                    if (bc != null) {
-                                        componGlob.setParam(bc.recordComponent);
-                                        startScreen(vh.screen, false, bc.recordComponent, requestCode);
-                                    }
-                                    break;
-                                default:
-                                    if (vh.addFragment) {
-                                        startScreen(vh.screen, false, null, requestCode, vh.addFragment);
-                                    } else {
-                                        startScreen(vh.screen, false, null, requestCode);
-                                    }
-                                    break;
-                            }
-                            break;
-                        case YOUTUBE:
-                            if (paramScreen != null && paramScreen.value != null) {
-                                componGlob.setParam((Record) paramScreen.value);
-                            }
-                            String stParYou = componGlob.getParamValue(vh.nameFieldWithValue);
-                            if (stParYou != null && stParYou.length() > 0) {
-                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(stParYou)));
-                            }
-                            break;
-                        case SET_PARAM:
-                            componGlob.setParamValue(vh.nameFieldWithValue, vh.pref_value_string);
-                            break;
-                        case CALL_UP:
-                            if (view instanceof TextView) {
-                                String st = ((TextView) view).getText().toString();
-                                if (st != null && st.length() > 0) {
-                                    activity.callUp(st);
+                        }
+                        switch (vh.paramForScreen) {
+                            case RECORD:
+                                startScreen(vh.screen, false, paramScreen, requestCode);
+                                break;
+                            case RECORD_COMPONENT:
+                                BaseComponent bc = mComponent.getComponent(vh.componId);
+                                if (bc != null) {
+                                    componGlob.setParam(bc.recordComponent);
+                                    startScreen(vh.screen, false, bc.recordComponent, requestCode);
+                                }
+                                break;
+                            default:
+                                if (vh.addFragment) {
+                                    startScreen(vh.screen, false, null, requestCode, vh.addFragment);
+                                } else {
+                                    startScreen(vh.screen, false, null, requestCode);
+                                }
+                                break;
+                        }
+                        break;
+                    case YOUTUBE:
+                        if (paramScreen != null && paramScreen.value != null) {
+                            componGlob.setParam((Record) paramScreen.value);
+                        }
+                        String stParYou = componGlob.getParamValue(vh.nameFieldWithValue);
+                        if (stParYou != null && stParYou.length() > 0) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(stParYou)));
+                        }
+                        break;
+                    case SET_PARAM:
+                        componGlob.setParamValue(vh.nameFieldWithValue, vh.pref_value_string);
+                        break;
+                    case RESULT_RECORD :
+                        Intent intent = new Intent();
+                        if (vh.nameFieldWithValue != null && vh.nameFieldWithValue.length() > 0) {
+                            Record record = workWithRecordsAndViews.ViewToRecord(parentLayout, vh.nameFieldWithValue);
+                            intent.putExtra(Constants.RECORD, record.toString());
+                        } else {
+                            intent.putExtra(Constants.RECORD, "{}");
+                        }
+                        activity.setResult(activity.RESULT_OK, intent);
+                        activity.finishActivity();
+                        break;
+                    case SET_VALUE_PARAM:
+                        setValueParam(vh.viewId);
+                        break;
+                    case SET_VALUE:
+                        if (mComponent != null && mComponent.itemSetValues != null) {
+                            setValue();
+                        } else {
+                            View showV = parentLayout.findViewById(vh.showViewId);
+                            if (showV != null) {
+                                if (showV instanceof TextView) {
+                                    ((TextView) showV).setText(getString(vh.idString));
                                 }
                             }
-                            break;
-                        case DIAL_UP:
-                            if (view instanceof TextView) {
-                                String st = ((TextView) view).getText().toString();
-                                if (st != null && st.length() > 0) {
-                                    activity.startDialPhone(st);
-                                }
+                        }
+                        break;
+                    case CALL_UP:
+                        if (view != null && view instanceof TextView) {
+                            String st = ((TextView) view).getText().toString();
+                            if (st != null && st.length() > 0) {
+                                activity.callUp(st);
                             }
-                            break;
-                        case SHOW:
-                            if (vh.onActivity) {
-                                activity.showSheetBottom(vh.showViewId, null, null, null);
+                        }
+                        break;
+                    case DIAL_UP:
+                        if (view != null && view instanceof TextView) {
+                            String st = ((TextView) view).getText().toString();
+                            if (st != null && st.length() > 0) {
+                                activity.startDialPhone(st);
+                            }
+                        }
+                        break;
+                    case SHOW:
+                        if (vh.onActivity) {
+                            activity.showSheetBottom(vh.showViewId, null, null, null);
+                        } else {
+                            View showView = parentLayout.findViewById(vh.showViewId);
+                            if (showView instanceof AnimatePanel) {
+                                ((AnimatePanel) showView).show(BaseFragment.this);
                             } else {
-                                View showView = parentLayout.findViewById(vh.showViewId);
-                                if (showView instanceof AnimatePanel) {
-                                    ((AnimatePanel) showView).show(BaseFragment.this);
+                                showView.setVisibility(View.VISIBLE);
+                            }
+                        }
+                        break;
+                    case SHOW_HIDE:
+                        if (view == null) break;
+                        View vv = parentLayout.findViewById(vh.showViewId);
+                        if (vv != null) {
+                            TextView tv = (TextView) view;
+                            if (vv instanceof AnimatePanel) {
+                                AnimatePanel ap = (AnimatePanel) vv;
+                                if (ap.isShow()) {
+                                    ap.hide();
+                                    tv.setText(activity.getString(vh.textHideId));
                                 } else {
-                                    showView.setVisibility(View.VISIBLE);
+                                    ap.show(getThis());
+                                    tv.setText(activity.getString(vh.textShowId));
+                                }
+                            } else {
+                                if (vv.getVisibility() == View.VISIBLE) {
+                                    vv.setVisibility(View.GONE);
+                                    tv.setText(activity.getString(vh.textHideId));
+                                } else {
+                                    vv.setVisibility(View.VISIBLE);
+                                    tv.setText(activity.getString(vh.textShowId));
                                 }
                             }
-                            break;
-                        case SHOW_HIDE:
-                            View vv = parentLayout.findViewById(vh.showViewId);
-                            if (vv != null) {
-                                TextView tv = (TextView) view;
-                                if (vv instanceof AnimatePanel) {
-                                    AnimatePanel ap = (AnimatePanel) vv;
-                                    if (ap.isShow()) {
-                                        ap.hide();
-                                        tv.setText(activity.getString(vh.textHideId));
-                                    } else {
-                                        ap.show(getThis());
-                                        tv.setText(activity.getString(vh.textShowId));
-                                    }
-                                } else {
-                                    if (vv.getVisibility() == View.VISIBLE) {
-                                        vv.setVisibility(View.GONE);
-                                        tv.setText(activity.getString(vh.textHideId));
-                                    } else {
-                                        vv.setVisibility(View.VISIBLE);
-                                        tv.setText(activity.getString(vh.textShowId));
-                                    }
-                                }
-                            }
-                            break;
-                        case SET_GLOBAL:
-                            BaseComponent bc = mComponent.getComponent(vh.componId);
-                            bc.setGlobalData(vh.nameFieldWithValue);
-                            break;
-                        case SET_MENU_DEF:
-                            activity.setMenu();
-                            break;
-                        case SET_MENU:
-                            activity.setMenu();
-                            break;
-                        case CLICK_SEND :
-                            Record rec = null;
-                            if (paramScreen != null && paramScreen.value != null) {
-                                rec = (Record) paramScreen.value;
-                                componGlob.setParam(rec);
-                            }
-                            selectViewHandler = vh;
-                            switch (vh.paramModel.method) {
-                                case POST_DB:
-                                    BaseDB baseDB = Injector.getBaseDB();
-                                    baseDB.insertRecord(vh.paramModel.url, rec, listener_send_back_screen);
-                                    break;
-                                case GET:
-                                    new BasePresenter(BaseFragment.this, vh.paramModel, null, rec, listener_send_back_screen);
-                                    break;
-                                case POST:
-                                    new BasePresenter(BaseFragment.this, vh.paramModel, null, rec, listener_send_back_screen);
-                                    break;
-                            }
-                            break;
-                        case CLICK_VIEW:
-                            if (mComponent.iCustom != null) {
-                                mComponent.iCustom.clickView(view, parentLayout, null, null, -1);
-                            } else if (mComponent.moreWork != null) {
-                                mComponent.moreWork.clickView(view, parentLayout, null, null, -1);
-                            }
-                            break;
-                        case BACK:
-                            backPressed();
-                            break;
-                        case EXIT:
-                            activity.exitAccount();
-                            break;
-                        case OPEN_DRAWER:
-                            activity.openDrawer();
-                            break;
-                        case RECEIVER:
-                            LocalBroadcastManager.getInstance(activity)
-                                    .registerReceiver(broadcastReceiver, new IntentFilter(vh.nameFieldWithValue));
-                            break;
-                        case ANIMATE:
-                            procesAnimate(vh.animate);
-                            break;
-                    }
+                        }
+                        break;
+                    case SET_GLOBAL:
+                        BaseComponent bc = mComponent.getComponent(vh.componId);
+                        bc.setGlobalData(vh.nameFieldWithValue);
+                        break;
+                    case SET_MENU_DEF:
+                        activity.setMenu();
+                        break;
+                    case SET_MENU:
+                        activity.setMenu();
+                        break;
+                    case CLICK_SEND :
+                        Record rec = null;
+                        if (paramScreen != null && paramScreen.value != null) {
+                            rec = (Record) paramScreen.value;
+                            componGlob.setParam(rec);
+                        }
+                        selectViewHandler = vh;
+                        switch (vh.paramModel.method) {
+                            case POST_DB:
+                                BaseDB baseDB = Injector.getBaseDB();
+                                baseDB.insertRecord(vh.paramModel.url, rec, listener_send_back_screen);
+                                break;
+                            case GET:
+                                new BasePresenter(BaseFragment.this, vh.paramModel, null, rec, listener_send_back_screen);
+                                break;
+                            case POST:
+                                new BasePresenter(BaseFragment.this, vh.paramModel, null, rec, listener_send_back_screen);
+                                break;
+                        }
+                        break;
+                    case CLICK_VIEW:
+                        if (mComponent.iCustom != null) {
+                            mComponent.iCustom.clickView(view, parentLayout, null, null, -1);
+                        } else if (mComponent.moreWork != null) {
+                            mComponent.moreWork.clickView(view, parentLayout, null, null, -1);
+                        }
+                        break;
+                    case BACK:
+                        backPressed();
+                        break;
+                    case EXIT:
+                        activity.exitAccount();
+                        break;
+                    case OPEN_DRAWER:
+                        activity.openDrawer();
+                        break;
+                    case RECEIVER:
+                        LocalBroadcastManager.getInstance(activity)
+                                .registerReceiver(broadcastReceiver, new IntentFilter(vh.nameFieldWithValue));
+                        break;
+                    case ANIMATE:
+                        procesAnimate(vh.animate);
+                        break;
+                    case SPR_SCALE:
+                        SpringScale scale = new SpringScale(parentLayout.findViewById(vh.showViewId), vh.velocity, vh.repeatTime);
+                        scale.startAnim();
+                        break;
+                    case SPR_Y:
+                        SpringY y = new SpringY(parentLayout.findViewById(vh.showViewId), vh.velocity, vh.repeatTime);
+                        y.startAnim();
+                        break;
                 }
             }
         }
-    };
+    }
+
+    public void setValueParam(int viewId) {
+        View view = parentLayout.findViewById(viewId);
+        if (view instanceof ViewGroup) {
+            ViewGroup vg = (ViewGroup) view;
+            int ik = vg.getChildCount();
+            for (int i = 0; i < ik; i++) {
+                setOneViewValue(vg.getChildAt(i));
+            }
+        } else {
+            setOneViewValue(view);
+        }
+    }
+
+    public void setOneViewValue(View view) {
+        int id = view.getId();
+        if (id <= 0) return;
+        String name = getResources().getResourceEntryName(id);
+        if (name == null) return;
+        String value = componGlob.getParamValueIfIs(name);
+        if (value == null) return;
+        if (view instanceof TextView) {
+            if (view instanceof IComponent) {
+                ((IComponent) view).setData(value);
+            } else {
+                ((TextView) view).setText(value);
+            }
+        } else if (view instanceof ImageView) {
+            GlideRequest gr = GlideApp.with(this).load(value);
+            if (view instanceof ComponImageView) {
+                ComponImageView simg = (ComponImageView) view;
+                if (simg.getBlur() > 0) {
+                    gr.apply(bitmapTransform(new BlurTransformation(simg.getBlur())));
+                }
+                if (simg.getPlaceholder() > 0) {
+                    gr.apply(placeholderOf(simg.getPlaceholder()));
+                }
+                if (simg.isOval()) {
+                    gr.apply(circleCropTransform());
+                }
+            }
+            gr.into((ImageView) view);
+        }
+    }
 
     IPresenterListener listener_send_back_screen = new IPresenterListener() {
         @Override
@@ -601,6 +742,12 @@ public class BaseFragment extends Fragment implements IBase {
                 View vv;
                 for (ViewHandler vh : afterResponse.viewHandlers) {
                     switch (vh.type) {
+                        case SET_VALUE:
+                            setValue();
+                            break;
+                        case SET_VALUE_PARAM:
+                            setValueParam(vh.viewId);
+                            break;
                         case ASSIGN_VALUE:
                             vv = parentLayout.findViewById(vh.viewId);
                             if (vv != null) {

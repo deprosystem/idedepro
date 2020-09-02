@@ -1,5 +1,6 @@
 package com.dpcsa.compon.base;
 
+import com.dpcsa.compon.components.AutoAutch;
 import com.dpcsa.compon.components.BarcodeComponent;
 import com.dpcsa.compon.components.CalendarComponent;
 import com.dpcsa.compon.components.ContainerComponent;
@@ -47,6 +48,7 @@ import com.dpcsa.compon.interfaces_classes.SetData;
 import com.dpcsa.compon.interfaces_classes.ToolMenu;
 import com.dpcsa.compon.interfaces_classes.ViewHandler;
 import com.dpcsa.compon.interfaces_classes.Visibility;
+import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.param.ParamComponent;
 import com.dpcsa.compon.param.ParamMap;
 import com.dpcsa.compon.param.ParamModel;
@@ -55,6 +57,7 @@ import com.dpcsa.compon.tools.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 
@@ -71,7 +74,7 @@ public class Screen<T>{
     public int fragmentLayoutId;
     public enum TYPE_VIEW {ACTIVITY, FRAGMENT, CUSTOM_FRAGMENT, CUSTOM_ACTIVITY};
     public TYPE_VIEW typeView;
-    public Navigator navigator;
+    public Navigator navigator, startNavig, stopNavig;
     public PushNavigator pushNavigator;
     public ICustom iCustom;
     public Class<T> customFragment;
@@ -81,6 +84,7 @@ public class Screen<T>{
     public ItemSetValue[] itemSetValues;
     public int keyBack;
     public boolean transparentScreen = false;
+    public boolean isFullScreen;
 
     public void setCustom(ICustom iCustom) {
         this.iCustom = iCustom;
@@ -123,9 +127,13 @@ public class Screen<T>{
         }
     }
 
-
     public Screen animate(Constants.AnimateScreen animate) {
         animateScreen = animate;
+        return this;
+    }
+
+    public Screen fullScreen() {
+        isFullScreen = true;
         return this;
     }
 
@@ -234,11 +242,21 @@ public class Screen<T>{
     }
 
     public Screen menuBottom(ParamModel paramModel, ParamView paramView) {
+        return menuBottom(paramModel, paramView, navigator);
+//        ParamComponent paramComponent = new ParamComponent();
+//        paramComponent.type = ParamComponent.TC.MENU_B;
+//        paramComponent.paramModel = paramModel;
+//        paramComponent.paramView = paramView;
+//        listComponents.add(paramComponent);
+//        return this;
+    }
+
+    public Screen menuBottom(ParamModel paramModel, ParamView paramView, Navigator ... navigator) {
         ParamComponent paramComponent = new ParamComponent();
         paramComponent.type = ParamComponent.TC.MENU_B;
         paramComponent.paramModel = paramModel;
         paramComponent.paramView = paramView;
-//        paramComponent.navigator = new Navigator(new ViewHandler("nameFunc"));
+        paramComponent.arrNavigator = navigator;
         listComponents.add(paramComponent);
         return this;
     }
@@ -393,6 +411,18 @@ public class Screen<T>{
         return this;
     }
 
+    public Screen autoAutch(ParamModel mod, Record rec, Map<String, String> head, ActionsAfterResponse after, String nextScreen) {
+        ParamComponent paramComponent = new ParamComponent();
+        paramComponent.type = ParamComponent.TC.AUTO_AUTCH;
+        paramComponent.name = nextScreen;
+        paramComponent.paramModel = mod;
+        paramComponent.paramModel.record = rec;
+        paramComponent.paramModel.head = head;
+        paramComponent.after = after;
+        listComponents.add(paramComponent);
+        return this;
+    }
+
     public Screen componentIntro(ParamModel model, int pager, int layoutId, int indicator, int skip, int next, int start) {
         ParamComponent paramComponent = new ParamComponent();
         paramComponent.type = ParamComponent.TC.INTRO;
@@ -534,6 +564,16 @@ public class Screen<T>{
                 }
             }
         }
+        return this;
+    }
+
+    public Screen startNavigator(ViewHandler ... handlers) {
+        this.startNavig = new Navigator(handlers);
+        return this;
+    }
+
+    public Screen stopNavigator(ViewHandler ... handlers) {
+        this.stopNavig = new Navigator(handlers);
         return this;
     }
 
@@ -713,6 +753,9 @@ public class Screen<T>{
                     break;
                 case SWITCH:
                     new SwitchComponent(iBase, cMV, this);
+                    break;
+                case AUTO_AUTCH:
+                    new AutoAutch(iBase, cMV, this);
                     break;
                 case SUBSCRIBE:
                     new SubscribeComponent(iBase, cMV, this);

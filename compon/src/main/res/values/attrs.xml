@@ -3,6 +3,8 @@
     <attr name="itemLayoutId" format="reference"/>
     <attr name="textSize" format="reference|dimension"/>
     <attr name="alias" format="string"/>
+    <attr name="selectColor" format="reference|color"/>
+    <attr name="normColor" format="reference|color"/>
     <declare-styleable name="ComponList">
         <attr name="gapBetweenTagsVert" format="reference|dimension"/>
         <attr name="gapBetweenTagsHoris" format="reference|dimension"/>
@@ -55,11 +57,18 @@
         <attr name="placeholder" format="reference"/>
         <attr name="blur" format="integer"/>
         <attr name="oval" format="boolean"/>
+        <attr name="noSwipeHide" format="boolean"/>
+        <attr name="viewMatch" format="boolean"/>
         <attr name="viewLayoutId" format="string"/>
         <attr name="fadedScreenColor" format="color"/>
+        <attr name="progressColorE" format="color"/>
+        <attr name="progressColorN" format="color"/>
         <attr name="textSize"/>
         <attr name="badgeColor" format="color"/>
         <attr name="hintTextColor" format="color"/>
+        <attr name="amountDots" format="integer"/>
+        <attr name="colorDot" format="color"/>
+        <attr name="diametrDot" format="dimension"/>
         <attr name="textColor" format="color"/>
         <attr name="iconColor" format="color"/>
         <attr name="stringArray" format="reference"/>
@@ -79,6 +88,17 @@
         <attr name="maxLength" format="integer"/>
         <attr name="noEdit" format="boolean"/>
         <attr name="fieldLength" format="integer"/>
+        <attr name="selectBackground" format="reference"/>
+        <attr name="selectColor"/>
+        <attr name="normColor"/>
+        <attr name="noSelImgChangeColor" format="boolean"/>
+        <attr name="toAnimate" format="boolean"/>
+        <attr name="imageLocale">
+            <enum name="left" value="0" />
+            <enum name="top" value="1" />
+            <enum name="right" value="2" />
+            <enum name="bottom" value="3" />
+        </attr>
         <attr name="typeValidate">
             <enum name="filled" value="0" />
             <enum name="email" value="1" />
@@ -115,7 +135,7 @@
         <attr name="beginValue" format="integer"/>
         <attr name="endValue" format="integer"/>
         <attr name="loopMode" format="boolean"/>
-        <attr name="selectColor" format="reference|color"/>
+        <attr name="selectColor"/>
         <attr name="otherColor" format="reference|color"/>
     </declare-styleable>
     <declare-styleable name="CalendarView">

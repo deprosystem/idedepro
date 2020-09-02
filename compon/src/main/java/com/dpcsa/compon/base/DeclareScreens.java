@@ -35,11 +35,14 @@ import com.dpcsa.compon.tools.Constants;
 import java.util.ArrayList;
 import java.util.Map;
 
+import static com.dpcsa.compon.interfaces_classes.ItemSetValue.TYPE_SOURCE.GROUPP_PARAM;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.DRAWER;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.NULLIFY;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_MENU;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_PAGER;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_RECYCLER;
+import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.SET_VALUE;
+import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.SET_VALUE_PARAM;
 
 public abstract class DeclareScreens<T>{
     protected ParamComponent.TC TC;
@@ -385,6 +388,11 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, screen);
     }
 
+    public ViewHandler start(int viewId, String screen, ActionsAfterResponse afterResponse) {
+        ViewHandler vh = new ViewHandler(viewId, screen, afterResponse);
+        return vh;
+    }
+
     public ViewHandler start(int viewId, String screen, ViewHandler.TYPE_PARAM_FOR_SCREEN paramForScreen) {
         return new ViewHandler(viewId, screen, paramForScreen);
     }
@@ -408,6 +416,17 @@ public abstract class DeclareScreens<T>{
     public ViewHandler start(int viewId, String screen, boolean blocked) {
         ViewHandler vh = new ViewHandler(viewId, screen);
         vh.blocked = blocked;
+        return vh;
+    }
+
+    public ViewHandler setValue(ItemSetValue ... item) {
+        ViewHandler vh = new ViewHandler(SET_VALUE);
+        vh.itemSetValues = item;
+        return vh;
+    }
+
+    public ViewHandler setValueParam(int viewId) {
+        ViewHandler vh = new ViewHandler(viewId, SET_VALUE_PARAM);
         return vh;
     }
 
@@ -555,6 +574,18 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, ViewHandler.TYPE.BACK);
     }
 
+    public ViewHandler backOk(int viewId) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.BACK_OK);
+    }
+
+    public ViewHandler springScale(int animViewId, int velocity, int repeatTime) {
+        return new ViewHandler(ViewHandler.TYPE.SPR_SCALE, animViewId, velocity, repeatTime);
+    }
+
+    public ViewHandler springY(int animViewId, int velocity, int repeatTime) {
+        return new ViewHandler(ViewHandler.TYPE.SPR_Y, animViewId, velocity, repeatTime);
+    }
+
     public ViewHandler finishDialog(@NonNull int titleId, @NonNull int messageId) {
         return new ViewHandler(0, ViewHandler.TYPE.FINISH, titleId, messageId);
     }
@@ -612,6 +643,10 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, ViewHandler.TYPE.SHOW, showViewId, false);
     }
 
+    public ViewHandler hide(int showViewId) {
+        return new ViewHandler(0, ViewHandler.TYPE.HIDE, showViewId, false);
+    }
+
     public ViewHandler hide(int viewId, int showViewId) {
         return new ViewHandler(viewId, ViewHandler.TYPE.HIDE, showViewId, false);
     }
@@ -641,7 +676,7 @@ public abstract class DeclareScreens<T>{
     }
 
     public ViewHandler handler(int viewId, int idTextV, int idString) {
-        return new ViewHandler(viewId, ViewHandler.TYPE.SET_VALUE, idTextV, idString);
+        return new ViewHandler(viewId, SET_VALUE, idTextV, idString);
     }
 
     public ViewHandler handler(int viewId, ViewHandler.TYPE type, int idCompon, String name) {
@@ -678,6 +713,10 @@ public abstract class DeclareScreens<T>{
 
     public ItemSetValue item(int viewId, ItemSetValue.TYPE_SOURCE source, int componId) {
         return new ItemSetValue(viewId, source, componId);
+    }
+
+    public ItemSetValue itemParam(int viewId) {
+        return new ItemSetValue(viewId, GROUPP_PARAM);
     }
 
     public FilterParam filter(String nameField, FilterParam.Operation oper, Object value) {

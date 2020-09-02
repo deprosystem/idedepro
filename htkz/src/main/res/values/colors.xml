@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="norm_menu">#000000</color>
+    <color name="sel_menu">#1b5ae7</color>
+
+    <color name="primary">#1b5ae7</color>
+    <color name="primary_dark">#043AB6</color>
+    <color name="accent">#fedf63</color>
+
+    <color name="progress_grad">#261b5ae7</color>
+    <color name="progress_fon">#c0dde6fb</color>
+    <color name="progress_stroke">#261b5ae7</color>
+    <color name="dot">#C10956FD</color>
+
+    <color name="red">#f00056</color>
+    <color name="white">#ffffff</color>
+
+    <color name="dark">#2b313e</color>
+    <color name="black">#000000</color>
+    <color name="black_40">#66000000</color>
+    <color name="f9">#f9f9f9</color>
+</resources>

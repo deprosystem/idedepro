@@ -276,6 +276,12 @@ public class Record extends ArrayList<Field>{
         }
     }
 
+    public Record addField(String name, int type, Object value) {
+        Field ff = new Field(name, type, value);
+        add(ff);
+        return this;
+    }
+
     @Override
     public String toString() {
         SimpleRecordToJson recordToJson = new SimpleRecordToJson();

@@ -1,8 +1,10 @@
 package com.dpcsa.compon.json_simple;
 
-import android.util.Log;
-
 import java.util.Date;
+
+import static com.dpcsa.compon.json_simple.Field.TYPE_LIST_FIELD;
+import static com.dpcsa.compon.json_simple.Field.TYPE_LIST_RECORD;
+import static com.dpcsa.compon.json_simple.Field.TYPE_RECORD;
 
 public class JsonSimple {
     private int ind, indMax;
@@ -17,6 +19,8 @@ public class JsonSimple {
     int ii = 0;
     SimpleRecordToJson recordToJson = new SimpleRecordToJson();
 
+    public String nameRecToList;
+
     public Field jsonToModel(String st) throws JsonSyntaxException {
         if (st == null) return null;
         Field res = null;
@@ -30,13 +34,13 @@ public class JsonSimple {
                 case "[" :
                     res.value = getList();
                     if (res.value instanceof ListRecords) {
-                        res.type = Field.TYPE_LIST_RECORD;
+                        res.type = TYPE_LIST_RECORD;
                     } else {
                         res.type = Field.TYPE_LIST_FIELD;
                     }
                     return res;
                 case "{" :
-                    res.type = Field.TYPE_RECORD;
+                    res.type = TYPE_RECORD;
                     res.value = getClazz();
                     return res;
                 case quote :
@@ -179,14 +183,18 @@ public class JsonSimple {
                         case "[" :   // List
                             item.value = getList();
                             if (item.value instanceof ListRecords) {
-                                item.type = Field.TYPE_LIST_RECORD;
+                                item.type = TYPE_LIST_RECORD;
                             } else {
                                 item.type = Field.TYPE_LIST_FIELD;
                             }
                             break;
                         case "{" :   // Class
-                            item.type = Field.TYPE_RECORD;
+                            item.type = TYPE_RECORD;
                             item.value = getClazz();
+                            if (nameRecToList != null && nameRecToList.length() > 0
+                                    && nameRecToList.equals(item.name)) {
+                                recToList(item);
+                            }
                             break;
                         default:
                             if (digits.contains(currentSymbol)) {    // digit
@@ -207,6 +215,33 @@ public class JsonSimple {
             throw new JsonSyntaxException("No : " + textForException());
         }
         return item;
+    }
+
+    private void recToList(Field item) {
+        Record rec = (Record) item.value;
+        int ik = rec.size();
+        if (ik > 0) {
+            Field f = rec.get(0);
+            if (f.type == TYPE_RECORD) {
+                ListRecords lr = new ListRecords();
+                for (int i = 0; i < ik; i++) {
+                    lr.add((Record) rec.get(i).value);
+                }
+                item.type = TYPE_LIST_RECORD;
+                item.value = lr;
+            } else {
+                ListFields lf = new ListFields();
+                for (int i = 0; i < ik; i++) {
+                    f = rec.get(i);
+                    lf.add(new Field("", f.type, f. value));
+                }
+                item.type = TYPE_LIST_FIELD;
+                item.value = lf;
+            }
+        } else {
+            item.type = TYPE_LIST_RECORD;
+            item.value = new ListRecords();
+        }
     }
 
     private Object getNullValue() throws JsonSyntaxException {

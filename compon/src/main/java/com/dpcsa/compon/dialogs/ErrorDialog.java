@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.json_simple.WorkWithRecordsAndViews;
 import com.dpcsa.compon.param.AppParams;
@@ -48,6 +50,10 @@ public class ErrorDialog extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
+        Field ff = rec.getField("name");
+        if (ff != null) {
+            rec.add(new Field("title", Field.TYPE_STRING, ff.value));
+        }
         workWithRecordsAndViews.RecordToView(rec, parentLayout);
         if (appParams.errorDialogNegativeId != 0) {
             parentLayout.findViewById(appParams.errorDialogNegativeId)

@@ -1,12 +1,14 @@
 package com.dpcsa.compon.base;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
@@ -14,6 +16,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.dynamicanimation.animation.DynamicAnimation;
+import androidx.dynamicanimation.animation.FloatPropertyCompat;
+import androidx.dynamicanimation.animation.SpringAnimation;
+import androidx.dynamicanimation.animation.SpringForce;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -21,13 +27,17 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import jp.wasabeef.glide.transformations.BlurTransformation;
+
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dpcsa.compon.components.MenuBComponent;
@@ -36,13 +46,17 @@ import com.dpcsa.compon.components.MenuComponent;
 import com.dpcsa.compon.components.PagerFComponent;
 import com.dpcsa.compon.components.RecyclerComponent;
 import com.dpcsa.compon.components.ToolBarComponent;
+import com.dpcsa.compon.custom_components.ComponImageView;
 import com.dpcsa.compon.dialogs.ErrorDialog;
 import com.dpcsa.compon.dialogs.ProgressDialog;
+import com.dpcsa.compon.glide.GlideApp;
+import com.dpcsa.compon.glide.GlideRequest;
 import com.dpcsa.compon.interfaces_classes.Animate;
 import com.dpcsa.compon.interfaces_classes.IComponent;
 import com.dpcsa.compon.interfaces_classes.ItemSetValue;
 import com.dpcsa.compon.interfaces_classes.PushHandler;
 import com.dpcsa.compon.interfaces_classes.SingleSetting;
+import com.dpcsa.compon.interfaces_classes.SpringScale;
 import com.dpcsa.compon.interfaces_classes.SubscribePush;
 import com.dpcsa.compon.param.AppParams;
 import com.dpcsa.compon.param.ParamComponent;
@@ -82,6 +96,11 @@ import java.util.Locale;
 import java.util.Map;
 
 import static android.view.View.inflate;
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
+import static com.bumptech.glide.request.RequestOptions.circleCropTransform;
+import static com.bumptech.glide.request.RequestOptions.placeholderOf;
+import static com.dpcsa.compon.interfaces_classes.ItemSetValue.TYPE_SOURCE.GROUPP_PARAM;
+import static com.dpcsa.compon.interfaces_classes.ItemSetValue.TYPE_SOURCE.PARAM;
 
 public abstract class BaseActivity extends FragmentActivity implements IBase {
 
@@ -106,7 +125,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     public MenuBComponent menuBottom;
     public ToolBarComponent toolBar;
 
-
+//    public boolean isFullScreen = false;
     private DialogFragment progressDialog;
     private int countProgressStart;
     private boolean isActive;
@@ -175,7 +194,6 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
         if ((st != null && st.length() > 0) || componGlob.appParams.nameLanguageInURL) {
             setLocale();
         }
-//Log.d("QWERT","Screen="+intent.getStringExtra(Constants.NAME_MVP)+" componGlob.needInitSettings="+componGlob.needInitSettings);
         if (componGlob.initSettings != null && componGlob.countSettings < componGlob.initSettings.length) {
             initSettings();
         }
@@ -201,6 +219,9 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                 if (mComponent == null) {
                     log("0002 No description of the activity " + nameScreen);
                     return;
+                }
+                if (mComponent.isFullScreen) {
+                    setFullScreen();
                 }
                 if (mComponent.typeView == Screen.TYPE_VIEW.CUSTOM_ACTIVITY) {
                     parentLayout = inflate(this, getLayoutId(), null);
@@ -255,6 +276,40 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
             ifPush(intent);
         }
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mComponent.startNavig != null) {
+            clickNavigat(null, 0, mComponent.startNavig.viewHandlers);
+        }
+    }
+
+    public void setFullScreen() {
+        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
+            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
+        }
+        if (Build.VERSION.SDK_INT >= 19) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+        //make fully Android Transparent Status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
+    public static void setWindowFlag(Activity activity, final int bits, boolean on) {
+
+        Window win = activity.getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
     }
 
     public boolean isDrawerComponent() {
@@ -466,14 +521,22 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     public void setValue() {
         if (mComponent != null && mComponent.itemSetValues != null) {
             for (ItemSetValue sv : mComponent.itemSetValues) {
+                if (sv.type == GROUPP_PARAM) {
+                    setValueParam(sv.viewId);
+                    continue;
+                }
                 View v = parentLayout.findViewById(sv.viewId);
-                if (v != null) {
+                if (v != null && v instanceof TextView) {
                     switch (sv.type) {
                         case PARAM:
+                            String name = sv.name;
+                            if (name == null) {
+                                name = getResources().getResourceEntryName(sv.viewId);
+                            }
                             if (v instanceof TextView) {
-                                ((TextView) v).setText(componGlob.getParamValue(sv.name));
+                                ((TextView) v).setText(componGlob.getParamValue(name));
                             } else if (v instanceof IComponent) {
-                                ((IComponent) v).setData(componGlob.getParamValue(sv.name));
+                                ((IComponent) v).setData(componGlob.getParamValue(name));
                             }
                             break;
                         case LOCALE:
@@ -483,6 +546,27 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                                 ((IComponent) v).setData(preferences.getLocale());
                             }
                             break;
+                    }
+                } else if (v != null && v instanceof ImageView) {
+                    if (sv.type == PARAM) {
+                        String name = sv.name;
+                        if (name == null) {
+                            name = getResources().getResourceEntryName(sv.viewId);
+                        }
+                        GlideRequest gr = GlideApp.with(this).load(componGlob.getParamValue(name));
+                        if (v instanceof ComponImageView) {
+                            ComponImageView simg = (ComponImageView) v;
+                            if (simg.getBlur() > 0) {
+                                gr.apply(bitmapTransform(new BlurTransformation(simg.getBlur())));
+                            }
+                            if (simg.getPlaceholder() > 0) {
+                                gr.apply(placeholderOf(simg.getPlaceholder()));
+                            }
+                            if (simg.isOval()) {
+                                gr.apply(circleCropTransform());
+                            }
+                        }
+                        gr.into((ImageView) v);
                     }
                 }
             }
@@ -643,6 +727,12 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
             if (resultCode == RESULT_OK) {
                 for (ViewHandler vh : afterResponse.viewHandlers) {
                     switch (vh.type) {
+                        case SET_VALUE:
+                            setValue();
+                            break;
+                        case SET_VALUE_PARAM:
+                            setValueParam(vh.viewId);
+                            break;
                         case UPDATE_DATA:
                             mComponent.getComponent(vh.viewId).updateData(vh.paramModel);
                             break;
@@ -659,168 +749,248 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                 return;
             }
             int id = view.getId();
-            for (ViewHandler vh : mComponent.navigator.viewHandlers) {
-                if (vh.viewId == id) {
-                    switch (vh.type) {
-                        case NAME_SCREEN:
-                            int requestCode = -1;
-                            if (vh.afterResponse != null) {
-                                requestCode = addForResult(vh.afterResponse, activityResult);
-                            }
-                            if (vh.blocked) {
+            clickNavigat(view, id, mComponent.navigator.viewHandlers);
+        }
+    };
+
+    public void clickNavigat(View view, int id, List<ViewHandler> viewHandlers) {
+        for (ViewHandler vh : viewHandlers) {
+            if (vh.viewId == id) {
+                switch (vh.type) {
+                    case NAME_SCREEN:
+                        int requestCode = -1;
+                        if (vh.afterResponse != null) {
+                            requestCode = addForResult(vh.afterResponse, activityResult);
+                        }
+                        if (vh.blocked) {
+                            if (view != null) {
                                 view.setEnabled(false);
                             }
-                            switch (vh.paramForScreen) {
-                                case RECORD:
-                                    startScreen(vh.screen, false, paramScreenRecord, requestCode);
-                                    break;
-                                case RECORD_COMPONENT:
-                                    BaseComponent bc = mComponent.getComponent(vh.componId);
-                                    if (bc != null) {
-                                        componGlob.setParam(bc.recordComponent);
-                                        startScreen(vh.screen, false, bc.recordComponent, requestCode);
-                                    }
-                                    break;
-                                default:
-                                    if (vh.addFragment) {
-                                        startScreen(vh.screen, false, null, requestCode, vh.addFragment);
-                                    } else {
-                                        startScreen(vh.screen, false, null, requestCode);
-                                    }
+                        }
+                        switch (vh.paramForScreen) {
+                            case RECORD:
+                                startScreen(vh.screen, false, paramScreenRecord, requestCode);
+                                break;
+                            case RECORD_COMPONENT:
+                                BaseComponent bc = mComponent.getComponent(vh.componId);
+                                if (bc != null) {
+                                    componGlob.setParam(bc.recordComponent);
+                                    startScreen(vh.screen, false, bc.recordComponent, requestCode);
+                                }
+                                break;
+                            default:
+                                if (vh.addFragment) {
+                                    startScreen(vh.screen, false, null, requestCode, vh.addFragment);
+                                } else {
+                                    startScreen(vh.screen, false, null, requestCode);
+                                }
 //                                    startScreen(vh.screen, false, null, requestCode);
-                                    break;
+                                break;
+                        }
+                        break;
+                    case YOUTUBE:
+                        if (paramScreenRecord != null) {
+                            componGlob.setParam(paramScreenRecord);
+                        }
+                        String stParYou = componGlob.getParamValue(vh.nameFieldWithValue);
+                        if (stParYou != null && stParYou.length() > 0) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(stParYou)));
+                        }
+                        break;
+                    case BACK:
+                        onBackPressed();
+                        break;
+                    case BACK_OK:
+                        Intent intentOk = new Intent();
+                        intentOk.putExtra(Constants.RECORD, "{}");
+                        setResult(RESULT_OK, intentOk);
+                        finishActivity();
+                        break;
+                    case EXIT:
+                        exitAccount();
+                        break;
+                    case CLICK_VIEW:
+                        if (mComponent.iCustom != null) {
+                            mComponent.iCustom.clickView(view, parentLayout, null, null, -1);
+                        } else if (mComponent.moreWork != null) {
+                            mComponent.moreWork.clickView(view, parentLayout, null, null, -1);
+                        }
+                        break;
+                    case SHOW:
+                        View showView = parentLayout.findViewById(vh.showViewId);
+                        if (showView != null) {
+                            if (showView instanceof AnimatePanel) {
+                                ((AnimatePanel) showView).show(BaseActivity.this);
+                            } else {
+                                showView.setVisibility(View.VISIBLE);
                             }
-                            break;
-                        case YOUTUBE:
-                            if (paramScreenRecord != null) {
-                                componGlob.setParam(paramScreenRecord);
+                        }
+                        break;
+                    case HIDE:
+                        showView = parentLayout.findViewById(vh.showViewId);
+                        if (showView != null) {
+                            if (showView instanceof AnimatePanel) {
+                                ((AnimatePanel) showView).hide();
+                            } else {
+                                showView.setVisibility(View.GONE);
                             }
-                            String stParYou = componGlob.getParamValue(vh.nameFieldWithValue);
-                            if (stParYou != null && stParYou.length() > 0) {
-                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(stParYou)));
-                            }
-                            break;
-                        case BACK:
-                            onBackPressed();
-                            break;
-                        case EXIT:
-                            exitAccount();
-                            break;
-                        case CLICK_VIEW:
-                            if (mComponent.iCustom != null) {
-                                mComponent.iCustom.clickView(view, parentLayout, null, null, -1);
-                            } else if (mComponent.moreWork != null) {
-                                mComponent.moreWork.clickView(view, parentLayout, null, null, -1);
-                            }
-                            break;
-                        case SHOW:
-                            View showView = parentLayout.findViewById(vh.showViewId);
-                            if (showView != null) {
-                                if (showView instanceof AnimatePanel) {
-                                    ((AnimatePanel) showView).show(BaseActivity.this);
+                        }
+                        break;
+                    case SHOW_HIDE:
+                        if (view == null) break;
+                        View vv = parentLayout.findViewById(vh.showViewId);
+                        if (vv != null) {
+                            TextView tv = (TextView) view;
+                            if (vv instanceof AnimatePanel) {
+                                AnimatePanel ap = (AnimatePanel) vv;
+                                if (ap.isShow()) {
+                                    ap.hide();
+                                    tv.setText(getString(vh.textHideId));
                                 } else {
-                                    showView.setVisibility(View.VISIBLE);
+                                    ap.show(BaseActivity.this);
+                                    tv.setText(getString(vh.textShowId));
+                                }
+                            } else {
+                                if (vv.getVisibility() == View.VISIBLE) {
+                                    vv.setVisibility(View.GONE);
+                                    tv.setText(getString(vh.textHideId));
+                                } else {
+                                    vv.setVisibility(View.VISIBLE);
+                                    tv.setText(getString(vh.textShowId));
                                 }
                             }
-                            break;
-                        case HIDE:
-                            showView = parentLayout.findViewById(vh.showViewId);
-                            if (showView != null) {
-                                if (showView instanceof AnimatePanel) {
-                                    ((AnimatePanel) showView).hide();
-                                } else {
-                                    showView.setVisibility(View.GONE);
-                                }
-                            }
-                            break;
-                        case SHOW_HIDE:
-                            View vv = parentLayout.findViewById(vh.showViewId);
-                            if (vv != null) {
-                                TextView tv = (TextView) view;
-                                if (vv instanceof AnimatePanel) {
-                                    AnimatePanel ap = (AnimatePanel) vv;
-                                    if (ap.isShow()) {
-                                        ap.hide();
-                                        tv.setText(getString(vh.textHideId));
-                                    } else {
-                                        ap.show(BaseActivity.this);
-                                        tv.setText(getString(vh.textShowId));
-                                    }
-                                } else {
-                                    if (vv.getVisibility() == View.VISIBLE) {
-                                        vv.setVisibility(View.GONE);
-                                        tv.setText(getString(vh.textHideId));
-                                    } else {
-                                        vv.setVisibility(View.VISIBLE);
-                                        tv.setText(getString(vh.textShowId));
-                                    }
-                                }
-                            }
-                            break;
-                        case OPEN_DRAWER:
-                            openDrawer();
-                            break;
-                        case SET_VALUE:
+                        }
+                        break;
+                    case OPEN_DRAWER:
+                        openDrawer();
+                        break;
+                    case SET_VALUE_PARAM:
+                        setValueParam(vh.viewId);
+                        break;
+                    case SET_VALUE:
+                        if (mComponent != null && mComponent.itemSetValues != null) {
+                            setValue();
+                        } else {
                             View showV = parentLayout.findViewById(vh.showViewId);
                             if (showV != null) {
                                 if (showV instanceof TextView) {
                                     ((TextView) showV).setText(getString(vh.idString));
                                 }
                             }
-                            break;
-                        case CALL_UP:
-                            if (view instanceof TextView) {
-                                String st = ((TextView) view).getText().toString();
-                                if (st != null && st.length() > 0) {
-                                    callUp(st);
-                                }
+                        }
+                        break;
+                    case CALL_UP:
+                        if (view == null) break;
+                        if (view instanceof TextView) {
+                            String st = ((TextView) view).getText().toString();
+                            if (st != null && st.length() > 0) {
+                                callUp(st);
                             }
-                            break;
-                        case DIAL_UP:
-                            if (view instanceof TextView) {
-                                String st = ((TextView) view).getText().toString();
-                                if (st != null && st.length() > 0) {
-                                    startDialPhone(st);
-                                }
+                        }
+                        break;
+                    case DIAL_UP:
+                        if (view == null) break;
+                        if (view instanceof TextView) {
+                            String st = ((TextView) view).getText().toString();
+                            if (st != null && st.length() > 0) {
+                                startDialPhone(st);
                             }
-                            break;
-                        case RESULT_RECORD :
-                            if (vh.nameFieldWithValue != null && vh.nameFieldWithValue.length() > 0) {
-                                Record record = workWithRecordsAndViews.ViewToRecord(parentLayout, vh.nameFieldWithValue);
-                                Intent intent = new Intent();
-                                intent.putExtra(Constants.RECORD, record.toString());
-                                setResult(RESULT_OK, intent);
-                            }
-                            finishActivity();
-                            break;
-                        case SET_LOCALE:
-                            preferences.setLocale(componGlob.getParamValue(componGlob.appParams.nameLanguageInParam));
-                            recreate();
-                            break;
-                        case SET_GLOBAL:
-                            BaseComponent bc = mComponent.getComponent(vh.componId);
-                            bc.setGlobalData(vh.nameFieldWithValue);
-                            break;
-                        case RECEIVER:
-                            LocalBroadcastManager.getInstance(BaseActivity.this).registerReceiver(broadcastReceiver,
-                                    new IntentFilter(vh.nameFieldWithValue));
-                            break;
-                        case RESULT_PARAM :
+                        }
+                        break;
+                    case RESULT_RECORD :
+                        Intent intent = new Intent();
+                        if (vh.nameFieldWithValue != null && vh.nameFieldWithValue.length() > 0) {
                             Record record = workWithRecordsAndViews.ViewToRecord(parentLayout, vh.nameFieldWithValue);
-                            if (record != null) {
-                                componGlob.setParam(record);
-                            }
-                            setResult(RESULT_OK);
-                            finishActivity();
-                            break;
-                        case ANIMATE:
-                            procesAnimate(vh.animate);
-                            break;
-                    }
+                            intent.putExtra(Constants.RECORD, record.toString());
+                        } else {
+                            intent.putExtra(Constants.RECORD, "{}");
+                        }
+                        setResult(RESULT_OK, intent);
+                        finishActivity();
+//                        if (vh.nameFieldWithValue != null && vh.nameFieldWithValue.length() > 0) {
+//                            Record record = workWithRecordsAndViews.ViewToRecord(parentLayout, vh.nameFieldWithValue);
+//                            Intent intent = new Intent();
+//                            intent.putExtra(Constants.RECORD, record.toString());
+//                            setResult(RESULT_OK, intent);
+//                        }
+//                        finishActivity();
+                        break;
+                    case SET_LOCALE:
+                        preferences.setLocale(componGlob.getParamValue(componGlob.appParams.nameLanguageInParam));
+                        recreate();
+                        break;
+                    case SET_GLOBAL:
+                        BaseComponent bc = mComponent.getComponent(vh.componId);
+                        bc.setGlobalData(vh.nameFieldWithValue);
+                        break;
+                    case RECEIVER:
+                        LocalBroadcastManager.getInstance(BaseActivity.this).registerReceiver(broadcastReceiver,
+                                new IntentFilter(vh.nameFieldWithValue));
+                        break;
+                    case RESULT_PARAM :
+                        Record record = workWithRecordsAndViews.ViewToRecord(parentLayout, vh.nameFieldWithValue);
+                        if (record != null) {
+                            componGlob.setParam(record);
+                        }
+                        setResult(RESULT_OK);
+                        finishActivity();
+                        break;
+                    case ANIMATE:
+                        procesAnimate(vh.animate);
+                        break;
+                    case SPR_SCALE:
+                        SpringScale scale = new SpringScale(parentLayout.findViewById(vh.showViewId), vh.velocity, vh.repeatTime);
+                        scale.startAnim();
+                        break;
+
                 }
             }
         }
-    };
+    }
+
+    public void setValueParam(int viewId) {
+        View view = parentLayout.findViewById(viewId);
+        if (view instanceof ViewGroup) {
+            ViewGroup vg = (ViewGroup) view;
+            int ik = vg.getChildCount();
+            for (int i = 0; i < ik; i++) {
+                setOneViewValue(vg.getChildAt(i));
+            }
+        } else {
+            setOneViewValue(view);
+        }
+    }
+
+    public void setOneViewValue(View view) {
+        int id = view.getId();
+        if (id <= 0) return;
+        String name = getResources().getResourceEntryName(id);
+        if (name == null) return;
+        String value = componGlob.getParamValueIfIs(name);
+        if (value == null) return;
+        if (view instanceof TextView) {
+            if (view instanceof IComponent) {
+                ((IComponent) view).setData(value);
+            } else {
+                ((TextView) view).setText(value);
+            }
+        } else if (view instanceof ImageView) {
+            GlideRequest gr = GlideApp.with(this).load(value);
+            if (view instanceof ComponImageView) {
+                ComponImageView simg = (ComponImageView) view;
+                if (simg.getBlur() > 0) {
+                    gr.apply(bitmapTransform(new BlurTransformation(simg.getBlur())));
+                }
+                if (simg.getPlaceholder() > 0) {
+                    gr.apply(placeholderOf(simg.getPlaceholder()));
+                }
+                if (simg.isOval()) {
+                    gr.apply(circleCropTransform());
+                }
+            }
+            gr.into((ImageView) view);
+        }
+    }
 
     public void procesAnimate(Animate animate) {
         if (animate.type == Animate.TYPE.SET) {
@@ -888,6 +1058,9 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
 
     @Override
     protected void onStop() {
+        if (mComponent.stopNavig != null) {
+
+        }
         if (listInternetProvider != null) {
             for (BaseInternetProvider provider : listInternetProvider) {
                 provider.cancel();

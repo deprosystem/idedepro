@@ -146,7 +146,12 @@ public class BaseProviderAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
             view = inflater.inflate(resurceId, parent, false);
         } else {
-            view = inflater.inflate(layoutItemId[viewType], parent, false);
+            if (viewType < layoutItemId.length) {
+                view = inflater.inflate(layoutItemId[viewType], parent, false);
+            } else {
+                iBase.log("1004 Индекс типа записи больше количества лайоутов в "
+                        + baseComponent.multiComponent.nameComponent);
+            }
         }
         return new ItemHolder(view);
     }

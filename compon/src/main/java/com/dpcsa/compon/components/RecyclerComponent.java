@@ -116,19 +116,42 @@ public class RecyclerComponent extends BaseComponent {
         provider.setData(listData);
         if (listPresenter != null) {
             int selectStart = preferences.getNameInt(componentTag + multiComponent.nameComponent, -1);
+            if (paramMV.paramView.typeValue != ParamView.TYPE_VALUE_SELECTED.NONE) {
+                selectStart = -1;
+            }
             int ik = listData.size();
             if (ik > 0) {
                 if (selectStart == -1) {
                     if (paramMV.paramView.selectNameField.length() > 0) {
-                        String selVal = paramMV.paramView.selectValueField;
-                        if (selVal.length() == 0) {
-                            selVal = getComponTools().getLocale();
+                        String selVal = "";
+                        switch (paramMV.paramView.typeValue) {
+                            case NONE:
+                                selVal = paramMV.paramView.selectValueField;
+                                if (selVal.length() == 0) {
+                                    selVal = getComponTools().getLocale();
+                                }
+                                break;
+                            case PARAM:
+                                selVal = componGlob.getParamValue(paramMV.paramView.selectNameField);
+                                break;
+                            case LOCALE:
+                                selVal = getComponTools().getLocale();
+                                break;
                         }
+
                         for (int i = 0; i < ik; i++) {
                             Record r = listData.get(i);
                             String sel = r.getString(paramMV.paramView.selectNameField);
-                            if (sel != null && sel.equals(selVal)) {
-                                selectStart = i;
+                            if (sel != null && sel.length() > 0 && sel.equals(selVal)) {
+                                String fieldType = paramMV.paramView.fieldType;
+                                if (fieldType != null && fieldType.length() > 0) {
+                                    int typeRec = r.getInt(fieldType);
+                                    if (typeRec < 2) {
+                                        selectStart = i;
+                                    }
+                                } else {
+                                    selectStart = i;
+                                }
                                 break;
                             }
                         }
@@ -136,7 +159,7 @@ public class RecyclerComponent extends BaseComponent {
                         for (int i = 0; i < ik; i++) {
                             Record r = listData.get(i);
                             int j = r.getInt(paramMV.paramView.fieldType);
-                            if (j == 1) {
+                            if (j < 2) {
                                 selectStart = i;
                                 break;
                             }

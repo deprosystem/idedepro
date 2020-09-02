@@ -19,6 +19,7 @@ public class ComponPrefTool {
     private static final String UPDATE_DB_DATE = "UpdateDBDate",
             SPLASH_SCREEN = "SPLASH_SCREEN",
             SPLASH_NAME_SCREEN = "SPLASH_NAME_SCREEN",
+            AUTO_AUTCH = "AUTO_AUTCH",
             PROFILE = "PROFILE";
 
     public void setUpdateDBDate(String value) {
@@ -83,6 +84,14 @@ public class ComponPrefTool {
 
     public int getSplashScreen() {
         return getSharedPreferences().getInt(SPLASH_SCREEN, 0);
+    }
+
+    public void setAutoAutch(int value) {
+        getEditor().putInt(AUTO_AUTCH, value).commit();
+    }
+
+    public int getAutoAutch() {
+        return getSharedPreferences().getInt(AUTO_AUTCH, 0);
     }
 
     public boolean getNameBoolean(String name) {

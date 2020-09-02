@@ -7,11 +7,12 @@ import com.dpcsa.compon.param.ParamModel;
 public class ViewHandler {
     public int viewId;
     public enum TYPE {NAME_SCREEN, CLOSE_DRAWER, OPEN_DRAWER, MODEL_PARAM, KEY_BACK, SET_TOKEN,
-        BACK, BACK_MES, PREFERENCE_SET_VALUE, PAGER_PLUS, PREFERENCE_SET_NAME, FINISH, SET_PUSH_TOKEN,
+        BACK, BACK_OK, BACK_MES, PREFERENCE_SET_VALUE, PAGER_PLUS, PREFERENCE_SET_NAME, FINISH, SET_PUSH_TOKEN,
         FIELD_WITH_NAME_SCREEN, SELECT, SET_PARAM, EXEC, UPDATE_DATA, RESULT_PARAM, NEXT_SCREEN_SEQUENCE,
-        RESULT_RECORD, ASSIGN_VALUE, SET_VALUE, SET_LOCALE, SET_GLOBAL, SET_MENU, SET_MENU_DEF, EXIT,
+        RESULT_RECORD, ASSIGN_VALUE, SET_VALUE, SET_VALUE_PARAM, SET_LOCALE, SET_GLOBAL, SET_MENU, SET_MENU_DEF, EXIT,
         CLICK_VIEW, MAP_ROUTE, SHOW, HIDE, SHOW_HIDE, BROADCAST, RECEIVER, CLICK_CUSTOM, DEL_RECYCLER,
         CLICK_SEND, SEND_UPDATE, SWITCH_ON, SWITCH_ON_STATUS, ANIMATE, YOUTUBE, SUBSCRIBE_PUSH,
+        SPR_SCALE, SPR_Y, AFTER,
         ACTUAL, GET_DATA, CALL_UP, DIAL_UP, SET_PROFILE}
     public TYPE type;
     public String nameFieldScreen;
@@ -37,6 +38,9 @@ public class ViewHandler {
     public boolean addFragment, blocked;
     public int textShowId, textHideId;
     public Animate animate;
+    public int repeatTime;
+    public float velocity;
+    public ItemSetValue[] itemSetValues;
 
     public ViewHandler(String nameField) {
         type = TYPE.FIELD_WITH_NAME_SCREEN;
@@ -151,6 +155,13 @@ public class ViewHandler {
         this.viewId = viewId;
         this.showViewId = idTextV;
         this.idString = idString;
+    }
+
+    public ViewHandler(TYPE type, int animViewId, float velocity, int repeatTime) {   //  spring Animate
+        this.type = type;
+        this.velocity = velocity;
+        showViewId = animViewId;
+        this.repeatTime = repeatTime;
     }
 
     public ViewHandler(int viewId, TYPE type, int idCompon, String name) {

@@ -115,7 +115,7 @@ public class BasePresenter implements BaseInternetProvider.InternetProviderListe
                 urlFull = baseUrl + paramModel.url;
             }
         }
-        if (method == ParamModel.GET) {
+        if (method == ParamModel.GET || method == ParamModel.POST) {
             String st = componGlob.installParam(paramModel.param, urlFull);
             url = urlFull + st;
         } else {
@@ -266,6 +266,7 @@ public class BasePresenter implements BaseInternetProvider.InternetProviderListe
             } else {
                 Field f = null;
                 try {
+                    jsonSimple.nameRecToList = paramModel.nameRecToList;
                     f = jsonSimple.jsonToModel(response);
                 } catch (JsonSyntaxException e) {
                     iBase.log(e.getMessage());
@@ -300,13 +301,15 @@ public class BasePresenter implements BaseInternetProvider.InternetProviderListe
                 iBase.progressStop();
             }
         }
-
         if (paramModel.errorShowView == 0) {
             if (paramModel.viewErrorDialog == null || paramModel.viewErrorDialog) {
                 iBase.showDialog(statusCode, message, null);
+            } else {
+                listener.onError(statusCode, message, null);
             }
+        } else {
+            listener.onError(statusCode, message, null);
         }
-        listener.onError(statusCode, message, null);
     }
 
 }

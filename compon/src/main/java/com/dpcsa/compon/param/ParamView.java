@@ -6,6 +6,8 @@ import java.util.List;
 import com.dpcsa.compon.interfaces_classes.Visibility;
 
 public class ParamView {
+    public enum TYPE_VALUE_SELECTED {NONE, PARAM, LOCALE};
+    public TYPE_VALUE_SELECTED typeValue;
     public int viewId;
     public int viewIdWithList;
     public String fieldType;
@@ -54,6 +56,7 @@ public class ParamView {
         this.fieldType = fieldType;
         layoutTypeId = null;
         layoutFurtherTypeId = null;
+        typeValue = TYPE_VALUE_SELECTED.NONE;
         indicatorId = 0;
         furtherViewId = 0;
         tabId = style;
@@ -67,6 +70,7 @@ public class ParamView {
         this.fieldType = "";
         this.layoutTypeId = null;
         this.layoutFurtherTypeId = null;
+        typeValue = TYPE_VALUE_SELECTED.NONE;
         indicatorId = 0;
         furtherViewId = 0;
         tabId = 0;
@@ -80,6 +84,7 @@ public class ParamView {
         this.fieldType = "";
         this.layoutTypeId = containerId;
         this.layoutFurtherTypeId = null;
+        typeValue = TYPE_VALUE_SELECTED.NONE;
         indicatorId = 0;
         furtherViewId = 0;
         tabId = 0;
@@ -89,6 +94,7 @@ public class ParamView {
     }
 
     public ParamView(int viewId, String fieldType, int[] layoutTypeId, int[] layoutFurtherTypeId) {
+        typeValue = TYPE_VALUE_SELECTED.NONE;
         this.viewId = viewId;
         this.fieldType = fieldType;
         this.layoutTypeId = layoutTypeId;
@@ -148,18 +154,29 @@ public class ParamView {
     public ParamView selected() {
         selected = true;
         maxItemSelect = -1;
+        typeValue = TYPE_VALUE_SELECTED.NONE;
         return this;
     }
 
     public ParamView selected(int maxItemSelect) {
         selected = true;
         this.maxItemSelect = maxItemSelect;
+        typeValue = TYPE_VALUE_SELECTED.NONE;
         return this;
     }
 
     public ParamView selected(String selectNameField) {
         this.selectNameField = selectNameField;
+        typeValue = TYPE_VALUE_SELECTED.NONE;
         selected = true;
+        maxItemSelect = -1;
+        return this;
+    }
+
+    public ParamView selected(String selectNameField, TYPE_VALUE_SELECTED typeValue) {
+        this.selectNameField = selectNameField;
+        selected = true;
+        this.typeValue = typeValue;
         maxItemSelect = -1;
         return this;
     }
@@ -167,6 +184,7 @@ public class ParamView {
     public ParamView selected(String selectNameField, String selectValueField) {
         this.selectNameField = selectNameField;
         this.selectValueField = selectValueField;
+        typeValue = TYPE_VALUE_SELECTED.NONE;
         selected = true;
         maxItemSelect = -1;
         return this;

@@ -22,7 +22,7 @@ public abstract class AppParams<T> {
     public int paginationPerPage = 20;  // количество записей на странице (в блоке) при пагинации
     public String paginationNameParamPerPage = "PerPage";   // название ключа заголовка в котором передается paginationPerPage
     public String paginationNameParamNumberPage = "NumberPage"; // название ключа заголовка в котором передается номер страницы
-
+    public String commonParameters = "";
     public Class<T>  classProgress;
     public Class<T>  classErrorDialog;
 

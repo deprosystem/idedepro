@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="panel_radius">16dp</dimen>
+    <dimen name="h_search_t">300dp</dimen>
+    <dimen name="h_burning_t">400dp</dimen>
+    <dimen name="w_item_2">200dp</dimen>
+    <dimen name="h_item_2">120dp</dimen>
+    <dimen name="h_button">56dp</dimen>
+    <dimen name="h_icon">24dp</dimen>
+
+
+    <dimen name="d_2">2dp</dimen>
+    <dimen name="d_6">6dp</dimen>
+    <dimen name="d_8">8dp</dimen>
+    <dimen name="d_10">10dp</dimen>
+    <dimen name="d_12">12dp</dimen>
+    <dimen name="d_14">14dp</dimen>
+    <dimen name="d_16">16dp</dimen>
+    <dimen name="d_20">20dp</dimen>
+    <dimen name="d_24">24dp</dimen>
+    <dimen name="d_54">54dp</dimen>
+    <dimen name="d_120">120dp</dimen>
+    <dimen name="d_124">124dp</dimen>
+
+
+    <dimen name="sp_12">12sp</dimen>
+    <dimen name="sp_14">14sp</dimen>
+    <dimen name="sp_18">18sp</dimen>
+    <dimen name="sp_22">22sp</dimen>
+</resources>

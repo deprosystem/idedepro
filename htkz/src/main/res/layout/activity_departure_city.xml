@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f9">
+
+    <RelativeLayout
+        android:id="@+id/tool"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/primary">
+        <LinearLayout
+            android:id="@+id/marsh"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="44dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:lineSpacingExtra="6sp"
+                android:text="@string/departure_city_hot"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/back"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:orientation="vertical"
+            android:layout_marginTop="48dp"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="@dimen/h_icon"
+                android:layout_height="@dimen/h_icon"
+                android:src="@drawable/close"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ok"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="48dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/h_icon"
+                android:layout_height="@dimen/h_icon"
+                android:src="@drawable/ok" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/select"
+        android:layout_below="@+id/tool"/>
+
+    <TextView
+        android:id="@+id/select"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h_button"
+        style="@style/st_button"
+        android:text="@string/select"
+        android:layout_marginTop="@dimen/d_20"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/d_20"/>
+
+</RelativeLayout>

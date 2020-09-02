@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -176,8 +177,19 @@ public class ComponGlob {
         paramValues.add(new Param(paramName, paramValue));
     }
 
-    public String installParamName(String param, String url) {
+    public String installParamName(String paramQuery, String url) {
         String st = "";
+        String param = "";
+        String sep = "";
+        String paramCommon = appParams.commonParameters;
+        if (paramCommon != null && paramCommon.length() > 0) {
+            param = paramCommon;
+            sep = ",";
+        }
+        if (paramQuery != null && paramQuery.length() > 0) {
+            param += sep + paramQuery;
+        }
+
         if (param != null && param.length() > 0) {
             if (url.contains("?")) {
                 st = "&";
@@ -185,13 +197,13 @@ public class ComponGlob {
                 st = "?";
             }
             String[] paramArray = param.split(Constants.SEPARATOR_LIST);
-            String sep = "";
+            sep = "";
             for (String paramOne : paramArray) {
                 for (Param paramV : paramValues) {
                     if (paramOne.equals(paramV.name)) {
                         String valuePar = paramV.value;
-                        if (valuePar != null && valuePar.length() > 0) {
-                            st = st + sep + paramOne + "=" + paramV.value;
+                        if (valuePar != null) {
+                            st = st + sep + paramOne + "=" + valuePar;
                             sep = "&";
                         }
                         break;
@@ -230,6 +242,15 @@ public class ComponGlob {
             }
         }
         return "";
+    }
+
+    public String getParamValueIfIs(String nameParam) {
+        for (Param paramV : paramValues) {
+            if (nameParam.equals(paramV.name)) {
+                return paramV.value;
+            }
+        }
+        return null;
     }
 
     public String installParam(String param, String url) {
@@ -441,5 +462,12 @@ public class ComponGlob {
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    public int getThemeColor (String nameColor) {
+        int colorAttr = context.getResources().getIdentifier(nameColor, "attr", context.getPackageName());
+        TypedValue value = new TypedValue ();
+        context.getTheme().resolveAttribute (colorAttr, value, true);
+        return value.data;
     }
 }

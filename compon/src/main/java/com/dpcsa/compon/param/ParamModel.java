@@ -12,6 +12,7 @@ import com.dpcsa.compon.single.Injector;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ParamModel <T> {
     public int method;
@@ -41,6 +42,8 @@ public class ParamModel <T> {
     public String nameTakeField;
     public Boolean viewErrorDialog;
     public List<Record> addRecordBegining;
+    public Record record;
+    public Map<String, String> head;
     public Field field;
     public Class<T>  internetProvider;
     public enum TypeParam {MAP, NAME, SLASH};
@@ -60,6 +63,7 @@ public class ParamModel <T> {
     public Filters filters;
     public boolean auth, isHeaderPush, noProgress;
     public String authScreen;
+    public String nameRecToList;
 
     public static void setDefaultMethod(int method) {
         defaultMethod = method;
@@ -193,6 +197,11 @@ public class ParamModel <T> {
     public ParamModel isAuth(String authScreen) {
         auth = true;
         this.authScreen = authScreen;
+        return this;
+    }
+
+    public ParamModel recordToList(String fieldName) {
+        nameRecToList = fieldName;
         return this;
     }
 

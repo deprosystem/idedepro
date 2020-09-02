@@ -57,7 +57,7 @@ public class VolleyInternetProvider extends BaseInternetProvider {
                     jsonSt = "";
                     e.printStackTrace();
                 }
-Log.d("QWERT","onErrorResponse status="+status+" jsonSt="+jsonSt);
+//Log.d("QWERT","onErrorResponse status="+status+" jsonSt="+jsonSt);
                 if (jsonSt != null && jsonSt.length() > 0) {
                     listener.error(status, jsonSt);
                     return;

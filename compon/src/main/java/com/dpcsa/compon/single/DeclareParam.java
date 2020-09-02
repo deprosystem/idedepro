@@ -61,7 +61,7 @@ public class DeclareParam {
     }
 
     public DeclareParam addParam(String name, String value) {
-        componGlob.addParamValue(name, value);
+        componGlob.setParamValue(name, value);
         return this;
     }
 
@@ -71,7 +71,7 @@ public class DeclareParam {
             loc = locale;
             preferences.setLocale(locale);
         }
-        componGlob.addParamValue(componGlob.appParams.nameLanguageInParam, loc);
+        componGlob.setParamValue(componGlob.appParams.nameLanguageInParam, loc);
     }
 
     public DeclareParam setDB(BaseDB baseDB) {

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/backgr">
+
+    <RelativeLayout
+        android:id="@+id/city"
+        android:layout_width="match_parent"
+        android:layout_height="72dp">
+        <TextView
+            android:id="@+id/t_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d_16"
+            android:layout_marginLeft="@dimen/d_20"
+            android:text="@string/departure_city_hot"
+            android:textColor="@color/black_40"
+            android:textSize="@dimen/sp_12"/>
+
+        <ImageView
+            android:id="@+id/flag_country"
+            android:layout_width="@dimen/d_24"
+            android:layout_height="@dimen/d_16"
+            android:layout_below="@+id/t_1"
+            android:layout_marginTop="@dimen/d_8"
+            android:layout_marginLeft="@dimen/d_20"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image" />
+        <TextView
+            android:id="@+id/cityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d_2"
+            android:layout_marginLeft="@dimen/d_6"
+            android:text="Алматы"
+            android:layout_below="@+id/t_1"
+            android:layout_toRightOf="@+id/flag_country"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_18"/>
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/pin"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/d_20"
+            android:layout_marginRight="@dimen/d_16"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/d_20"
+            android:layout_marginRight="56dp"
+            android:background="@color/progress_grad" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/t_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/d_16"
+        android:layout_marginLeft="@dimen/d_20"
+        android:layout_below="@+id/city"
+        android:text="@string/country_city"
+        android:textColor="@color/black_40"
+        android:textSize="@dimen/sp_12"/>
+
+    <TextView
+        android:id="@+id/country_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/d_2"
+        android:layout_marginLeft="@dimen/d_16"
+        android:text="Египет, Шарм-Эль-Шейх"
+        android:layout_below="@+id/t_2"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_18"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/country_city"
+        android:layout_marginLeft="@dimen/d_20"
+        android:layout_marginRight="@dimen/d_20"
+        android:background="@color/progress_grad" />
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/pin"
+        android:layout_below="@+id/city"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/d_20"
+        android:layout_marginRight="@dimen/d_16"/>
+
+    <com.dpcsa.compon.custom_components.Ellipsis
+        android:layout_width="3dp"
+        android:layout_height="40dp"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="52dp"
+        app:amountDots="6"
+        app:diametrDot="2dp"
+        app:colorDot="@color/dot"/>
+
+</RelativeLayout>
