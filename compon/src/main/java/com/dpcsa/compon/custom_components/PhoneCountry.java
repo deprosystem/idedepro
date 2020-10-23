@@ -3,7 +3,6 @@ package com.dpcsa.compon.custom_components;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewParent;
 import android.widget.TextView;
@@ -17,7 +16,6 @@ public class PhoneCountry extends ComponEditText {
 
     public PhoneCountry(Context context) {
         super(context);
-//        init(context);
     }
 
     public PhoneCountry(Context context, AttributeSet attrs) {
@@ -38,14 +36,7 @@ public class PhoneCountry extends ComponEditText {
         } finally {
             a.recycle();
         }
-//        init(context);
     }
-
-//    private void init(Context context) {
-//        if (countryViewId != 0) {
-//            countryView = (TextView) ((View)getParent()).findViewById(countryViewId);
-//        }
-//    }
 
     @Override
     public String getString() {

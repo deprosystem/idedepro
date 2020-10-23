@@ -2,7 +2,9 @@ package com.dpcsa.compon.custom_components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -18,13 +20,12 @@ public class BaseComponList extends LinearLayout {
     private boolean isTag = false;
     protected BaseStaticListAdapter adapter;
     protected List<View> listV = new ArrayList<>();
+    protected float DENSITY = getResources().getDisplayMetrics().density;
     protected int ITEM_LAYOUT_ID;
     private int GAP_BETWEEN_TAGS_HORIS, GAP_BETWEEN_TAGS_VERT;
-    private int GAP_BETWEEN_TAGS_DEFAULT = 5;
-    private int HEIGTH_TAGS;
-    private int HEIGTH_TAGS_DEFAULT = 64;
+    private int GAP_BETWEEN_TAGS_DEFAULT_HORIS = (int) (4 * DENSITY);
+    private int GAP_BETWEEN_TAGS_DEFAULT_VERT = (int) (6 * DENSITY);
     private int WIDTH_TAGS;
-    private int WIDTH_TAGS_DEFAULT = 250;
     protected int evenColor;
 
     public BaseComponList(Context context) {
@@ -44,10 +45,8 @@ public class BaseComponList extends LinearLayout {
     protected void setAttributes(AttributeSet attrs){
         setOrientation(VERTICAL);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ComponList);
-        GAP_BETWEEN_TAGS_HORIS = (int)a.getDimension(R.styleable.ComponList_gapBetweenTagsHoris, GAP_BETWEEN_TAGS_DEFAULT);
-        GAP_BETWEEN_TAGS_VERT = (int)a.getDimension(R.styleable.ComponList_gapBetweenTagsVert, GAP_BETWEEN_TAGS_DEFAULT);
-        HEIGTH_TAGS = (int)a.getDimension(R.styleable.ComponList_heightTags, HEIGTH_TAGS_DEFAULT);
-        WIDTH_TAGS = (int)a.getDimension(R.styleable.ComponList_widthTagsMax, WIDTH_TAGS_DEFAULT);
+        GAP_BETWEEN_TAGS_HORIS = (int)a.getDimension(R.styleable.ComponList_gapBetweenTagsHoris, GAP_BETWEEN_TAGS_DEFAULT_HORIS);
+        GAP_BETWEEN_TAGS_VERT = (int)a.getDimension(R.styleable.ComponList_gapBetweenTagsVert, GAP_BETWEEN_TAGS_DEFAULT_VERT);
         ITEM_LAYOUT_ID = a.getResourceId(R.styleable.ComponList_itemLayoutId, 0);
         evenColor = a.getColor(R.styleable.ComponList_evenColor, 0);
         a.recycle();
@@ -61,6 +60,24 @@ public class BaseComponList extends LinearLayout {
     }
 
     public void formView(){
+        handler.postDelayed(formV, 10);
+    }
+
+    Handler handler = new Handler();
+
+    Runnable formV = new Runnable() {
+        @Override
+        public void run() {
+            WIDTH_TAGS = getWidth();
+            if (WIDTH_TAGS > 0) {
+                formViewW();
+            } else {
+                handler.postDelayed(formV, 10);
+            }
+        }
+    };
+
+    public void formViewW(){
         listV.clear();
         View v = null;
         int width, widthAll;
@@ -78,27 +95,28 @@ public class BaseComponList extends LinearLayout {
             for (int i = 0; i < ik; i++){
                 v = adapter.getView(i);
                 listV.add(v);
-                v.setOnClickListener(onClick);
+//                v.setOnClickListener(onClick);
                 v.setLayoutParams(lpM);
                 v.measure(0, 0);
                 width = v.getMeasuredWidth()+GAP_BETWEEN_TAGS_HORIS;
                 widthAll += width;
-                if (widthAll<WIDTH_TAGS) line.addView(v);
-                else {
+                if (widthAll < WIDTH_TAGS) {
+                    line.addView(v);
+                } else {
                     line = newLayout(context, lp_W_W);
                     addView(line);
                     line.addView(v);
                     widthAll = width;
                 }
             }
-        }
-        else
-            for (int i = 0; i < ik; i++){
+        } else {
+            for (int i = 0; i < ik; i++) {
                 v = adapter.getView(i);
                 listV.add(v);
                 v.setOnClickListener(onClick);
                 addView(v);
             }
+        }
     }
 
     public List<View> getListViews(){

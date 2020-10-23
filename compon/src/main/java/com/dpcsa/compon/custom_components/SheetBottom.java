@@ -13,7 +13,6 @@ import androidx.dynamicanimation.animation.SpringAnimation;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -46,7 +45,7 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
     private IBase iBase;
     private SheetBottom thisSheet;
     private int showTime;
-    private boolean noSwipeHide, viewMatch;
+    private boolean noSwipeHide, viewMatch, noBackPressedHide;
 
     public SheetBottom(Context context) {
         super(context);
@@ -75,6 +74,7 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
             viewMatch = a.getBoolean(R.styleable.Simple_viewMatch, false);
             fadedScreenColor = a.getColor(R.styleable.Simple_fadedScreenColor, fadedScreenColorDefault);
             noSwipeHide = a.getBoolean(R.styleable.Simple_noSwipeHide, false);
+            noBackPressedHide = a.getBoolean(R.styleable.Simple_noBackPressedHide, false);
             a.recycle();
         }
         fadedScreen = new LinearLayout(context);
@@ -137,23 +137,6 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
         startAnim.run();
     }
 
-//    public void open(Fragment sheetFragment, int fadedColor) {
-//        setVisibility(VISIBLE);
-//        fadedScreen.setAlpha(0.0f);
-//        fadedScreen.setBackgroundResource(fadedColor);
-//        fadedScreen.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                fadedScreenClose(true, null);
-//            }
-//        });
-//        if (sheetFragment instanceof SheetBottomFragment) {
-//            ((SheetBottomFragment) sheetFragment).setSheetBottomListener(listenerForView);
-//        }
-//        fragmentManager.beginTransaction().replace(idContainer, sheetFragment).commit();
-//        startAnim.run();
-//    }
-
     Handler handler = new Handler();
 
     private Runnable startAnim = new Runnable() {
@@ -172,8 +155,6 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
     private void fadedScreenOpen() {
         thisSheet.setVisibility(VISIBLE);
         fadedScreen.animate().alpha(1.0f).setDuration(duration).setListener(null);
-//        TranslateAnimation animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0f,
-//                Animation.RELATIVE_TO_SELF, 1f, Animation.RELATIVE_TO_SELF, 0f);
         TranslateAnimation animation = new TranslateAnimation(0f, 0f, heigthF, 0);
         animation.setDuration(duration);
         sheetContainer.startAnimation(animation);
@@ -204,35 +185,10 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
         sheetContainer.startAnimation(animation);
     }
 
-//    private void setVisib(int vis) {
-//        super.setVisibility(vis);
-//    }
-
-//    @Override
-//    public void setVisibility(int visibility) {
-//        switch (visibility) {
-//            case VISIBLE :
-//                open();
-//                break;
-//            case GONE :
-//                fadedScreenClose(true, null);
-//                break;
-//            default:
-//                super.setVisibility(visibility);
-//                break;
-//        }
-////        if (visibility == VISIBLE) {
-////            open();
-////        } else {
-////            fadedScreenClose(true, null);
-////        }
-//    }
-
     private SheetBottomListener listenerForView = new SheetBottomListener() {
         @Override
         public void negativeClose() {
             hide();
-//            fadedScreenClose(true, null);
         }
 
         @Override
@@ -247,7 +203,9 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
         if (getVisibility() == GONE) {
             open();
             this.iBase = iBase;
-            iBase.addAnimatePanel(this);
+            if ( ! noBackPressedHide) {
+                iBase.addAnimatePanel(this);
+            }
             if (showTime > 0) {
                 handler.postDelayed(new Runnable() {
                     @Override

@@ -1,5 +1,6 @@
 package com.dpcsa.compon.custom_components;
 
+import android.util.Log;
 import android.view.View;
 
 public class BaseStaticListAdapter {

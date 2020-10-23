@@ -3,6 +3,7 @@ package com.dpcsa.compon.custom_components;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.dpcsa.compon.R;
 import com.dpcsa.compon.interfaces_classes.IAlias;
@@ -65,8 +66,20 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
             SimpleDateFormat df = new SimpleDateFormat(dateFormat);
             if (data instanceof String) {
                 String stt = new String((String) data);
-                Date dat = stringToDate(stt).getTime();
-                setText(df.format(dat));
+                Calendar cc = stringToDate(stt);
+                Date dat;
+                if (cc != null) {
+                    dat = cc.getTime();
+                    setText(df.format(dat));
+                } else {
+                    try {
+                        long dd = Long.valueOf(stt);
+                        dat = new Date(dd);
+                        setText(df.format(dat));
+                    } catch (NumberFormatException e) {
+                        setText(stt);
+                    }
+                }
             } else if (data instanceof Long) {
                 long d = (long)data;
                 if ( ! dateMilisec) {
@@ -109,7 +122,7 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
 
     @Override
     public Object getData() {
-        return null;
+        return data;
     }
 
     @Override
@@ -134,6 +147,9 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
         } else {
             dd = st;
         }
+        if (dd.indexOf("-") == -1) {
+            return null;
+        }
         String[] d = dd.split("-");
         if (tt.length() > 0) {
             String[] t = tt.split(":");
@@ -142,9 +158,16 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
                     Integer.valueOf(d[2]),
                     Integer.valueOf(t[0]), Integer.valueOf(t[1]), Integer.valueOf(t[2]));
         } else {
-            c = new GregorianCalendar(Integer.valueOf(d[0]),
-                    Integer.valueOf(d[1]) - 1,
-                    Integer.valueOf(d[2]));
+            if (d.length <= 1) {
+                return null;
+            }
+            try {
+                c = new GregorianCalendar(Integer.valueOf(d[0]),
+                        Integer.valueOf(d[1]) - 1,
+                        Integer.valueOf(d[2]));
+            } catch (NumberFormatException e) {
+                return null;
+            }
         }
         return c;
     }

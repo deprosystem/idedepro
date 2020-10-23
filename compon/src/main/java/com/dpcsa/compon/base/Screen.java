@@ -1,5 +1,8 @@
 package com.dpcsa.compon.base;
 
+import android.util.Log;
+import android.view.View;
+
 import com.dpcsa.compon.components.AutoAutch;
 import com.dpcsa.compon.components.BarcodeComponent;
 import com.dpcsa.compon.components.CalendarComponent;
@@ -29,6 +32,7 @@ import com.dpcsa.compon.components.SequenceComponent;
 import com.dpcsa.compon.components.StaticListComponent;
 import com.dpcsa.compon.components.SubscribeComponent;
 import com.dpcsa.compon.components.SwitchComponent;
+import com.dpcsa.compon.components.TagsComponent;
 import com.dpcsa.compon.components.ToolBarComponent;
 import com.dpcsa.compon.components.ToolBarModify;
 import com.dpcsa.compon.components.TotalComponent;
@@ -84,7 +88,7 @@ public class Screen<T>{
     public ItemSetValue[] itemSetValues;
     public int keyBack;
     public boolean transparentScreen = false;
-    public boolean isFullScreen;
+    public Boolean isFullScreen;
 
     public void setCustom(ICustom iCustom) {
         this.iCustom = iCustom;
@@ -132,8 +136,8 @@ public class Screen<T>{
         return this;
     }
 
-    public Screen fullScreen() {
-        isFullScreen = true;
+    public Screen fullScreen(boolean show) {
+        isFullScreen = show;
         return this;
     }
 
@@ -624,6 +628,20 @@ public class Screen<T>{
         return null;
     }
 
+    public View getComponentView(int viewId) {
+        for (ParamComponent cMV : listComponents) {
+            if (cMV.paramView.viewId == viewId) {
+                BaseComponent bc = cMV.baseComponent;
+                if (bc != null) {
+                    return bc.viewComponent;
+                } else {
+                    return null;
+                }
+            }
+        }
+        return null;
+    }
+
     public BaseComponent getComponent(ParamComponent.TC type) {
         for (ParamComponent cMV : listComponents) {
             if (cMV.type == type) {
@@ -756,6 +774,9 @@ public class Screen<T>{
                     break;
                 case AUTO_AUTCH:
                     new AutoAutch(iBase, cMV, this);
+                    break;
+                case TAGS:
+                    new TagsComponent(iBase, cMV, this);
                     break;
                 case SUBSCRIBE:
                     new SubscribeComponent(iBase, cMV, this);

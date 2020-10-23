@@ -8,6 +8,7 @@ public class MyParams extends AppParams {
     public void setParams() {
         baseUrl = "https://deprosystem.com/depro/";
         nameTokenInHeader = "DEVICE_KEY";
+        isFullScreen = true;
 
         errorDialogViewId = R.id.error;
         idStringNOCONNECTIONERROR = R.string.no_connect;

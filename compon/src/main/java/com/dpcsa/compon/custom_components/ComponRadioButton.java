@@ -12,7 +12,7 @@ import android.view.Gravity;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
+
 import android.widget.TextView;
 
 import com.dpcsa.compon.R;

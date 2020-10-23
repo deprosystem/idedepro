@@ -18,7 +18,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             >
 
             <com.makeramen.roundedimageview.RoundedImageView
@@ -109,19 +108,31 @@
                 android:letterSpacing="0.02"
                 android:lineSpacingExtra="2sp"/>
 
-            <TextView
-                android:id="@+id/cost_old"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="31dp"
-                android:layout_marginRight="14dp"
-                android:text="от 327 500 T"
-                android:textSize="@dimen/sp_12"
-                android:textColor="@color/black"
-                android:letterSpacing="0.04"
-                android:lineSpacingExtra="4sp"/>
+                android:layout_marginRight="14dp">
+                <TextView
+                    android:id="@+id/cost_old"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="от 327 500 T"
+                    android:textSize="@dimen/sp_12"
+                    android:textColor="@color/black"
+                    android:letterSpacing="0.04"
+                    android:lineSpacingExtra="4sp"/>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_alignStart="@id/cost_old"
+                    android:layout_alignEnd="@id/cost_old"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/black_40" />
+            </RelativeLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

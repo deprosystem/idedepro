@@ -9,6 +9,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 
 import com.dpcsa.compon.base.BaseInternetProvider;
 import com.dpcsa.compon.interfaces_classes.IVolleyListener;
+import com.dpcsa.compon.single.Injector;
 import com.dpcsa.compon.volley.MultipartRequest;
 import com.dpcsa.compon.volley.VolleyProvider;
 import com.dpcsa.compon.volley.VolleyRequest;
@@ -63,9 +64,8 @@ public class VolleyInternetProvider extends BaseInternetProvider {
                     return;
                 }
             }
-//            Log.d(Injector.getComponGlob().appParams.NAME_LOG_NET,"VolleyInternetProvider error.toString()="+error.toString()+"< status="
-//                    + status
-//                    +"< mes="+error.getMessage()+"< URL="+url);
+            Log.d(Injector.getComponGlob().appParams.NAME_LOG_NET,"VolleyInternetProvider error="+error.toString()+"< status="
+                    + status +"< mes=" + error.getMessage()+"< URL="+url);
             String st = error.toString();
             if (st != null) {
                 st = st.toUpperCase();

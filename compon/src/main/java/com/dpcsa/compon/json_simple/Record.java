@@ -270,16 +270,34 @@ public class Record extends ArrayList<Field>{
     public void deleteField(String name) {
         int ik = size();
         for (int i = 0; i < ik; i++) {
-            if (name.equals(get(i))) {
+            if (name.equals(get(i).name)) {
                 remove(i);
+                break;
             }
         }
     }
 
     public Record addField(String name, int type, Object value) {
-        Field ff = new Field(name, type, value);
-        add(ff);
+        return (addField(new Field(name, type, value)));
+    }
+
+    public Record addField(Field ff) {
+        Field field = getField(ff.name);
+        if (field == null) {
+            add(ff);
+        } else {
+            field.type = ff.type;
+            field.value = ff.value;
+        }
         return this;
+    }
+
+    public Record copyRecord() {
+        Record result = new Record();
+        for (Field ff : this) {
+            result.addField(new Field(ff.name, ff.type, ff.value));
+        }
+        return result;
     }
 
     @Override

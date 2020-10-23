@@ -19,4 +19,56 @@
         <item name="android:background">@drawable/rect_button</item>
     </style>
 
+    <style name="st_err_10">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/error</item>
+    </style>
+
+    <style name="st_txt_12_40">
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/black_40</item>
+    </style>
+    <style name="st_prim_12_40">
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/primary_40</item>
+    </style>
+
+    <style name="st_dark_12">
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/dark</item>
+    </style>
+
+    <style name="st_prim_14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <style name="st_14_black">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="st_16_black">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="st_txt_18">
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="st_txt_22">
+        <item name="android:textSize">22sp</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

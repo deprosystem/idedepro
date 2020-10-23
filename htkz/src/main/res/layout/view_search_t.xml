@@ -6,103 +6,251 @@
     android:background="@drawable/backgr">
 
     <RelativeLayout
-        android:id="@+id/city"
+        android:id="@+id/panel"
         android:layout_width="match_parent"
-        android:layout_height="72dp">
-        <TextView
-            android:id="@+id/t_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/d_16"
-            android:layout_marginLeft="@dimen/d_20"
-            android:text="@string/departure_city_hot"
-            android:textColor="@color/black_40"
-            android:textSize="@dimen/sp_12"/>
-
-        <ImageView
-            android:id="@+id/flag_country"
-            android:layout_width="@dimen/d_24"
-            android:layout_height="@dimen/d_16"
-            android:layout_below="@+id/t_1"
-            android:layout_marginTop="@dimen/d_8"
-            android:layout_marginLeft="@dimen/d_20"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image" />
-        <TextView
-            android:id="@+id/cityName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/d_2"
-            android:layout_marginLeft="@dimen/d_6"
-            android:text="Алматы"
-            android:layout_below="@+id/t_1"
-            android:layout_toRightOf="@+id/flag_country"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_18"/>
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/pin"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/d_20"
-            android:layout_marginRight="@dimen/d_16"/>
-
-        <LinearLayout
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/city"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
+            android:layout_height="72dp">
+            <TextView
+                android:id="@+id/t_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_16"
+                android:layout_marginLeft="@dimen/d_20"
+                android:text="@string/departure_city_hot"
+                android:textColor="@color/black_40"
+                android:textSize="@dimen/sp_12"/>
+
+            <ImageView
+                android:id="@+id/flag_country"
+                android:layout_width="@dimen/d_24"
+                android:layout_height="@dimen/d_16"
+                android:layout_below="@+id/t_1"
+                android:layout_marginTop="@dimen/d_8"
+                android:layout_marginLeft="@dimen/d_20"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image" />
+            <TextView
+                android:id="@+id/depart_city_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_2"
+                android:layout_marginLeft="@dimen/d_6"
+                android:text="Алматы"
+                android:layout_below="@+id/t_1"
+                android:layout_toRightOf="@+id/flag_country"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_18"/>
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/pin"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/d_20"
+                android:layout_marginRight="@dimen/d_16"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/d_20"
+                android:layout_marginRight="56dp"
+                android:background="@color/primary_20" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/country"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@+id/city">
+            <TextView
+                android:id="@+id/t_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_14"
+                android:layout_marginLeft="@dimen/d_20"
+                android:text="@string/country_city"
+                style="@style/st_txt_12_40"/>
+
+            <com.example.htkz.custom.TextCountryCity
+                android:id="@+id/country_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_24"
+                android:layout_marginLeft="@dimen/d_20"
+                style="@style/st_txt_18"
+                app:textError="Нужно выбрать куда летим"
+                app:idError="@id/error"
+                app:typeValidate="filled"/>
+
+            <TextView
+                android:id="@+id/error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d_20"
+                android:layout_marginTop="56dp"
+                style="@style/st_err_10"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/d_20"
+                android:layout_marginRight="@dimen/d_20"
+                android:background="@color/primary_20" />
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/pin"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/d_20"
+                android:layout_marginRight="@dimen/d_16"/>
+
+        </RelativeLayout>
+
+        <com.dpcsa.compon.custom_components.Ellipsis
+            android:layout_width="3dp"
+            android:layout_height="40dp"
+            android:orientation="vertical"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="52dp"
+            app:amountDots="6"
+            app:diametrDot="2dp"
+            app:colorDot="@color/dot"/>
+
+        <RelativeLayout
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
             android:layout_marginLeft="@dimen/d_20"
-            android:layout_marginRight="56dp"
-            android:background="@color/progress_grad" />
+            android:layout_marginRight="@dimen/d_20"
+            android:layout_below="@+id/country">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/t_1_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/st_txt_12_40"
+                        android:layout_marginTop="@dimen/d_16"
+                        android:text="@string/depart_date"/>
+                    <com.example.htkz.custom.TextDepartDate
+                        android:id="@+id/depart_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/t_1_1"
+                        style="@style/st_txt_18"
+                        android:layout_marginTop="2dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/t_1_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/st_txt_12_40"
+                        android:layout_marginLeft="@dimen/d_20"
+                        android:layout_marginTop="@dimen/d_16"
+                        android:text="@string/how_many"/>
+                    <com.example.htkz.custom.MyTextViewNumberGrammar
+                        android:id="@+id/night"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/d_20"
+                        android:layout_below="@+id/t_1_2"
+                        app:stringArray="@array/nights"
+                        style="@style/st_txt_18"
+                        android:layout_marginTop="2dp"/>
+                    <LinearLayout
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/d_12"
+                        android:layout_marginBottom="@dimen/d_12"
+                        android:background="@color/primary_20"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/primary_20" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/who"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_marginLeft="@dimen/d_20"
+            android:layout_marginRight="@dimen/d_20"
+            android:layout_below="@+id/date">
+            <TextView
+                android:id="@+id/t_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_16"
+                android:text="@string/who_flies"
+                style="@style/st_txt_12_40"/>
+
+            <LinearLayout
+                android:id="@+id/who_flying"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_2"
+                android:layout_below="@+id/t_3"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <com.dpcsa.compon.custom_components.TextViewNumberGrammar
+                    android:id="@+id/adults"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:stringArray="@array/adults_arr"
+                    style="@style/st_txt_18"/>
+
+                <com.dpcsa.compon.custom_components.TextViewNumberGrammar
+                    android:id="@+id/kids"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:prefix=", "
+                    app:stringArray="@array/kinds_arr"
+                    app:zeroNotView="true"
+                    style="@style/st_txt_18"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/error_who"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                style="@style/st_err_10"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/primary_20" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/select"
+            style="@style/st_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/h_button"
+            android:layout_below="@+id/who"
+            android:layout_marginTop="@dimen/d_16"
+            android:layout_marginBottom="@dimen/d_16"
+            android:text="@string/find_tours" />
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/t_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/d_16"
-        android:layout_marginLeft="@dimen/d_20"
-        android:layout_below="@+id/city"
-        android:text="@string/country_city"
-        android:textColor="@color/black_40"
-        android:textSize="@dimen/sp_12"/>
-
-    <TextView
-        android:id="@+id/country_city"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/d_2"
-        android:layout_marginLeft="@dimen/d_16"
-        android:text="Египет, Шарм-Эль-Шейх"
-        android:layout_below="@+id/t_2"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_18"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/country_city"
-        android:layout_marginLeft="@dimen/d_20"
-        android:layout_marginRight="@dimen/d_20"
-        android:background="@color/progress_grad" />
-
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/pin"
-        android:layout_below="@+id/city"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/d_20"
-        android:layout_marginRight="@dimen/d_16"/>
-
-    <com.dpcsa.compon.custom_components.Ellipsis
-        android:layout_width="3dp"
-        android:layout_height="40dp"
-        android:orientation="vertical"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="52dp"
-        app:amountDots="6"
-        app:diametrDot="2dp"
-        app:colorDot="@color/dot"/>
 
 </RelativeLayout>

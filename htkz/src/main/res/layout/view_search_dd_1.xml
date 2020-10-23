@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/sw"
+        android:layout_width="match_parent"
+        android:layout_height="64dp">
+
+        <com.dpcsa.compon.custom_components.ComponSwitch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/d_20"
+            android:layout_marginLeft="@dimen/d_20"
+            android:text="@string/flexible_departure"
+            android:thumb="@drawable/switch_thumb_selector"
+            app:track="@drawable/switch_track_selector"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/primary_20"/>
+    </RelativeLayout>
+
+    <com.dpcsa.compon.custom_components.CalendarVertical
+        android:id="@+id/calendar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/sw"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:heightCell="56dp"
+        app:heightMonth="56dp"
+        app:countAfterMonth="5"
+        app:showDateId="@id/depart_date"
+        app:dateFormat="dd.MM"
+        app:saveParam="depart_date"
+        app:afterToday="true"
+        app:textDaySize="14sp"
+        app:rangeDate="true"
+        app:monthSize="10sp"
+        app:nameMonth="@array/month"/>
+
+</RelativeLayout>

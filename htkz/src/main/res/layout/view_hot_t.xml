@@ -22,22 +22,21 @@
             android:textSize="@dimen/sp_12"/>
 
         <ImageView
-            android:id="@+id/flag_country_hot"
+            android:id="@+id/hot_flag_country"
             android:layout_width="@dimen/d_24"
             android:layout_height="@dimen/d_16"
             android:layout_below="@+id/t_1"
             android:layout_marginTop="@dimen/d_8"
             android:layout_marginLeft="@dimen/d_16"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image" />
+            android:scaleType="centerCrop" />
         <TextView
-            android:id="@+id/cityName_hot"
+            android:id="@+id/hot_depart_city_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/d_2"
             android:layout_marginLeft="@dimen/d_6"
             android:layout_below="@+id/t_1"
-            android:layout_toRightOf="@+id/flag_country_hot"
+            android:layout_toRightOf="@+id/hot_flag_country"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_18"/>
     </RelativeLayout>
@@ -66,7 +65,7 @@
             android:layout_marginLeft="@dimen/d_16"
             android:layout_marginTop="@dimen/d_16"
             app:progressColorN="@color/progress_fon"
-            app:progressColorE="@color/progress_grad"/>
+            app:progressColorE="@color/primary_20"/>
 
         <com.dpcsa.compon.custom_components.ProgressLayout
             android:layout_width="150dp"
@@ -75,7 +74,7 @@
             android:background="@color/progress_fon"
             android:layout_marginTop="2dp"
             app:progressColorN="@color/progress_fon"
-            app:progressColorE="@color/progress_grad"/>
+            app:progressColorE="@color/primary_20"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,7 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:progressColorN="@color/progress_fon"
-                    app:progressColorE="@color/progress_grad"/>
+                    app:progressColorE="@color/primary_20"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -105,7 +104,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:progressColorN="@color/progress_fon"
-                    app:progressColorE="@color/progress_grad"/>
+                    app:progressColorE="@color/primary_20"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -125,7 +124,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:progressColorN="@color/progress_fon"
-                    app:progressColorE="@color/progress_grad"/>
+                    app:progressColorE="@color/primary_20"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -137,7 +136,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:progressColorN="@color/progress_fon"
-                    app:progressColorE="@color/progress_grad"/>
+                    app:progressColorE="@color/primary_20"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

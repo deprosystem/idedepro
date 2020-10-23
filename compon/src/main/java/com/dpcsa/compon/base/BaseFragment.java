@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dpcsa.compon.components.MenuBottomComponent;
@@ -33,6 +34,7 @@ import com.dpcsa.compon.interfaces_classes.Animate;
 import com.dpcsa.compon.interfaces_classes.IComponent;
 import com.dpcsa.compon.interfaces_classes.IPresenterListener;
 import com.dpcsa.compon.interfaces_classes.ItemSetValue;
+import com.dpcsa.compon.interfaces_classes.Param;
 import com.dpcsa.compon.interfaces_classes.PushHandler;
 import com.dpcsa.compon.interfaces_classes.SpringScale;
 import com.dpcsa.compon.interfaces_classes.SpringY;
@@ -55,7 +57,10 @@ import com.dpcsa.compon.json_simple.JsonSyntaxException;
 import com.dpcsa.compon.single.ComponPrefTool;
 import com.dpcsa.compon.tools.Constants;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
@@ -220,7 +225,7 @@ public class BaseFragment extends Fragment implements IBase {
         if (mComponent != null && mComponent.itemSetValues != null) {
             for (ItemSetValue sv : mComponent.itemSetValues) {
                 if (sv.type == GROUPP_PARAM) {
-                    setValueParam(sv.viewId);
+                    setValueParam(sv.viewId, sv.name);
                     continue;
                 }
                 View v = parentLayout.findViewById(sv.viewId);
@@ -237,8 +242,35 @@ public class BaseFragment extends Fragment implements IBase {
                                 ((IComponent) v).setData(componGlob.getParamValue(name));
                             }
                             break;
+                        case GLOBAL_VAR:
+                            setVar(sv.viewId, sv.name);
+                            break;
                         case LOCALE:
-                            ((TextView) v).setText(preferences.getLocale());
+                            if (v instanceof TextView) {
+                                ((TextView) v).setText(preferences.getLocale());
+                            } else if (v instanceof IComponent) {
+                                ((IComponent) v).setData(preferences.getLocale());
+                            }
+                            break;
+                        case SYSTEM_TIME:
+                            Calendar c = new GregorianCalendar();
+                            long tt = c.getTimeInMillis();
+                            String dat;
+                            if (sv.name != null && sv.name.length() > 0) {
+                                SimpleDateFormat df = new SimpleDateFormat(sv.name);
+                                dat = df.format(tt);
+                                if (v instanceof IComponent) {
+                                    ((IComponent) v).setData(dat);
+                                } else  if (v instanceof TextView) {
+                                    ((TextView) v).setText(dat);
+                                }
+                            } else {
+                                if (v instanceof IComponent) {
+                                    ((IComponent) v).setData(tt);
+                                } else  if (v instanceof TextView) {
+                                    ((TextView) v).setText(String.valueOf(tt));
+                                }
+                            }
                             break;
                     }
                 } else if (v != null && v instanceof ImageView) {
@@ -498,24 +530,38 @@ public class BaseFragment extends Fragment implements IBase {
                         Intent intent = new Intent();
                         if (vh.nameFieldWithValue != null && vh.nameFieldWithValue.length() > 0) {
                             Record record = workWithRecordsAndViews.ViewToRecord(parentLayout, vh.nameFieldWithValue);
+                            componGlob.setParam(record);
                             intent.putExtra(Constants.RECORD, record.toString());
                         } else {
+                            log("Запись с возвращаемыми параметрами не сформирована в " + mComponent.nameComponent);
                             intent.putExtra(Constants.RECORD, "{}");
                         }
                         activity.setResult(activity.RESULT_OK, intent);
                         activity.finishActivity();
                         break;
                     case SET_VALUE_PARAM:
-                        setValueParam(vh.viewId);
+                        setValueParam(vh.viewId, null);
                         break;
                     case SET_VALUE:
                         if (mComponent != null && mComponent.itemSetValues != null) {
                             setValue();
                         } else {
-                            View showV = parentLayout.findViewById(vh.showViewId);
+                            View showV = parentLayout.findViewById(vh.componId);
                             if (showV != null) {
-                                if (showV instanceof TextView) {
-                                    ((TextView) showV).setText(getString(vh.idString));
+                                if (showV != null) {
+                                    if (showV instanceof IComponent) {
+                                        if (vh.idString != 0) {
+                                            ((IComponent) showV).setData(getString(vh.idString));
+                                        } else if (vh.nameFieldWithValue != null) {
+                                            ((IComponent) showV).setData(vh.nameFieldWithValue);
+                                        }
+                                    } else if (showV instanceof TextView) {
+                                        if (vh.idString != 0) {
+                                            ((TextView) showV).setText(getString(vh.idString));
+                                        } else if (vh.nameFieldWithValue != null) {
+                                            ((TextView) showV).setText(vh.nameFieldWithValue);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -573,6 +619,63 @@ public class BaseFragment extends Fragment implements IBase {
                             }
                         }
                         break;
+                    case SAVE_PARAM:
+                        Record recParam = workWithRecordsAndViews.ViewToRecord(parentLayout, vh.nameFieldWithValue);
+                        activity.setParamFromComponents(recParam, parentLayout, mComponent, activity);
+                        componGlob.setParam(recParam);
+                        break;
+                    case CLEAN_VAR:
+                        Field ff = componGlob.globalData.getField(vh.nameFieldWithValue);
+                        if (ff != null && ff.type == Field.TYPE_RECORD) {
+                            ((Record) ff.value).clear();
+                        }
+                        break;
+                    case CLEAN_COPY_VAR:
+                        String nn = "\u0000" + vh.nameFieldWithValue;
+                        String ns = vh.nameFieldWithValue;
+                        ff = componGlob.globalData.getField(ns);
+                        if (ff != null && ff.type == Field.TYPE_RECORD) {
+                            Field ffCopy = componGlob.globalData.getField(nn);
+                            if (ffCopy == null) {
+                                ffCopy = new Field(nn, Field.TYPE_RECORD, null);
+                                componGlob.globalData.add(ffCopy);
+                            }
+                            Record rec = (Record) ff.value;
+                            if (rec != null) {
+                                ffCopy.value = rec.copyRecord();
+                                rec.clear();
+                            }
+                        }
+                        break;
+                    case RESTORE_VAR:
+                        ns = "\u0000" + vh.nameFieldWithValue;
+                        nn = vh.nameFieldWithValue;
+                        ff = componGlob.globalData.getField(vh.nameFieldWithValue);
+                        if (ff != null && ff.type == Field.TYPE_RECORD) {
+                            Field ffCopy = componGlob.globalData.getField(nn);
+                            if (ffCopy == null) {
+                                ffCopy = new Field(nn, Field.TYPE_RECORD, null);
+                                componGlob.globalData.add(ffCopy);
+                            }
+                            Record rec = (Record) ff.value;
+                            if (rec != null) {
+                                ffCopy.value = rec.copyRecord();
+                                rec.clear();
+                            }
+                        }
+                        componGlob.globalData.deleteField(ns);
+                        break;
+                    case DEL_VAR:
+                        ff = componGlob.globalData.getField(vh.nameFieldWithValue);
+                        if (ff != null && ff.type == Field.TYPE_RECORD) {
+                            Record recGl = (Record) ff.value;
+                            String[] par = vh.pref_value_string.split(",");
+                            int ik = par.length;
+                            for (int i = 0; i < ik; i++) {
+                                recGl.deleteField(par[i]);
+                            }
+                        }
+                        break;
                     case SET_GLOBAL:
                         BaseComponent bc = mComponent.getComponent(vh.componId);
                         bc.setGlobalData(vh.nameFieldWithValue);
@@ -583,7 +686,7 @@ public class BaseFragment extends Fragment implements IBase {
                     case SET_MENU:
                         activity.setMenu();
                         break;
-                    case CLICK_SEND :
+                    case CLICK_SEND:
                         Record rec = null;
                         if (paramScreen != null && paramScreen.value != null) {
                             rec = (Record) paramScreen.value;
@@ -639,23 +742,28 @@ public class BaseFragment extends Fragment implements IBase {
         }
     }
 
-    public void setValueParam(int viewId) {
+    public void setValueParam(int viewId, String name) {
         View view = parentLayout.findViewById(viewId);
         if (view instanceof ViewGroup) {
             ViewGroup vg = (ViewGroup) view;
             int ik = vg.getChildCount();
             for (int i = 0; i < ik; i++) {
-                setOneViewValue(vg.getChildAt(i));
+                setOneViewValue(vg.getChildAt(i), null);
             }
         } else {
-            setOneViewValue(view);
+            setOneViewValue(view, name);
         }
     }
 
-    public void setOneViewValue(View view) {
+    public void setOneViewValue(View view, String namePar) {
         int id = view.getId();
         if (id <= 0) return;
-        String name = getResources().getResourceEntryName(id);
+        String name;
+        if (namePar == null || namePar.length() == 0) {
+            name = getResources().getResourceEntryName(id);
+        } else {
+            name = namePar;
+        }
         if (name == null) return;
         String value = componGlob.getParamValueIfIs(name);
         if (value == null) return;
@@ -682,6 +790,50 @@ public class BaseFragment extends Fragment implements IBase {
             gr.into((ImageView) view);
         }
     }
+
+//    public void setValueParam(int viewId) {
+//        View view = parentLayout.findViewById(viewId);
+//        if (view instanceof ViewGroup) {
+//            ViewGroup vg = (ViewGroup) view;
+//            int ik = vg.getChildCount();
+//            for (int i = 0; i < ik; i++) {
+//                setOneViewValue(vg.getChildAt(i));
+//            }
+//        } else {
+//            setOneViewValue(view);
+//        }
+//    }
+//
+//    public void setOneViewValue(View view) {
+//        int id = view.getId();
+//        if (id <= 0) return;
+//        String name = getResources().getResourceEntryName(id);
+//        if (name == null) return;
+//        String value = componGlob.getParamValueIfIs(name);
+//        if (value == null) return;
+//        if (view instanceof TextView) {
+//            if (view instanceof IComponent) {
+//                ((IComponent) view).setData(value);
+//            } else {
+//                ((TextView) view).setText(value);
+//            }
+//        } else if (view instanceof ImageView) {
+//            GlideRequest gr = GlideApp.with(this).load(value);
+//            if (view instanceof ComponImageView) {
+//                ComponImageView simg = (ComponImageView) view;
+//                if (simg.getBlur() > 0) {
+//                    gr.apply(bitmapTransform(new BlurTransformation(simg.getBlur())));
+//                }
+//                if (simg.getPlaceholder() > 0) {
+//                    gr.apply(placeholderOf(simg.getPlaceholder()));
+//                }
+//                if (simg.isOval()) {
+//                    gr.apply(circleCropTransform());
+//                }
+//            }
+//            gr.into((ImageView) view);
+//        }
+//    }
 
     IPresenterListener listener_send_back_screen = new IPresenterListener() {
         @Override
@@ -746,7 +898,10 @@ public class BaseFragment extends Fragment implements IBase {
                             setValue();
                             break;
                         case SET_VALUE_PARAM:
-                            setValueParam(vh.viewId);
+                            setValueParam(vh.viewId, null);
+                            break;
+                        case SET_VAR:
+                            setVar(vh.viewId, vh.nameFieldWithValue);
                             break;
                         case ASSIGN_VALUE:
                             vv = parentLayout.findViewById(vh.viewId);
@@ -763,6 +918,15 @@ public class BaseFragment extends Fragment implements IBase {
                                 if (ff != null) {
                                     workWithRecordsAndViews.RecordToView((Record) ff.value, vv);
                                 }
+                            }
+                            break;
+                        case ACTUAL:
+                            BaseComponent bc = mComponent.getComponent(vh.showViewId);
+                            if (bc != null) {
+                                bc.actual();
+                            } else {
+                                String stN = activity.getResources().getResourceEntryName(vh.showViewId);
+                                log("0004 Нет компонента с id " + stN + " для актуализации в " + mComponent.nameComponent);
                             }
                             break;
                         case SHOW:
@@ -783,6 +947,36 @@ public class BaseFragment extends Fragment implements IBase {
             }
         }
     };
+
+    public void setVar(int viewId, String nameVar) {
+        View view = parentLayout.findViewById(viewId);
+        if (view != null) {
+            Field ff = componGlob.globalData.getField(nameVar);
+            Object obj = null;
+            if (ff != null) {
+                obj = ff.value;
+                if (obj instanceof Record) {
+                    for (Field fr : (Record) obj) {
+                        setOneParam(fr);
+                    }
+                } else if (obj instanceof Field) {
+                    setOneParam((Field) obj);
+                }
+            }
+            if (view instanceof IComponent) {
+                ((IComponent) view).setData(obj);
+            } else if (view instanceof ViewGroup) {
+
+            }
+        }
+    }
+
+    public void setOneParam(Field ff) {
+        Param param = componGlob.getParam(ff.name);
+        if (param != null) {
+            componGlob.setParamValue(param, ff);
+        }
+    }
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -885,7 +1079,12 @@ public class BaseFragment extends Fragment implements IBase {
 
     @Override
     public void backPressed() {
-        ((BaseActivity) getActivity()).onBackPressed();
+        activity.onBackPressed();
+    }
+
+    @Override
+    public void backOk() {
+        activity.backOk();
     }
 
     public boolean canBackPressed() {

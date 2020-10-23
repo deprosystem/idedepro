@@ -2,7 +2,7 @@ package com.dpcsa.compon.interfaces_classes;
 
 public class ItemSetValue {
     public int viewId;
-    public enum TYPE_SOURCE {PARAM, SIZE, LOCALE, GROUPP_PARAM};
+    public enum TYPE_SOURCE {PARAM, SIZE, LOCALE, SYSTEM_TIME, GROUPP_PARAM, GLOBAL_VAR};
     public TYPE_SOURCE type;
     public String name;
     public int componId;

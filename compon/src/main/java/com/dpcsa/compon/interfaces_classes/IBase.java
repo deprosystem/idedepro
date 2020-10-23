@@ -30,6 +30,7 @@ public interface IBase {
     void startDrawerFragment(String screen, int containerFragmentId);
     void startPush();
     void backPressed();
+    void backOk();
     void progressStart();
     void progressStop();
     void showDialog(String title, String message, View.OnClickListener click);

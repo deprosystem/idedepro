@@ -28,7 +28,7 @@ import com.dpcsa.compon.presenter.ListPresenter;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_RECYCLER;
 
 public class RecyclerComponent extends BaseComponent {
-    RecyclerView recycler;
+    public RecyclerView recycler;
     public BaseProviderAdapter adapter;
     private OnChangeStatusListener statusListener;
 
@@ -44,7 +44,7 @@ public class RecyclerComponent extends BaseComponent {
             iBase.log("0009 Не найден RecyclerView в " + multiComponent.nameComponent);
             return;
         }
-
+        viewComponent = recycler;
         listData = new ListRecords();
         if (paramMV.paramView.selected) {
             if (navigator == null) {
@@ -97,7 +97,10 @@ public class RecyclerComponent extends BaseComponent {
             }
             return;
         }
-        if (field == null || field.value == null || ! (field.value instanceof ListRecords)) return;
+        if (field == null || field.value == null || ! (field.value instanceof ListRecords)) {
+            iBase.log("Не правильный тип данных в " + multiComponent.nameComponent);
+            return;
+        }
         int countOld = 0, countAdd = 0;
         if (paramMV.paramModel.pagination != null ) {
             countOld = listData.size();
@@ -183,7 +186,15 @@ public class RecyclerComponent extends BaseComponent {
                     }
                 }
                 if (selectStart < 0) {
-                    selectStart = 0;
+                    for (int i = 0; i < ik; i++) {
+                        Record r = listData.get(i);
+                        int j = r.getInt(paramMV.paramView.fieldType);
+                        if (j < 2) {
+                            selectStart = i;
+                            break;
+                        }
+                    }
+//                    selectStart = 0;
                 } else if (selectStart >= ik && ik > 0) {
                     selectStart = ik - 1;
                 }
@@ -227,6 +238,27 @@ public class RecyclerComponent extends BaseComponent {
 //            scrollSelectPush(ph.screen, ph.handlerId);
 //        }
         iBase.sendEvent(paramMV.paramView.viewId);
+    }
+
+    @Override
+    public void addRecord(Record rec) {
+        int pos = listData.size();
+        listData.add(rec);
+        iBase.itemSetValue(paramMV.paramView.viewId, listData.size());
+        adapter.notifyItemInserted(pos);
+        if (moreWork != null) {
+            moreWork.afterChangeData(this);
+        }
+    }
+
+    @Override
+    public void delRecord(int pos) {
+        listData.remove(pos);
+        iBase.itemSetValue(paramMV.paramView.viewId, listData.size());
+        adapter.notifyItemRemoved(pos);
+        if (moreWork != null) {
+            moreWork.afterChangeData(this);
+        }
     }
 
     OnResumePause resumePause = new OnResumePause() {

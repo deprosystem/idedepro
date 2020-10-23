@@ -13,11 +13,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dpcsa.compon.R;
+import com.dpcsa.compon.interfaces_classes.ICalendar;
+import com.dpcsa.compon.interfaces_classes.OnCalendarClick;
 
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
-public class Calendar extends RelativeLayout {
+public class Calendar extends RelativeLayout implements ICalendar {
 
     Context context;
     CalendarView calendarView;
@@ -28,7 +30,7 @@ public class Calendar extends RelativeLayout {
     int HeightTitleDens = (int) (HeightTitle * DENSITY);
     int arrowH = (int) (24 * DENSITY);
     int arrowPadding = (int) (10 * DENSITY);
-    private CalendarClick cClick;
+    private OnCalendarClick cClick;
     TextView viewDate;
     View thisView, rootView;
     public int viewDateId;
@@ -124,12 +126,12 @@ public class Calendar extends RelativeLayout {
         return (View) view2;
     }
 
-    public void setListenerOk(CalendarClick cClick) {
-        this.cClick = cClick;
-        if (cClick != null) {
-            cClick.onChangeDate(newDateC, weekday);
-        }
-    }
+//    public void setListenerOk(OnCalendarClick cClick) {
+//        this.cClick = cClick;
+//        if (cClick != null) {
+//            cClick.onChangeDate(newDateC, weekday);
+//        }
+//    }
 
     OnClickListener clickR = new OnClickListener() {
         @Override
@@ -171,6 +173,14 @@ public class Calendar extends RelativeLayout {
             }
         }
     };
+
+    @Override
+    public void setListenerOk(OnCalendarClick cClick) {
+        this.cClick = cClick;
+        if (cClick != null) {
+            cClick.onChangeDate(newDateC, weekday);
+        }
+    }
 
     private class ArrowRight extends LinearLayout{
         int colorLine = 0xFF000000;
@@ -249,7 +259,7 @@ public class Calendar extends RelativeLayout {
         }
     }
 
-    public interface CalendarClick {
-        void onChangeDate(long newDate, int weekday);
-    }
+//    public interface CalendarClick {
+//        void onChangeDate(long newDate, int weekday);
+//    }
 }

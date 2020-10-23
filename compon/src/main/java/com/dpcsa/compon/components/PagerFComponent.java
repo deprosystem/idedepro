@@ -1,5 +1,6 @@
 package com.dpcsa.compon.components;
 
+import com.dpcsa.compon.custom_components.ComponViewPager;
 import com.google.android.material.tabs.TabLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -97,6 +98,29 @@ public class PagerFComponent extends BaseComponent {
                 }
             }
         }
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (indicator != null) {
+                    indicator.setSelect(position);
+                }
+                if (paramMV.paramView.noSwipePages != null && paramMV.paramView.noSwipePages.length > position) {
+                    if (pager instanceof ComponViewPager) {
+                        ((ComponViewPager)pager).setSwipeEnabled( ! paramMV.paramView.noSwipePages[position]);
+                    }
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         BaseFragment bf = iBase.getBaseFragment();
         if (bf != null) {
             adapter = new Adapter(bf.getChildFragmentManager());

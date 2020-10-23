@@ -52,7 +52,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-    api 'androidx.appcompat:appcompat:1.0.0'
+    api 'androidx.appcompat:appcompat:1.2.0'
     api 'androidx.recyclerview:recyclerview:1.0.0'
     api 'androidx.dynamicanimation:dynamicanimation:1.0.0'
     api 'com.google.android.material:material:1.0.0'
@@ -82,7 +82,7 @@ dependencies {
     api 'io.reactivex:rxandroid:1.2.1'
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
 
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+//    implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
 }
 

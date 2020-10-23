@@ -15,13 +15,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dpcsa.compon.components.PagerVComponent;
+import com.dpcsa.compon.components.PanelEnterComponent;
+import com.dpcsa.compon.custom_components.ComponImageView;
 import com.dpcsa.compon.custom_components.PlusMinus;
 import com.dpcsa.compon.interfaces_classes.ActionsAfterResponse;
 import com.dpcsa.compon.interfaces_classes.ActivityResult;
 import com.dpcsa.compon.interfaces_classes.Animate;
+import com.dpcsa.compon.interfaces_classes.IComponent;
 import com.dpcsa.compon.interfaces_classes.ISwitch;
 import com.dpcsa.compon.interfaces_classes.OnResumePause;
 import com.dpcsa.compon.interfaces_classes.PushHandler;
@@ -58,6 +62,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.dpcsa.compon.json_simple.Field.TYPE_INTEGER;
+import static com.dpcsa.compon.json_simple.Field.TYPE_LIST_RECORD;
+import static com.dpcsa.compon.json_simple.Field.TYPE_LONG;
+import static com.dpcsa.compon.json_simple.Field.TYPE_RECORD;
+import static com.dpcsa.compon.json_simple.Field.TYPE_STRING;
 import static com.dpcsa.compon.param.ParamModel.DEL_DB;
 import static com.dpcsa.compon.param.ParamModel.GET_DB;
 import static com.dpcsa.compon.param.ParamModel.POST_DB;
@@ -198,6 +207,42 @@ public abstract class BaseComponent {
                     } else {
                         setParentData(pm.field);
                     }
+                    break;
+                case ParamModel.POST:
+                    Record recParam = new Record();
+                    if (paramModel.param != null && paramModel.param.length() > 0) {
+                        String[] parArr = paramModel.param.split(",");
+                        if (parArr != null && parArr.length > 0) {
+                            for (String st : parArr) {
+                                int i = st.indexOf("(");
+                                if (i > 0) {
+                                    String stN = st.substring(0, i);
+                                    int ik = st.indexOf(")");
+                                    if (ik == -1) {
+                                        Log.e("SMPL","Ошибка в параметрах " + stN + ". Скорее всего разделитель в скобках не ;");
+                                        ik = st.length();
+                                    }
+                                    String[] globArr = st.substring(i + 1, ik).split(";");
+                                    Field fg = componGlob.globalData.getField(stN);
+                                    if (fg != null && fg.value != null) {
+                                        Record recGl = (Record) fg.value;
+                                        for (String namePar : globArr) {
+                                            Field fPar = recGl.getField(namePar);
+                                            if (fPar != null && fPar.value != null) {
+                                                recParam.add(new Field(namePar, fPar.type, fPar.value));
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    Param pp = componGlob.getParam(st);
+                                    if (pp != null) {
+                                        recParam.add(new Field(st, TYPE_STRING, pp.value));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    new BasePresenter(iBase, paramModel, null, recParam, listener);
                     break;
                 case ParamModel.FIELD:
                     changeDataBase(paramModel.field);
@@ -352,6 +397,12 @@ public abstract class BaseComponent {
                 changeDataBase(field);
             }
         }
+    }
+
+    public void addRecord(Record rec) {
+    }
+
+    public void delRecord(int pos) {
     }
 
     public void changeDataPosition(int position, boolean select) {
@@ -545,11 +596,6 @@ public abstract class BaseComponent {
         for (ViewHandler vh : viewHandlers) {
             if (vId == vh.viewId || (vh.viewId == 0 && v == viewComponent)) {
                 switch (vh.type) {
-//                        case SEND_CHANGE_BACK :
-//                            Record param = workWithRecordsAndViews.ViewToRecord(viewComponent, vh.paramModel.param);
-//                            new BasePresenter(iBase, vh.paramModel, null, setRecord(param), listener_send_change);
-//                            break;
-
                     case NAME_SCREEN:
                         if (recordComponent != null) {
                             componGlob.setParam(recordComponent);
@@ -566,6 +612,10 @@ public abstract class BaseComponent {
                                     if (vh.paramForSend != null && vh.paramForSend.length() > 0) {
                                         Record rec = workWithRecordsAndViews.ViewToRecord(viewComponent, vh.paramForSend);
                                         iBase.startScreen(vh.screen, false, rec, requestCode);
+                                    } else {
+                                        if (this instanceof PanelEnterComponent) {
+                                            viewToParam(viewComponent);
+                                        }
                                     }
                                 }
                                 break;
@@ -577,6 +627,9 @@ public abstract class BaseComponent {
                                 }
                                 break;
                             default:
+                                if (this instanceof PanelEnterComponent) {
+                                    viewToParam(viewComponent);
+                                }
                                 iBase.startScreen(vh.screen, false, null, requestCode);
                                 break;
                         }
@@ -596,6 +649,24 @@ public abstract class BaseComponent {
                             case BOOLEAN:
                                 preferences.setNameBoolean(vh.namePreference, vh.pref_value_boolean);
                                 break;
+                        }
+                        break;
+                    case SET_VALUE:
+                        View showV = parentLayout.findViewById(vh.showViewId);
+                        if (showV != null) {
+                            if (showV instanceof IComponent) {
+                                if (vh.idString != 0) {
+                                    ((IComponent) showV).setData(activity.getString(vh.idString));
+                                } else if (vh.nameFieldWithValue != null) {
+                                    ((IComponent) showV).setData(vh.nameFieldWithValue);
+                                }
+                            } else if (showV instanceof TextView) {
+                                if (vh.idString != 0) {
+                                    ((TextView) showV).setText(activity.getString(vh.idString));
+                                } else if (vh.nameFieldWithValue != null) {
+                                    ((TextView) showV).setText(vh.nameFieldWithValue);
+                                }
+                            }
                         }
                         break;
                     case SET_PARAM:
@@ -686,6 +757,43 @@ public abstract class BaseComponent {
                                 break;
                         }
                         break;
+                    case ADD_VAR:
+                        param = workWithRecordsAndViews.ViewToRecord(viewComponent, vh.pref_value_string);
+                        Field ff = componGlob.globalData.getField(vh.nameFieldWithValue);
+                        Record recGl;
+                        if (ff == null) {
+                            recGl = new Record();
+                            ff = new Field(vh.nameFieldWithValue, Field.TYPE_RECORD, recGl);
+                            componGlob.globalData.addField(ff);
+                        }
+                        if (ff.type == Field.TYPE_RECORD) {
+                            recGl = (Record) ff.value;
+                            int ik = param.size();
+                            for (int i = 0; i < ik; i++) {
+                                Field fp = param.get(i);
+                                if (fp.value != null) {
+                                    recGl.addField(fp);
+                                }
+                            }
+                        }
+                        break;
+                    case DEL_VAR:
+                        ff = componGlob.globalData.getField(vh.nameFieldWithValue);
+                        if (ff != null && ff.type == Field.TYPE_RECORD) {
+                            recGl = (Record) ff.value;
+                            String[] par = vh.pref_value_string.split(",");
+                            for (String st : par) {
+                                recGl.deleteField(st);
+                            }
+                        }
+                        break;
+                    case CLEAN_VAR:
+                        ff = componGlob.globalData.getField(vh.nameFieldWithValue);
+                        if (ff != null && ff.type == Field.TYPE_RECORD) {
+                            recGl = (Record) ff.value;
+                            recGl.clear();
+                        }
+                        break;
                     case CLICK_SEND :
                         boolean valid = true;
                         if (vh.mustValid != null) {
@@ -705,37 +813,59 @@ public abstract class BaseComponent {
                             Record rec = setRecord(param);
                             for (Field f : rec) {
                                 if (f.type == Field.TYPE_LIST_RECORD) {
-                                    View vL = componGlob.findViewByName(viewComponent, f.name);
-                                    if (vL != null) {
-                                        BaseComponent bc = getComponent(vL.getId());
-                                        if (bc != null) {
-                                            String[] stParam = ((String) f.value).split(";");
-                                            if (stParam.length > 0) {
-                                                if (bc instanceof RecyclerComponent) {
-                                                    ListRecords listRecParam = new ListRecords();
-                                                    for (Record recList : ((RecyclerComponent) bc).listData) {
-                                                        Record recParam = new Record();
-                                                        for (String nameParam : stParam) {
-                                                            Field fParam = recList.getField(nameParam);
-                                                            if (fParam != null) {
-                                                                recParam.add(fParam);
-                                                            }
-                                                        }
-                                                        listRecParam.add(recParam);
+                                    Field glob = componGlob.globalData.getField(f.name);
+                                    if (glob != null) {
+                                        String[] arrParam = ((String) f.value).split(";");
+                                        if (arrParam.length > 0) {
+                                            Record globRec = (Record) glob.value;
+                                            rec.remove(f);
+                                            for (Field fg : globRec) {
+                                                for (String par : arrParam) {
+                                                    if (fg.name.equals(par)) {
+                                                        rec.add(fg);
+                                                        break;
                                                     }
-                                                    f.value = listRecParam;
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        View vL = componGlob.findViewByName(viewComponent, f.name);
+                                        if (vL != null) {
+                                            BaseComponent bc = getComponent(vL.getId());
+                                            if (bc != null) {
+                                                String[] stParam = ((String) f.value).split(";");
+                                                if (stParam.length > 0) {
+                                                    if (bc instanceof RecyclerComponent) {
+                                                        ListRecords listRecParam = new ListRecords();
+                                                        for (Record recList : ((RecyclerComponent) bc).listData) {
+                                                            Record recParam = new Record();
+                                                            for (String nameParam : stParam) {
+                                                                Field fParam = recList.getField(nameParam);
+                                                                if (fParam != null) {
+                                                                    recParam.add(fParam);
+                                                                }
+                                                            }
+                                                            listRecParam.add(recParam);
+                                                        }
+                                                        f.value = listRecParam;
+                                                    }
+                                                } else {
+                                                    if (bc instanceof RecyclerComponent) {
+                                                        f.type = Field.TYPE_INTEGER;
+                                                        f.value = ((RecyclerComponent) bc).listData.size();
+                                                    } else {
+                                                        iBase.log("1001 No data for parameter " + f.name + " in " + multiComponent.nameComponent);
+                                                        rec.remove(f);
+                                                    }
                                                 }
                                             } else {
-                                                iBase.log("1001 No data for parameter " + f.name + " in " + multiComponent.nameComponent);
+                                                iBase.log("0010 Component " + f.name + " not found in " + multiComponent.nameComponent);
                                                 rec.remove(f);
                                             }
                                         } else {
-                                            iBase.log("0010 Component " + f.name + " not found in " + multiComponent.nameComponent);
+                                            iBase.log("0009 No item " + f.name + " in " + multiComponent.nameComponent);
                                             rec.remove(f);
                                         }
-                                    } else {
-                                        iBase.log("0009 No item " + f.name + " in " + multiComponent.nameComponent);
-                                        rec.remove(f);
                                     }
                                 }
                             }
@@ -807,6 +937,59 @@ public abstract class BaseComponent {
         }
     }
 
+    public void viewToParam(View v) {
+        ViewGroup vg;
+        int id;
+        if (v instanceof ViewGroup) {
+            vg = (ViewGroup) v;
+            int countChild = vg.getChildCount();
+            id = v.getId();
+            if (id > -1) {
+                setParamValue(v);
+            }
+            for (int i = 0; i < countChild; i++) {
+                viewToParam(vg.getChildAt(i));
+            }
+        } else {
+            if (v != null) {
+                id = v.getId();
+                if (id != -1) {
+                    setParamValue(v);
+                }
+            }
+        }
+    }
+
+    private void setParamValue(View v) {
+        int id = v.getId();
+        String name = v.getContext().getResources().getResourceEntryName(id);
+        Param par = componGlob.getParam(name);
+        if (par != null) {
+            String val = viewToString(v);
+            if (val != null) {
+                par.value = val;
+            }
+        }
+    }
+
+    private String viewToString(View v) {
+        if (v instanceof ComponImageView) {
+            return ((ComponImageView) v).getPathImg();
+        }
+        if (v instanceof IComponent) {
+            Object obj = ((IComponent) v).getData();
+            if (obj != null) {
+                return String.valueOf(obj);
+            } else {
+                return ((IComponent) v).getString();
+            }
+        }
+        if (v instanceof TextView) {
+            return ((TextView) v).getText().toString();
+        }
+        return null;
+    }
+
     private void responseOrError(int error, ParamModel paramModel, IPresenterListener listener) {
         if (messageError.length() == 0) {
             Field ff = null;
@@ -849,7 +1032,7 @@ public abstract class BaseComponent {
 
     }
 
-    public void clickAdapter1(RecyclerView.ViewHolder holder, View view, int id, int position, Record record) {
+    public void clickAdapter1(View itemView, View view, int id, int position, Record record) {
         if (navigator != null) {
             for (ViewHandler vh : navigator.viewHandlers) {
                 if (vh.viewId == id) {
@@ -863,6 +1046,84 @@ public abstract class BaseComponent {
                             break;
                         case SET_PARAM:
                             componGlob.setParam(record);
+                            break;
+                        case SHOW:
+                            View vv = parentLayout.findViewById(vh.showViewId);
+                            if (vv != null) {
+                                if (vv instanceof AnimatePanel) {
+                                    ((AnimatePanel) vv).show(iBase);
+                                } else {
+                                    vv.setVisibility(View.VISIBLE);
+                                }
+                                if (vh.nameFieldWithValue != null && vh.nameFieldWithValue.length() > 0) {
+                                    workWithRecordsAndViews.RecordToView(paramToRecord(vh.nameFieldWithValue), vv);
+                                }
+                            }
+                            break;
+                        case HIDE:
+                            vv = parentLayout.findViewById(vh.showViewId);
+                            if (vv != null) {
+                                if (vv instanceof AnimatePanel) {
+                                    ((AnimatePanel) vv).hide();
+                                } else {
+                                    vv.setVisibility(View.GONE);
+                                }
+                            }
+                            break;
+                        case SET_VALUE:
+                            View showV = parentLayout.findViewById(vh.componId);
+                            if (showV == null && itemView != null) {
+                                showV = itemView.findViewById(vh.componId);
+                            }
+                            if (showV != null) {
+                                if (showV instanceof IComponent) {
+                                    if (vh.idString != 0) {
+                                        ((IComponent) showV).setData(activity.getString(vh.idString));
+                                    } else if (vh.nameFieldWithValue != null) {
+                                        ((IComponent) showV).setData(vh.nameFieldWithValue);
+                                    }
+                                } else if (showV instanceof TextView) {
+                                    if (vh.idString != 0) {
+                                        ((TextView) showV).setText(activity.getString(vh.idString));
+                                    } else if (vh.nameFieldWithValue != null) {
+                                        ((TextView) showV).setText(vh.nameFieldWithValue);
+                                    }
+                                }
+                            }
+                            break;
+                        case ADD_VAR:
+//                            Record param = workWithRecordsAndViews.ViewToRecord(viewComponent, vh.pref_value_string);
+                            Field ff = componGlob.globalData.getField(vh.nameFieldWithValue);
+                            Record recGl;
+                            if (ff == null) {
+                                recGl = new Record();
+                                ff = new Field(vh.nameFieldWithValue, Field.TYPE_RECORD, recGl);
+                                componGlob.globalData.addField(ff);
+                            }
+                            if (ff.type == Field.TYPE_RECORD) {
+                                recGl = (Record) ff.value;
+                                String[] arrPar = vh.pref_value_string.split(",");
+                                if (arrPar.length > 0) {
+                                    for (String par : arrPar) {
+                                        for (Field fr : record) {
+                                            if (par.equals(fr.name)) {
+                                                recGl.addField(fr);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                        case DEL_VAR:
+                            ff = componGlob.globalData.getField(vh.nameFieldWithValue);
+                            if (ff != null && ff.type == Field.TYPE_RECORD) {
+                                recGl = (Record) ff.value;
+                                String[] par = vh.pref_value_string.split(",");
+                                for (String st : par) {
+                                    recGl.deleteField(st);
+                                }
+                            }
                             break;
                         case YOUTUBE:
                             componGlob.setParam(record);
@@ -880,9 +1141,29 @@ public abstract class BaseComponent {
                                 iBase.startScreen((String) record.getValue(vh.nameFieldScreen), false);
                             }
                             break;
+                        case ADD_RECORD:
+                            BaseComponent bc = getComponent(vh.componId);
+                            if (bc != null) {
+                                bc.addRecord(record);
+                            }
+                            break;
+                        case DEL_RECORD:
+                            delRecord(position);
+                            break;
                         case RESULT_RECORD :
                             Intent intent = new Intent();
-                            intent.putExtra(Constants.RECORD, record.toString());
+                            if (record == null) {
+                                if (this instanceof PagerVComponent) {
+                                    Record rec = workWithRecordsAndViews.ViewToRecord(parentLayout, vh.nameFieldWithValue);
+                                    componGlob.setParam(rec);
+                                    intent.putExtra(Constants.RECORD, rec.toString());
+                                } else {
+                                    iBase.log("Запись с возвращаемыми параметрами не сформирована в " + multiComponent.nameComponent);
+                                    intent.putExtra(Constants.RECORD, "{}");
+                                }
+                            } else {
+                                intent.putExtra(Constants.RECORD, record.toString());
+                            }
                             activity.setResult(Activity.RESULT_OK, intent);
                             activity.finishActivity();
                             break;
@@ -948,17 +1229,20 @@ public abstract class BaseComponent {
                             if (vh.paramForScreen == ViewHandler.TYPE_PARAM_FOR_SCREEN.RECORD) {
                                 iBase.startScreen(vh.screen, false, record, requestCode);
                             } else {
-                                iBase.startScreen(vh.screen, false, requestCode);
+                                iBase.startScreen(vh.screen, false, null, requestCode);
                             }
                             break;
                         case CLICK_VIEW:
-                            if (holder != null) {
+                            if (itemView != null) {
                                 if (iCustom != null) {
-                                    iCustom.clickView(view, holder.itemView, this, record, position);
+                                    iCustom.clickView(view, itemView, this, record, position);
                                 } else if (moreWork != null) {
-                                    moreWork.clickView(view, holder.itemView, this, record, position);
+                                    moreWork.clickView(view, itemView, this, record, position);
                                 }
                             }
+                            break;
+                        case BACK_OK:
+                            iBase.backOk();
                             break;
                         case BACK:
                             iBase.backPressed();
@@ -1004,7 +1288,11 @@ public abstract class BaseComponent {
 
     public void clickAdapter(RecyclerView.ViewHolder holder, View view, int position, Record record) {
         int id = view == null ? 0 : view.getId();
-        clickAdapter1(holder, view, id, position, record);
+        if (holder == null) {
+            clickAdapter1(null, view, id, position, record);
+        } else {
+            clickAdapter1(holder.itemView, view, id, position, record);
+        }
     }
 
     private ContentValues setCV(String paramSt, Record rec) {
@@ -1194,7 +1482,7 @@ public abstract class BaseComponent {
                     iBase.startScreen(vh.screen, false);
                     break;
                 case SET_TOKEN:
-                    if (response.value != null) {
+                    if (response.value != null && response.type == Field.TYPE_RECORD) {
                         rec = ((Record) response.value);
                         st = rec.getString(vh.nameFieldWithValue);
                     } else {
@@ -1227,7 +1515,11 @@ public abstract class BaseComponent {
                 case RESULT_RECORD :
                     Intent intent = new Intent();
                     if (response.value != null) {
+                        componGlob.setParam((Record) response.value);
                         intent.putExtra(Constants.RECORD, ((Record) response.value).toString());
+                    } else {
+                        iBase.log("Запись с возвращаемыми параметрами не сформирована в " + multiComponent.nameComponent);
+                        intent.putExtra(Constants.RECORD, "{}");
                     }
                     activity.setResult(Activity.RESULT_OK, intent);
                     activity.finishActivity();
@@ -1253,6 +1545,9 @@ public abstract class BaseComponent {
                             workWithRecordsAndViews.RecordToView(paramToRecord(vh.nameFieldWithValue), vv);
                         }
                     }
+                    break;
+                case BACK_OK:
+                    iBase.backOk();
                     break;
                 case HIDE:
                     vv = parentLayout.findViewById(vh.showViewId);

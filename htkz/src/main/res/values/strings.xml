@@ -23,9 +23,36 @@
     <string name="info_my_tour_2">Уже заказали тур в турагентстве или через оператора? Введите номер телефона и мы отобразим ваш тур здесь.</string>
 
     <string name="departure_city_hot">Город вылета</string>
-    <string name="country_city">Страна, курорт, отель</string>
+    <string name="country_city">Страна, курорт</string>
+    <string name="depart_date">Дата вылета</string>
+    <string name="visa">Нужна виза</string>
+    <string name="how_many">На сколько</string>
+    <string name="who_flies">Кто летит</string>
+    <string name="find_tours">Найти туры</string>
     <string name="select">Выбрать</string>
+    <string name="ot">от</string>
+    <string name="departure_d_d">Дата вылета и длительность</string>
+    <string name="n_5">5 ночей</string>
+    <string name="n_7">7 ночей</string>
+    <string name="n_9">9 ночей</string>
+    <string name="n_11">11 ночей</string>
+    <string name="n_14">14 ночей</string>
+    <string name="n_15">15 ночей</string>
+    <string name="n_21">21 ночей</string>
+    <string name="who_flying">Кто летит</string>
+    <string name="where_going">Куда полетим?</string>
+    <string name="flexible_departure">Гибкий вылет. Дата ± 3 дня</string>
+    <string name="kind">Ребенок,</string>
+    <string name="adults">Взрослые</string>
+    <string name="add_kid">Добавить ребенка</string>
+    <string name="indicate_age">Укажите возраст ребенка</string>
+    <string name="cancel">Отмена</string>
 
+    <string name="test">{\"aa\":\"Gfdsa Ytrewq\",\"seek\":{\"min\":6,\"max\":11,\"smin\":2,\"smax\":20}}</string>
+    <string name="age">[{\"year\":\"0\",\"title\":\"До года\"},{\"year\":\"1\",\"title\":\"1\"},{\"year\":\"2\",\"title\":\"2\"},{\"year\":\"3\",\"title\":\"3\"},
+        {\"year\":\"4\",\"title\":\"4\"},{\"year\":\"5\",\"title\":\"5\"},{\"year\":\"6\",\"title\":\"6\"},{\"year\":\"7\",\"title\":\"7\"},
+        {\"year\":\"8\",\"title\":\"8\"},{\"year\":\"9\",\"title\":\"9\"},{\"year\":\"10\",\"title\":\"10\"},{\"year\":\"11\",\"title\":\"11\"},
+        {\"year\":\"12\",\"title\":\"12\"},{\"year\":\"13\",\"title\":\"13\"},{\"year\":\"14\",\"title\":\"14\"},{\"year\":\"15\",\"title\":\"15\"},{\"year\":\"16\",\"title\":\"16\"}]</string>
 
     <string name="hot_test">[{\"img\":\"https://bipbap.ru/wp-content/uploads/2017/04/4-2.jpg\",\"cost\":\"от 123 345 Т\",\"country\":\"Египет\"},{\"img\":\"https://bipbap.ru/wp-content/uploads/2017/04/81074043_lovelylandscapes101.jpg\",\"cost\":\"от 345 543 Т\",\"country\":\"ОАЕ\"},{\"img\":\"https://bipbap.ru/wp-content/uploads/2017/04/132638948_beautiful_nature_9_5.jpg\",\"cost\":\"от 123 345 Т\",\"country\":\"Украина\"}]</string>
     <string name="ins_test">[{\"img\":\"https://ht.kz/fls/post/1578308176bfab8958.jpg\",\"discont\":\"-33%\",\"no_time\":\"Осталось 3 дня\",\"cost\":\"от 123 345 Т\",\"title\":\"Лучшие отели Пхукета\nна первой линии!\",\"txt\":\"Предлагаем Вашему вниманию ТОП лучших отелей находящихся на первой линии!\nОтели с прекрасным сервисом и прямым доступом к морю! Виза оформляется по прилету!\"},{\"img\":\"https://ht.kz/fls/post/15753685459eb50ca8.jpg\",\"discont\":\"-33%\",\"no_time\":\"Осталось 4 дня\",\"cost\":\"от 123 345 Т\",\"title\":\"Новинка! Маврикий\nиз Алматы!\",\"txt\":\"Маврикий — звезда Индийского океана!\nПляжи с белоснежным песком, разнообразный подводный мир, а так же все возможности для морской рыбалки!\"}]</string>
@@ -35,4 +62,61 @@
 
     <string name="no_connect">Проверьте подключение и попробуйте\nповторить действие снова</string>
     <string name="no_connect_title">Нет соединения\nс интернетом</string>
+
+    <string-array name="nights">
+        <item>ночь</item>
+        <item>ночи</item>
+        <item>ночей</item>
+    </string-array>
+
+    <string-array name="adults_arr">
+        <item>взрослый</item>
+        <item>взрослых</item>
+        <item>взрослых</item>
+    </string-array>
+
+    <string-array name="kinds_arr">
+        <item>ребенок</item>
+        <item>ребенка</item>
+        <item>детей</item>
+    </string-array>
+
+    <string-array name="adults_arr_1">
+        <item>взрослого</item>
+        <item>взрослых</item>
+        <item>взрослых</item>
+    </string-array>
+
+    <string-array name="kinds_arr_1">
+        <item>ребенка</item>
+        <item>детей</item>
+        <item>детей</item>
+    </string-array>
+
+    <string-array name="years">
+        <item>год</item>
+        <item>года</item>
+        <item>лет</item>
+    </string-array>
+
+    <string-array name="dd">
+        <item> </item>
+        <item> </item>
+    </string-array>
+
+    <string-array name="month">
+        <item>Январь</item>
+        <item>Февраль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Август</item>
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
+    </string-array>
+
 </resources>

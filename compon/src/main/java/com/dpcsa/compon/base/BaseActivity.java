@@ -90,7 +90,10 @@ import com.dpcsa.compon.json_simple.WorkWithRecordsAndViews;
 import com.dpcsa.compon.single.ComponPrefTool;
 import com.dpcsa.compon.tools.Constants;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -125,7 +128,6 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     public MenuBComponent menuBottom;
     public ToolBarComponent toolBar;
 
-//    public boolean isFullScreen = false;
     private DialogFragment progressDialog;
     private int countProgressStart;
     private boolean isActive;
@@ -220,8 +222,14 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                     log("0002 No description of the activity " + nameScreen);
                     return;
                 }
-                if (mComponent.isFullScreen) {
-                    setFullScreen();
+                if (mComponent.isFullScreen == null) {
+                    if (componGlob.appParams.isFullScreen) {
+                        setFullScreen();
+                    }
+                } else {
+                    if (mComponent.isFullScreen) {
+                        setFullScreen();
+                    }
                 }
                 if (mComponent.typeView == Screen.TYPE_VIEW.CUSTOM_ACTIVITY) {
                     parentLayout = inflate(this, getLayoutId(), null);
@@ -239,6 +247,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
             }
             if (nameScreen != null) {
                 setContentView(parentLayout);
+                mComponent.initComponents(this);
                 if (mComponent.navigator != null) {
                     for (ViewHandler vh : mComponent.navigator.viewHandlers) {
                         if (vh.viewId != 0) {
@@ -252,7 +261,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                         }
                     }
                 }
-                mComponent.initComponents(this);
+//                mComponent.initComponents(this);
                 if (mComponent.moreWork != null) {
                     mComponent.moreWork.startScreen();
                 }
@@ -273,6 +282,9 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
             isActive = true;
             initView();
             setValue();
+            if (mComponent.startNavig != null) {
+                clickNavigat(null, 0, mComponent.startNavig.viewHandlers);
+            }
             ifPush(intent);
         }
 
@@ -281,9 +293,9 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     @Override
     protected void onStart() {
         super.onStart();
-        if (mComponent.startNavig != null) {
-            clickNavigat(null, 0, mComponent.startNavig.viewHandlers);
-        }
+//        if (mComponent.startNavig != null) {
+//            clickNavigat(null, 0, mComponent.startNavig.viewHandlers);
+//        }
     }
 
     public void setFullScreen() {
@@ -522,7 +534,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
         if (mComponent != null && mComponent.itemSetValues != null) {
             for (ItemSetValue sv : mComponent.itemSetValues) {
                 if (sv.type == GROUPP_PARAM) {
-                    setValueParam(sv.viewId);
+                    setValueParam(sv.viewId, sv.name);
                     continue;
                 }
                 View v = parentLayout.findViewById(sv.viewId);
@@ -539,11 +551,34 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                                 ((IComponent) v).setData(componGlob.getParamValue(name));
                             }
                             break;
+                        case GLOBAL_VAR:
+                            setVar(sv.viewId, sv.name);
+                            break;
                         case LOCALE:
                             if (v instanceof TextView) {
                                 ((TextView) v).setText(preferences.getLocale());
                             } else if (v instanceof IComponent) {
                                 ((IComponent) v).setData(preferences.getLocale());
+                            }
+                            break;
+                        case SYSTEM_TIME:
+                            Calendar c = new GregorianCalendar();
+                            long tt = c.getTimeInMillis();
+                            String dat;
+                            if (sv.name != null && sv.name.length() > 0) {
+                                SimpleDateFormat df = new SimpleDateFormat(sv.name);
+                                dat = df.format(tt);
+                                if (v instanceof IComponent) {
+                                    ((IComponent) v).setData(dat);
+                                } else  if (v instanceof TextView) {
+                                    ((TextView) v).setText(dat);
+                                }
+                            } else {
+                                if (v instanceof IComponent) {
+                                    ((IComponent) v).setData(tt);
+                                } else  if (v instanceof TextView) {
+                                    ((TextView) v).setText(String.valueOf(tt));
+                                }
                             }
                             break;
                     }
@@ -731,10 +766,40 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                             setValue();
                             break;
                         case SET_VALUE_PARAM:
-                            setValueParam(vh.viewId);
+                            setValueParam(vh.viewId, null);
+                            break;
+                        case SET_VAR:
+//                            setVar(vh);
+                            setVar(vh.viewId, vh.nameFieldWithValue);
                             break;
                         case UPDATE_DATA:
                             mComponent.getComponent(vh.viewId).updateData(vh.paramModel);
+                            break;
+                        case ASSIGN_VALUE:
+                            View vv = parentLayout.findViewById(vh.viewId);
+                            if (vv != null) {
+                                String json = data.getStringExtra(Constants.RECORD);
+                                JsonSimple jsonSimple = new JsonSimple();
+                                Field ff = null;
+                                try {
+                                    ff = jsonSimple.jsonToModel(json);
+                                } catch (JsonSyntaxException e) {
+                                    log(e.getMessage());
+                                    e.printStackTrace();
+                                }
+                                if (ff != null) {
+                                    workWithRecordsAndViews.RecordToView((Record) ff.value, vv);
+                                }
+                            }
+                            break;
+                        case ACTUAL:
+                            BaseComponent bc = mComponent.getComponent(vh.showViewId);
+                            if (bc != null) {
+                                bc.actual();
+                            } else {
+                                String stN = getResources().getResourceEntryName(vh.showViewId);
+                                log("0004 Нет компонента с id " + stN + " для актуализации в " + mComponent.nameComponent);
+                            }
                             break;
                     }
                 }
@@ -745,11 +810,10 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     public View.OnClickListener navigatorClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (mComponent.navigator == null) {
-                return;
+            if (mComponent.navigator != null) {
+                int id = view.getId();
+                clickNavigat(view, id, mComponent.navigator.viewHandlers);
             }
-            int id = view.getId();
-            clickNavigat(view, id, mComponent.navigator.viewHandlers);
         }
     };
 
@@ -801,10 +865,11 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                         onBackPressed();
                         break;
                     case BACK_OK:
-                        Intent intentOk = new Intent();
-                        intentOk.putExtra(Constants.RECORD, "{}");
-                        setResult(RESULT_OK, intentOk);
-                        finishActivity();
+                        backOk();
+//                        Intent intentOk = new Intent();
+//                        intentOk.putExtra(Constants.RECORD, "{}");
+//                        setResult(RESULT_OK, intentOk);
+//                        finishActivity();
                         break;
                     case EXIT:
                         exitAccount();
@@ -861,20 +926,67 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                             }
                         }
                         break;
+                    case SAVE_PARAM:
+                        Record recParam = workWithRecordsAndViews.ViewToRecord(parentLayout, vh.nameFieldWithValue);
+                        setParamFromComponents(recParam, parentLayout, mComponent, this);
+                        componGlob.setParam(recParam);
+                        break;
+                    case CLEAN_VAR:
+                        Field ff = componGlob.globalData.getField(vh.nameFieldWithValue);
+                        if (ff != null && ff.type == Field.TYPE_RECORD) {
+                            ((Record) ff.value).clear();
+                        }
+                        break;
+                    case CLEAN_COPY_VAR:
+                        String nn = "\u0000" + vh.nameFieldWithValue;
+                        String ns = vh.nameFieldWithValue;
+                        changeRecordGlob(nn, ns);
+                        Field fg = componGlob.globalData.getField(ns);
+                        if (fg != null && fg.type == Field.TYPE_RECORD) {
+                            ((Record) fg.value).clear();
+                        }
+                        break;
+                    case RESTORE_VAR:
+                        ns = "\u0000" + vh.nameFieldWithValue;
+                        nn = vh.nameFieldWithValue;
+                        changeRecordGlob(nn, ns);
+                        componGlob.globalData.deleteField(ns);
+                        break;
+                    case DEL_VAR:
+                        ff = componGlob.globalData.getField(vh.nameFieldWithValue);
+                        if (ff != null && ff.type == Field.TYPE_RECORD) {
+                            Record recGl = (Record) ff.value;
+                            String[] par = vh.pref_value_string.split(",");
+                            int ik = par.length;
+                            for (int i = 0; i < ik; i++) {
+                                recGl.deleteField(par[i]);
+                            }
+                        }
+                        break;
                     case OPEN_DRAWER:
                         openDrawer();
                         break;
                     case SET_VALUE_PARAM:
-                        setValueParam(vh.viewId);
+                        setValueParam(vh.viewId, null);
                         break;
                     case SET_VALUE:
                         if (mComponent != null && mComponent.itemSetValues != null) {
                             setValue();
                         } else {
-                            View showV = parentLayout.findViewById(vh.showViewId);
+                            View showV = parentLayout.findViewById(vh.componId);
                             if (showV != null) {
-                                if (showV instanceof TextView) {
-                                    ((TextView) showV).setText(getString(vh.idString));
+                                if (showV instanceof IComponent) {
+                                    if (vh.idString != 0) {
+                                        ((IComponent) showV).setData(getString(vh.idString));
+                                    } else if (vh.nameFieldWithValue != null) {
+                                        ((IComponent) showV).setData(vh.nameFieldWithValue);
+                                    }
+                                } else if (showV instanceof TextView) {
+                                    if (vh.idString != 0) {
+                                        ((TextView) showV).setText(getString(vh.idString));
+                                    } else if (vh.nameFieldWithValue != null) {
+                                        ((TextView) showV).setText(vh.nameFieldWithValue);
+                                    }
                                 }
                             }
                         }
@@ -901,8 +1013,10 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                         Intent intent = new Intent();
                         if (vh.nameFieldWithValue != null && vh.nameFieldWithValue.length() > 0) {
                             Record record = workWithRecordsAndViews.ViewToRecord(parentLayout, vh.nameFieldWithValue);
+                            componGlob.setParam(record);
                             intent.putExtra(Constants.RECORD, record.toString());
                         } else {
+                            log("Запись с возвращаемыми параметрами не сформирована в " + mComponent.nameComponent);
                             intent.putExtra(Constants.RECORD, "{}");
                         }
                         setResult(RESULT_OK, intent);
@@ -948,23 +1062,91 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
         }
     }
 
-    public void setValueParam(int viewId) {
+    private void changeRecordGlob(String nn, String ns) {
+        Field ff = componGlob.globalData.getField(ns);
+        if (ff != null && ff.type == Field.TYPE_RECORD) {
+            Field ffCopy = componGlob.globalData.getField(nn);
+            if (ffCopy == null) {
+                ffCopy = new Field(nn, Field.TYPE_RECORD, null);
+                componGlob.globalData.add(ffCopy);
+            }
+            Record rec = (Record) ff.value;
+            if (rec != null) {
+                ffCopy.value = rec.copyRecord();
+            }
+        }
+    }
+
+    public void setParamFromComponents(Record rec, View parentView, Screen multiComponent, IBase iBase) {
+        for (Field f : rec) {
+            if (f.type == Field.TYPE_LIST_RECORD) {
+                View vL = componGlob.findViewByName(parentView, f.name);
+                if (vL != null) {
+//                    BaseComponent bc = getComponent(vL.getId());
+                    BaseComponent bc = multiComponent.getComponent(vL.getId());
+                    if (bc != null) {
+                        String[] stParam = {};
+                        if (((String) f.value).length() > 0) {
+                            stParam = ((String) f.value).split(";");
+                        }
+                        if (stParam.length > 0) {
+                            if (bc instanceof RecyclerComponent) {
+                                ListRecords listRecParam = new ListRecords();
+                                for (Record recList : ((RecyclerComponent) bc).listData) {
+                                    Record recParam = new Record();
+                                    for (String nameParam : stParam) {
+                                        Field fParam = recList.getField(nameParam);
+                                        if (fParam != null) {
+                                            recParam.add(fParam);
+                                        }
+                                    }
+                                    listRecParam.add(recParam);
+                                }
+                                f.value = listRecParam;
+                            }
+                        } else {
+                            if (bc instanceof RecyclerComponent) {
+                                f.type = Field.TYPE_INTEGER;
+                                f.value = ((RecyclerComponent) bc).listData.size();
+                            } else {
+                                iBase.log("1001 No data for parameter " + f.name + " in " + multiComponent.nameComponent);
+                                rec.remove(f);
+                            }
+                        }
+                    } else {
+                        iBase.log("0010 Component " + f.name + " not found in " + multiComponent.nameComponent);
+                        rec.remove(f);
+                    }
+                } else {
+                    iBase.log("0009 No item " + f.name + " in " + multiComponent.nameComponent);
+                    rec.remove(f);
+                }
+            }
+        }
+    }
+
+    public void setValueParam(int viewId, String name) {
         View view = parentLayout.findViewById(viewId);
         if (view instanceof ViewGroup) {
             ViewGroup vg = (ViewGroup) view;
             int ik = vg.getChildCount();
             for (int i = 0; i < ik; i++) {
-                setOneViewValue(vg.getChildAt(i));
+                setOneViewValue(vg.getChildAt(i), null);
             }
         } else {
-            setOneViewValue(view);
+            setOneViewValue(view, name);
         }
     }
 
-    public void setOneViewValue(View view) {
+    public void setOneViewValue(View view, String namePar) {
         int id = view.getId();
         if (id <= 0) return;
-        String name = getResources().getResourceEntryName(id);
+        String name;
+        if (namePar == null || namePar.length() == 0) {
+            name = getResources().getResourceEntryName(id);
+        } else {
+            name = namePar;
+        }
         if (name == null) return;
         String value = componGlob.getParamValueIfIs(name);
         if (value == null) return;
@@ -989,6 +1171,36 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                 }
             }
             gr.into((ImageView) view);
+        }
+    }
+
+    public void setVar(int viewId, String nameVar) {
+        View view = parentLayout.findViewById(viewId);
+        if (view != null) {
+            Field ff = componGlob.globalData.getField(nameVar);
+            Object obj = null;
+            if (ff != null) {
+                obj = ff.value;
+                if (obj instanceof Record) {
+                    for (Field fr : (Record) obj) {
+                        setOneParam(fr);
+                    }
+                } else if (obj instanceof Field) {
+                    setOneParam((Field) obj);
+                }
+            }
+            if (view instanceof IComponent) {
+                ((IComponent) view).setData(obj);
+            } else if (view instanceof ViewGroup) {
+
+            }
+        }
+    }
+
+    public void setOneParam(Field ff) {
+        Param param = componGlob.getParam(ff.name);
+        if (param != null) {
+            componGlob.setParamValue(param, ff);
         }
     }
 
@@ -1158,15 +1370,33 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     }
 
     @Override
+    public void backOk() {
+        Intent intentOk = new Intent();
+        intentOk.putExtra(Constants.RECORD, "{}");
+        setResult(RESULT_OK, intentOk);
+        finishActivity();
+    }
+
+    @Override
     public void onBackPressed() {
         if ( ! canBackPressed()) {
             return;
         }
         FragmentManager fm = getSupportFragmentManager();
-        int countFragment = fm.getBackStackEntryCount();
+//        int countFragment = fm.getBackStackEntryCount();
 //        int countFragment = stackFragments.size();
+        List<Fragment> lf = fm.getFragments();
+        for (int i = 0; i < lf.size(); i++) {
+            Fragment ff = lf.get(i);
+            if (lf.get(i).getTag().contains("glide")) {
+                lf.remove(i);
+                break;
+            }
+        }
+        int countFragment = lf.size();
         if (countFragment > 0) {
-            Fragment fragment = topFragment(fm);
+//            Fragment fragment = topFragment(fm);
+            Fragment fragment = lf.get(lf.size() - 1);
             if (fragment != null && fragment instanceof BaseFragment) {
                 if (((BaseFragment) fragment).canBackPressed()) {
                     if (((BaseFragment) fragment).noKeyBack()) {

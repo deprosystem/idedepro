@@ -15,8 +15,9 @@ public class TextViewNumberGrammar extends androidx.appcompat.widget.AppCompatTe
     private Context context;
     private int stringArray;
     private String [] textArray;
-    private String alias;
+    private String alias, value, prefix;
     private Object data;
+    private boolean zeroNotView;
 
     public TextViewNumberGrammar(Context context) {
         super(context);
@@ -38,36 +39,80 @@ public class TextViewNumberGrammar extends androidx.appcompat.widget.AppCompatTe
     private void setAttrs(AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Simple);
         alias = a.getString(R.styleable.Simple_alias);
+        value = a.getString(R.styleable.Simple_value);
+        prefix = a.getString(R.styleable.Simple_prefix);
         stringArray = a.getResourceId(R.styleable.Simple_stringArray, 0);
+        zeroNotView = a.getBoolean(R.styleable.Simple_zeroNotView, false);
+        if (prefix == null) {
+            prefix = "";
+        }
         a.recycle();
         textArray = null;
         if (stringArray != 0) {
             textArray = getResources().getStringArray(stringArray);
         }
+        if (value != null && value.length() > 0) {
+            setData(value);
+        }
     }
 
     @Override
     public void setData(Object data) {
-        if (textArray != null) {
-            int num = 0;
-            if (data instanceof String) {
-                try {
-                    num = Integer.valueOf((String) data);
-                } catch (NumberFormatException e) {
+        this.data = data;
+        int num = 0;
+        String std = "";
+        boolean isStr = false;
+        if (data instanceof String) {
+            try {
+                num = Integer.valueOf((String) data);
+            } catch (NumberFormatException e) {
+                std = (String) data;
+                int in = std.length() - 1;
+                num = 0;
+                int res = 0;
+                int j = 0;
+                for (int i = in; i > -1; i --) {
+                    char c = std.charAt(i);
+                    if (c >= '0' && c <= '9') {
+                        res = c - 48;
+                        isStr = true;
+                        j++;
+                        if (j > 1) {
+                            num += (res * 10);
+                            break;
+                        } else {
+                            num = res;
+                        }
+                    }
                 }
-            } else {
-                if (data instanceof Long) {
-                    long lon = (Long) data;
-                    num = (int) lon;
-                } else if (data instanceof Integer) {
-                    num = (Integer) data;
-                } else {
+                if (! isStr) {
+                    setText(std);
                     return;
                 }
             }
-            String st = Injector.getComponGlob().TextForNumbet(num, textArray[0],
-                    textArray[1], textArray[2]);
-            setText(num + " " + st);
+        } else {
+            if (data instanceof Long) {
+                long lon = (Long) data;
+                num = (int) lon;
+            } else if (data instanceof Integer) {
+                num = (Integer) data;
+            } else {
+                return;
+            }
+        }
+        if (zeroNotView && num == 0) {
+            setText("");
+        } else {
+            String st = "";
+            if (textArray != null) {
+                st = " " + Injector.getComponGlob().TextForNumbet(num, textArray[0],
+                        textArray[1], textArray[2]);
+            }
+            if (isStr) {
+                setText(prefix + std + st);
+            } else {
+                setText(prefix + num + st);
+            }
         }
     }
 
@@ -78,7 +123,7 @@ public class TextViewNumberGrammar extends androidx.appcompat.widget.AppCompatTe
 
     @Override
     public Object getData() {
-        return null;
+        return data;
     }
 
     @Override

@@ -25,9 +25,18 @@ public class MyApp extends Application {
         DeclareParam.build(context)
                 .setAppParams(new MyParams())
                 .setDeclareScreens(new MyDeclare())
-                .addParam("cityId_hot", "2")
-                .addParam("cityName_hot", "Алматы")
-                .addParam("flag_country_hot", "https://ht.kz/fls/page/1352713745eccd5ee1.gif")
+
+                .addParam("hot_depart_city_id", "2")
+                .addParam("hot_depart_city_name", "Алматы")
+                .addParam("country_name", "")
+                .addParam("adults", "1")
+                .addParam("kids","")
+                .addParam("country_id","")
+                .addParam("city_id","")
+                .addParam("hot_flag_country", "https://deprosystem.com/images/htkz/flag_kaz.png")
+                .addParam("depart_city_id", "2")
+                .addParam("depart_city_name", "Алматы")
+                .addParam("flag_country", "https://deprosystem.com/images/htkz/flag_kaz.png")
                 .addParam("access-token","885bfa8ed2c62b023dfae54ecb8c598ea");
 //                .addParam("access-token","885bfa8ed2c62b023dfae54ecb8c598ea85515b1cf95ba957f1c2f20675467e4");
     }

@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewParent;
+import android.widget.TextView;
 
 import com.dpcsa.compon.R;
 import com.dpcsa.compon.interfaces_classes.IAlias;
@@ -38,8 +39,9 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
     private boolean onlyLetters;
     private OnFocusChangeListener focusChangeListenerInheritor = null;
     private String filter = "[a-zA-ZёЁїЇіІ а-яА-Я-]+";
-    private int selectPos, idShow, idHide, idClean, idEquals;
+    private int selectPos, idShow, idHide, idClean, idEquals, idError;
     private View viewShow, viewHide, viewClean;
+    private TextView viewError;
     private ComponEditText viewEquals, equalsGeneral;
     private String oldString;
     private View parent;
@@ -69,6 +71,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
             if (textError == null) {
                 textError = "";
             }
+            idError = a.getResourceId(R.styleable.Simple_idError, 0);
             onlyLetters = a.getBoolean(R.styleable.Simple_onlyLetters, false);
             minValueText = a.getString(R.styleable.Simple_minValue);
             maxLength = a.getInt(R.styleable.Simple_maxLength, Integer.MAX_VALUE);
@@ -158,8 +161,8 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
         int i = getId();
+        parent = getParenView();
         if (idHide != 0 && idShow != 0 || idClean != 0) {
-            parent = getParenView();
             if (idHide != 0 && idHide != idShow) {
                 viewHide = parent.findViewById(idHide);
                 viewShow = parent.findViewById(idShow);
@@ -183,6 +186,9 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                     errorLog("0004 не правильная ссылка на проверку совпадения паролей ");
                 }
             }
+        }
+        if (idError != 0) {
+            viewError = (TextView) parent.findViewById(idError);
         }
     }
 
@@ -246,7 +252,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
 
     @Override
     public void setData(Object data) {
-        setText((String) data);
+        setText(String.valueOf(data));
     }
 
     @Override
@@ -360,6 +366,11 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                 equalsGeneral.setErrorValid(null);
             }
         }
+        if ( ! result) {
+            setErrorValid(textError);
+        } else {
+            setErrorValid("");
+        }
         return result;
     }
 
@@ -462,11 +473,15 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
     }
 
     public void setErrorValid(String textError) {
-        if (textInputLayout == null) {
-            getTextInputLayout();
-        }
-        if (textInputLayout != null) {
-            textInputLayout.setError(textError);
+        if (viewError != null) {
+            viewError.setText(textError);
+        } else {
+            if (textInputLayout == null) {
+                getTextInputLayout();
+            }
+            if (textInputLayout != null) {
+                textInputLayout.setError(textError);
+            }
         }
     }
 

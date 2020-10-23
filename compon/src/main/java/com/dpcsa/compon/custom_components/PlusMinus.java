@@ -17,21 +17,23 @@ import com.dpcsa.compon.interfaces_classes.IBase;
 import com.dpcsa.compon.interfaces_classes.IComponent;
 import com.dpcsa.compon.interfaces_classes.ICustom;
 import com.dpcsa.compon.interfaces_classes.Multiply;
+import com.dpcsa.compon.interfaces_classes.OnChangeStatusListener;
 import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.param.ParamComponent;
+import com.dpcsa.compon.single.Injector;
 
-public class PlusMinus extends AppCompatEditText {
+public class PlusMinus extends AppCompatEditText implements IComponent{
 
     private Context context;
-    private int plusId, minusId;
+    private int plusId, minusId, viewMirror;
     public ICustom iCustom;
     public ParamComponent paramMV;
-    private View parentView;
+    private View parentView, vMirror;
     private Record record;
     private Field fieldRecord;
     private Field field;
-    private String thisName;
+    private String thisName, saveParam;
     private BaseComponent component;
     private int minValueInt,maxValueInt;
     private String minValue,maxValue;
@@ -57,9 +59,11 @@ public class PlusMinus extends AppCompatEditText {
             try {
                 plusId = a.getResourceId(R.styleable.Simple_plusViewId, 0);
                 minusId = a.getResourceId(R.styleable.Simple_minusViewId, 0);
+                viewMirror = a.getResourceId(R.styleable.Simple_viewMirror, 0);
                 minValue = a.getString(R.styleable.Simple_minValue);
                 maxValue = a.getString(R.styleable.Simple_maxValue);
                 noEdit = a.getBoolean(R.styleable.Simple_noEdit, false);
+                saveParam = a.getString(R.styleable.Simple_saveParam);
             } finally {
                 a.recycle();
             }
@@ -88,6 +92,9 @@ public class PlusMinus extends AppCompatEditText {
 
     public void setParam(View parentView, Record rec, BaseComponent component) {
         this.parentView = parentView;
+        if (viewMirror != 0) {
+            vMirror = parentView.findViewById(viewMirror);
+        }
         this.record = rec;
         fieldRecord = new Field("", Field.TYPE_RECORD, rec);
         iCustom = component.iCustom;
@@ -202,11 +209,18 @@ public class PlusMinus extends AppCompatEditText {
         }
     }
 
-    public void setData(String data) {
-        blockEdit = true;
-        setText(data);
-        blockEdit = false;
-    }
+//    public void setData(String data) {
+//        int c;
+//        try {
+//            c = Integer.valueOf((String) data);
+//            setValue(c);
+//            blockEdit = true;
+//            setText(data);
+//            blockEdit = false;
+//        } catch (NumberFormatException e) {
+//
+//        }
+//    }
 
     private void setValue(int count) {
         countValue = count;
@@ -217,43 +231,55 @@ public class PlusMinus extends AppCompatEditText {
                 field.value = count;
             }
         }
+        if (vMirror != null) {
+            if (vMirror instanceof IComponent) {
+                ((IComponent) vMirror).setData(count);
+            } else {
+                ((TextView) vMirror).setText(String.valueOf(count));
+            }
+        }
+        if (saveParam != null && saveParam.length() > 0) {
+            Injector.getComponGlob().setParamValue(saveParam, String.valueOf(count));
+        }
         plusMinusComponent.clickAdapter(null, null, 0, record);
-        for (Multiply m : plusMinusComponent.paramMV.multiplies) {
-            Float mult = record.getFloat(m.nameField);
-            if (mult != null) {
-                TextView tv = parentView.findViewById(m.viewId);
-                Float ff = mult * count;
-                if (tv != null) {
-                    if (tv instanceof IComponent) {
-                        ((IComponent) tv).setData(ff);
-                    } else {
-                        tv.setText(String.valueOf(ff));
-                    }
-                }
-                if (m.nameFieldRes != null && m.nameFieldRes.length() > 0) {
-                    Field field = record.getField(m.nameFieldRes);
-                    if (field != null) {
-                        switch (field.type) {
-                            case Field.TYPE_DOUBLE:
-                                Double d = Double.valueOf(ff);
-                                field.value = d;
-                                break;
-                            case Field.TYPE_FLOAT:
-                                field.value = ff;
-                                break;
-                            case Field.TYPE_INTEGER:
-                                float ii = ff;
-                                Integer in = Integer.valueOf((int) ii);
-                                field.value = in;
-                                break;
-                            case Field.TYPE_LONG:
-                                float iL = ff;
-                                Long lon = Long.valueOf((long) iL);
-                                field.value = lon;
-                                break;
+        if (plusMinusComponent.paramMV.multiplies != null) {
+            for (Multiply m : plusMinusComponent.paramMV.multiplies) {
+                Float mult = record.getFloat(m.nameField);
+                if (mult != null) {
+                    TextView tv = parentView.findViewById(m.viewId);
+                    Float ff = mult * count;
+                    if (tv != null) {
+                        if (tv instanceof IComponent) {
+                            ((IComponent) tv).setData(ff);
+                        } else {
+                            tv.setText(String.valueOf(ff));
                         }
-                    } else {
-                        record.add(new Field(m.nameFieldRes, Field.TYPE_FLOAT, ff));
+                    }
+                    if (m.nameFieldRes != null && m.nameFieldRes.length() > 0) {
+                        Field field = record.getField(m.nameFieldRes);
+                        if (field != null) {
+                            switch (field.type) {
+                                case Field.TYPE_DOUBLE:
+                                    Double d = Double.valueOf(ff);
+                                    field.value = d;
+                                    break;
+                                case Field.TYPE_FLOAT:
+                                    field.value = ff;
+                                    break;
+                                case Field.TYPE_INTEGER:
+                                    float ii = ff;
+                                    Integer in = Integer.valueOf((int) ii);
+                                    field.value = in;
+                                    break;
+                                case Field.TYPE_LONG:
+                                    float iL = ff;
+                                    Long lon = Long.valueOf((long) iL);
+                                    field.value = lon;
+                                    break;
+                            }
+                        } else {
+                            record.add(new Field(m.nameFieldRes, Field.TYPE_FLOAT, ff));
+                        }
                     }
                 }
             }
@@ -270,5 +296,36 @@ public class PlusMinus extends AppCompatEditText {
 
     public Record getRecord() {
         return record;
+    }
+
+    @Override
+    public void setData(Object data) {
+        int c;
+        try {
+            c = Integer.valueOf((String) data);
+            if (c >= minValueInt && c <= maxValueInt) {
+                setValue(c);
+                blockEdit = true;
+                setText(String.valueOf(c));
+                blockEdit = false;
+            }
+        } catch (NumberFormatException e) {
+
+        }
+    }
+
+    @Override
+    public Object getData() {
+        return null;
+    }
+
+    @Override
+    public void setOnChangeStatusListener(OnChangeStatusListener statusListener) {
+
+    }
+
+    @Override
+    public String getString() {
+        return null;
     }
 }

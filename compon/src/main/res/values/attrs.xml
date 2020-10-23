@@ -5,6 +5,10 @@
     <attr name="alias" format="string"/>
     <attr name="selectColor" format="reference|color"/>
     <attr name="normColor" format="reference|color"/>
+    <attr name="heightCell" format="reference|dimension"/>
+    <attr name="dateFormat" format="string"/>
+    <attr name="betweenColor" format="color"/>
+    <attr name="saveParam" format="string"/>
     <declare-styleable name="ComponList">
         <attr name="gapBetweenTagsVert" format="reference|dimension"/>
         <attr name="gapBetweenTagsHoris" format="reference|dimension"/>
@@ -45,19 +49,21 @@
         <attr name="positiveViewId" format="reference"/>
         <attr name="plusViewId" format="reference"/>
         <attr name="minusViewId" format="reference"/>
+        <attr name="viewMirror" format="reference"/>
         <attr name="location" format="reference"/>
         <attr name="showTime" format="integer"/>
         <attr name="selectorLine" format="reference"/>
         <attr name="heightLine" format="dimension"/>
         <attr name="numberFormat" format="string"/>
         <attr name="moneyFormat" format="string"/>
-        <attr name="dateFormat" format="string"/>
+        <attr name="dateFormat"/>
         <attr name="dateMilisec" format="boolean"/>
         <attr name="onlyLetters" format="boolean"/>
         <attr name="placeholder" format="reference"/>
         <attr name="blur" format="integer"/>
         <attr name="oval" format="boolean"/>
         <attr name="noSwipeHide" format="boolean"/>
+        <attr name="noBackPressedHide" format="boolean"/>
         <attr name="viewMatch" format="boolean"/>
         <attr name="viewLayoutId" format="string"/>
         <attr name="fadedScreenColor" format="color"/>
@@ -67,11 +73,16 @@
         <attr name="badgeColor" format="color"/>
         <attr name="hintTextColor" format="color"/>
         <attr name="amountDots" format="integer"/>
+        <attr name="amountStars" format="integer"/>
+        <attr name="star" format="reference"/>
+        <attr name="starFilled" format="reference"/>
         <attr name="colorDot" format="color"/>
         <attr name="diametrDot" format="dimension"/>
+        <attr name="widthStar" format="dimension"/>
         <attr name="textColor" format="color"/>
         <attr name="iconColor" format="color"/>
         <attr name="stringArray" format="reference"/>
+        <attr name="zeroNotView" format="boolean"/>
         <attr name="titleTool" format="reference|string" />
         <attr name="titleColor" format="color"/>
         <attr name="titleSize" format="reference|dimension"/>
@@ -84,6 +95,8 @@
         <attr name="textError" format="string"/>
         <attr name="minValue" format="string"/>
         <attr name="maxValue" format="integer"/>
+        <attr name="value" format="string"/>
+        <attr name="prefix" format="string"/>
         <attr name="minLength" format="integer"/>
         <attr name="maxLength" format="integer"/>
         <attr name="noEdit" format="boolean"/>
@@ -91,8 +104,25 @@
         <attr name="selectBackground" format="reference"/>
         <attr name="selectColor"/>
         <attr name="normColor"/>
+        <attr name="saveParam"/>
         <attr name="noSelImgChangeColor" format="boolean"/>
         <attr name="toAnimate" format="boolean"/>
+        <attr name="thumbImg" format="reference"/>
+        <attr name="thumbDiam" format="dimension"/>
+        <attr name="barHeight" format="dimension"/>
+        <attr name="barColor" format="color"/>
+        <attr name="betweenColor" />
+        <attr name="barRoundedCorners" format="boolean"/>
+        <attr name="barDrawable" format="reference"/>
+        <attr name="sliderViewInfo" format="reference"/>
+        <attr name="showMinValue" format="reference"/>
+        <attr name="showMaxValue" format="reference"/>
+        <attr name="showMinMaxValue" format="reference"/>
+        <attr name="minValueSeek" format="integer"/>
+        <attr name="maxValueSeek" format="integer"/>
+        <attr name="minStartValue" format="integer"/>
+        <attr name="maxStartValue" format="integer"/>
+        <attr name="singleThumb" format="boolean"/>
         <attr name="imageLocale">
             <enum name="left" value="0" />
             <enum name="top" value="1" />
@@ -103,6 +133,7 @@
             <enum name="filled" value="0" />
             <enum name="email" value="1" />
         </attr>
+        <attr name="idError" format="reference" />
         <attr name="swipeViewId" format="reference"/>
         <attr name="swipeRightViewId" format="reference"/>
         <attr name="swipeLeftViewId" format="reference"/>
@@ -119,6 +150,30 @@
             <enum name="REMOVE" value="3" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="CalendarV">
+        <attr name="heightCell"/>
+        <attr name="heightMonth" format="reference|dimension"/>
+        <attr name="countAfterMonth" format="integer"/>
+        <attr name="countBeforeMonth" format="integer"/>
+        <attr name="afterToday" format="boolean"/>
+        <attr name="tillToday" format="boolean"/>
+        <attr name="rangeDate" format="boolean"/>
+        <attr name="nameMonth" format="reference"/>
+        <attr name="textDaySize" format="reference|dimension"/>
+        <attr name="monthSize" format="reference|dimension"/>
+        <attr name="selectTextColor" format="color"/>
+        <attr name="selectTintColor" format="color"/>
+        <attr name="betweenColor" />
+        <attr name="selectTintDiam" format="dimension"/>
+        <attr name="workDayColor" format="color"/>
+        <attr name="noWorkDayColor" format="color"/>
+        <attr name="showDateId" format="reference"/>
+        <attr name="saveParam"/>
+        <attr name="dateFormat" />
+        <attr name="alias" />
+    </declare-styleable>
+
     <declare-styleable name="Drum">
         <attr name="itemHeight" format="reference|dimension"/>
         <attr name="textSize" />
@@ -140,7 +195,7 @@
     </declare-styleable>
     <declare-styleable name="CalendarView">
         <attr name="heightTitle" format="reference|dimension"/>
-        <attr name="heightCell" format="reference|dimension"/>
+        <attr name="heightCell"/>
         <attr name="border" format="reference|dimension"/>
         <attr name="borderColorGrid" format="reference|color"/>
         <attr name="countMonthLeft" format="integer" />

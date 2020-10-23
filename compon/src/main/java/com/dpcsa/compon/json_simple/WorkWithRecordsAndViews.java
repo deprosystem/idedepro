@@ -20,8 +20,10 @@ import com.dpcsa.compon.interfaces_classes.IAlias;
 import com.dpcsa.compon.interfaces_classes.IBaseComponent;
 import com.dpcsa.compon.interfaces_classes.IComponent;
 import com.dpcsa.compon.interfaces_classes.Navigator;
+import com.dpcsa.compon.interfaces_classes.Param;
 import com.dpcsa.compon.interfaces_classes.ViewHandler;
 import com.dpcsa.compon.interfaces_classes.Visibility;
+import com.dpcsa.compon.single.ComponGlob;
 import com.dpcsa.compon.single.Injector;
 
 import java.text.SimpleDateFormat;
@@ -34,6 +36,7 @@ import static com.bumptech.glide.request.RequestOptions.placeholderOf;
 import static com.dpcsa.compon.json_simple.Field.TYPE_INTEGER;
 import static com.dpcsa.compon.json_simple.Field.TYPE_LIST_RECORD;
 import static com.dpcsa.compon.json_simple.Field.TYPE_LONG;
+import static com.dpcsa.compon.json_simple.Field.TYPE_RECORD;
 import static com.dpcsa.compon.json_simple.Field.TYPE_STRING;
 
 public class WorkWithRecordsAndViews {
@@ -86,6 +89,7 @@ public class WorkWithRecordsAndViews {
                 String stN = st.substring(0, i);
                 int ik = st.indexOf(")");
                 if (ik == -1) {
+                    Log.e("SMPL","Ошибка в параметрах " + stN + ". Скорее всего разделитель в скобках не ;");
                     ik = st.length();
                 }
                 recordResult.add(new Field(stN, TYPE_LIST_RECORD, st.substring(i + 1, ik)));
@@ -109,9 +113,6 @@ public class WorkWithRecordsAndViews {
                             recordResult.add(new Field(stN, TYPE_STRING, stPar));
 
                     }
-//                    if (stPar.equals(SYSTEM_TIME)) {
-//                        recordResult.add(new Field(stN, TYPE_STRING, String.valueOf(new Date().getTime())));
-//                    }
                 } else {
                     recordResult.add(new Field(st, TYPE_STRING, null));
                 }
@@ -147,14 +148,31 @@ public class WorkWithRecordsAndViews {
 
     private void setRecordField(View v, String name) {
         for (Field f : recordResult) {
-            if (f.name.equals(name)) {
+            if (f.type != TYPE_LIST_RECORD && f.name.equals(name)) {
                 if (v instanceof ComponImageView) {
                     f.type = Field.TYPE_FILE_PATH;
                     f.value = ((ComponImageView) v).getPathImg();
                     break;
                 }
                 if (v instanceof IComponent) {
-                    f.value = ((IComponent) v).getString();
+                    Object obj = ((IComponent) v).getData();
+                    if (obj != null) {
+                        if (obj instanceof Long) {
+                            f.type = TYPE_LONG;
+                            f.value = obj;
+                        } else if (obj instanceof Integer) {
+                            f.type = TYPE_INTEGER;
+                            f.value = obj;
+                        } else if (obj instanceof Record) {
+                            f.type = TYPE_RECORD;
+                            f.value = obj;
+                        } else if (obj instanceof String) {
+                            f.type = TYPE_STRING;
+                            f.value = obj;
+                        }
+                    } else {
+                        f.value = ((IComponent) v).getString();
+                    }
                     break;
                 }
                 if (v instanceof TextView) {
@@ -169,16 +187,17 @@ public class WorkWithRecordsAndViews {
         int id = v.getId();
         String st;
         String name = v.getContext().getResources().getResourceEntryName(id);
+        if (setParam) {
+            setRecordField(v, name);
+            return;
+        }
         if (v instanceof IAlias) {
             st = ((IAlias) v).getAlias();
             if (st != null && st.length() > 0) {
                 name = st;
             }
         }
-        if (setParam) {
-            setRecordField(v, name);
-            return;
-        }
+
         if (navigator != null) {
             for (ViewHandler vh : navigator.viewHandlers) {
                 if (id == vh.viewId) {

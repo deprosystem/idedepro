@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/tool"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/primary">
+        <LinearLayout
+            android:id="@+id/marsh"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:lineSpacingExtra="6sp"
+                android:text="@string/departure_d_d"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/back"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:orientation="vertical"
+            android:layout_marginTop="28dp"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="@dimen/h_icon"
+                android:layout_height="@dimen/h_icon"
+                android:src="@drawable/close"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ok"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="@dimen/h_icon"
+                android:layout_height="@dimen/h_icon"
+                android:src="@drawable/ok" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_below="@+id/tool">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/d_20"
+            android:layout_marginRight="@dimen/d_20"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/t_1_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/st_txt_12_40"
+                    android:layout_marginTop="@dimen/d_16"
+                    android:text="@string/depart_date"/>
+                <TextView
+                    android:id="@+id/depart_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/t_1_1"
+                    style="@style/st_txt_22"
+                    android:layout_marginTop="2dp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/t_1_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/st_txt_12_40"
+                    android:layout_marginLeft="@dimen/d_20"
+                    android:layout_marginTop="@dimen/d_16"
+                    android:text="@string/how_many"/>
+
+                <com.dpcsa.compon.custom_components.TextViewNumberGrammar
+                    android:id="@+id/night"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d_20"
+                    android:layout_marginTop="2dp"
+                    app:stringArray="@array/nights"
+                    style="@style/st_txt_22"
+                    android:layout_below="@+id/t_1_2"/>
+
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/d_12"
+                    android:layout_marginBottom="@dimen/d_12"
+                    android:background="@color/primary_20"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/primary_20" />
+    </RelativeLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        app:tabIndicatorColor="@color/primary"
+        app:tabIndicatorHeight="3dp"
+        android:layout_below="@+id/tool"/>
+
+    <com.dpcsa.compon.custom_components.ComponViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tabs"/>
+
+</RelativeLayout>

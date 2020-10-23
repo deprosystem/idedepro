@@ -19,15 +19,15 @@
         android:layout_height="56dp"
         android:background="@color/white"
         android:layout_alignParentBottom="true"
-        app:selectColor="@color/sel_menu"
-        app:normColor="@color/norm_menu"/>
+        app:selectColor="@color/primary"
+        app:normColor="@color/black"/>
 
     <LinearLayout
         android:id="@+id/dev"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_above="@+id/menu"
-        android:background="@color/sel_menu"
+        android:background="@color/primary"
         android:orientation="horizontal" />
 
     <com.dpcsa.compon.custom_components.SheetBottom

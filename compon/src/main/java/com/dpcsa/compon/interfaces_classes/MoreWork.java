@@ -9,12 +9,15 @@ import com.dpcsa.compon.base.BaseComponent;
 import com.dpcsa.compon.base.Screen;
 import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.Record;
+import com.dpcsa.compon.single.ComponGlob;
+import com.dpcsa.compon.single.Injector;
 
 public class MoreWork implements ICustom {
     public IBase iBase;
     public Screen screen;
     public BaseActivity activity;
     public View parentLayout;
+    public ComponGlob componGlob;
 
     public void setParam(IBase iBase, Screen screen) {
         this.iBase = iBase;
@@ -25,6 +28,7 @@ public class MoreWork implements ICustom {
         } else {
             parentLayout = activity.getParentLayout();
         }
+        componGlob = Injector.getComponGlob();
     }
 
     @Override

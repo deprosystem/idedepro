@@ -1,5 +1,7 @@
 package com.dpcsa.compon.param;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,7 @@ public class ParamView {
     public String selectNameField = "", selectValueField = "";
     public List<Expanded> expandedList;
     public boolean horizontal;
+    public boolean[] noSwipePages;
     public int spanCount;
 
     public ParamView(int viewId) {
@@ -121,6 +124,11 @@ public class ParamView {
     public ParamView setTab(int tabId, int arrayLabelId) {
         this.tabId = tabId;
         this.arrayLabelId = arrayLabelId;
+        return this;
+    }
+
+    public ParamView noSwipePages(boolean ... noSwipe) {
+        noSwipePages = noSwipe;
         return this;
     }
 

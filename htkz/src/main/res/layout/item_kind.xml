@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="72dp">
+
+    <TextView
+        android:id="@+id/r1"
+        style="@style/st_14_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/d_20"
+        android:text="@string/kind" />
+
+    <com.dpcsa.compon.custom_components.TextViewNumberGrammar
+        android:id="@+id/title"
+        style="@style/st_14_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@id/r1"
+        app:stringArray="@array/years" />
+
+    <LinearLayout
+        android:id="@+id/del_kind"
+        android:layout_width="@dimen/d_40"
+        android:layout_height="@dimen/d_40"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/d_20"
+        android:background="@drawable/oval"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="@dimen/d_16"
+            android:layout_height="@dimen/d_16"
+            android:src="@drawable/minus"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/primary_20"
+        android:layout_marginLeft="@dimen/d_20"
+        android:layout_marginRight="@dimen/d_20"/>
+</RelativeLayout>

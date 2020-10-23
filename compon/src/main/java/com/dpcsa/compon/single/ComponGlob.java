@@ -103,6 +103,7 @@ public class ComponGlob {
     }
 
     public void setParam(Record fields) {
+        if (fields == null) return;
         int ik = paramValues.size();
         boolean isParam;
         for (Field f: fields) {
@@ -126,7 +127,16 @@ public class ComponGlob {
         }
     }
 
-    private void setParamValue(Param param, Field f) {
+    public Param getParam(String name) {
+        for (Param param : paramValues) {
+            if (param.name.equals(name)) {
+                return param;
+            }
+        }
+        return null;
+    }
+
+    public void setParamValue(Param param, Field f) {
         switch (f.type) {
             case Field.TYPE_STRING:
                 param.value = new String((String) f.value);

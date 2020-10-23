@@ -1,18 +1,16 @@
 package com.dpcsa.compon.components;
 
-import android.util.Log;
-
 import com.dpcsa.compon.base.BaseComponent;
 import com.dpcsa.compon.base.Screen;
-import com.dpcsa.compon.custom_components.Calendar;
 import com.dpcsa.compon.interfaces_classes.IBase;
-import com.dpcsa.compon.interfaces_classes.Param;
+import com.dpcsa.compon.interfaces_classes.ICalendar;
+import com.dpcsa.compon.interfaces_classes.OnCalendarClick;
 import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.param.ParamComponent;
 
 public class CalendarComponent extends BaseComponent {
 
-    public Calendar calendar;
+    public ICalendar calendar;
     public CalendarComponent(IBase iBase, ParamComponent paramMV, Screen multiComponent) {
         super(iBase, paramMV, multiComponent);
     }
@@ -20,7 +18,7 @@ public class CalendarComponent extends BaseComponent {
     @Override
     public void initView() {
         if (paramMV.paramView != null || paramMV.paramView.viewId != 0) {
-            calendar = (Calendar) parentLayout.findViewById(paramMV.paramView.viewId);
+            calendar = (ICalendar) parentLayout.findViewById(paramMV.paramView.viewId);
         }
         if (calendar == null) {
             iBase.log("Не найден Calendar в " + multiComponent.nameComponent);
@@ -34,10 +32,12 @@ public class CalendarComponent extends BaseComponent {
 
     }
 
-    public Calendar.CalendarClick cClick = new Calendar.CalendarClick() {
+    public OnCalendarClick cClick = new OnCalendarClick() {
         @Override
         public void onChangeDate(long newDate, int weekday) {
-            componGlob.setParamValue(paramMV.paramView.selectNameField, String.valueOf(newDate));
+            if (paramMV.paramView.selectNameField != null && paramMV.paramView.selectNameField.length() > 0) {
+                componGlob.setParamValue(paramMV.paramView.selectNameField, String.valueOf(newDate));
+            }
             iBase.sendEvent(paramMV.paramView.viewId);
         }
     };

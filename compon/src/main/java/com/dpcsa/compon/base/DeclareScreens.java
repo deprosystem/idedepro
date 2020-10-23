@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.util.Log;
 //import android.graphics.Color;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ import com.dpcsa.compon.tools.Constants;
 import java.util.ArrayList;
 import java.util.Map;
 
+import static com.dpcsa.compon.interfaces_classes.ItemSetValue.TYPE_SOURCE.GLOBAL_VAR;
 import static com.dpcsa.compon.interfaces_classes.ItemSetValue.TYPE_SOURCE.GROUPP_PARAM;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.DRAWER;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.NULLIFY;
@@ -397,8 +399,16 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, screen, paramForScreen);
     }
 
+    public ViewHandler start(int viewId, String screen, ViewHandler.TYPE_PARAM_FOR_SCREEN paramForScreen, String param) {
+        return new ViewHandler(viewId, screen, paramForScreen, param);
+    }
+
     public ViewHandler start(String screen, ViewHandler.TYPE_PARAM_FOR_SCREEN paramForScreen) {
         return new ViewHandler(0, screen, paramForScreen);
+    }
+
+    public ViewHandler start(String screen, ViewHandler.TYPE_PARAM_FOR_SCREEN paramForScreen, String param) {
+        return new ViewHandler(0, screen, paramForScreen, param);
     }
 
     public ViewHandler start(String screen, ViewHandler.TYPE_PARAM_FOR_SCREEN paramForScreen, int componId) {
@@ -462,6 +472,14 @@ public abstract class DeclareScreens<T>{
 
     public ViewHandler setProfile(String profile) {
         return new ViewHandler(0, ViewHandler.TYPE.SET_PROFILE, profile);
+    }
+
+    public ViewHandler saveViewInParams(String param) {
+        return new ViewHandler(0, ViewHandler.TYPE.SAVE_PARAM, param);
+    }
+
+    public ViewHandler saveViewInParams(int viewId, String param) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.SAVE_PARAM, param);
     }
 
     public ViewHandler subscribePush(String url) {
@@ -574,6 +592,10 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, ViewHandler.TYPE.BACK);
     }
 
+    public ViewHandler backOk() {
+        return new ViewHandler(0, ViewHandler.TYPE.BACK_OK);
+    }
+
     public ViewHandler backOk(int viewId) {
         return new ViewHandler(viewId, ViewHandler.TYPE.BACK_OK);
     }
@@ -643,6 +665,46 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, ViewHandler.TYPE.SHOW, showViewId, false);
     }
 
+    public ViewHandler cleanVar(String nameVar) {
+        return new ViewHandler(0, ViewHandler.TYPE.CLEAN_VAR, nameVar);
+    }
+
+    public ViewHandler cleanVar(int viewId, String nameVar) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.CLEAN_VAR, nameVar);
+    }
+
+    public ViewHandler cleanCopyVar(String nameVar) {
+        return new ViewHandler(0, ViewHandler.TYPE.CLEAN_COPY_VAR, nameVar);
+    }
+
+    public ViewHandler restoreVar(String nameVar) {
+        return new ViewHandler(0, ViewHandler.TYPE.RESTORE_VAR, nameVar);
+    }
+
+    public ViewHandler restoreVar(int viewId, String nameVar) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.RESTORE_VAR, nameVar);
+    }
+
+    public ViewHandler addVar(String nameVar, String param) {
+        return new ViewHandler(0, ViewHandler.TYPE.ADD_VAR, nameVar, param);
+    }
+
+    public ViewHandler addVar(int viewId, String nameVar, String param) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.ADD_VAR, nameVar, param);
+    }
+
+    public ViewHandler setVar(int viewId, String nameVar) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.SET_VAR, nameVar);
+    }
+
+    public ViewHandler delVar(String nameVar, String param) {
+        return new ViewHandler(0, ViewHandler.TYPE.DEL_VAR, nameVar, param);
+    }
+
+    public ViewHandler delVar(int viewId, String nameVar, String param) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.DEL_VAR, nameVar, param);
+    }
+
     public ViewHandler hide(int showViewId) {
         return new ViewHandler(0, ViewHandler.TYPE.HIDE, showViewId, false);
     }
@@ -677,6 +739,14 @@ public abstract class DeclareScreens<T>{
 
     public ViewHandler handler(int viewId, int idTextV, int idString) {
         return new ViewHandler(viewId, SET_VALUE, idTextV, idString);
+    }
+
+    public ViewHandler handler(int viewId, int idTextV, String value) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.SET_VALUE, idTextV, value);
+    }
+
+    public ViewHandler setValue(int viewId, int idTextV, String value) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.SET_VALUE, idTextV, value);
     }
 
     public ViewHandler handler(int viewId, ViewHandler.TYPE type, int idCompon, String name) {
@@ -717,6 +787,14 @@ public abstract class DeclareScreens<T>{
 
     public ItemSetValue itemParam(int viewId) {
         return new ItemSetValue(viewId, GROUPP_PARAM);
+    }
+
+    public ItemSetValue itemParam(int viewId, String nameParam) {
+        return new ItemSetValue(viewId, GROUPP_PARAM, nameParam);
+    }
+
+    public ItemSetValue itemVar(int viewId, String nameVar) {
+        return new ItemSetValue(viewId, GLOBAL_VAR, nameVar);
     }
 
     public FilterParam filter(String nameField, FilterParam.Operation oper, Object value) {

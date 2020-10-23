@@ -3,6 +3,7 @@ package com.dpcsa.compon.custom_components;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.dpcsa.compon.R;
 import com.dpcsa.compon.interfaces_classes.IAlias;
@@ -17,6 +18,8 @@ public class TextViewGrammar extends androidx.appcompat.widget.AppCompatTextView
     private String [] textArray;
     private String alias;
     private Object data;
+    private boolean zeroNotView;
+
     public TextViewGrammar(Context context) {
         super(context);
         this.context = context;
@@ -38,6 +41,7 @@ public class TextViewGrammar extends androidx.appcompat.widget.AppCompatTextView
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Simple);
         alias = a.getString(R.styleable.Simple_alias);
         stringArray = a.getResourceId(R.styleable.Simple_stringArray, 0);
+        zeroNotView = a.getBoolean(R.styleable.Simple_zeroNotView, false);
         a.recycle();
         textArray = null;
         if (stringArray != 0) {
@@ -48,18 +52,28 @@ public class TextViewGrammar extends androidx.appcompat.widget.AppCompatTextView
     @Override
     public void setData(Object data) {
         if (textArray != null) {
-            int num;
+            int num = 0;
             if (data instanceof Long) {
                 long lon = (Long) data;
                 num = (int) lon;
             } else if (data instanceof Integer) {
                 num = (Integer) data;
+            } else if (data instanceof String){
+                try {
+                    num = Integer.valueOf((String) data);
+                } catch (NumberFormatException e) {
+                    Log.e("","");
+                }
             } else {
                 return;
             }
-            String st = Injector.getComponGlob().TextForNumbet(num, textArray[0],
-                    textArray[1], textArray[2]);
-            setText(st);
+            if (zeroNotView && num == 0) {
+                setText("");
+            } else {
+                String st = Injector.getComponGlob().TextForNumbet(num, textArray[0],
+                        textArray[1], textArray[2]);
+                setText(st);
+            }
         }
     }
 

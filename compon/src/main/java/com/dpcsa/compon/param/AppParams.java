@@ -19,6 +19,9 @@ public abstract class AppParams<T> {
     public static String NAME_LOG_NET = "SMPL_NET";
     public static String NAME_LOG_APP = "SMPL_APP";
     public static String NAME_LOG_DB = "SMPL_DB";
+
+    public boolean isFullScreen = false;
+
     public int paginationPerPage = 20;  // количество записей на странице (в блоке) при пагинации
     public String paginationNameParamPerPage = "PerPage";   // название ключа заголовка в котором передается paginationPerPage
     public String paginationNameParamNumberPage = "NumberPage"; // название ключа заголовка в котором передается номер страницы
