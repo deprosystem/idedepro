@@ -4,16 +4,18 @@ import android.util.Log;
 
 import com.dpcsa.compon.param.ParamModel;
 
+import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.SET_VALUE_PARAM;
+
 public class ViewHandler {
     public int viewId;
     public enum TYPE {NAME_SCREEN, CLOSE_DRAWER, OPEN_DRAWER, MODEL_PARAM, KEY_BACK, SET_TOKEN,
         BACK, BACK_OK, BACK_MES, PREFERENCE_SET_VALUE, PAGER_PLUS, PREFERENCE_SET_NAME, FINISH, SET_PUSH_TOKEN,
         FIELD_WITH_NAME_SCREEN, SELECT, SET_PARAM, EXEC, UPDATE_DATA, RESULT_PARAM, NEXT_SCREEN_SEQUENCE,
-        RESULT_RECORD, ASSIGN_VALUE, SET_VALUE, SET_VALUE_PARAM, SET_LOCALE, SET_GLOBAL, SET_MENU, SET_MENU_DEF, EXIT,
-        CLICK_VIEW, MAP_ROUTE, SHOW, HIDE, SHOW_HIDE, BROADCAST, RECEIVER, CLICK_CUSTOM, DEL_RECYCLER,
+        RESULT_RECORD, ASSIGN_VALUE, SET_VALUE, SET_VALUE_PARAM, SET_LOCALE, SET_GLOBAL, SET_MENU, //SET_MENU_DEF,
+        EXIT, CLICK_VIEW, MAP_ROUTE, SHOW, HIDE, SHOW_HIDE, BROADCAST, RECEIVER, CLICK_CUSTOM, DEL_RECYCLER,
         CLICK_SEND, SEND_UPDATE, SWITCH_ON, SWITCH_ON_STATUS, ANIMATE, YOUTUBE, SUBSCRIBE_PUSH,
         SPR_SCALE, SPR_Y, AFTER, ADD_RECORD, DEL_RECORD, SAVE_PARAM, CLEAN_VAR, ADD_VAR, DEL_VAR, SET_VAR,
-        ACTUAL, GET_DATA, CALL_UP, DIAL_UP, SET_PROFILE, CLEAN_COPY_VAR, RESTORE_VAR}
+        ACTUAL, GET_DATA, CALL_UP, DIAL_UP, SET_PROFILE, CLEAN_COPY_VAR, RESTORE_VAR, NONE}
     public TYPE type;
     public String nameFieldScreen;
     public String screen;
@@ -75,13 +77,6 @@ public class ViewHandler {
         this.execMethod = execMethod;
     }
 
-    public ViewHandler(int viewId, String screen, TYPE_PARAM_FOR_SCREEN paramForScreen) {
-        type = TYPE.NAME_SCREEN;
-        this.paramForScreen = paramForScreen;
-        this.viewId = viewId;
-        this.screen = screen;
-    }
-
     public ViewHandler(int viewId, String screen, TYPE_PARAM_FOR_SCREEN paramForScreen, int componId) {
         type = TYPE.NAME_SCREEN;
         this.paramForScreen = paramForScreen;
@@ -106,6 +101,13 @@ public class ViewHandler {
         this.afterResponse = afterResponse;
         this.viewId = viewId;
         paramForSend = param;
+        this.screen = screen;
+    }
+
+    public ViewHandler(int viewId, String screen, TYPE_PARAM_FOR_SCREEN paramForScreen) {
+        type = TYPE.NAME_SCREEN;
+        this.paramForScreen = paramForScreen;
+        this.viewId = viewId;
         this.screen = screen;
     }
 

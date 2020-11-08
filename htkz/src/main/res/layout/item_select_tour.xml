@@ -149,7 +149,7 @@
                         android:layout_height="24dp"
                         android:layout_marginLeft="4dp"
                         android:src="@drawable/nights"/>
-                    <com.dpcsa.compon.custom_components.ComponTextView
+                    <com.dpcsa.compon.custom_components.TextViewNumberGrammar
                         android:id="@+id/night"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
                         android:text="7 yjxtq"
                         android:layout_marginRight="8dp"
                         android:layout_marginLeft="4dp"
-                        app:dateFormat="dd MMMM"/>
+                        app:stringArray="@array/nights"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -176,6 +176,19 @@
 
             <TextView
                 android:id="@+id/min_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/who"
+                android:layout_toLeftOf="@id/currency"
+                android:layout_marginTop="27dp"
+                android:layout_marginRight="4dp"
+                android:text="234 566"
+                android:textSize="@dimen/sp_22"
+                android:textColor="@color/dark"
+                android:letterSpacing="0.02"
+                android:lineSpacingExtra="2sp"/>
+            <TextView
+                android:id="@+id/currency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/who"

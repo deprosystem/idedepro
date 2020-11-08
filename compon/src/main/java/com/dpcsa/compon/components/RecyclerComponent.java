@@ -26,6 +26,7 @@ import com.dpcsa.compon.param.ParamView;
 import com.dpcsa.compon.presenter.ListPresenter;
 
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_RECYCLER;
+import static com.dpcsa.compon.param.ParamModel.GLOBAL;
 
 public class RecyclerComponent extends BaseComponent {
     public RecyclerView recycler;
@@ -69,18 +70,6 @@ public class RecyclerComponent extends BaseComponent {
             }
             layoutManager = new GridLayoutManager(activity, c);
         }
-
-//        switch (paramMV.type) {
-//            case RECYCLER_GRID:
-//                layoutManager = new GridLayoutManager(activity, 2);
-//                break;
-//            case RECYCLER_HORIZONTAL:
-//                layoutManager = new LinearLayoutManager(activity);
-//                layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//                break;
-//            default:
-//                layoutManager = new LinearLayoutManager(activity);
-//        }
         if (paramMV.paramView.notify) {
             iBase.setResumePause(resumePause);
         }
@@ -112,7 +101,12 @@ public class RecyclerComponent extends BaseComponent {
         } else {
             listData.clear();
         }
-        listData.addAll((ListRecords) field.value);
+        if (paramMV.paramModel.method == GLOBAL) {
+            listData = (ListRecords) field.value;
+            provider.setData(listData);
+        } else {
+            listData.addAll((ListRecords) field.value);
+        }
         if (statusListener != null) {
             checkValid();
         }
@@ -228,15 +222,6 @@ public class RecyclerComponent extends BaseComponent {
         if (isPush && pushHandler != null) {
             scrollSelectPush(pushHandler.screen, pushHandler.handlerId);
         }
-
-//        PushHandler ph = iBase.getPusHandler(SELECT_RECYCLER, paramMV.paramView.viewId);
-//        if (ph != null) {
-//            if ( ! ph.continuePush) {
-//                preferences.setPushType("");
-////                componGlob.nullifyValue(ph.pushType);
-//            }
-//            scrollSelectPush(ph.screen, ph.handlerId);
-//        }
         iBase.sendEvent(paramMV.paramView.viewId);
     }
 

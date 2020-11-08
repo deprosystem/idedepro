@@ -16,6 +16,7 @@ import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.ListRecords;
 import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.param.ParamComponent;
+import com.dpcsa.compon.presenter.ListPresenter;
 import com.dpcsa.compon.tools.Constants;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -44,10 +45,6 @@ public class MenuBComponent extends BaseComponent {
 
     @Override
     public void initView() {
-//        if (iBase.getBaseFragment() != null) {
-//            iBase.log("0015 Нижнее меню может быть только в активности " + multiComponent.nameComponent);
-//            return;
-//        }
         if (paramMV.paramView != null && paramMV.paramView.viewId != 0) {
             menuB = (ComponMenuB) parentLayout.findViewById(paramMV.paramView.viewId);
         }
@@ -152,6 +149,39 @@ public class MenuBComponent extends BaseComponent {
         ll.setImg(rr.getInt("icon"), imageLocale);
         ll.setText(rr.getInt("nameId"));
         return ll;
+    }
+
+    public void setItem(int position) {
+        if (position > -1 && position < viewMenu.length) {
+            selectStart = position;
+        }
+        viewMenu[selectStart].setSelected(true);
+        activity.navigatorClick.onClick(viewMenu[selectStart]);
+        startScreen(selectStart);
+    }
+
+    public void setItem() {
+        viewMenu[selectStart].setSelected(true);
+        activity.navigatorClick.onClick(viewMenu[selectStart]);
+        startScreen(selectStart);
+    }
+
+    public void selectPunct(String name) {
+        int pos = getSelectPush(name);
+        if (pos > -1) {
+            setItem(pos);
+            listPresenter.ranCommand(ListPresenter.Command.SELECT, pos, null);
+        }
+    }
+
+    public int getSelectPush(String screen) {
+        int ik = paramMV.paramView.screens.length;
+        for (int i = 0; i < ik; i++) {
+            if (paramMV.paramView.screens[i].equals(screen)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     private View.OnClickListener listener = new View.OnClickListener() {

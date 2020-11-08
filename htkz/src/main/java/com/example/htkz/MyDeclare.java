@@ -1,29 +1,12 @@
 package com.example.htkz;
 
-import android.util.Log;
-
 import com.dpcsa.compon.base.DeclareScreens;
-import com.dpcsa.compon.interfaces_classes.ItemSetValue;
 import com.dpcsa.compon.interfaces_classes.Menu;
-import com.dpcsa.compon.json_simple.Field;
-import com.dpcsa.compon.json_simple.Record;
-import com.dpcsa.compon.param.ParamComponent;
-import com.dpcsa.compon.param.ParamView;
 import com.example.htkz.custom.WorkWhoFlying;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.dpcsa.compon.interfaces_classes.ItemSetValue.TYPE_SOURCE.SIZE;
-import static com.dpcsa.compon.interfaces_classes.ItemSetValue.TYPE_SOURCE.SYSTEM_TIME;
 import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.ADD_RECORD;
 import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.DEL_RECORD;
-import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE_PARAM_FOR_SCREEN.RECORD;
-import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE_PARAM_FOR_SCREEN.RECORD_COMPONENT;
-import static com.dpcsa.compon.param.ParamComponent.TC.PAGER_F;
 import static com.dpcsa.compon.param.ParamComponent.TC.PAGER_V;
-import static com.dpcsa.compon.param.ParamComponent.TC.PANEL;
-import static com.dpcsa.compon.param.ParamComponent.TC.PANEL_ENTER;
 import static com.dpcsa.compon.param.ParamComponent.TC.TAGS;
 import static com.dpcsa.compon.param.ParamView.TYPE_VALUE_SELECTED.PARAM;
 import static com.dpcsa.compon.tools.Constants.AnimateScreen.BT;
@@ -49,8 +32,8 @@ public class MyDeclare extends DeclareScreens {
                 .menuBottom(model(menu), view(R.id.menu));
 
         fragment(SEARCH, R.layout.fragment_search)
-                .setValue(itemParam(R.id.city_hot), itemParam(R.id.city),
-                        itemParam(R.id.adults), itemParam(R.id.kids), itemVar(R.id.country_city, "country_city"))
+                .setValue(setParam(R.id.city_hot), setParam(R.id.city),
+                        setParam(R.id.adults), setParam(R.id.kids), setGlob(R.id.country_city, "country_city"))
                 .navigator(start(R.id.city_hot, HOT_DEPART_CITY, after(setValueParam(R.id.city_hot), actual(R.id.list))),
                         start(R.id.city, DEPART_CITY, after(setValueParam(R.id.city))),
                         start(R.id.country, COUNTRY_CITY, after(setVar(R.id.country_city, "country_city"))),
@@ -59,7 +42,7 @@ public class MyDeclare extends DeclareScreens {
                 .menuBottom(model(menuSearch), view(R.id.menu_b), navigator(hide(R.id.hot_t), show(R.id.search_t)),
                         navigator(hide(R.id.search_t), show(R.id.hot_t)))
                 .component(TC.PANEL_ENTER, null,
-                        view(R.id.panel), navigator(start(R.id.select, SELECT_TOURS)))
+                        view(R.id.panel), navigator(start(R.id.select, SELECT_TOURS, false, R.id.country_city)))
                 .list(model(API.HOT_TOUR, "hot_depart_city_id").progress(R.id.progress_hot),
                         view(R.id.list, R.layout.item_hot_t).spanCount(2),
                         navigator(start(HOT_INSIDE)));
@@ -77,9 +60,9 @@ public class MyDeclare extends DeclareScreens {
                         navigator(handler(0, ADD_RECORD, R.id.recycler)));
 
         activity(SELECT_TOURS, R.layout.activity_select_tour)
-                .setValue(itemParam(R.id.marsh))
+                .setValue(setParam(R.id.marsh))
                 .list(model(POST, API.FIND_TOURS,
-                        "city,kids,adults,depart_date,night,depart_city_id,country_city(country_id;city_id)"),
+                        "kids,adults,depart_date,night,depart_city_id,country_city(country_id;city_id)"),
                         view(R.id.list, R.layout.item_select_tour));
 
         activity(COUNTRY_CITY, R.layout.activity_country_city)
@@ -102,29 +85,29 @@ public class MyDeclare extends DeclareScreens {
                         navigator(addVar(R.id.city, "country_city", "city_id,city_name"), backOk(R.id.city)));
 
         activity(WHO_FLYING, R.layout.activity_who_flying, WorkWhoFlying.class)
-                .setValue(itemParam(R.id.amount, "adults"))
+                .setValue(setParam(R.id.amount, "adults"))
                 .navigator(show(R.id.add_kid, R.id.kid_age), hide(R.id.cancel, R.id.kid_age),
-                        handler(R.id.select, VH.RESULT_RECORD, "kids,adults"),
-                        back(R.id.back), handler(R.id.ok, VH.RESULT_RECORD, "kids,adults"))
+                        backOk(R.id.select, "kids,adults"),
+                        back(R.id.back), backOk(R.id.ok, "kids,adults"))
                 .plusMinus(R.id.amount, R.id.plus, R.id.minus, null, null)
-                .list(model(), view(R.id.recycler, R.layout.item_kind),
+                .list(model(GLOBAL, "kids_gl"), view(R.id.recycler, R.layout.item_kind),
                         navigator(handler(R.id.del_kind, DEL_RECORD)))
                 .component(TAGS, model(JSON, getString(R.string.age)),
                         view(R.id.age, R.layout.item_age),
                         navigator(handler(0, ADD_RECORD, R.id.recycler), hide(R.id.kid_age)));
 
         activity(SEARCH_D_D, R.layout.activity_search_d_d)
-                .navigator(back(R.id.back), handler(R.id.ok, VH.RESULT_RECORD, "depart_date,night"),
-                        handler(R.id.select, VH.RESULT_RECORD, "depart_date,night"))
+                .navigator(back(R.id.back), backOk(R.id.ok, "depart_date,night"),
+                        backOk(R.id.select, "depart_date,night"))
                 .component(PAGER_V, null,
                         view(R.id.pager, new int[] {R.layout.view_search_dd_1, R.layout.view_search_dd_2})
                                 .setTab(R.id.tabs, R.array.dd),
-                        navigator(handler(R.id.select, VH.RESULT_RECORD, "depart_date,night"), setValue(R.id.n_5, R.id.seek, "5"),
+                        navigator(backOk(R.id.select, "depart_date,night"), setValue(R.id.n_5, R.id.seek, "5"),
                                 setValue(R.id.n_7, R.id.seek, "7"), setValue(R.id.n_9, R.id.seek, "9"),
                                 setValue(R.id.n_11, R.id.seek, "11"), setValue(R.id.n_14, R.id.seek, "14")));
 
         activity(HOT_INSIDE, R.layout.fragment_hot_inside).animate(BT)
-                .setValue(itemParam(R.id.marsh))
+                .setValue(setParam(R.id.marsh))
                 .navigator(back(R.id.back))
                 .list(model(JSON, getString(R.string.ins_test)), view(R.id.list, R.layout.item_hot_inside));
 
@@ -156,11 +139,6 @@ public class MyDeclare extends DeclareScreens {
             .item(R.drawable.my_tour, R.string.my_tour, "MY_TOUR")
             .item(R.drawable.help, R.string.help, "HELP");
 
-//    Record rec_auto = new Record()
-//            .addField("platform", Field.TYPE_INTEGER, 1)
-//            .addField("deviceName", Field.TYPE_STRING, "")
-////            .addField("fcmKey", Field.TYPE_STRING, "ea7604df1394e6f1229f81c9716079d9")
-//            ;
 
 
 }

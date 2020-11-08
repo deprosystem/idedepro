@@ -13,12 +13,14 @@ import com.dpcsa.compon.base.BaseInternetProvider;
 import com.dpcsa.compon.base.Screen;
 import com.dpcsa.compon.interfaces_classes.Channel;
 import com.dpcsa.compon.interfaces_classes.IBase;
+import com.dpcsa.compon.interfaces_classes.IComponent;
 import com.dpcsa.compon.interfaces_classes.Notice;
 import com.dpcsa.compon.interfaces_classes.Param;
 import com.dpcsa.compon.interfaces_classes.ViewHandler;
 import com.dpcsa.compon.json_simple.FieldBroadcast;
 import com.dpcsa.compon.json_simple.JsonSimple;
 import com.dpcsa.compon.json_simple.JsonSyntaxException;
+import com.dpcsa.compon.json_simple.ListRecords;
 import com.dpcsa.compon.param.AppParams;
 import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.Record;
@@ -30,6 +32,9 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.dpcsa.compon.json_simple.Field.TYPE_LIST_RECORD;
+import static com.dpcsa.compon.json_simple.Field.TYPE_RECORD;
 
 public class ComponGlob {
     public static String NAME_TOKEN = "token";
@@ -62,7 +67,7 @@ public class ComponGlob {
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
-        profile = new FieldBroadcast(NAME_PROFILE, Field.TYPE_RECORD, record);
+        profile = new FieldBroadcast(NAME_PROFILE, TYPE_RECORD, record);
     }
 
     public String getNameScreenNotice(String name) {
@@ -122,6 +127,55 @@ public class ComponGlob {
                     Param nParam = new Param(name, "");
                     setParamValue(nParam, f);
                     paramValues.add(nParam);
+                }
+            }
+        }
+    }
+
+    public void setParamsFromGlob(Record rec, String params, String stN) {
+//  В rec заносятся поля из globalData с именем stN в соответствии с перечнем параметров в params
+//  Есди в globalData переменная типа TYPE_LIST_RECORD, то в rec записывается поле с именем stN типа TYPE_LIST_RECORD
+        String[] globArr = params.split(";");
+        if (globArr.length == 0) return;
+        Field fg = globalData.getField(stN);
+        if (fg != null && fg.value != null) {
+            if (fg.type == TYPE_LIST_RECORD) {
+                ListRecords listResult = new ListRecords();
+                ListRecords lr = (ListRecords) fg.value;
+                if (lr != null && lr.size() > 0) {
+                    for (Record rr : lr) {
+                        Record recItem = new Record();
+                        for (String st : globArr) {
+                            Field ff = rr.getField(st);
+                            if (ff != null) {
+                                recItem.add(new Field(st, ff.type, ff.value));
+                            }
+                        }
+                        listResult.add(recItem);
+                    }
+                }
+                Field field = rec.getField(stN);
+                if (field == null) {
+                    rec.add(new Field(stN, TYPE_LIST_RECORD, listResult));
+                } else {
+                    field.type = TYPE_LIST_RECORD;
+                    field.value = listResult;
+                }
+            } else if (fg.type == TYPE_RECORD) {
+                Record recGl = (Record) fg.value;
+                Record recResult = new Record();
+                for (String namePar : globArr) {
+                    Field fPar = recGl.getField(namePar);
+                    if (fPar != null && fPar.value != null) {
+                        recResult.add(new Field(namePar, fPar.type, fPar.value));
+                    }
+                }
+                Field field = rec.getField(stN);
+                if (field == null) {
+                    rec.add(new Field(stN, TYPE_RECORD, recResult));
+                } else {
+                    field.type = TYPE_RECORD;
+                    field.value = recResult;
                 }
             }
         }
@@ -374,7 +428,7 @@ public class ComponGlob {
                 }
                 if (f != null && f.value != null) {
                     Field ff = ((Record) f.value).get(0);
-                    if (ff.type == Field.TYPE_RECORD) {
+                    if (ff.type == TYPE_RECORD) {
                         result = (Record) ff.value;
                     } else {
                         return (Record) f.value;
@@ -465,6 +519,36 @@ public class ComponGlob {
             }
         }
         return rec;
+    }
+
+    public void viewFromVar(View view, String nameVar) {
+        if (view != null) {
+            Field ff = globalData.getField(nameVar);
+            Object obj = null;
+            if (ff != null) {
+                obj = ff.value;
+                if (obj instanceof Record) {
+                    for (Field fr : (Record) obj) {
+//                        setOneParam(fr);
+                        Param param = getParam(fr.name);
+                        if (param != null) {
+                            setParamValue(param, fr);
+                        }
+                    }
+                } else if (obj instanceof Field) {
+//                    setOneParam((Field) obj);
+                    Param param = getParam(((Field) obj).name);
+                    if (param != null) {
+                        setParamValue(param, (Field) obj);
+                    }
+                }
+            }
+            if (view instanceof IComponent) {
+                ((IComponent) view).setData(obj);
+            } else if (view instanceof ViewGroup) {
+
+            }
+        }
     }
 
     public boolean isOnline() {

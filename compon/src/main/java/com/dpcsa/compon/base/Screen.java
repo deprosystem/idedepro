@@ -247,12 +247,6 @@ public class Screen<T>{
 
     public Screen menuBottom(ParamModel paramModel, ParamView paramView) {
         return menuBottom(paramModel, paramView, navigator);
-//        ParamComponent paramComponent = new ParamComponent();
-//        paramComponent.type = ParamComponent.TC.MENU_B;
-//        paramComponent.paramModel = paramModel;
-//        paramComponent.paramView = paramView;
-//        listComponents.add(paramComponent);
-//        return this;
     }
 
     public Screen menuBottom(ParamModel paramModel, ParamView paramView, Navigator ... navigator) {

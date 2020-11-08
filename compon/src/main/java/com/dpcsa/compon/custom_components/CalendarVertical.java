@@ -196,6 +196,10 @@ public class CalendarVertical extends RecyclerView implements ICalendar, ICompon
             int mm = startC.get(Calendar.MONTH);
             if (mm != month) {
                 if ( ! isNewWeek) {
+                    if (weekData.select > 0) {
+                        paramC.selDay = weekData.select;
+                        paramC.selPos = dataList.size();
+                    }
                     dataList.add(weekData);
                 }
                 weekData = new WeekData(startC.get(Calendar.YEAR), mm, 0);
@@ -240,6 +244,7 @@ public class CalendarVertical extends RecyclerView implements ICalendar, ICompon
                 if (weekData.select > 0) {
                     paramC.selDay = weekData.select;
                     paramC.selPos = dataList.size();
+
                 }
                 dataList.add(weekData);
                 isNewWeek = true;
@@ -253,14 +258,6 @@ public class CalendarVertical extends RecyclerView implements ICalendar, ICompon
         setLayoutManager(new LinearLayoutManager(context));
         adapter = new CalendarVertAdapter(context, dataList, paramC, selDate);
         setAdapter(adapter);
-//********************************************
-//        Calendar c = new GregorianCalendar();
-//        c.add(Calendar.DAY_OF_MONTH, 40);
-//        String st = c.getTime().getTime() + ",";
-////        c.add(Calendar.DAY_OF_MONTH, 10);
-//        st += c.getTime().getTime();
-//        setData(st);
-//**********************************************
     }
 
     private SelectDateListener selDate = new SelectDateListener() {

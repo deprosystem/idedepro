@@ -43,6 +43,8 @@ import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.NULLIFY;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_MENU;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_PAGER;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_RECYCLER;
+import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.CLICK_SEND;
+import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.NONE;
 import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.SET_VALUE;
 import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.SET_VALUE_PARAM;
 
@@ -87,10 +89,15 @@ public abstract class DeclareScreens<T>{
             String par = value.getParamModel();
             if (par != null && par.length() > 0) {
                 String[] param = par.split(Constants.SEPARATOR_LIST);
-                int ik = param.length;
-                for (int i = 0; i < ik; i++) {
-                    componGlob.addParam(param[i]);
+                for (String stPar : param) {
+                    if (stPar.indexOf("(") < 0) {
+                        componGlob.addParam(stPar);
+                    }
                 }
+//                int ik = param.length;
+//                for (int i = 0; i < ik; i++) {
+//                    componGlob.addParam(param[i]);
+//                }
             }
         }
         if (componGlob.channels != null && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -390,6 +397,13 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, screen);
     }
 
+    public ViewHandler start(int viewId, String screen, boolean changeEnabled, int... mustValid) {
+        ViewHandler vh = new ViewHandler(viewId, screen);
+        vh.changeEnabled = changeEnabled;
+        vh.mustValid = mustValid;
+        return vh;
+    }
+
     public ViewHandler start(int viewId, String screen, ActionsAfterResponse afterResponse) {
         ViewHandler vh = new ViewHandler(viewId, screen, afterResponse);
         return vh;
@@ -440,6 +454,16 @@ public abstract class DeclareScreens<T>{
         return vh;
     }
 
+//    public ViewHandler setParam(int ... viewId) {
+//        ViewHandler vh;
+//        if (viewId.length > 0) {
+//            vh = new ViewHandler(viewId[0], SET_VALUE_PARAM);
+//        } else {
+//            vh = new ViewHandler(0, NONE);
+//        }
+//        return vh;
+//    }
+
     public ViewHandler addScreen(int viewId, String screen) {
         ViewHandler vh = new ViewHandler(viewId, screen);
         vh.addFragment = true;
@@ -450,13 +474,13 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, ViewHandler.TYPE.SET_MENU);
     }
 
-    public ViewHandler setMenu(int viewId, String screen) {
-        return new ViewHandler(viewId, ViewHandler.TYPE.SET_MENU, screen);
-    }
-
-    public ViewHandler setMenu(int viewId, int position) {
-        return new ViewHandler(viewId, ViewHandler.TYPE.SET_MENU, position);
-    }
+//    public ViewHandler setMenu(int viewId, String screen) {
+//        return new ViewHandler(viewId, ViewHandler.TYPE.SET_MENU, screen);
+//    }
+//
+//    public ViewHandler setMenu(int viewId, int position) {
+//        return new ViewHandler(viewId, ViewHandler.TYPE.SET_MENU, position);
+//    }
 
     public ViewHandler setToken() {
         return new ViewHandler(0, ViewHandler.TYPE.SET_TOKEN, "token");
@@ -524,26 +548,27 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, paramModel);
     }
 
+    public ViewHandler send(int viewId, ParamModel paramModel, ActionsAfterResponse afterResponse) {
+        return new ViewHandler(viewId, CLICK_SEND, paramModel, afterResponse, false, null);
+    }
+
+    public ViewHandler send(int viewId, ParamModel paramModel, ActionsAfterResponse afterResponse,
+                            boolean changeEnabled, int... mustValid) {
+        return new ViewHandler(viewId, CLICK_SEND, paramModel, afterResponse, changeEnabled, mustValid);
+    }
+
+    public ViewHandler send(int viewId, ParamModel paramModel,
+                               ActionsAfterResponse afterResponse, ActionsAfterError afterError) {
+        return new ViewHandler(viewId, CLICK_SEND, paramModel, afterResponse, afterError, false, null);
+    }
+
+    public ViewHandler send(int viewId, ParamModel paramModel, ActionsAfterResponse afterResponse,
+                            ActionsAfterError afterError, boolean changeEnabled, int... mustValid) {
+        return new ViewHandler(viewId, CLICK_SEND, paramModel, afterResponse, afterError, changeEnabled, mustValid);
+    }
+
     public ViewHandler handler(int viewId, ParamModel paramModel, ActionsAfterResponse afterResponse) {
         return new ViewHandler(viewId, ViewHandler.TYPE.MODEL_PARAM, paramModel, afterResponse, false, null);
-    }
-
-    public ViewHandler handler(ParamModel paramModel) {
-        return new ViewHandler(0, paramModel);
-    }
-
-    public ViewHandler handler(int viewId, ViewHandler.TYPE type, ParamModel paramModel) {
-        return new ViewHandler(viewId, type, paramModel);
-    }
-
-// В screen передается Record (в paramModel тип )  ??????????????? уточнить
-//    public ViewHandler handler(int viewId, ViewHandler.TYPE type, ParamModel paramModel, String screen) {
-//        return new ViewHandler(viewId, type, paramModel, screen);
-//    }
-
-    public ViewHandler handler(int viewId, ViewHandler.TYPE type, ParamModel paramModel,
-                               String screen, boolean changeEnabled, int... mustValid) {
-        return new ViewHandler(viewId, type, paramModel, screen, changeEnabled, mustValid);
     }
 
     public ViewHandler handler(int viewId, ViewHandler.TYPE type, ParamModel paramModel,
@@ -564,6 +589,19 @@ public abstract class DeclareScreens<T>{
     public ViewHandler handler(int viewId, ViewHandler.TYPE type, ParamModel paramModel,
                                ActionsAfterResponse afterResponse, ActionsAfterError afterError, boolean changeEnabled, int... mustValid) {
         return new ViewHandler(viewId, type, paramModel, afterResponse, afterError, changeEnabled, mustValid);
+    }
+
+    public ViewHandler handler(ParamModel paramModel) {
+        return new ViewHandler(0, paramModel);
+    }
+
+    public ViewHandler handler(int viewId, ViewHandler.TYPE type, ParamModel paramModel) {
+        return new ViewHandler(viewId, type, paramModel);
+    }
+
+    public ViewHandler handler(int viewId, ViewHandler.TYPE type, ParamModel paramModel,
+                               String screen, boolean changeEnabled, int... mustValid) {
+        return new ViewHandler(viewId, type, paramModel, screen, changeEnabled, mustValid);
     }
 
     public ViewHandler handler(int viewId, ViewHandler.TYPE type, ParamModel paramModel,
@@ -600,6 +638,18 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, ViewHandler.TYPE.BACK_OK);
     }
 
+    public ViewHandler backOk(int viewId, boolean rec) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.RESULT_RECORD);
+    }
+
+    public ViewHandler backOk(int viewId, String param) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.RESULT_RECORD, param);
+    }
+
+    public ViewHandler keyBack(int viewId) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.KEY_BACK);
+    }
+
     public ViewHandler springScale(int animViewId, int velocity, int repeatTime) {
         return new ViewHandler(ViewHandler.TYPE.SPR_SCALE, animViewId, velocity, repeatTime);
     }
@@ -610,10 +660,6 @@ public abstract class DeclareScreens<T>{
 
     public ViewHandler finishDialog(@NonNull int titleId, @NonNull int messageId) {
         return new ViewHandler(0, ViewHandler.TYPE.FINISH, titleId, messageId);
-    }
-
-    public ViewHandler keyBack(int viewId) {
-        return new ViewHandler(viewId, ViewHandler.TYPE.KEY_BACK);
     }
 
     public ViewHandler handler(int viewId, ViewHandler.TYPE type) {
@@ -697,6 +743,14 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, ViewHandler.TYPE.SET_VAR, nameVar);
     }
 
+    public ViewHandler writeVar(String nameVar) {
+        return new ViewHandler(0, ViewHandler.TYPE.SET_GLOBAL, nameVar);
+    }
+
+    public ViewHandler writeVar(int viewId, String nameVar) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.SET_GLOBAL, nameVar);
+    }
+
     public ViewHandler delVar(String nameVar, String param) {
         return new ViewHandler(0, ViewHandler.TYPE.DEL_VAR, nameVar, param);
     }
@@ -713,6 +767,10 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, ViewHandler.TYPE.HIDE, showViewId, false);
     }
 
+    public ViewHandler actual(int showViewId) {
+        return new ViewHandler(0, ViewHandler.TYPE.ACTUAL, showViewId, false);
+    }
+
     public ViewHandler actual(int viewId, int showViewId) {
         return new ViewHandler(viewId, ViewHandler.TYPE.ACTUAL, showViewId, false);
     }
@@ -723,10 +781,6 @@ public abstract class DeclareScreens<T>{
 
     public ViewHandler switchOnStatus(int viewId, boolean value) {
         return new ViewHandler(viewId, ViewHandler.TYPE.SWITCH_ON_STATUS, value);
-    }
-
-    public ViewHandler actual(int showViewId) {
-        return new ViewHandler(0, ViewHandler.TYPE.ACTUAL, showViewId, false);
     }
 
     public ViewHandler actual() {
@@ -773,27 +827,27 @@ public abstract class DeclareScreens<T>{
         return new Animate(Animate.TYPE.SET, animates);
     }
 
-    public ItemSetValue item(int viewId, ItemSetValue.TYPE_SOURCE source) {
+    public ItemSetValue set(int viewId, ItemSetValue.TYPE_SOURCE source) {
         return new ItemSetValue(viewId, source);
     }
 
-    public ItemSetValue item(int viewId, ItemSetValue.TYPE_SOURCE source, String name) {
+    public ItemSetValue set(int viewId, ItemSetValue.TYPE_SOURCE source, String name) {
         return new ItemSetValue(viewId, source, name);
     }
 
-    public ItemSetValue item(int viewId, ItemSetValue.TYPE_SOURCE source, int componId) {
+    public ItemSetValue set(int viewId, ItemSetValue.TYPE_SOURCE source, int componId) {
         return new ItemSetValue(viewId, source, componId);
     }
 
-    public ItemSetValue itemParam(int viewId) {
+    public ItemSetValue setParam(int viewId) {
         return new ItemSetValue(viewId, GROUPP_PARAM);
     }
 
-    public ItemSetValue itemParam(int viewId, String nameParam) {
+    public ItemSetValue setParam(int viewId, String nameParam) {
         return new ItemSetValue(viewId, GROUPP_PARAM, nameParam);
     }
 
-    public ItemSetValue itemVar(int viewId, String nameVar) {
+    public ItemSetValue setGlob(int viewId, String nameVar) {
         return new ItemSetValue(viewId, GLOBAL_VAR, nameVar);
     }
 

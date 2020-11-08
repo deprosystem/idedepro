@@ -680,9 +680,9 @@ public class BaseFragment extends Fragment implements IBase {
                         BaseComponent bc = mComponent.getComponent(vh.componId);
                         bc.setGlobalData(vh.nameFieldWithValue);
                         break;
-                    case SET_MENU_DEF:
-                        activity.setMenu();
-                        break;
+//                    case SET_MENU_DEF:
+//                        activity.setMenu();
+//                        break;
                     case SET_MENU:
                         activity.setMenu();
                         break;
@@ -950,33 +950,34 @@ public class BaseFragment extends Fragment implements IBase {
 
     public void setVar(int viewId, String nameVar) {
         View view = parentLayout.findViewById(viewId);
-        if (view != null) {
-            Field ff = componGlob.globalData.getField(nameVar);
-            Object obj = null;
-            if (ff != null) {
-                obj = ff.value;
-                if (obj instanceof Record) {
-                    for (Field fr : (Record) obj) {
-                        setOneParam(fr);
-                    }
-                } else if (obj instanceof Field) {
-                    setOneParam((Field) obj);
-                }
-            }
-            if (view instanceof IComponent) {
-                ((IComponent) view).setData(obj);
-            } else if (view instanceof ViewGroup) {
-
-            }
-        }
+        componGlob.viewFromVar(view, nameVar);
+//        if (view != null) {
+//            Field ff = componGlob.globalData.getField(nameVar);
+//            Object obj = null;
+//            if (ff != null) {
+//                obj = ff.value;
+//                if (obj instanceof Record) {
+//                    for (Field fr : (Record) obj) {
+//                        setOneParam(fr);
+//                    }
+//                } else if (obj instanceof Field) {
+//                    setOneParam((Field) obj);
+//                }
+//            }
+//            if (view instanceof IComponent) {
+//                ((IComponent) view).setData(obj);
+//            } else if (view instanceof ViewGroup) {
+//
+//            }
+//        }
     }
 
-    public void setOneParam(Field ff) {
-        Param param = componGlob.getParam(ff.name);
-        if (param != null) {
-            componGlob.setParamValue(param, ff);
-        }
-    }
+//    public void setOneParam(Field ff) {
+//        Param param = componGlob.getParam(ff.name);
+//        if (param != null) {
+//            componGlob.setParamValue(param, ff);
+//        }
+//    }
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override

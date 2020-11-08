@@ -769,7 +769,6 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                             setValueParam(vh.viewId, null);
                             break;
                         case SET_VAR:
-//                            setVar(vh);
                             setVar(vh.viewId, vh.nameFieldWithValue);
                             break;
                         case UPDATE_DATA:
@@ -1021,13 +1020,6 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                         }
                         setResult(RESULT_OK, intent);
                         finishActivity();
-//                        if (vh.nameFieldWithValue != null && vh.nameFieldWithValue.length() > 0) {
-//                            Record record = workWithRecordsAndViews.ViewToRecord(parentLayout, vh.nameFieldWithValue);
-//                            Intent intent = new Intent();
-//                            intent.putExtra(Constants.RECORD, record.toString());
-//                            setResult(RESULT_OK, intent);
-//                        }
-//                        finishActivity();
                         break;
                     case SET_LOCALE:
                         preferences.setLocale(componGlob.getParamValue(componGlob.appParams.nameLanguageInParam));
@@ -1176,33 +1168,34 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
 
     public void setVar(int viewId, String nameVar) {
         View view = parentLayout.findViewById(viewId);
-        if (view != null) {
-            Field ff = componGlob.globalData.getField(nameVar);
-            Object obj = null;
-            if (ff != null) {
-                obj = ff.value;
-                if (obj instanceof Record) {
-                    for (Field fr : (Record) obj) {
-                        setOneParam(fr);
-                    }
-                } else if (obj instanceof Field) {
-                    setOneParam((Field) obj);
-                }
-            }
-            if (view instanceof IComponent) {
-                ((IComponent) view).setData(obj);
-            } else if (view instanceof ViewGroup) {
-
-            }
-        }
+        componGlob.viewFromVar(view, nameVar);
+//        if (view != null) {
+//            Field ff = componGlob.globalData.getField(nameVar);
+//            Object obj = null;
+//            if (ff != null) {
+//                obj = ff.value;
+//                if (obj instanceof Record) {
+//                    for (Field fr : (Record) obj) {
+//                        setOneParam(fr);
+//                    }
+//                } else if (obj instanceof Field) {
+//                    setOneParam((Field) obj);
+//                }
+//            }
+//            if (view instanceof IComponent) {
+//                ((IComponent) view).setData(obj);
+//            } else if (view instanceof ViewGroup) {
+//
+//            }
+//        }
     }
 
-    public void setOneParam(Field ff) {
-        Param param = componGlob.getParam(ff.name);
-        if (param != null) {
-            componGlob.setParamValue(param, ff);
-        }
-    }
+//    public void setOneParam(Field ff) {
+//        Param param = componGlob.getParam(ff.name);
+//        if (param != null) {
+//            componGlob.setParamValue(param, ff);
+//        }
+//    }
 
     public void procesAnimate(Animate animate) {
         if (animate.type == Animate.TYPE.SET) {
@@ -2098,14 +2091,14 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     }
 
     public void setMenu() {
-        MenuBottomComponent menu = (MenuBottomComponent) mComponent.getComponent(ParamComponent.TC.MENU_BOTTOM);
+        MenuBComponent menu = (MenuBComponent) mComponent.getComponent(ParamComponent.TC.MENU_B);
         if (menu != null) {
             menu.setItem();
         }
     }
 
     public void setMenu(int position) {
-        MenuBottomComponent menu = (MenuBottomComponent) mComponent.getComponent(ParamComponent.TC.MENU_BOTTOM);
+        MenuBComponent menu = (MenuBComponent) mComponent.getComponent(ParamComponent.TC.MENU_B);
         if (menu != null) {
             menu.setItem(position);
         }
