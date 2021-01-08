@@ -31,7 +31,7 @@ public class ComponMenuB extends RadioGroup implements IAlias {
     private void init(Context context, AttributeSet attrs) {
         this.context = context;
         colorNormDef = getThemeColor("colorAccent");
-        colorSelectDef = getThemeColor("colorAccentDark");
+        colorSelectDef = colorNormDef;
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Simple);
         imageLocale = a.getInt(R.styleable.Simple_imageLocale, 1);
         colorNorm = a.getColor(R.styleable.Simple_normColor, colorNormDef);
