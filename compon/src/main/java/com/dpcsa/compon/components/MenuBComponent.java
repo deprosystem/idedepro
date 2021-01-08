@@ -74,12 +74,13 @@ public class MenuBComponent extends BaseComponent {
         listData.addAll((ListRecords) field.value);
         colorNorm = menuB.colorNorm;
         colorSelect = menuB.colorSelect;
-         if (menu != null) {
-            if (menu.colorNorm != 0 && menu.colorSelect != 0) {
-                colorNorm = activity.getResources().getColor(menu.colorNorm);
-                colorSelect = activity.getResources().getColor(menu.colorSelect);
-            }
-        }
+
+//         if (menu != null) {
+//            if (menu.colorNorm != 0 && menu.colorSelect != 0) {
+//                colorNorm = activity.getResources().getColor(menu.colorNorm);
+//                colorSelect = activity.getResources().getColor(menu.colorSelect);
+//            }
+//        }
         countButton = listData.size();
         viewMenu = new ComponRadioButtonRL[countButton];
         selectStart = preferences.getNameInt(componentTag + multiComponent.nameComponent, -1);

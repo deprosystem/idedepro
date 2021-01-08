@@ -5,6 +5,7 @@
 
     <color name="primary">#1b5ae7</color>
     <color name="primary_dark">#043AB6</color>
+    <color name="primary_light">#4372FF</color>
     <color name="primary_50">#801B5AE7</color>
     <color name="primary_40">#661B5AE7</color>
     <color name="primary_20">#341B5AE7</color>

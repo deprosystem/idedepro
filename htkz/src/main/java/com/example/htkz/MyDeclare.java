@@ -27,7 +27,7 @@ public class MyDeclare extends DeclareScreens {
                         after(setToken("key")), MAIN);
 
         activity(MAIN, R.layout.activity_main)
-                .navigator()
+//                .navigator()
                 .fragmentsContainer(R.id.container)
                 .menuBottom(model(menu), view(R.id.menu));
 

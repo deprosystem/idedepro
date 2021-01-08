@@ -48,7 +48,7 @@ public class ComponRadioButtonRL extends RelativeLayout {
         ll.setLayoutParams(pl);
         ll.setVisibility(GONE);
         ShapeDrawable shapeSplash = new ShapeDrawable (new RoundRectShape(outR, null, null));
-        shapeSplash.getPaint().setColor(0xffeeeeee);
+        shapeSplash.getPaint().setColor(0x55eeeeee);
         ll.setBackground(shapeSplash);
         addView(ll);
         crb = new ComponRadioButton(context);
