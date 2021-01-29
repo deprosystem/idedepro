@@ -263,12 +263,22 @@ public class ComponGlob {
             String[] paramArray = param.split(Constants.SEPARATOR_LIST);
             sep = "";
             for (String paramOne : paramArray) {
+                String par1 = paramOne;
+                int i = paramOne.indexOf("=");
+                if (i > 0) {
+                    par1 = paramOne.substring(0, i);
+                }
                 for (Param paramV : paramValues) {
-                    if (paramOne.equals(paramV.name)) {
+                    if (par1.equals(paramV.name)) {
                         String valuePar = paramV.value;
-                        if (valuePar != null) {
-                            st = st + sep + paramOne + "=" + valuePar;
+                        if (valuePar != null && valuePar.length() > 0) {
+                            st = st + sep + par1 + "=" + valuePar;
                             sep = "&";
+                        } else {
+                            if (i > 0) {
+                                st += sep + paramOne;
+                                sep = "&";
+                            }
                         }
                         break;
                     }

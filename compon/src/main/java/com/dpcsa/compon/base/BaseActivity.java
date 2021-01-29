@@ -1169,33 +1169,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     public void setVar(int viewId, String nameVar) {
         View view = parentLayout.findViewById(viewId);
         componGlob.viewFromVar(view, nameVar);
-//        if (view != null) {
-//            Field ff = componGlob.globalData.getField(nameVar);
-//            Object obj = null;
-//            if (ff != null) {
-//                obj = ff.value;
-//                if (obj instanceof Record) {
-//                    for (Field fr : (Record) obj) {
-//                        setOneParam(fr);
-//                    }
-//                } else if (obj instanceof Field) {
-//                    setOneParam((Field) obj);
-//                }
-//            }
-//            if (view instanceof IComponent) {
-//                ((IComponent) view).setData(obj);
-//            } else if (view instanceof ViewGroup) {
-//
-//            }
-//        }
     }
-
-//    public void setOneParam(Field ff) {
-//        Param param = componGlob.getParam(ff.name);
-//        if (param != null) {
-//            componGlob.setParamValue(param, ff);
-//        }
-//    }
 
     public void procesAnimate(Animate animate) {
         if (animate.type == Animate.TYPE.SET) {

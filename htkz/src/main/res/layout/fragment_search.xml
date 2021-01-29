@@ -34,7 +34,8 @@
         app:imageLocale="left"
         app:selectBackground="@drawable/rect_w_28"
         app:noSelImgChangeColor="true"
+        app:selectColor="@color/black"
+        app:normColor="@color/white"
         app:toAnimate="false"
         />
-
 </RelativeLayout>

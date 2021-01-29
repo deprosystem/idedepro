@@ -91,13 +91,14 @@ public abstract class DeclareScreens<T>{
                 String[] param = par.split(Constants.SEPARATOR_LIST);
                 for (String stPar : param) {
                     if (stPar.indexOf("(") < 0) {
-                        componGlob.addParam(stPar);
+                        String stP = stPar;
+                        int i = stPar.indexOf("=");
+                        if (i > 0) {
+                            stP = stPar.substring(0, i);
+                        }
+                        componGlob.addParam(stP);
                     }
                 }
-//                int ik = param.length;
-//                for (int i = 0; i < ik; i++) {
-//                    componGlob.addParam(param[i]);
-//                }
             }
         }
         if (componGlob.channels != null && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {

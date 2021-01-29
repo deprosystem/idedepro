@@ -43,7 +43,7 @@ public class MyDeclare extends DeclareScreens {
                         navigator(hide(R.id.search_t), show(R.id.hot_t)))
                 .component(TC.PANEL_ENTER, null,
                         view(R.id.panel), navigator(start(R.id.select, SELECT_TOURS, false, R.id.country_city)))
-                .list(model(API.HOT_TOUR, "hot_depart_city_id").progress(R.id.progress_hot),
+                .list(model(API.HOT_TOUR, "hot_depart_city_id=2").progress(R.id.progress_hot),
                         view(R.id.list, R.layout.item_hot_t).spanCount(2),
                         navigator(start(HOT_INSIDE)));
 
@@ -53,11 +53,9 @@ public class MyDeclare extends DeclareScreens {
                 .startNavigator(springY(R.id.hant_img, -1000, 1000));
 
         fragment(HELP, R.layout.fragment_help)
-                .list(model(JSON, "[]"), view(R.id.recycler, R.layout.item_kind),
-                        navigator(handler(R.id.del_kind, DEL_RECORD)))
-                .component(TAGS, model(JSON, getString(R.string.age)),
-                        view(R.id.age, R.layout.item_age),
-                        navigator(handler(0, ADD_RECORD, R.id.recycler)));
+                .menuBottom(model(menuSearchMenu_b), view(R.id.menu_b),
+                        navigator(hide(R.id.sheet_h), show(R.id.sheet_s)),
+                        navigator(hide(R.id.sheet_s), show(R.id.sheet_h)));
 
         activity(SELECT_TOURS, R.layout.activity_select_tour)
                 .setValue(setParam(R.id.marsh))
@@ -129,7 +127,7 @@ public class MyDeclare extends DeclareScreens {
 
     }
 
-    Menu menuSearch = new Menu(R.color.white, R.color.black)
+    Menu menuSearch = new Menu()
         .item(0, R.string.search_t, "", true)
         .item(R.drawable.fire_20, R.string.burning_t, "");
 
@@ -139,6 +137,8 @@ public class MyDeclare extends DeclareScreens {
             .item(R.drawable.my_tour, R.string.my_tour, "MY_TOUR")
             .item(R.drawable.help, R.string.help, "HELP");
 
-
+    Menu menuSearchMenu_b = new Menu()
+            .item(0, R.string.search_t, "", true)
+            .item(R.drawable.fire_20, R.string.burning_t, "");
 
 }

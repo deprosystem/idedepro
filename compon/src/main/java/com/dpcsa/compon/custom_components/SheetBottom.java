@@ -40,7 +40,7 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
     private int idContainer;
     private int viewId;
     private int negativeViewId, positiveViewId;
-    private int fadedScreenColorDefault = 0x50000000;
+    private int fadedScreenColorDefault = 0x50ff0000;
     private int fadedScreenColor = fadedScreenColorDefault;
     private IBase iBase;
     private SheetBottom thisSheet;

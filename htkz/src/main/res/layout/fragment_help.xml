@@ -1,19 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/image"
+    >
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
+    <com.dpcsa.compon.custom_components.SheetBottom
+        android:id="@+id/sheet_s"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <com.dpcsa.compon.custom_components.TagsView
-        android:id="@+id/age"
+        android:layout_height="match_parent"
+        app:noSwipeHide="true"
+        app:noBackPressedHide="true"
+        app:viewId="@layout/view_search_sheet_s"
+        />
+    <com.dpcsa.compon.custom_components.SheetBottom
+        android:id="@+id/sheet_h"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/recycler"
-        android:layout_marginRight="@dimen/d_20"
-        android:layout_marginLeft="@dimen/d_20"
-        android:layout_marginTop="@dimen/d_20"/>
+        android:layout_height="match_parent"
+        app:viewMatch="true"
+        app:noSwipeHide="true"
+        app:noBackPressedHide="true"
+        app:viewId="@layout/view_search_sheet_h"
+        />
+    <com.dpcsa.compon.custom_components.ComponMenuB
+        android:id="@+id/menu_b"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/shape_1000"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="16dp"
+        app:normColor="@color/white"
+        app:selectColor="@color/black"
+        app:toAnimate="false"
+        app:noSelImgChangeColor="true"
+        app:imageLocale="left"
+        app:selectBackground="@drawable/shape_1018"
+        />
 </RelativeLayout>

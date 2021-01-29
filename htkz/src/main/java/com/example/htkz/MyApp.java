@@ -26,7 +26,7 @@ public class MyApp extends Application {
                 .setAppParams(new MyParams())
                 .setDeclareScreens(new MyDeclare())
 
-                .addParam("hot_depart_city_id", "2")
+//                .addParam("hot_depart_city_id", "2")
                 .addParam("hot_depart_city_name", "Алматы")
                 .addParam("country_name", "")
                 .addParam("adults", "1")
