@@ -1,14 +1,29 @@
 package com.dpcsa.compon.components;
 
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dpcsa.compon.base.BaseComponent;
 import com.dpcsa.compon.base.Screen;
+import com.dpcsa.compon.custom_components.ComponImageView;
+import com.dpcsa.compon.glide.GlideApp;
+import com.dpcsa.compon.glide.GlideRequest;
 import com.dpcsa.compon.interfaces_classes.IBase;
+import com.dpcsa.compon.interfaces_classes.IComponent;
+import com.dpcsa.compon.interfaces_classes.ViewHandler;
 import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.ListRecords;
 import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.param.ParamComponent;
+
+import jp.wasabeef.glide.transformations.BlurTransformation;
+
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
+import static com.bumptech.glide.request.RequestOptions.circleCropTransform;
+import static com.bumptech.glide.request.RequestOptions.placeholderOf;
 
 public class PanelComponent extends BaseComponent {
 
@@ -20,11 +35,23 @@ public class PanelComponent extends BaseComponent {
         if (viewComponent == null) {
             iBase.log("0009 Не найдена панель в " + multiComponent.nameComponent);
         } else {
+// Щоб кліки не проходили через панель, бо вона може бути над іншою зі своїми єлементами
             viewComponent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                 }
             });
+
+            if (navigator != null && navigator.viewHandlers.size() > 0) {
+                for (ViewHandler vh : navigator.viewHandlers) {
+                    if (vh.viewId == 0) {
+                        viewComponent.setOnClickListener(clickView);
+                        break;
+                    }
+                }
+            }
+
+// Якщо но дате. Але мабуть краще зробити лише одне View, а не багато
             int[] splash = paramMV.paramView.splashScreenViewId;
             if (splash != null && splash.length > 0) {
                 v_splash = new View[splash.length];

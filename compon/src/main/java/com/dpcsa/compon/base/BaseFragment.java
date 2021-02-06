@@ -156,14 +156,14 @@ public class BaseFragment extends Fragment implements IBase {
                 setTitle();
             }
 
-            if (mComponent.navigator != null) {
-                for (ViewHandler vh : mComponent.navigator.viewHandlers) {
-                    View v = parentLayout.findViewById(vh.viewId);
-                    if (v != null) {
-                        v.setOnClickListener(navigatorClick);
-                    }
-                }
-            }
+//            if (mComponent.navigator != null) {
+//                for (ViewHandler vh : mComponent.navigator.viewHandlers) {
+//                    View v = parentLayout.findViewById(vh.viewId);
+//                    if (v != null) {
+//                        v.setOnClickListener(navigatorClick);
+//                    }
+//                }
+//            }
             if (mComponent.listSetData != null) {
                 int ik = mComponent.listSetData.size();
                 for (int i = 0; i < ik; i++) {
@@ -183,6 +183,14 @@ public class BaseFragment extends Fragment implements IBase {
                 }
             }
             mComponent.initComponents(this);
+            if (mComponent.navigator != null) {
+                for (ViewHandler vh : mComponent.navigator.viewHandlers) {
+                    View v = parentLayout.findViewById(vh.viewId);
+                    if (v != null) {
+                        v.setOnClickListener(navigatorClick);
+                    }
+                }
+            }
             if (mComponent.moreWork != null) {
                 mComponent.moreWork.startScreen();
             }
@@ -766,7 +774,7 @@ public class BaseFragment extends Fragment implements IBase {
         }
         if (name == null) return;
         String value = componGlob.getParamValueIfIs(name);
-        if (value == null) return;
+        if (value == null || value.length() == 0) return;
         if (view instanceof TextView) {
             if (view instanceof IComponent) {
                 ((IComponent) view).setData(value);

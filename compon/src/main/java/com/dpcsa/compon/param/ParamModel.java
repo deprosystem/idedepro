@@ -36,6 +36,7 @@ public class ParamModel <T> {
     public static final int COUNTRY_CODE = 106;
     public static final int JSON = 107;
     public static final int PROFILE = 108;
+    public static final int PARAMETERS = 109;
     public static int defaultMethod = GET;
     public String nameField, nameFieldTo;
     public DataFieldGet dataFieldGet;

@@ -98,7 +98,7 @@ ext {
     siteUrl = 'https://github.com/deprosystem/idedepro'
     gitUrl = 'https://github.com/deprosystem/idedepro.git'
 
-    libraryVersion = '4.0.2'
+    libraryVersion = '4.0.3'
 
     developerId = 'deprosystem'
     developerName = 'deprosystem'

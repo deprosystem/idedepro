@@ -62,6 +62,7 @@ public abstract class DeclareScreens<T>{
     protected int GET = ParamModel.GET, POST = ParamModel.POST, JSON = ParamModel.JSON, PROFILE = ParamModel.PROFILE,
             GET_DB = ParamModel.GET_DB, POST_DB = ParamModel.POST_DB, UPDATE_DB = ParamModel.UPDATE_DB,
             INSERT_DB = ParamModel.INSERT_DB, DEL_DB = ParamModel.DEL_DB, PARENT = ParamModel.PARENT,
+            PARAMETERS = ParamModel.PARAMETERS,
             FIELD = ParamModel.FIELD, ARGUMENTS = ParamModel.ARGUMENTS, COUNTRY_CODE = ParamModel.COUNTRY_CODE,
             STRINGARRAY = ParamModel.STRINGARRAY, DATAFIELD = ParamModel.DATAFIELD, GLOBAL = ParamModel.GLOBAL;
 
@@ -291,7 +292,11 @@ public abstract class DeclareScreens<T>{
     }
 
     public ParamModel model(int method, String urlOrNameParent) {
-        return new ParamModel(method, urlOrNameParent);
+        if (method == PARAMETERS) {
+            return new ParamModel(method, "", urlOrNameParent);
+        } else {
+            return new ParamModel(method, urlOrNameParent);
+        }
     }
 
     public ParamModel model(int method, String[] urlArray, String param) {
@@ -407,6 +412,11 @@ public abstract class DeclareScreens<T>{
 
     public ViewHandler start(int viewId, String screen, ActionsAfterResponse afterResponse) {
         ViewHandler vh = new ViewHandler(viewId, screen, afterResponse);
+        return vh;
+    }
+
+    public ViewHandler start(String screen, ActionsAfterResponse afterResponse) {
+        ViewHandler vh = new ViewHandler(0, screen, afterResponse);
         return vh;
     }
 

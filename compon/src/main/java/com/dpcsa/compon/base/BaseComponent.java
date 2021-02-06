@@ -12,16 +12,20 @@ import android.os.Handler;
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dpcsa.compon.components.PagerVComponent;
 import com.dpcsa.compon.components.PanelEnterComponent;
 import com.dpcsa.compon.custom_components.ComponImageView;
 import com.dpcsa.compon.custom_components.PlusMinus;
+import com.dpcsa.compon.glide.GlideApp;
+import com.dpcsa.compon.glide.GlideRequest;
 import com.dpcsa.compon.interfaces_classes.ActionsAfterResponse;
 import com.dpcsa.compon.interfaces_classes.ActivityResult;
 import com.dpcsa.compon.interfaces_classes.Animate;
@@ -62,6 +66,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
+import static com.bumptech.glide.request.RequestOptions.circleCropTransform;
+import static com.bumptech.glide.request.RequestOptions.placeholderOf;
 import static com.dpcsa.compon.json_simple.Field.TYPE_INTEGER;
 import static com.dpcsa.compon.json_simple.Field.TYPE_LIST_RECORD;
 import static com.dpcsa.compon.json_simple.Field.TYPE_LONG;
@@ -192,6 +199,7 @@ public abstract class BaseComponent {
     }
 
     private void actualModel(ParamModel paramModel) {
+//Log.d("QWERT",componentTag + multiComponent.nameComponent + " actualModel");
         isChangeData = false;
         if (paramModel != null) {
             switch (paramModel.method) {
@@ -276,6 +284,9 @@ public abstract class BaseComponent {
                         componGlob.globalData.add(fg);
                     }
                     listener.onResponse(fg);
+                    break;
+                case ParamModel.PARAMETERS:
+                    setValueParam(paramMV.paramView.viewId);
                     break;
                 case ParamModel.ARGUMENTS :
                     if (iBase.getBaseFragment() != null) {
@@ -588,6 +599,7 @@ public abstract class BaseComponent {
     };
 
     public void clickHandler(View v, int vId) {
+//Log.d("QWERT",componentTag +multiComponent.nameComponent + " clickHandler");
         List<ViewHandler> viewHandlers = navigator.viewHandlers;
         View vv;
         boolean valid;
@@ -674,6 +686,9 @@ public abstract class BaseComponent {
                         break;
                     case SET_PARAM:
                         componGlob.setParam(recordComponent);
+                        break;
+                    case SET_VALUE_PARAM:
+                        setValueParam(vh.viewId);
                         break;
                     case BACK:
                         activity.onBackPressed();
@@ -914,6 +929,64 @@ public abstract class BaseComponent {
                         break;
                 }
             }
+        }
+    }
+
+    public void setValueParam(int id) {
+//Log.d("QWERT",componentTag +multiComponent.nameComponent + " setValueParam");
+        ViewGroup vg = null;
+        if (id == 0) {
+            vg = (ViewGroup) viewComponent;
+        } else {
+            View view = parentLayout.findViewById(id);
+            if (view instanceof ViewGroup) {
+                vg = (ViewGroup) view;
+            } else {
+                setOneViewValue(view, null);
+                return;
+            }
+        }
+        int ik = vg.getChildCount();
+        for (int i = 0; i < ik; i++) {
+            setOneViewValue(vg.getChildAt(i), null);
+        }
+    }
+
+    public void setOneViewValue(View view, String namePar) {
+        int id = view.getId();
+        if (id <= 0) return;
+        String name;
+        if (namePar == null || namePar.length() == 0) {
+            name = activity.getResources().getResourceEntryName(id);
+        } else {
+            name = namePar;
+        }
+        if (name == null) return;
+        String value = componGlob.getParamValueIfIs(name);
+//        Log.d("QWERT",componentTag+multiComponent.nameComponent + " name="+name+"<< value="+value+"<< getParam="+componGlob.getParam(name));
+        if (value == null || value.length() == 0) return;
+//        Log.d("QWERT",componentTag+multiComponent.nameComponent + " name="+name+"???????????????? value.length()="+value.length());
+        if (view instanceof TextView) {
+            if (view instanceof IComponent) {
+                ((IComponent) view).setData(value);
+            } else {
+                ((TextView) view).setText(value);
+            }
+        } else if (view instanceof ImageView) {
+            GlideRequest gr = GlideApp.with(activity).load(value);
+            if (view instanceof ComponImageView) {
+                ComponImageView simg = (ComponImageView) view;
+                if (simg.getBlur() > 0) {
+                    gr.apply(bitmapTransform(new BlurTransformation(simg.getBlur())));
+                }
+                if (simg.getPlaceholder() > 0) {
+                    gr.apply(placeholderOf(simg.getPlaceholder()));
+                }
+                if (simg.isOval()) {
+                    gr.apply(circleCropTransform());
+                }
+            }
+            gr.into((ImageView) view);
         }
     }
 
@@ -1487,6 +1560,9 @@ public abstract class BaseComponent {
                         componGlob.token.setValue(new String(st), 0, activity);
                         preferences.setSessionToken(st);
                     }
+                    break;
+                case SET_VALUE_PARAM:
+                    setValueParam(vh.viewId);
                     break;
                 case SET_PROFILE:
                     if (response.value != null) {

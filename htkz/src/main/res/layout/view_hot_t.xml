@@ -28,6 +28,7 @@
             android:layout_below="@+id/t_1"
             android:layout_marginTop="@dimen/d_8"
             android:layout_marginLeft="@dimen/d_16"
+            android:src="@drawable/flag_kaz"
             android:scaleType="centerCrop" />
         <TextView
             android:id="@+id/hot_depart_city_name"
@@ -36,6 +37,7 @@
             android:layout_marginTop="@dimen/d_2"
             android:layout_marginLeft="@dimen/d_6"
             android:layout_below="@+id/t_1"
+            android:text="Алматы"
             android:layout_toRightOf="@+id/hot_flag_country"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_18"/>

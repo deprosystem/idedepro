@@ -32,15 +32,19 @@ public class MyDeclare extends DeclareScreens {
                 .menuBottom(model(menu), view(R.id.menu));
 
         fragment(SEARCH, R.layout.fragment_search)
-                .setValue(setParam(R.id.city_hot), setParam(R.id.city),
+//                .setValue(setParam(R.id.city_hot), setParam(R.id.city),
+                .setValue(setParam(R.id.city),
                         setParam(R.id.adults), setParam(R.id.kids), setGlob(R.id.country_city, "country_city"))
-                .navigator(start(R.id.city_hot, HOT_DEPART_CITY, after(setValueParam(R.id.city_hot), actual(R.id.list))),
+//                .navigator(start(R.id.city_hot, HOT_DEPART_CITY, after(setValueParam(R.id.city_hot), actual(R.id.list))),
+                .navigator(
                         start(R.id.city, DEPART_CITY, after(setValueParam(R.id.city))),
                         start(R.id.country, COUNTRY_CITY, after(setVar(R.id.country_city, "country_city"))),
                         start(R.id.date, SEARCH_D_D, after(assignValue(R.id.date))),
                         start(R.id.who, WHO_FLYING, after(assignValue(R.id.who_flying))))
                 .menuBottom(model(menuSearch), view(R.id.menu_b), navigator(hide(R.id.hot_t), show(R.id.search_t)),
                         navigator(hide(R.id.search_t), show(R.id.hot_t)))
+                .component(TC.PANEL, model(PARAMETERS, "hot_flag_country,hot_depart_city_name"), view(R.id.city_hot),
+                        navigator(start(HOT_DEPART_CITY, after(setValueParam(R.id.city_hot), actual(R.id.list)))))
                 .component(TC.PANEL_ENTER, null,
                         view(R.id.panel), navigator(start(R.id.select, SELECT_TOURS, false, R.id.country_city)))
                 .list(model(API.HOT_TOUR, "hot_depart_city_id=2").progress(R.id.progress_hot),
@@ -56,7 +60,6 @@ public class MyDeclare extends DeclareScreens {
                 .menuBottom(model(menuSearchMenu_b), view(R.id.menu_b),
                         navigator(hide(R.id.sheet_h), show(R.id.sheet_s)),
                         navigator(hide(R.id.sheet_s), show(R.id.sheet_h)));
-
         activity(SELECT_TOURS, R.layout.activity_select_tour)
                 .setValue(setParam(R.id.marsh))
                 .list(model(POST, API.FIND_TOURS,
