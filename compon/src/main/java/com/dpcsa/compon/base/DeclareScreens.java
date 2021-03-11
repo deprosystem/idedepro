@@ -50,6 +50,7 @@ import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.SET_VALUE_PAR
 
 public abstract class DeclareScreens<T>{
     protected ParamComponent.TC TC;
+    protected ParamView.TYPE_VALUE_SELECTED TVS;
     protected Constants.AnimateScreen AS;
     protected ViewHandler.TYPE VH;
     protected ItemSetValue.TYPE_SOURCE TS;
@@ -752,6 +753,10 @@ public abstract class DeclareScreens<T>{
 
     public ViewHandler setVar(int viewId, String nameVar) {
         return new ViewHandler(viewId, ViewHandler.TYPE.SET_VAR, nameVar);
+    }
+
+    public ViewHandler setVar(int viewId, String nameVar, String nameSetVar) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.SET_VAR, nameVar, nameSetVar);
     }
 
     public ViewHandler writeVar(String nameVar) {

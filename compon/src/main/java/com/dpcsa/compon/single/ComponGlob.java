@@ -310,8 +310,20 @@ public class ComponGlob {
     }
 
     public String getParamValue(String nameParam) {
+        String np = nameParam;
+        int i = np.indexOf("=");
+        String vv = "";
+        if (i > 0) {
+            np = np.substring(0, i);
+            int i_1 = i + 1;
+            if (i_1 < nameParam.length())
+            vv = nameParam.substring(i_1);
+        }
         for (Param paramV : paramValues) {
-            if (nameParam.equals(paramV.name)) {
+            if (np.equals(paramV.name)) {
+                if (paramV.value.length() == 0) {
+                    paramV.value = vv;
+                }
                 return paramV.value;
             }
         }
@@ -531,13 +543,14 @@ public class ComponGlob {
         return rec;
     }
 
-    public void viewFromVar(View view, String nameVar) {
+    public void viewFromVar(View view, String nameVar, String listVar) {
         if (view != null) {
             Field ff = globalData.getField(nameVar);
             Object obj = null;
             if (ff != null) {
                 obj = ff.value;
                 if (obj instanceof Record) {
+                    Record recObj = (Record) obj;
                     for (Field fr : (Record) obj) {
 //                        setOneParam(fr);
                         Param param = getParam(fr.name);
@@ -545,20 +558,38 @@ public class ComponGlob {
                             setParamValue(param, fr);
                         }
                     }
+                    Record rec = null;
+                    if (listVar != null && listVar.length() > 0) {
+                        String[] ls = listVar.split(",");
+                        rec = new Record();
+                        for (String st : ls) {
+                            Field f = recObj.getField(st);
+                            if (f != null) {
+                                rec.add(f);
+                            }
+                        }
+                    } else {
+                        rec = (Record) obj;
+                    }
+                    if (view instanceof IComponent) {
+                        ((IComponent) view).setData(rec);
+                    } else if (view instanceof ViewGroup) {
+
+                    }
                 } else if (obj instanceof Field) {
 //                    setOneParam((Field) obj);
                     Param param = getParam(((Field) obj).name);
                     if (param != null) {
                         setParamValue(param, (Field) obj);
                     }
+                    if (view instanceof IComponent) {
+                        ((IComponent) view).setData(obj);
+                    } else if (view instanceof ViewGroup) {
+
+                    }
                 }
             }
-            if (view instanceof IComponent) {
-                ((IComponent) view).setData(obj);
-            } else if (view instanceof ViewGroup) {
-
-            }
-        }
+         }
     }
 
     public boolean isOnline() {

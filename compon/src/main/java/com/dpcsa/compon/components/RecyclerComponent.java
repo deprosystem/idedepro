@@ -120,6 +120,11 @@ public class RecyclerComponent extends BaseComponent {
             if (ik > 0) {
                 if (selectStart == -1) {
                     if (paramMV.paramView.selectNameField.length() > 0) {
+                        String nameField = paramMV.paramView.selectNameField;
+                        int iNF = nameField.indexOf("=");
+                        if (iNF > -1) {
+                            nameField = nameField.substring(0, iNF);
+                        }
                         String selVal = "";
                         switch (paramMV.paramView.typeValue) {
                             case NONE:
@@ -138,7 +143,7 @@ public class RecyclerComponent extends BaseComponent {
 
                         for (int i = 0; i < ik; i++) {
                             Record r = listData.get(i);
-                            String sel = r.getString(paramMV.paramView.selectNameField);
+                            String sel = r.getString(nameField);
                             if (sel != null && sel.length() > 0 && sel.equals(selVal)) {
                                 String fieldType = paramMV.paramView.fieldType;
                                 if (fieldType != null && fieldType.length() > 0) {

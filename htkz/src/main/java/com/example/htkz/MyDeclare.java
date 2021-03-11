@@ -8,7 +8,7 @@ import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.ADD_RECORD;
 import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.DEL_RECORD;
 import static com.dpcsa.compon.param.ParamComponent.TC.PAGER_V;
 import static com.dpcsa.compon.param.ParamComponent.TC.TAGS;
-import static com.dpcsa.compon.param.ParamView.TYPE_VALUE_SELECTED.PARAM;
+//import static com.dpcsa.compon.param.ParamView.TYPE_VALUE_SELECTED.PARAM;
 import static com.dpcsa.compon.tools.Constants.AnimateScreen.BT;
 
 public class MyDeclare extends DeclareScreens {
@@ -38,7 +38,7 @@ public class MyDeclare extends DeclareScreens {
 //                .navigator(start(R.id.city_hot, HOT_DEPART_CITY, after(setValueParam(R.id.city_hot), actual(R.id.list))),
                 .navigator(
                         start(R.id.city, DEPART_CITY, after(setValueParam(R.id.city))),
-                        start(R.id.country, COUNTRY_CITY, after(setVar(R.id.country_city, "country_city"))),
+                        start(R.id.country, COUNTRY_CITY, after(setVar(R.id.country_city, "country_city", "country_name,city_name"))),
                         start(R.id.date, SEARCH_D_D, after(assignValue(R.id.date))),
                         start(R.id.who, WHO_FLYING, after(assignValue(R.id.who_flying))))
                 .menuBottom(model(menuSearch), view(R.id.menu_b), navigator(hide(R.id.hot_t), show(R.id.search_t)),
@@ -117,7 +117,7 @@ public class MyDeclare extends DeclareScreens {
                 .list(model(API.HOT_DEPART_CITY),
                         view(R.id.list, "sel", new int[]{R.layout.item_hot_departure_city_0,
                                 R.layout.item_hot_departure_city_1, R.layout.item_hot_departure_city_2})
-                                .selected("hot_depart_city_id", PARAM),
+                                .selected("hot_depart_city_id=2", TVS.PARAM),
                         navigator(show(R.id.select), show(R.id.ok)));
 
         activity(DEPART_CITY, R.layout.activity_departure_city)
@@ -125,7 +125,7 @@ public class MyDeclare extends DeclareScreens {
                 .list(model(API.DEPART_CITY),
                         view(R.id.list, "sel", new int[]{R.layout.item_departure_city_0,
                                 R.layout.item_departure_city_1, R.layout.item_departure_city_2})
-                                .selected("depart_city_id", PARAM),
+                                .selected("depart_city_id", TVS.PARAM),
                         navigator(show(R.id.select), show(R.id.ok)));
 
     }

@@ -38,4 +38,10 @@
         app:normColor="@color/white"
         app:toAnimate="false"
         />
+    <com.dpcsa.compon.custom_components.SheetBottom
+        android:id="@+id/error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:positiveViewId="@id/ok"
+        app:viewId="@layout/view_error"/>
 </RelativeLayout>

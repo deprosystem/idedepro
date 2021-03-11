@@ -677,10 +677,6 @@ public class Screen<T>{
                 case SPINNER :
                     new SpinnerComponent(iBase, cMV, this);
                     break;
-//                case RECYCLER_EXPANDED:
-//                case RECYCLER_STICKY:
-//                case RECYCLER_HORIZONTAL :
-//                case RECYCLER_GRID :
                 case RECYCLER :
                     new RecyclerComponent(iBase, cMV, this);
                     break;

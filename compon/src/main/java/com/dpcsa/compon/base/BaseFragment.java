@@ -251,7 +251,7 @@ public class BaseFragment extends Fragment implements IBase {
                             }
                             break;
                         case GLOBAL_VAR:
-                            setVar(sv.viewId, sv.name);
+                            setVar(sv.viewId, sv.name, null);
                             break;
                         case LOCALE:
                             if (v instanceof TextView) {
@@ -909,7 +909,7 @@ public class BaseFragment extends Fragment implements IBase {
                             setValueParam(vh.viewId, null);
                             break;
                         case SET_VAR:
-                            setVar(vh.viewId, vh.nameFieldWithValue);
+                            setVar(vh.viewId, vh.nameFieldWithValue, vh.pref_value_string);
                             break;
                         case ASSIGN_VALUE:
                             vv = parentLayout.findViewById(vh.viewId);
@@ -956,36 +956,10 @@ public class BaseFragment extends Fragment implements IBase {
         }
     };
 
-    public void setVar(int viewId, String nameVar) {
+    public void setVar(int viewId, String nameVar, String listVar) {
         View view = parentLayout.findViewById(viewId);
-        componGlob.viewFromVar(view, nameVar);
-//        if (view != null) {
-//            Field ff = componGlob.globalData.getField(nameVar);
-//            Object obj = null;
-//            if (ff != null) {
-//                obj = ff.value;
-//                if (obj instanceof Record) {
-//                    for (Field fr : (Record) obj) {
-//                        setOneParam(fr);
-//                    }
-//                } else if (obj instanceof Field) {
-//                    setOneParam((Field) obj);
-//                }
-//            }
-//            if (view instanceof IComponent) {
-//                ((IComponent) view).setData(obj);
-//            } else if (view instanceof ViewGroup) {
-//
-//            }
-//        }
+        componGlob.viewFromVar(view, nameVar, listVar);
     }
-
-//    public void setOneParam(Field ff) {
-//        Param param = componGlob.getParam(ff.name);
-//        if (param != null) {
-//            componGlob.setParamValue(param, ff);
-//        }
-//    }
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override

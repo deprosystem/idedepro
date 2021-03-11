@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -74,5 +75,12 @@
         android:layout_marginBottom="@dimen/d_20"
         android:text="@string/select"
         android:visibility="gone" />
+
+    <com.dpcsa.compon.custom_components.SheetBottom
+        android:id="@+id/error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:positiveViewId="@id/ok"
+        app:viewId="@layout/view_error"/>
 
 </RelativeLayout>

@@ -36,21 +36,21 @@ public class TextCountryCity extends ComponEditText {
         setKeyListener(null);
     }
 
-    @Override
-    public void setData(Object data) {
-        setErrorValid(null);
-        if (data == null) {
-            setText("");
-        } else {
-            Record rec = (Record) data;
-            String country = rec.getString("country_name");
-            if (country != null && country.length() > 0) {
-                String city = rec.getString("city_name");
-                if (city != null && city.length() > 0) {
-                    country += ", " + city;
-                }
-            }
-            setText(country);
-        }
-    }
+//    @Override
+//    public void setData(Object data) {
+//        setErrorValid(null);
+//        if (data == null) {
+//            setText("");
+//        } else {
+//            Record rec = (Record) data;
+//            String country = rec.getString("country_name");
+//            if (country != null && country.length() > 0) {
+//                String city = rec.getString("city_name");
+//                if (city != null && city.length() > 0) {
+//                    country += ", " + city;
+//                }
+//            }
+//            setText(country);
+//        }
+//    }
 }

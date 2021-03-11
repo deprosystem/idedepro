@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dpcsa.compon.interfaces_classes.Visibility;
+import com.dpcsa.compon.single.ComponGlob;
+import com.dpcsa.compon.single.Injector;
+
+import static com.dpcsa.compon.param.ParamView.TYPE_VALUE_SELECTED.PARAM;
 
 public class ParamView {
     public enum TYPE_VALUE_SELECTED {NONE, PARAM, LOCALE};
@@ -184,6 +188,16 @@ public class ParamView {
     public ParamView selected(String selectNameField, TYPE_VALUE_SELECTED typeValue) {
         this.selectNameField = selectNameField;
         selected = true;
+        if (typeValue == PARAM) {
+            int i = selectNameField.indexOf("=");
+            String stPar = selectNameField;
+            if (i > 0) {
+                stPar = selectNameField.substring(0, i);
+            }
+//Log.d("QWERT","selected addParam="+stPar+"<<");
+            ComponGlob componGlob = Injector.getComponGlob();
+            componGlob.addParam(stPar);
+        }
         this.typeValue = typeValue;
         maxItemSelect = -1;
         return this;

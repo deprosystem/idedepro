@@ -552,7 +552,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                             }
                             break;
                         case GLOBAL_VAR:
-                            setVar(sv.viewId, sv.name);
+                            setVar(sv.viewId, sv.name, null);
                             break;
                         case LOCALE:
                             if (v instanceof TextView) {
@@ -769,7 +769,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                             setValueParam(vh.viewId, null);
                             break;
                         case SET_VAR:
-                            setVar(vh.viewId, vh.nameFieldWithValue);
+                            setVar(vh.viewId, vh.nameFieldWithValue, vh.pref_value_string);
                             break;
                         case UPDATE_DATA:
                             mComponent.getComponent(vh.viewId).updateData(vh.paramModel);
@@ -1166,9 +1166,9 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
         }
     }
 
-    public void setVar(int viewId, String nameVar) {
+    public void setVar(int viewId, String nameVar, String listVar) {
         View view = parentLayout.findViewById(viewId);
-        componGlob.viewFromVar(view, nameVar);
+        componGlob.viewFromVar(view, nameVar, listVar);
     }
 
     public void procesAnimate(Animate animate) {
@@ -1617,6 +1617,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
             View viewErrorDialog = parentLayout.findViewById(id);
             if (viewErrorDialog == null) {
                 log("0004 Нет view для ErrorDialog в " + mComponent.nameComponent);
+
             } else {
                 if (viewErrorDialog instanceof AnimatePanel) {
                     ((AnimatePanel) viewErrorDialog).show(this);

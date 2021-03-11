@@ -57,7 +57,7 @@ public class ParamModel <T> {
     public String updateTable, updateUrl, updateAlias, updateSet, updateWhere;
     public String[] urlArray;
     public int urlArrayIndex = -1;
-    private ComponGlob componGlob;
+    public ComponGlob componGlob;
     public int progressId;
     public String sortParam;
     public int errorShowView;

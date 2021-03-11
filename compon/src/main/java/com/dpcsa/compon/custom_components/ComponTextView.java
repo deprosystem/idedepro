@@ -9,6 +9,8 @@ import com.dpcsa.compon.R;
 import com.dpcsa.compon.interfaces_classes.IAlias;
 import com.dpcsa.compon.interfaces_classes.IComponent;
 import com.dpcsa.compon.interfaces_classes.OnChangeStatusListener;
+import com.dpcsa.compon.json_simple.Field;
+import com.dpcsa.compon.json_simple.Record;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -62,6 +64,24 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
     @Override
     public void setData(Object data) {
         this.data = data;
+        if (data == null) return;
+        if (data instanceof Record) {
+            Record rec = (Record) data;
+            String st = "";
+            String sep = "";
+            for (int i = 0; i < rec.size(); i++) {
+                Field f = rec.get(i);
+                if (f.value != null) {
+                    String sti = String.valueOf(f.value);
+                    if (sti != null && sti.length() > 0) {
+                        st += sep + sti;
+                        sep = ", ";
+                    }
+                }
+            }
+            setText(st);
+            return;
+        }
         if (dateFormat != null && dateFormat.length() > 0) {
             SimpleDateFormat df = new SimpleDateFormat(dateFormat);
             if (data instanceof String) {

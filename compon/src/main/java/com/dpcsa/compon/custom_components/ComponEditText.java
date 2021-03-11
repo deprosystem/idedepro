@@ -2,6 +2,9 @@ package com.dpcsa.compon.custom_components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+
+import com.dpcsa.compon.json_simple.Field;
+import com.dpcsa.compon.json_simple.Record;
 import com.google.android.material.textfield.TextInputLayout;
 import androidx.appcompat.widget.AppCompatEditText;
 import android.text.Editable;
@@ -252,7 +255,25 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
 
     @Override
     public void setData(Object data) {
-        setText(String.valueOf(data));
+        if (data == null) return;
+        if (data instanceof Record) {
+            Record rec = (Record) data;
+            String st = "";
+            String sep = "";
+            for (int i = 0; i < rec.size(); i++) {
+                Field f = rec.get(i);
+                if (f.value != null) {
+                    String sti = String.valueOf(f.value);
+                    if (sti != null && sti.length() > 0) {
+                        st += sep + sti;
+                        sep = ", ";
+                    }
+                }
+            }
+            setText(st);
+        } else {
+            setText(String.valueOf(data));
+        }
     }
 
     @Override
