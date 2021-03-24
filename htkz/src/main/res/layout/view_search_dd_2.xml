@@ -31,7 +31,7 @@
         android:layout_marginLeft="@dimen/d_20"
         android:layout_marginRight="@dimen/d_20"
         android:layout_marginBottom="44dp"
-        app:thumbImg="@drawable/slider_pin"
+
         app:betweenColor="@color/primary"
         app:barHeight="12dp"
         app:barDrawable="@drawable/rec_between"
@@ -39,7 +39,7 @@
         app:maxValueSeek="15"
         app:minStartValue="7"
         app:maxStartValue="9"
-        app:showMinMaxValue="@id/night"
+        app:sendNotif="date_night"
         app:sliderViewInfo="@id/inf" />
 
     <TextView

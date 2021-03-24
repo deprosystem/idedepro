@@ -1,6 +1,9 @@
 package com.dpcsa.compon.custom_components;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
@@ -9,6 +12,9 @@ import com.dpcsa.compon.interfaces_classes.IAlias;
 import com.dpcsa.compon.interfaces_classes.IComponent;
 import com.dpcsa.compon.interfaces_classes.OnChangeStatusListener;
 import com.dpcsa.compon.single.Injector;
+import com.dpcsa.compon.tools.Constants;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class TextViewNumberGrammar extends androidx.appcompat.widget.AppCompatTextView
         implements IComponent, IAlias {
@@ -18,6 +24,8 @@ public class TextViewNumberGrammar extends androidx.appcompat.widget.AppCompatTe
     private String alias, value, prefix;
     private Object data;
     private boolean zeroNotView;
+    private BroadcastReceiver setAcceptNotif;
+    private String acceptNotif;
 
     public TextViewNumberGrammar(Context context) {
         super(context);
@@ -43,6 +51,7 @@ public class TextViewNumberGrammar extends androidx.appcompat.widget.AppCompatTe
         prefix = a.getString(R.styleable.Simple_prefix);
         stringArray = a.getResourceId(R.styleable.Simple_stringArray, 0);
         zeroNotView = a.getBoolean(R.styleable.Simple_zeroNotView, false);
+        acceptNotif = a.getString(R.styleable.Simple_acceptNotif);
         if (prefix == null) {
             prefix = "";
         }
@@ -53,6 +62,17 @@ public class TextViewNumberGrammar extends androidx.appcompat.widget.AppCompatTe
         }
         if (value != null && value.length() > 0) {
             setData(value);
+        }
+        if (acceptNotif != null && acceptNotif.length() > 0) {
+            setAcceptNotif = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String txt = intent.getStringExtra(Constants.DATA_STR);
+                    setData(txt);
+                }
+            };
+            LocalBroadcastManager.getInstance(context).registerReceiver(setAcceptNotif,
+                    new IntentFilter(acceptNotif));
         }
     }
 
@@ -134,5 +154,14 @@ public class TextViewNumberGrammar extends androidx.appcompat.widget.AppCompatTe
     @Override
     public String getString() {
         return getText().toString();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (setAcceptNotif != null) {
+            LocalBroadcastManager.getInstance(context).unregisterReceiver(setAcceptNotif);
+            setAcceptNotif = null;
+        }
     }
 }

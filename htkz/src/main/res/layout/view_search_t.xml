@@ -144,13 +144,20 @@
                         style="@style/st_txt_12_40"
                         android:layout_marginTop="@dimen/d_16"
                         android:text="@string/depart_date"/>
-                    <com.example.htkz.custom.TextDepartDate
+                    <TextView
                         android:id="@+id/depart_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/t_1_1"
                         style="@style/st_txt_18"
                         android:layout_marginTop="2dp"/>
+<!--                    <com.example.htkz.custom.TextDepartDate-->
+<!--                        android:id="@+id/depart_date"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/t_1_1"-->
+<!--                        style="@style/st_txt_18"-->
+<!--                        android:layout_marginTop="2dp"/>-->
                 </RelativeLayout>
 
                 <RelativeLayout

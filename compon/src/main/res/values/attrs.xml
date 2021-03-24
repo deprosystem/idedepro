@@ -9,6 +9,7 @@
     <attr name="dateFormat" format="string"/>
     <attr name="betweenColor" format="color"/>
     <attr name="saveParam" format="string"/>
+    <attr name="sendNotif" format="string"/>
     <declare-styleable name="ComponList">
         <attr name="gapBetweenTagsVert" format="reference|dimension"/>
         <attr name="gapBetweenTagsHoris" format="reference|dimension"/>
@@ -56,6 +57,7 @@
         <attr name="heightLine" format="dimension"/>
         <attr name="numberFormat" format="string"/>
         <attr name="moneyFormat" format="string"/>
+        <attr name="acceptNotif" format="string"/>
         <attr name="dateFormat"/>
         <attr name="dateMilisec" format="boolean"/>
         <attr name="onlyLetters" format="boolean"/>
@@ -111,6 +113,7 @@
         <attr name="thumbDiam" format="dimension"/>
         <attr name="barHeight" format="dimension"/>
         <attr name="barColor" format="color"/>
+        <attr name="tumbColor" format="color"/>
         <attr name="betweenColor" />
         <attr name="barRoundedCorners" format="boolean"/>
         <attr name="barDrawable" format="reference"/>
@@ -118,6 +121,7 @@
         <attr name="showMinValue" format="reference"/>
         <attr name="showMaxValue" format="reference"/>
         <attr name="showMinMaxValue" format="reference"/>
+        <attr name="sendNotif"/>
         <attr name="minValueSeek" format="integer"/>
         <attr name="maxValueSeek" format="integer"/>
         <attr name="minStartValue" format="integer"/>
@@ -169,6 +173,7 @@
         <attr name="workDayColor" format="color"/>
         <attr name="noWorkDayColor" format="color"/>
         <attr name="showDateId" format="reference"/>
+        <attr name="sendNotif"/>
         <attr name="saveParam"/>
         <attr name="dateFormat" />
         <attr name="alias" />

@@ -333,6 +333,7 @@ public abstract class BaseComponent {
                 }
             }
         } else {
+//            workWithRecordsAndViews.setCompon(iBase);
             changeDataBase(null);
         }
     }
@@ -805,6 +806,29 @@ public abstract class BaseComponent {
                             }
                         }
                         break;
+                    case DEL_VAR_FOLOW:
+                        ff = componGlob.globalData.getField(vh.nameFieldWithValue);
+                        if (ff != null && ff.type == Field.TYPE_RECORD) {
+                            recGl = (Record) ff.value;
+                            String[] par = vh.pref_value_string.split(",");
+                            String endVar = par[par.length - 1];
+                            int jEnd = -1;
+                            int ik = recGl.size();
+                            if (ik == 0) return;
+                            for (int i = 0; i < ik; i++) {
+                                if (recGl.get(i).name.equals(endVar)) {
+                                    jEnd = i;
+                                    break;
+                                }
+                            }
+                            if (jEnd > 0) {
+                                jEnd++;
+                                while (jEnd < recGl.size()) {
+                                    recGl.remove(jEnd);
+                                }
+                            }
+                        }
+                        break;
                     case CLEAN_VAR:
                         ff = componGlob.globalData.getField(vh.nameFieldWithValue);
                         if (ff != null && ff.type == Field.TYPE_RECORD) {
@@ -1189,6 +1213,29 @@ public abstract class BaseComponent {
                                 String[] par = vh.pref_value_string.split(",");
                                 for (String st : par) {
                                     recGl.deleteField(st);
+                                }
+                            }
+                            break;
+                        case DEL_VAR_FOLOW:
+                            ff = componGlob.globalData.getField(vh.nameFieldWithValue);
+                            if (ff != null && ff.type == Field.TYPE_RECORD) {
+                                recGl = (Record) ff.value;
+                                String[] par = vh.pref_value_string.split(",");
+                                String endVar = par[par.length - 1];
+                                int jEnd = -1;
+                                int ik = recGl.size();
+                                if (ik == 0) return;
+                                for (int i = 0; i < ik; i++) {
+                                    if (recGl.get(i).name.equals(endVar)) {
+                                        jEnd = i;
+                                        break;
+                                    }
+                                }
+                                if (jEnd > 0) {
+                                    jEnd++;
+                                    while (jEnd < recGl.size()) {
+                                        recGl.remove(jEnd);
+                                    }
                                 }
                             }
                             break;
@@ -1685,7 +1732,7 @@ public abstract class BaseComponent {
                     vv = parentLayout.findViewById(vh.viewId);
                     if (vv != null) {
                         if (response != null) {
-                            workWithRecordsAndViews.RecordToView((Record) response.value, vv);
+                            workWithRecordsAndViews.RecordToView((Record) response.value, vv, this, clickView);
                         }
                     }
                     break;

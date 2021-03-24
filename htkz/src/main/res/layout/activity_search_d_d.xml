@@ -78,13 +78,24 @@
                     style="@style/st_txt_12_40"
                     android:layout_marginTop="@dimen/d_16"
                     android:text="@string/depart_date"/>
-                <TextView
+
+<!--                <TextView-->
+<!--                    android:id="@+id/depart_date"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/t_1_1"-->
+<!--                    style="@style/st_txt_22"-->
+<!--                    android:layout_marginTop="2dp"/>-->
+
+                <com.dpcsa.compon.custom_components.ComponTextView
                     android:id="@+id/depart_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/t_1_1"
                     style="@style/st_txt_22"
+                    app:acceptNotif="date_dep_notif"
                     android:layout_marginTop="2dp"/>
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -107,6 +118,7 @@
                     android:layout_marginLeft="@dimen/d_20"
                     android:layout_marginTop="2dp"
                     app:stringArray="@array/nights"
+                    app:acceptNotif="date_night"
                     style="@style/st_txt_22"
                     android:layout_below="@+id/t_1_2"/>
 

@@ -1,22 +1,29 @@
 package com.dpcsa.compon.custom_components;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 
 import com.dpcsa.compon.R;
+import com.dpcsa.compon.base.BaseActivity;
 import com.dpcsa.compon.interfaces_classes.IAlias;
 import com.dpcsa.compon.interfaces_classes.IComponent;
 import com.dpcsa.compon.interfaces_classes.OnChangeStatusListener;
 import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.Record;
+import com.dpcsa.compon.tools.Constants;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
         implements IComponent, IAlias {
@@ -25,6 +32,8 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
     private boolean dateMilisec;
     private Object data;
     private String alias;
+    private String acceptNotif;
+    private BroadcastReceiver setAcceptNotif;
 
     public ComponTextView(Context context) {
         super(context);
@@ -48,9 +57,22 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
         numberFormat = a.getString(R.styleable.Simple_numberFormat);
         moneyFormat = a.getString(R.styleable.Simple_moneyFormat);
         dateFormat = a.getString(R.styleable.Simple_dateFormat);
+        acceptNotif = a.getString(R.styleable.Simple_acceptNotif);
         dateMilisec = a.getBoolean(R.styleable.Simple_dateMilisec, true);
+
         alias = a.getString(R.styleable.Simple_alias);
         a.recycle();
+        if (acceptNotif != null && acceptNotif.length() > 0) {
+            setAcceptNotif = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String txt = intent.getStringExtra(Constants.DATA_STR);
+                    setText(txt);
+                }
+            };
+            LocalBroadcastManager.getInstance(context).registerReceiver(setAcceptNotif,
+                    new IntentFilter(acceptNotif));
+        }
     }
 
     public String getNumberFormat() {
@@ -190,5 +212,14 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
             }
         }
         return c;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (setAcceptNotif != null) {
+            LocalBroadcastManager.getInstance(context).unregisterReceiver(setAcceptNotif);
+            setAcceptNotif = null;
+        }
     }
 }

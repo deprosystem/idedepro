@@ -63,6 +63,8 @@
     <string name="no_connect">Проверьте подключение и попробуйте\nповторить действие снова</string>
     <string name="no_connect_title">Нет соединения\nс интернетом</string>
 
+    <string name="month_st">Январь,Февраль,Март,Апрель,Май,Июнь,Июль,Август,Сентябрь,Октябрь,Ноябрь,Декабрь</string>
+
     <string-array name="nights">
         <item>ночь</item>
         <item>ночи</item>

@@ -27,6 +27,25 @@
             android:background="@color/primary_20"/>
     </RelativeLayout>
 
+<!--    <com.dpcsa.compon.custom_components.CalendarVertical-->
+<!--        android:id="@+id/calendar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_below="@+id/sw"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_marginRight="20dp"-->
+<!--        app:heightCell="56dp"-->
+<!--        app:heightMonth="56dp"-->
+<!--        app:countAfterMonth="5"-->
+<!--        app:showDateId="@id/depart_date"-->
+<!--        app:dateFormat="dd.MM"-->
+<!--        app:saveParam="depart_date"-->
+<!--        app:afterToday="true"-->
+<!--        app:textDaySize="14sp"-->
+<!--        app:rangeDate="true"-->
+<!--        app:monthSize="10sp"-->
+<!--        app:nameMonth="@array/month"/>-->
+
     <com.dpcsa.compon.custom_components.CalendarVertical
         android:id="@+id/calendar"
         android:layout_width="match_parent"
@@ -37,13 +56,14 @@
         app:heightCell="56dp"
         app:heightMonth="56dp"
         app:countAfterMonth="5"
-        app:showDateId="@id/depart_date"
+        app:sendNotif="date_dep_notif"
         app:dateFormat="dd.MM"
         app:saveParam="depart_date"
         app:afterToday="true"
         app:textDaySize="14sp"
         app:rangeDate="true"
         app:monthSize="10sp"
-        app:nameMonth="@array/month"/>
+        app:nameMonth="@string/month_st"
+        />
 
 </RelativeLayout>

@@ -684,6 +684,29 @@ public class BaseFragment extends Fragment implements IBase {
                             }
                         }
                         break;
+                    case DEL_VAR_FOLOW:
+                        ff = componGlob.globalData.getField(vh.nameFieldWithValue);
+                        if (ff != null && ff.type == Field.TYPE_RECORD) {
+                            Record recGl = (Record) ff.value;
+                            String[] par = vh.pref_value_string.split(",");
+                            String endVar = par[par.length - 1];
+                            int jEnd = -1;
+                            int ik = recGl.size();
+                            if (ik == 0) return;
+                            for (int i = 0; i < ik; i++) {
+                                if (recGl.get(i).name.equals(endVar)) {
+                                    jEnd = i;
+                                    break;
+                                }
+                            }
+                            if (jEnd > 0) {
+                                jEnd++;
+                                while (jEnd < recGl.size()) {
+                                    recGl.remove(jEnd);
+                                }
+                            }
+                        }
+                        break;
                     case SET_GLOBAL:
                         BaseComponent bc = mComponent.getComponent(vh.componId);
                         bc.setGlobalData(vh.nameFieldWithValue);

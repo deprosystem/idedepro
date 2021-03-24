@@ -8,6 +8,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.dpcsa.compon.base.BaseInternetProvider;
 import com.dpcsa.compon.base.Screen;
@@ -26,6 +27,7 @@ import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.tools.Constants;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -310,29 +312,54 @@ public class ComponGlob {
     }
 
     public String getParamValue(String nameParam) {
+        String vvv = getParamValueIfIs(nameParam);
+        if (vvv == null) {
+            return "";
+        } else {
+            return vvv;
+        }
+//        String np = nameParam;
+//        int i = np.indexOf("=");
+//        String vv = "";
+//        if (i > 0) {
+//            np = np.substring(0, i);
+//            int i_1 = i + 1;
+//            if (i_1 < nameParam.length())
+//            vv = nameParam.substring(i_1);
+//        }
+//        for (Param paramV : paramValues) {
+//            if (np.equals(paramV.name)) {
+//                if (paramV.value.length() == 0) {
+//                    paramV.value = vv;
+//                }
+//                return paramV.value;
+//            }
+//        }
+//        return "";
+    }
+
+    public String getParamValueIfIs(String nameParam) {
         String np = nameParam;
         int i = np.indexOf("=");
         String vv = "";
         if (i > 0) {
             np = np.substring(0, i);
             int i_1 = i + 1;
-            if (i_1 < nameParam.length())
-            vv = nameParam.substring(i_1);
+            if (i_1 < nameParam.length()) {
+                vv = nameParam.substring(i_1);
+                if (vv.equals("SysDate")) {
+                    Calendar c = new GregorianCalendar();
+                    long tt = c.getTimeInMillis();
+                    SimpleDateFormat df = new SimpleDateFormat("dd.MM.yy");
+                    vv = df.format(tt);
+                }
+            }
         }
         for (Param paramV : paramValues) {
             if (np.equals(paramV.name)) {
                 if (paramV.value.length() == 0) {
                     paramV.value = vv;
                 }
-                return paramV.value;
-            }
-        }
-        return "";
-    }
-
-    public String getParamValueIfIs(String nameParam) {
-        for (Param paramV : paramValues) {
-            if (nameParam.equals(paramV.name)) {
                 return paramV.value;
             }
         }
@@ -573,6 +600,20 @@ public class ComponGlob {
                     }
                     if (view instanceof IComponent) {
                         ((IComponent) view).setData(rec);
+                    } else if (view instanceof TextView) {
+                        String st = "";
+                        String sep = "";
+                        for (int i = 0; i < rec.size(); i++) {
+                            Field f = rec.get(i);
+                            if (f.value != null) {
+                                String sti = String.valueOf(f.value);
+                                if (sti != null && sti.length() > 0) {
+                                    st += sep + sti;
+                                    sep = ", ";
+                                }
+                            }
+                        }
+                        ((TextView) view).setText(st);
                     } else if (view instanceof ViewGroup) {
 
                     }
@@ -589,7 +630,7 @@ public class ComponGlob {
                     }
                 }
             }
-         }
+        }
     }
 
     public boolean isOnline() {

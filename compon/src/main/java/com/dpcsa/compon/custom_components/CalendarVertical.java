@@ -1,6 +1,7 @@
 package com.dpcsa.compon.custom_components;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.dpcsa.compon.interfaces_classes.OnChangeStatusListener;
 import com.dpcsa.compon.interfaces_classes.WeekData;
 import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.single.Injector;
+import com.dpcsa.compon.tools.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,6 +46,7 @@ public class CalendarVertical extends RecyclerView implements ICalendar, ICompon
     private Calendar c;
     private List<WeekData> dataList;
     private String alias;
+    private String nameMonthStr = "January,February,March,April,May,June,July,August,September,October,November,December";
     int nameMonth;
     int showDateId;
     ParamCalendar paramC;
@@ -58,6 +62,7 @@ public class CalendarVertical extends RecyclerView implements ICalendar, ICompon
     OnCalendarClick cClick;
     int widthC;
     CalendarVertAdapter adapter;
+    String sendNotif;
 
     public CalendarVertical(@NonNull Context context) {
         super(context);
@@ -105,6 +110,7 @@ public class CalendarVertical extends RecyclerView implements ICalendar, ICompon
             showDateId = a.getResourceId(R.styleable.CalendarV_showDateId, 0);
             dateFormat = a.getString(R.styleable.CalendarV_dateFormat);
             saveParam = a.getString(R.styleable.CalendarV_saveParam);
+            sendNotif = a.getString(R.styleable.CalendarV_sendNotif);
             alias = a.getString(R.styleable.CalendarV_alias);
             if (dateFormat == null) {
                 dateFormat = "dd.MM.yyyy";
@@ -112,7 +118,14 @@ public class CalendarVertical extends RecyclerView implements ICalendar, ICompon
 //            viewMonth = a.getResourceId(R.styleable.CalendarV_viewMonth, 0);
 //            viewWeek = a.getResourceId(R.styleable.CalendarV_viewWeek, 0);
             if (nameMonth != 0) {
-                paramC.arrayMonth = getResources().getStringArray(nameMonth);
+                String resType = getResources().getResourceTypeName(nameMonth);
+                if (resType.indexOf("array") > -1) {
+                    paramC.arrayMonth = getResources().getStringArray(nameMonth);
+                } else {
+                    paramC.arrayMonth = getResources().getString(nameMonth).split(",");
+                }
+            } else {
+                paramC.arrayMonth = nameMonthStr.split(",");
             }
             if (afterToday) {
                 countBeforeMonth = 0;
@@ -120,6 +133,9 @@ public class CalendarVertical extends RecyclerView implements ICalendar, ICompon
             }
             if (tillToday) {
                 countAfterMonth = 0;
+            }
+            if (sendNotif != null && sendNotif.length() == 0) {
+                sendNotif = null;
             }
         } finally {
             a.recycle();
@@ -139,6 +155,9 @@ public class CalendarVertical extends RecyclerView implements ICalendar, ICompon
                 if (showDate != null) {
                     showDate.setText(showDateText);
                 }
+                if (sendNotif != null) {
+                    sendNotification(showDateText);
+                }
             }
         }
     }
@@ -153,6 +172,9 @@ public class CalendarVertical extends RecyclerView implements ICalendar, ICompon
         showDateText = format.format(selectD);
         if (showDate != null) {
             showDate.setText(showDateText);
+        }
+        if (sendNotif != null) {
+            sendNotification(showDateText);
         }
         Calendar ca = new GregorianCalendar(sysC.get(Calendar.YEAR), sysC.get(Calendar.MONTH), sysC.get(Calendar.DAY_OF_MONTH));
         long selectDate = ca.getTimeInMillis();
@@ -269,6 +291,9 @@ public class CalendarVertical extends RecyclerView implements ICalendar, ICompon
             if (showDate != null) {
                 showDate.setText(showDateText);
             }
+            if (sendNotif != null) {
+                sendNotification(showDateText);
+            }
             if (cClick != null) {
                 currentDate = c.getTimeInMillis();
                 currentWeekDay = c.get(Calendar.DAY_OF_WEEK);
@@ -290,12 +315,21 @@ public class CalendarVertical extends RecyclerView implements ICalendar, ICompon
             if (showDate != null) {
                 showDate.setText(showDateText);
             }
+            if (sendNotif != null) {
+                sendNotification(showDateText);
+            }
             if (saveParam != null && saveParam.length() > 0) {
                 Record rec = new Record();
                 Injector.getComponGlob().setParamValue(saveParam, min.getTime() + "," + max.getTime());
             }
         }
     };
+
+    private void sendNotification(String notif) {
+        Intent intentBroad = new Intent(sendNotif);
+        intentBroad.putExtra(Constants.DATA_STR, notif);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intentBroad);
+    }
 
     private View getParentRoot(ViewParent view) {
         ViewParent viewRoot = view;

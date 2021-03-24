@@ -775,6 +775,10 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, ViewHandler.TYPE.DEL_VAR, nameVar, param);
     }
 
+    public ViewHandler delVarFollow(int viewId, String nameVar, String param) {
+        return new ViewHandler(viewId, ViewHandler.TYPE.DEL_VAR_FOLOW, nameVar, param);
+    }
+
     public ViewHandler hide(int showViewId) {
         return new ViewHandler(0, ViewHandler.TYPE.HIDE, showViewId, false);
     }

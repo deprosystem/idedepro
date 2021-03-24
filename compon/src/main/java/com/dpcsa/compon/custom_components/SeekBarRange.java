@@ -1,7 +1,9 @@
 package com.dpcsa.compon.custom_components;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.util.AttributeSet;
@@ -20,8 +22,10 @@ import com.dpcsa.compon.interfaces_classes.OnChangeStatusListener;
 import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.single.Injector;
+import com.dpcsa.compon.tools.Constants;
 
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
 public class SeekBarRange extends RelativeLayout
@@ -34,7 +38,10 @@ public class SeekBarRange extends RelativeLayout
     private int thumbImg;
     private float DENSITY = getResources().getDisplayMetrics().density;
     private int DEF_BAR_H = (int) (2 * DENSITY);
+    private int DEF_TUMB_H = (int) (32 * DENSITY);
+    private int DEF_TUMB_COLOR = 0x801B5AE7;
     private int thumbDiam, barHeight, barColor, betweenColor, barDrawable;      // pix
+    private int tumbColor;
     private LinearLayout thumb_1, thumb_2, barAll, barBetween, thumb_active;
     private int WRAP = -2, MATCH = -1;
     private boolean barRoundedCorners, singleThumb;
@@ -52,6 +59,7 @@ public class SeekBarRange extends RelativeLayout
     private int intX;
     private boolean mustParamSeekBar;
     private String saveParam;
+    private String sendNotif;
 
     public SeekBarRange(Context context) {
         super(context);
@@ -80,6 +88,7 @@ public class SeekBarRange extends RelativeLayout
                 thumbDiam = a.getDimensionPixelOffset(R.styleable.Simple_thumbDiam, 0);
                 barHeight = a.getDimensionPixelOffset(R.styleable.Simple_barHeight, DEF_BAR_H);
                 barColor = a.getColor(R.styleable.Simple_barColor, 0xff000000);
+                tumbColor = a.getColor(R.styleable.Simple_tumbColor, DEF_TUMB_COLOR);
                 betweenColor = a.getColor(R.styleable.Simple_betweenColor, 0xff000000);
                 barRoundedCorners = a.getBoolean(R.styleable.Simple_barRoundedCorners, false);
                 sliderViewInfo = a.getResourceId(R.styleable.Simple_sliderViewInfo, 0);
@@ -92,6 +101,7 @@ public class SeekBarRange extends RelativeLayout
                 showMaxId = a.getResourceId(R.styleable.Simple_showMaxValue, 0);
                 showMinId = a.getResourceId(R.styleable.Simple_showMinValue, 0);
                 showMinMaxId = a.getResourceId(R.styleable.Simple_showMinMaxValue, 0);
+                sendNotif = a.getString(R.styleable.Simple_sendNotif);
                 saveParam = a.getString(R.styleable.Simple_saveParam);
                 validMinMax(minV, maxV);
                 validStartMinMax(minStart, maxStart);
@@ -109,6 +119,9 @@ public class SeekBarRange extends RelativeLayout
             if ( ! singleThumb) {
                 thumb_2 = thumb(true);
                 addView(thumb_2);
+            }
+            if (sendNotif != null && sendNotif.length() == 0) {
+                sendNotif = null;
             }
         }
     }
@@ -156,6 +169,7 @@ public class SeekBarRange extends RelativeLayout
         if (showMinMaxId != 0) {
             showMinMaxTV = parentRoot.findViewById(showMinMaxId);
         }
+
         int[] location = new int[2];
         getLocationOnScreen(location);
         thisXX = location[0] - rootXX;
@@ -171,6 +185,12 @@ public class SeekBarRange extends RelativeLayout
         }
         setStartValue();
         showValue();
+    }
+
+    private void sendNotification(String notif) {
+        Intent intentBroad = new Intent(sendNotif);
+        intentBroad.putExtra(Constants.DATA_STR, notif);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intentBroad);
     }
 
     private void validStartMinMax(int min, int max) {
@@ -222,6 +242,10 @@ public class SeekBarRange extends RelativeLayout
         if (thumbDiam != 0) {
             w = thumbDiam;
             h = thumbDiam;
+        } else {
+            if (thumbImg == 0) {
+                w = h = DEF_TUMB_H;
+            }
         }
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(w, h);
         if (right) {
@@ -231,9 +255,16 @@ public class SeekBarRange extends RelativeLayout
         if (thumbImg != 0) {
             ll.setBackgroundResource(thumbImg);
         } else {
-
+            ll.setBackground(formTumb(DEF_TUMB_H / 2f));
         }
         return ll;
+    }
+
+    private ShapeDrawable formTumb(float r) {
+        float[] outR = new float[]{r, r, r, r, r, r, r, r};
+        ShapeDrawable shape = new ShapeDrawable(new RoundRectShape(outR, null, null));
+        shape.getPaint().setColor(tumbColor);
+        return shape;
     }
 
     private LinearLayout bar_1() {
@@ -389,16 +420,16 @@ public class SeekBarRange extends RelativeLayout
             }
             Injector.getComponGlob().setParamValue(saveParam, str);
         }
-        if (showMinMaxTV != null) {
-            if (singleThumb) {
+        if (singleThumb) {
+            str = String.valueOf(minV);
+        } else {
+            if (minV == maxV) {
                 str = String.valueOf(minV);
             } else {
-                if (minV == maxV) {
-                    str = String.valueOf(minV);
-                } else {
-                    str = String.valueOf(minV) + " - " + String.valueOf(maxV);
-                }
+                str = String.valueOf(minV) + " - " + String.valueOf(maxV);
             }
+        }
+        if (showMinMaxTV != null) {
             if (showMinMaxTV instanceof TextViewNumberGrammar) {
                 ((TextViewNumberGrammar) showMinMaxTV).setData(str);
             } else {
@@ -413,6 +444,9 @@ public class SeekBarRange extends RelativeLayout
             if (showMinTV != null) {
                 showMinTV.setText(String.valueOf(minV));
             }
+        }
+        if (sendNotif != null) {
+            sendNotification(str);
         }
     }
 
@@ -518,15 +552,6 @@ public class SeekBarRange extends RelativeLayout
             return valueTh_1;
         } else {
             return valueTh_1 + "," + valueTh_2;
-//            Record rec = new Record();
-//            if (valueTh_1 < valueTh_2) {
-//                rec.add(new Field("min", Field.TYPE_INTEGER, valueTh_1));
-//                rec.add(new Field("max", Field.TYPE_INTEGER, valueTh_2));
-//            } else {
-//                rec.add(new Field("min", Field.TYPE_INTEGER, valueTh_2));
-//                rec.add(new Field("max", Field.TYPE_INTEGER, valueTh_1));
-//            }
-//            return rec;
         }
     }
 

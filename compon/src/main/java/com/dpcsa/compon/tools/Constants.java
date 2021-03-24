@@ -25,5 +25,6 @@ public class Constants {
     public static String MESSAGE = "message";
     public static String NAME_FUNC = "nameFunc";
     public static String TAG_SUBSCRIBE = "SUBSCRIBE_";
+    public static String DATA_STR = "DATA_STR";
 
 }
