@@ -122,6 +122,8 @@
                     style="@style/st_txt_22"
                     android:layout_below="@+id/t_1_2"/>
 
+<!--                app:stringArray="@array/nights"-->
+
                 <LinearLayout
                     android:layout_width="1dp"
                     android:layout_height="match_parent"

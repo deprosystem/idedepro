@@ -87,8 +87,8 @@ public class SeekBarRange extends RelativeLayout
                 thumbImg = a.getResourceId(R.styleable.Simple_thumbImg, 0);
                 thumbDiam = a.getDimensionPixelOffset(R.styleable.Simple_thumbDiam, 0);
                 barHeight = a.getDimensionPixelOffset(R.styleable.Simple_barHeight, DEF_BAR_H);
-                barColor = a.getColor(R.styleable.Simple_barColor, 0xff000000);
-                tumbColor = a.getColor(R.styleable.Simple_tumbColor, DEF_TUMB_COLOR);
+                barColor = a.getColor(R.styleable.Simple_barColor, 0x301B5AE7);
+                tumbColor = a.getColor(R.styleable.Simple_thumbColor, DEF_TUMB_COLOR);
                 betweenColor = a.getColor(R.styleable.Simple_betweenColor, 0xff000000);
                 barRoundedCorners = a.getBoolean(R.styleable.Simple_barRoundedCorners, false);
                 sliderViewInfo = a.getResourceId(R.styleable.Simple_sliderViewInfo, 0);

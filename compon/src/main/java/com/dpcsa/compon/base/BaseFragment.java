@@ -539,7 +539,9 @@ public class BaseFragment extends Fragment implements IBase {
                         if (vh.nameFieldWithValue != null && vh.nameFieldWithValue.length() > 0) {
                             Record record = workWithRecordsAndViews.ViewToRecord(parentLayout, vh.nameFieldWithValue);
                             componGlob.setParam(record);
-                            intent.putExtra(Constants.RECORD, record.toString());
+                            activity.resultOkRecord(record);
+                            break;
+//                            intent.putExtra(Constants.RECORD, record.toString());
                         } else {
                             log("Запись с возвращаемыми параметрами не сформирована в " + mComponent.nameComponent);
                             intent.putExtra(Constants.RECORD, "{}");

@@ -57,9 +57,22 @@ public class TextViewNumberGrammar extends androidx.appcompat.widget.AppCompatTe
         }
         a.recycle();
         textArray = null;
+/*
         if (stringArray != 0) {
             textArray = getResources().getStringArray(stringArray);
         }
+
+*/
+        if (stringArray != 0) {
+            String resType = getResources().getResourceTypeName(stringArray);
+            if (resType.indexOf("array") > -1) {
+                textArray = getResources().getStringArray(stringArray);
+            } else {
+                textArray = getResources().getString(stringArray).split(",");
+            }
+        }
+
+
         if (value != null && value.length() > 0) {
             setData(value);
         }

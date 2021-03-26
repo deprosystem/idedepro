@@ -31,7 +31,7 @@
         android:layout_marginLeft="@dimen/d_20"
         android:layout_marginRight="@dimen/d_20"
         android:layout_marginBottom="44dp"
-
+        app:thumbImg="@drawable/slider_pin"
         app:betweenColor="@color/primary"
         app:barHeight="12dp"
         app:barDrawable="@drawable/rec_between"

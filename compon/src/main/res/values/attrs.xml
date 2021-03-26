@@ -113,7 +113,7 @@
         <attr name="thumbDiam" format="dimension"/>
         <attr name="barHeight" format="dimension"/>
         <attr name="barColor" format="color"/>
-        <attr name="tumbColor" format="color"/>
+        <attr name="thumbColor" format="color"/>
         <attr name="betweenColor" />
         <attr name="barRoundedCorners" format="boolean"/>
         <attr name="barDrawable" format="reference"/>

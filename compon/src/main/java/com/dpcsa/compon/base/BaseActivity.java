@@ -1077,6 +1077,31 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
         }
     }
 
+    public void resultOkRecord(Record record, String par) {
+        Intent intent = new Intent();
+        Record recAct = workWithRecordsAndViews.ViewToRecord(parentLayout, par);
+        if (record.size() > 0) {
+            for (Field f : record) {
+                Field ff = recAct.getField(f.name);
+                if (ff == null) {
+                    recAct.add(f);
+                }
+            }
+        }
+        intent.putExtra(Constants.RECORD, recAct.toString());
+
+//        if (vh.nameFieldWithValue != null && vh.nameFieldWithValue.length() > 0) {
+//            Record record = workWithRecordsAndViews.ViewToRecord(parentLayout, vh.nameFieldWithValue);
+//            componGlob.setParam(record);
+//            intent.putExtra(Constants.RECORD, record.toString());
+//        } else {
+//            log("Запись с возвращаемыми параметрами не сформирована в " + mComponent.nameComponent);
+//            intent.putExtra(Constants.RECORD, "{}");
+//        }
+        setResult(RESULT_OK, intent);
+        finishActivity();
+    }
+
     private void changeRecordGlob(String nn, String ns) {
         Field ff = componGlob.globalData.getField(ns);
         if (ff != null && ff.type == Field.TYPE_RECORD) {
