@@ -209,19 +209,6 @@ public class PlusMinus extends AppCompatEditText implements IComponent{
         }
     }
 
-//    public void setData(String data) {
-//        int c;
-//        try {
-//            c = Integer.valueOf((String) data);
-//            setValue(c);
-//            blockEdit = true;
-//            setText(data);
-//            blockEdit = false;
-//        } catch (NumberFormatException e) {
-//
-//        }
-//    }
-
     private void setValue(int count) {
         countValue = count;
         if (field != null) {

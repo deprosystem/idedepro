@@ -570,6 +570,46 @@ public class ComponGlob {
         return rec;
     }
 
+    public Record paramSetRecord(String param) {
+        Record rec = new Record();
+        String[] par = param.split(",");
+        if (par.length > 0) {
+            for (String nameField : par) {
+                String np = nameField;
+                int i = np.indexOf("=");
+                String vv = "";
+                if (i > 0) {
+                    np = np.substring(0, i);
+                    int i_1 = i + 1;
+                    if (i_1 < nameField.length()) {
+                        vv = nameField.substring(i_1);
+                        if (vv.equals("SysDate")) {
+                            Calendar c = new GregorianCalendar();
+                            long tt = c.getTimeInMillis();
+                            SimpleDateFormat df = new SimpleDateFormat("dd.MM.yy");
+                            vv = df.format(tt);
+                        }
+                    }
+                }
+
+                Param p = getParam(np);
+                String value;
+                if (p == null) {
+                    addParamValue(np, vv);
+                    value = vv;
+                } else {
+                    if (p.value.length() == 0) {
+                        value = vv;
+                    } else {
+                        value = p.value;
+                    }
+                }
+                rec.add(new Field(np, Field.TYPE_STRING, value));
+            }
+        }
+        return rec;
+    }
+
     public void viewFromVar(View view, String nameVar, String listVar) {
         if (view != null) {
             Field ff = globalData.getField(nameVar);

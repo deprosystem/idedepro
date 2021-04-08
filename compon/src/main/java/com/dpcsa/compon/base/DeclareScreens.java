@@ -466,16 +466,6 @@ public abstract class DeclareScreens<T>{
         return vh;
     }
 
-//    public ViewHandler setParam(int ... viewId) {
-//        ViewHandler vh;
-//        if (viewId.length > 0) {
-//            vh = new ViewHandler(viewId[0], SET_VALUE_PARAM);
-//        } else {
-//            vh = new ViewHandler(0, NONE);
-//        }
-//        return vh;
-//    }
-
     public ViewHandler addScreen(int viewId, String screen) {
         ViewHandler vh = new ViewHandler(viewId, screen);
         vh.addFragment = true;
@@ -864,6 +854,12 @@ public abstract class DeclareScreens<T>{
     }
 
     public ItemSetValue setParam(int viewId, String nameParam) {
+        if (nameParam != null && nameParam.length() > 0) {
+            String[] pp = nameParam.split(",");
+            for (String par : pp) {
+                componGlob.addParam(par);
+            }
+        }
         return new ItemSetValue(viewId, GROUPP_PARAM, nameParam);
     }
 

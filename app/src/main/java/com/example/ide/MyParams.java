@@ -7,6 +7,7 @@ public class MyParams extends AppParams {
     @Override
     public void setParams() {
 
-        baseUrl = "https://deprosystem.com/";
+        baseUrl = "https://deprosystem.com/depro/";
+        isFullScreen = true;
     }
 }

@@ -154,5 +154,9 @@
     <orderEntry type="library" name="Gradle: com.makeramen:roundedimageview:2.3.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: io.reactivex:rxandroid:1.2.1@aar" level="project" />
     <orderEntry type="module" module-name="compon" />
+    <orderEntry type="module" module-name="compon" />
+    <orderEntry type="module" module-name="compon" />
+    <orderEntry type="module" module-name="compon" />
+    <orderEntry type="module" module-name="compon" />
   </component>
 </module>

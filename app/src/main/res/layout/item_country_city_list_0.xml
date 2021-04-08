@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/T_0"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dim_56"
+>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dim_20"
+        android:layout_marginRight="@dimen/dim_20"
+    />
+    <RelativeLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/flag"
+        android:layout_marginLeft="@dimen/dim_8"
+    >
+        <TextView
+            android:id="@+id/country_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dim_16"
+            android:textColor="@color/text"
+        />
+        <TextView
+            android:id="@+id/visa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/country_name"
+            android:text="Нужна виза"
+            android:textSize="@dimen/dim_12"
+        />
+    </RelativeLayout>
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/flag"
+        android:layout_width="@dimen/dim_32"
+        android:layout_height="@dimen/dim_32"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dim_20"
+        android:scaleType="centerCrop"
+        app:riv_corner_radius="16dp"
+    />
+    <ImageView
+        android:id="@+id/selcity"
+        android:layout_width="@dimen/dim_56"
+        android:layout_height="@dimen/dim_56"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dim_20"
+        android:padding="@dimen/dim_16"
+        android:src="@drawable/arrow"
+        android:scaleType="centerCrop"
+    />
+</RelativeLayout>

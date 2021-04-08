@@ -1170,6 +1170,10 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
         if (view instanceof ViewGroup) {
             ViewGroup vg = (ViewGroup) view;
             int ik = vg.getChildCount();
+for (int z = 0; z < componGlob.paramValues.size(); z++){
+    Log.d("QWERT", "III="+z+" nnn="+componGlob.paramValues.get(z).name+"<< VV="+componGlob.paramValues.get(z).value+"<<");
+}
+Log.d("QWERT","*******************");
             for (int i = 0; i < ik; i++) {
                 setOneViewValue(vg.getChildAt(i), null);
             }

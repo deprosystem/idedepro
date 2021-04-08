@@ -539,7 +539,7 @@ public class BaseFragment extends Fragment implements IBase {
                         if (vh.nameFieldWithValue != null && vh.nameFieldWithValue.length() > 0) {
                             Record record = workWithRecordsAndViews.ViewToRecord(parentLayout, vh.nameFieldWithValue);
                             componGlob.setParam(record);
-                            activity.resultOkRecord(record);
+                            activity.resultOkRecord(record, vh.nameFieldWithValue);
                             break;
 //                            intent.putExtra(Constants.RECORD, record.toString());
                         } else {

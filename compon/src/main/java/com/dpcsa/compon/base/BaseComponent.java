@@ -286,7 +286,14 @@ public abstract class BaseComponent {
                     listener.onResponse(fg);
                     break;
                 case ParamModel.PARAMETERS:
-                    setValueParam(paramMV.paramView.viewId);
+                    if (paramMV.paramModel.param != null && paramMV.paramModel.param.length() > 0) {
+                        Record rr = componGlob.paramSetRecord(paramMV.paramModel.param);
+//Log.d("QWERT","RRR="+rr.toString()+"<<");
+                        View vv = parentLayout.findViewById(paramMV.paramView.viewId);
+                        workWithRecordsAndViews.RecordToView(rr, vv, this, clickView);
+                    } else {
+                        setValueParam(paramMV.paramView.viewId);
+                    }
                     break;
                 case ParamModel.ARGUMENTS :
                     if (iBase.getBaseFragment() != null) {

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <com.dpcsa.compon.custom_components.CalendarVertical
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dim_20"
+        android:layout_marginRight="@dimen/dim_20"
+        app:heightMonth="56dp"
+        app:heightCell="56dp"
+        app:monthSize="14sp"
+        app:textDaySize="16sp"
+        app:selectTintDiam="40dp"
+        app:countAfterMonth="5"
+        app:workDayColor="@color/title"
+        app:selectTintColor="@color/primary"
+        app:selectTextColor="@color/white"
+        app:sendNotif="date_dep_notif"
+        app:dateFormat="dd.MM"
+        app:rangeDate="true"
+        app:afterToday="true"
+        app:nameMonth="@string/sel_datecalendar"
+    />
+</RelativeLayout>

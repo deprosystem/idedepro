@@ -119,6 +119,8 @@
             android:gravity="center"
             app:minValue="1"
             app:maxValue="3"
+            app:minusViewId="@id/minus"
+            app:plusViewId="@id/plus"
             app:viewMirror="@id/adults"
             app:noEdit="true"/>
 
@@ -193,7 +195,7 @@
     <RelativeLayout
         android:id="@+id/kid_age"
         android:layout_width="match_parent"
-        android:layout_height="210dp"
+        android:layout_height="250dp"
         android:layout_below="@+id/recycler"
         android:background="@color/white"
         android:visibility="gone">
@@ -204,37 +206,39 @@
             android:layout_height="56dp">
 
             <TextView
+                style="@style/st_txt_12_40"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/st_txt_12_40"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/d_20"
                 android:text="@string/indicate_age" />
 
             <TextView
+                style="@style/st_prim_12_40"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/st_prim_12_40"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/d_20"
                 android:text="@string/cancel" />
         </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/d_20"
+            android:layout_marginTop="@dimen/d_20"
+            android:layout_marginRight="@dimen/d_20"
+            android:background="@color/primary_20" />
+
         <com.dpcsa.compon.custom_components.TagsView
             android:id="@+id/age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/cancel"
-            android:layout_marginRight="@dimen/d_20"
-            android:layout_marginLeft="@dimen/d_20"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/d_20"
-            android:background="@color/primary_20"
             android:layout_marginLeft="@dimen/d_20"
-            android:layout_marginRight="@dimen/d_20"/>
+            android:layout_marginRight="@dimen/d_20" />
     </RelativeLayout>
 
     <TextView

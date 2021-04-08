@@ -80,13 +80,6 @@ public class WorkWithRecordsAndViews {
         enumViewChild(view);
     }
 
-//    public void setCompon(BaseComponent bc) {
-//        if (bc != null) {
-//            baseComponent = bc;
-//            navigator = bc.navigator;
-//        }
-//    }
-
     public Record ViewToRecord(View view, String par) {
         recordResult = new Record();
         param = par.split(",");

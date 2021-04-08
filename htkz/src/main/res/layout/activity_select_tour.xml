@@ -17,7 +17,7 @@
             android:orientation="horizontal"
             android:gravity="center">
             <TextView
-                android:id="@+id/hot_depart_city_name"
+                android:id="@+id/depart_city_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
