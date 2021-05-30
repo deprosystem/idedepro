@@ -55,6 +55,10 @@ public class ToolBarComponent extends BaseComponent {
         tool.setTitle(name);
     }
 
+    public String  getTitle() {
+        return tool.getTitle();
+    }
+
     View.OnClickListener clickHamburger = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

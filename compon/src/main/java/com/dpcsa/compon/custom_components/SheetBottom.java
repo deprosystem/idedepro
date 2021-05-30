@@ -13,6 +13,7 @@ import androidx.dynamicanimation.animation.SpringAnimation;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -40,7 +41,7 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
     private int idContainer;
     private int viewId;
     private int negativeViewId, positiveViewId;
-    private int fadedScreenColorDefault = 0x50ff0000;
+    private int fadedScreenColorDefault = 0xcc333333;
     private int fadedScreenColor = fadedScreenColorDefault;
     private IBase iBase;
     private SheetBottom thisSheet;

@@ -43,7 +43,7 @@ Log.d("QWERT","mod.type="+mod.type);
                 iBase.log("0013 ToolBar отсутствует в родительской активити " + multiComponent.nameComponent);
             }
         } else {
-            iBase.log("0012 ToolBarModify не может быть в активити " + multiComponent.nameComponent);
+            iBase.log("0012 ToolBarModify не может быть в Fragment " + multiComponent.nameComponent);
         }
     }
 

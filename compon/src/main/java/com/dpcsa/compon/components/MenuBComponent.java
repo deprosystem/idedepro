@@ -38,6 +38,7 @@ public class MenuBComponent extends BaseComponent {
     int imageLocale;
     public int selBackgr;
     public boolean noSelImgChangeColor, toAnimate;
+    private boolean isActivity;
 
     public MenuBComponent(IBase iBase, ParamComponent paramMV, Screen multiComponent) {
         super(iBase, paramMV, multiComponent);
@@ -45,6 +46,7 @@ public class MenuBComponent extends BaseComponent {
 
     @Override
     public void initView() {
+        isActivity = iBase.getBaseFragment() == null;
         if (paramMV.paramView != null && paramMV.paramView.viewId != 0) {
             menuB = (ComponMenuB) parentLayout.findViewById(paramMV.paramView.viewId);
         }
@@ -56,7 +58,9 @@ public class MenuBComponent extends BaseComponent {
         noSelImgChangeColor = menuB.noSelImgChangeColor;
         toAnimate = menuB.toAnimate;
         componentTag = "MENU_B_";
-        activity.menuBottom = this;
+        if (isActivity) {
+            activity.menuBottom = this;
+        }
         imageLocale = menuB.imageLocale;
         listData = new ListRecords();
         menuB.setOrientation(LinearLayout.HORIZONTAL);
@@ -78,6 +82,9 @@ public class MenuBComponent extends BaseComponent {
         countButton = listData.size();
         viewMenu = new ComponRadioButtonRL[countButton];
         selectStart = preferences.getNameInt(componentTag + multiComponent.nameComponent, -1);
+
+selectStart = -1;
+
         int selectRadio = -1;
         for (int i = 0; i < countButton; i++) {
             Record rr = listData.get(i);
@@ -95,28 +102,32 @@ public class MenuBComponent extends BaseComponent {
         if (selectStart == -1) {
             selectStart = 0;
         }
-        if (activity.menuDraw != null) {
-            String selScr = activity.menuDraw.getSelectScreen();
-            int countButton = listData.size();
-            int selPos = -1;
-            for (int i = 0; i < countButton; i++) {
-                Record rr = listData.get(i);
-                String screen = rr.getString(Constants.NAME_FUNC);
-                if (screen != null && screen.equals(selScr)) {
-                    selPos = i;
-                    break;
+        if (isActivity) {
+            if (activity.menuDraw != null) {
+                String selScr = activity.menuDraw.getSelectScreen();
+                int countButton = listData.size();
+                int selPos = -1;
+                for (int i = 0; i < countButton; i++) {
+                    Record rr = listData.get(i);
+                    String screen = rr.getString(Constants.NAME_FUNC);
+                    if (screen != null && screen.equals(selScr)) {
+                        selPos = i;
+                        break;
+                    }
                 }
-            }
-            if (selPos != -1) {
-                selectStart = selPos;
-                viewMenu[selectStart].setSelected(true);
-                preferences.setNameInt(componentTag + multiComponent.nameComponent, selectStart);
-            }
-        } else {
-            if ( ! activity.isDrawerComponent()) {
+                if (selPos != -1) {
+                    selectStart = selPos;
+                    viewMenu[selectStart].setSelected(true);
+                    preferences.setNameInt(componentTag + multiComponent.nameComponent, selectStart);
+                }
+            } else {
                 viewMenu[selectStart].setSelected(true);
                 startScreen(selectStart);
             }
+        } else {
+
+            viewMenu[selectStart].setSelected(true);
+            startScreen(selectStart);
         }
     }
 
@@ -151,13 +162,17 @@ public class MenuBComponent extends BaseComponent {
             selectStart = position;
         }
         viewMenu[selectStart].setSelected(true);
-        activity.navigatorClick.onClick(viewMenu[selectStart]);
+        if (isActivity) {
+            activity.navigatorClick.onClick(viewMenu[selectStart]);
+        }
         startScreen(selectStart);
     }
 
     public void setItem() {
         viewMenu[selectStart].setSelected(true);
-        activity.navigatorClick.onClick(viewMenu[selectStart]);
+        if (isActivity) {
+            activity.navigatorClick.onClick(viewMenu[selectStart]);
+        }
         startScreen(selectStart);
     }
 
@@ -207,7 +222,7 @@ public class MenuBComponent extends BaseComponent {
             screen = listData.get(position).getString(Constants.NAME_FUNC);
         }
         if (screen.length() > 0) {
-            if (activity.menuDraw != null) {
+            if (isActivity && activity.menuDraw != null) {
                 activity.menuDraw.syncMenu(screen);
             }
             iBase.startScreen(screen, true);

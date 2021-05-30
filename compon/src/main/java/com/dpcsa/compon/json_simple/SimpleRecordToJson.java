@@ -44,13 +44,13 @@ public class SimpleRecordToJson {
                         int iL = stQ.length();
                         do {
                             i = stQ.indexOf(quote, j);
-                            if (i > 0) {
+                            if (i > -1) {
                                 stRes += stQ.substring(j, i) + a + quote;
                                 j = i + 1;
                             } else {
                                 stRes += stQ.substring(j, iL);
                             }
-                        } while (i > 0);;
+                        } while (i > 0);
                         sb.append(quote + f.name + quoteColon + quote + stRes + quote);
                     }
                     break;

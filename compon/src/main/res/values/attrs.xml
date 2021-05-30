@@ -73,6 +73,8 @@
         <attr name="progressColorN" format="color"/>
         <attr name="textSize"/>
         <attr name="badgeColor" format="color"/>
+        <attr name="enablColor" format="color"/>
+        <attr name="dividerColor" format="color"/>
         <attr name="hintTextColor" format="color"/>
         <attr name="amountDots" format="integer"/>
         <attr name="amountStars" format="integer"/>

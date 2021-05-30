@@ -270,6 +270,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
             if (this instanceof ICustom) {
                 mComponent.setCustom((ICustom) this);
             }
+
             if (mComponent.title != null || mComponent.titleId != 0) {
                 setTitle();
             }
@@ -367,11 +368,14 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     public void setTitle(String  txtTit) {
         if (toolBar != null) {
             toolBar.setTitle(txtTit);
+        }
+    }
+
+    public String getTitleC() {
+        if (toolBar != null) {
+            return toolBar.getTitle();
         } else {
-            TextView titV = (TextView) componGlob.findViewByName(parentLayout, "title");
-            if (titV != null) {
-                titV.setText(txtTit);
-            }
+            return null;
         }
     }
 
@@ -1170,10 +1174,6 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
         if (view instanceof ViewGroup) {
             ViewGroup vg = (ViewGroup) view;
             int ik = vg.getChildCount();
-for (int z = 0; z < componGlob.paramValues.size(); z++){
-    Log.d("QWERT", "III="+z+" nnn="+componGlob.paramValues.get(z).name+"<< VV="+componGlob.paramValues.get(z).value+"<<");
-}
-Log.d("QWERT","*******************");
             for (int i = 0; i < ik; i++) {
                 setOneViewValue(vg.getChildAt(i), null);
             }
@@ -1402,8 +1402,6 @@ Log.d("QWERT","*******************");
             return;
         }
         FragmentManager fm = getSupportFragmentManager();
-//        int countFragment = fm.getBackStackEntryCount();
-//        int countFragment = stackFragments.size();
         List<Fragment> lf = fm.getFragments();
         for (int i = 0; i < lf.size(); i++) {
             Fragment ff = lf.get(i);
@@ -1413,6 +1411,9 @@ Log.d("QWERT","*******************");
             }
         }
         int countFragment = lf.size();
+        if (isDrawerComponent()) {
+            countFragment --;
+        }
         if (countFragment > 0) {
 //            Fragment fragment = topFragment(fm);
             Fragment fragment = lf.get(lf.size() - 1);
@@ -1797,7 +1798,8 @@ Log.d("QWERT","*******************");
 
     @Override
     public void startScreen(String nameMVP, boolean startFlag, Object object, int forResult) {
-        startScreen(nameMVP, startFlag, object, forResult, false);
+//        startScreen(nameMVP, startFlag, object, forResult, false);
+        startScreen(nameMVP, startFlag, object, forResult, true);
     }
 
     String SaveNameMVP;
@@ -1912,7 +1914,6 @@ Log.d("QWERT","*******************");
 
     public void startFragment(String nameMVP, Screen mComponent, boolean startFlag, Object object, int forResult, boolean addFragment) {
         BaseFragment fr = (BaseFragment) getSupportFragmentManager().findFragmentByTag(nameMVP);
-
         if (startFlag) {
             clearBackStack(nameMVP, fr == null);
         }

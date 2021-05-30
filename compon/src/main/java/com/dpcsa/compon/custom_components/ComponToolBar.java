@@ -141,6 +141,10 @@ public class ComponToolBar extends RelativeLayout {
         TITLE.setText(name);
     }
 
+    public String getTitle() {
+        return TITLE.getText().toString();
+    }
+
     public View addItem(int id) {
         int ik = listView.size();
         View res = null;

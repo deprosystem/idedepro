@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -92,6 +95,7 @@ public class BaseFragment extends Fragment implements IBase {
     public WorkWithRecordsAndViews workWithRecordsAndViews;
     private ToolBarComponent toolBar;
     private String typePush;
+    private String previousTitle;
     public ViewHandler selectViewHandler;
 
     public BaseFragment() {
@@ -150,11 +154,12 @@ public class BaseFragment extends Fragment implements IBase {
         } else {
             parentLayout = inflater.inflate(mComponent.fragmentLayoutId, null, false);
         }
+        previousTitle = "";
         if (mComponent != null) {
             animatePanelList = new ArrayList<>();
-            if ((mComponent.title != null && mComponent.title.length() > 0)|| mComponent.titleId != 0) {
-                setTitle();
-            }
+//            if ((mComponent.title != null && mComponent.title.length() > 0)|| mComponent.titleId != 0) {
+//                setTitle();
+//            }
 
 //            if (mComponent.navigator != null) {
 //                for (ViewHandler vh : mComponent.navigator.viewHandlers) {
@@ -212,15 +217,16 @@ public class BaseFragment extends Fragment implements IBase {
         } else {
             txtTit = mComponent.title;
         }
+        previousTitle = activity.getTitleC();
+        setTitleFact(txtTit);
+    }
+
+    private void setTitleFact(String txtTit) {
+Log.d("QWERT","txtTit="+txtTit+"<<");
         if (toolBar != null) {
             toolBar.setTitle(txtTit);
         } else {
-            TextView titV = (TextView) componGlob.findViewByName(parentLayout, "title");
-            if (titV != null) {
-                titV.setText(txtTit);
-            } else {
-                activity.setTitle(txtTit);
-            }
+            activity.setTitle(txtTit);
         }
     }
 
@@ -1022,6 +1028,9 @@ public class BaseFragment extends Fragment implements IBase {
     @Override
     public void onResume() {
         super.onResume();
+        if ((mComponent.title != null && mComponent.title.length() > 0)|| mComponent.titleId != 0) {
+            setTitle();
+        }
         if (resumePauseList != null) {
             for (OnResumePause rp : resumePauseList) {
                 rp.onResume();
@@ -1031,6 +1040,9 @@ public class BaseFragment extends Fragment implements IBase {
 
     @Override
     public void onPause() {
+        if (previousTitle != null && previousTitle.length() > 0) {
+            setTitleFact(previousTitle);
+        }
         if (resumePauseList != null) {
             for (OnResumePause rp : resumePauseList) {
                 rp.onPause();

@@ -27,14 +27,14 @@ android {
             enabled = false
         }
     }
-
+/*
     allprojects {
         repositories { jcenter() }
         tasks.withType(Javadoc).all {
             enabled = false
         }
     }
-
+*/
     lintOptions {
         abortOnError false
     }

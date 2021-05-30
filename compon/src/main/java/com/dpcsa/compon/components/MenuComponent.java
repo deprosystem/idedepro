@@ -24,6 +24,7 @@ import com.dpcsa.compon.base.BaseComponent;
 import com.dpcsa.compon.base.BaseProvider;
 import com.dpcsa.compon.base.BaseProviderAdapter;
 import com.dpcsa.compon.base.Screen;
+import com.dpcsa.compon.custom_components.ElementMenu;
 import com.dpcsa.compon.interfaces_classes.IBase;
 import com.dpcsa.compon.interfaces_classes.Menu;
 import com.dpcsa.compon.interfaces_classes.OnResumePause;
@@ -39,12 +40,12 @@ import com.dpcsa.compon.tools.Constants;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_MENU;
 
 public class MenuComponent extends BaseComponent {
-    RecyclerView recycler;
+    ElementMenu recycler;
     ListRecords listData;
     BaseProviderAdapter adapter;
     private String componentTag = "MENU_";
     private String fieldType = "select";
-    int colorNorm, colorSelect, colorEnabl;
+    int colorNorm, colorSelect, colorEnabl, colorDivider, colorBadge;
     boolean isBaseItem;
     boolean isEnabled = false;
     BroadcastReceiver tokenMessageReceiver = null;
@@ -58,13 +59,10 @@ public class MenuComponent extends BaseComponent {
 
     @Override
     public void initView() {
-        if (paramMV.paramView == null || paramMV.paramView.viewId == 0) {
-            recycler = (RecyclerView) componGlob.findViewByName(parentLayout, "recycler");
-        } else {
-            recycler = (RecyclerView) parentLayout.findViewById(paramMV.paramView.viewId);
-        }
+        recycler = (ElementMenu) parentLayout.findViewById(paramMV.paramView.viewId);
         if (recycler == null) {
-            iBase.log("0009 Не найден RecyclerView для Menu в " + multiComponent.nameComponent);
+            iBase.log("0009 Не найден ElementMenu для Menu в " + multiComponent.nameComponent);
+            return;
         }
         if (navigator != null) {
             for (ViewHandler vh : navigator.viewHandlers) {
@@ -76,6 +74,11 @@ public class MenuComponent extends BaseComponent {
         } else {
             iBase.log("0009 Нет навигатора для Menu в " + multiComponent.nameComponent);
         }
+        colorNorm = recycler.colorNorm;
+        colorSelect = recycler.colorSelect;
+        colorEnabl = recycler.colorEnabl;
+        colorDivider = recycler.colorDivider;
+        colorBadge = recycler.colorBadge;
         isBaseItem = false;
         paramMV.paramView.fieldType = fieldType;
         if (paramMV.paramView.layoutTypeId == null) {
@@ -102,16 +105,16 @@ public class MenuComponent extends BaseComponent {
         }
         listData.clear();
         listData.addAll((ListRecords) field.value);
-        colorNorm = getThemeColor("colorPrimary");
-        colorSelect = getThemeColor("colorPrimaryDark");
-        colorEnabl = 0xffbbbbbb;
-        if (menu != null) {
-            if (menu.colorNorm != 0 && menu.colorSelect != 0 && menu.colorEnabl != 0) {
-                colorNorm = activity.getResources().getColor(menu.colorNorm);
-                colorSelect = activity.getResources().getColor(menu.colorSelect);
-                colorEnabl = activity.getResources().getColor(menu.colorEnabl);
-            }
-        }
+//        colorNorm = getThemeColor("colorPrimary");
+//        colorSelect = getThemeColor("colorPrimaryDark");
+//        colorEnabl = 0xffbbbbbb;
+//        if (menu != null) {
+//            if (menu.colorNorm != 0 && menu.colorSelect != 0 && menu.colorEnabl != 0) {
+//                colorNorm = activity.getResources().getColor(menu.colorNorm);
+//                colorSelect = activity.getResources().getColor(menu.colorSelect);
+//                colorEnabl = activity.getResources().getColor(menu.colorEnabl);
+//            }
+//        }
         provider.setData(listData);
         int ik = listData.size();
         isEnabled = false;
@@ -243,10 +246,14 @@ public class MenuComponent extends BaseComponent {
 
     public void syncMenu(String scr) {
         int ik = listData.size();
-        Record r = listData.get(selectStart);
-        Field ft = r.getField(fieldType);
-        ft.value = new Integer(0);
-        adapter.notifyItemChanged(selectStart);
+        Record r;
+        Field ft;
+        if (selectStart > -1) {
+            r = listData.get(selectStart);
+            ft = r.getField(fieldType);
+            ft.value = new Integer(0);
+            adapter.notifyItemChanged(selectStart);
+        }
         selectStart = -1;
         for (int i = 0; i < ik; i++) {
             Record record = listData.get(i);
@@ -322,9 +329,12 @@ public class MenuComponent extends BaseComponent {
                 iBase.startScreen(screen, true);
             }
         } else {
-            Record r = listData.get(selectStart);
-            Field ft = r.getField(fieldType);
-            ft.value = new Integer(0);
+            if (selectStart > -1) {
+                Record r = listData.get(selectStart);
+                Field ft = r.getField(fieldType);
+                ft.value = new Integer(0);
+            }
+            selectStart = position;
             adapter.notifyItemChanged(selectStart);
         }
     }

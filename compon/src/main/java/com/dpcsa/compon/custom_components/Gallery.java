@@ -22,6 +22,7 @@ import com.dpcsa.compon.interfaces_classes.IAlias;
 import com.dpcsa.compon.interfaces_classes.IComponent;
 import com.dpcsa.compon.interfaces_classes.OnChangeStatusListener;
 import com.dpcsa.compon.json_simple.Field;
+import com.dpcsa.compon.json_simple.JsonSyntaxException;
 import com.dpcsa.compon.json_simple.WorkWithRecordsAndViews;
 import com.dpcsa.compon.single.Injector;
 
@@ -106,30 +107,49 @@ public class Gallery extends ViewPager implements IComponent, IAlias {
     public void setData(Object data) {
         if (data instanceof List) {
             listData = (List<Field>) data;
-            if (INDICATOR != 0) {
-                View v = (View) getParent();
-                indicator = (PagerIndicator) v.findViewById(INDICATOR);
-                indicator.setCount(listData.size());
-            }
-            setOnPageChangeListener(new OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                }
-
-                @Override
-                public void onPageSelected(int position) {
-                    if (INDICATOR != 0) {
-                        indicator.setSelect(position);
+            viewGallery();
+        } else {
+            if (data instanceof String) {
+                String dSt = (String) data;
+                if (dSt.indexOf("[") == 0) {
+                    try {
+                        Field ff = Injector.getComponGlob().jsonSimple.jsonToModel(dSt);
+                        listData = (List<Field>) ff.value;
+                    } catch (JsonSyntaxException e) {
+                        e.printStackTrace();
+                    }
+                    if (listData != null) {
+                        viewGallery();
                     }
                 }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-
-                }
-            });
-            setAdapter(adapter);
+            }
         }
+    }
+
+    private void viewGallery() {
+        if (INDICATOR != 0) {
+            View v = (View) getParent();
+            indicator = (PagerIndicator) v.findViewById(INDICATOR);
+            indicator.setCount(listData.size());
+        }
+        setOnPageChangeListener(new OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (INDICATOR != 0) {
+                    indicator.setSelect(position);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        setAdapter(adapter);
     }
 
     @Override

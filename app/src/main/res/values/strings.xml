@@ -1,29 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">tour</string>
-    <string name="main_menu_b_0">Поиск</string>
-    <string name="main_menu_b_1">Хантер</string>
-    <string name="main_menu_b_2">Мой тур</string>
-    <string name="main_menu_b_3">Помощь</string>
-    <string name="search_screen_title">Поиск</string>
-    <string name="search_menu_b_0">Поиск тура</string>
-    <string name="search_menu_b_1">Горящие</string>
-    <string name="hanter_screen_title">Хантер</string>
-    <string name="my_tour_screen_title">Мой тур</string>
-    <string name="help_screen_title">Помощь</string>
-    <string name="Searchnightgrammar">ночь,ночи,ночей</string>
-    <string name="Searchadultsgrammar">взрослый,взрослых,взрослых</string>
-    <string name="Searchkidsgrammar">ребенок,ребенка,детей</string>
-    <string name="SELECT_TOURSadultsgrammar">взрослый,взрослых,взрослых</string>
-    <string name="SELECT_TOURSkidsgrammar">ребенок,детей,детей</string>
-    <string name="SELECT_TOURSnightgrammar">ночь,ночи,ночей</string>
-    <string name="SEARCH_D_Dnightgrammar">ночь,ночи,ночей</string>
-    <string name="sel_datecalendar">Январь,Февраль,Март,Апрель,Май,Июнь,Июль,Август,Сентябрь,Октябрь,Ноябрь,Декабрь</string>
-    <string name="WHO_FLYINGtitlegrammar">год,года,лет</string>
-    <string name="WHO_FLYINGadultsgrammar">взрослый,взрослых,взрослых</string>
-    <string name="WHO_FLYINGkidsgrammar">ребенок,ребенка,детей</string>
-    <string-array name="search_d_d_tab_layout">
-        <item> </item>
-        <item> </item>
+    <string name="app_name">test_9</string>
+    <string name="main_menu_b_0">Новости</string>
+    <string name="main_menu_b_1">Мероприятия</string>
+    <string name="news_screen_title">Новости</string>
+    <string name="events_screen_title">Мероприятия</string>
+    <string name="bef_screen_title">Были</string>
+    <string name="aft_screen_title">Будут</string>
+    <string-array name="events_tab_layout">
+        <item>Были</item>
+        <item>Будут</item>
     </string-array>
 </resources>
