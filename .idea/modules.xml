@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/compon/compon.iml" filepath="$PROJECT_DIR$/compon/compon.iml" />
-      <module fileurl="file://$PROJECT_DIR$/htkz/htkz.iml" filepath="$PROJECT_DIR$/htkz/htkz.iml" />
       <module fileurl="file://$PROJECT_DIR$/idedepro.iml" filepath="$PROJECT_DIR$/idedepro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/idedepro.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/idedepro.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/compon/idedepro.compon.iml" filepath="$PROJECT_DIR$/.idea/modules/compon/idedepro.compon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/htkz/idedepro.htkz.iml" filepath="$PROJECT_DIR$/.idea/modules/htkz/idedepro.htkz.iml" />
     </modules>
   </component>
 </project>
