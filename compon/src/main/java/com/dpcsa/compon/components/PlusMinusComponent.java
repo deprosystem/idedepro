@@ -1,5 +1,7 @@
 package com.dpcsa.compon.components;
 
+import android.util.Log;
+
 import com.dpcsa.compon.base.BaseComponent;
 import com.dpcsa.compon.base.Screen;
 import com.dpcsa.compon.custom_components.PlusMinus;

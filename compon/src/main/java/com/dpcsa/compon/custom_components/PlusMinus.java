@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import androidx.appcompat.widget.AppCompatEditText;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -233,7 +234,10 @@ public class PlusMinus extends AppCompatEditText implements IComponent{
             for (Multiply m : plusMinusComponent.paramMV.multiplies) {
                 Float mult = record.getFloat(m.nameField);
                 if (mult != null) {
-                    TextView tv = parentView.findViewById(m.viewId);
+                    TextView tv = null;
+                    if (m.viewId != 0) {
+                        tv = parentView.findViewById(m.viewId);
+                    }
                     Float ff = mult * count;
                     if (tv != null) {
                         if (tv instanceof IComponent) {
@@ -287,9 +291,22 @@ public class PlusMinus extends AppCompatEditText implements IComponent{
 
     @Override
     public void setData(Object data) {
-        int c;
+        int c = Integer.MIN_VALUE;
         try {
-            c = Integer.valueOf((String) data);
+            if (data instanceof String) {
+                c = Integer.valueOf((String) data);
+            } else {
+                if (data instanceof Long) {
+                    long ll = (Long) data;
+                    c =  (int)ll;
+                }
+            }
+            if (c < minValueInt) {
+                c = minValueInt;
+            }
+            if (c > maxValueInt) {
+                c = maxValueInt;
+            }
             if (c >= minValueInt && c <= maxValueInt) {
                 setValue(c);
                 blockEdit = true;

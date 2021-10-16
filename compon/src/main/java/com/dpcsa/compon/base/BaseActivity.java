@@ -53,6 +53,7 @@ import com.dpcsa.compon.glide.GlideApp;
 import com.dpcsa.compon.glide.GlideRequest;
 import com.dpcsa.compon.interfaces_classes.Animate;
 import com.dpcsa.compon.interfaces_classes.IComponent;
+import com.dpcsa.compon.interfaces_classes.ISwitch;
 import com.dpcsa.compon.interfaces_classes.ItemSetValue;
 import com.dpcsa.compon.interfaces_classes.PushHandler;
 import com.dpcsa.compon.interfaces_classes.SingleSetting;
@@ -853,6 +854,15 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
                                 }
 //                                    startScreen(vh.screen, false, null, requestCode);
                                 break;
+                        }
+                        break;
+                    case CHECKED:
+                        if (view instanceof ISwitch) {
+                            if (view.getTag() != null && ((Boolean)view.getTag())) {
+                                clickNavigat(view, 0, vh.afterResponse.viewHandlers);
+                            } else {
+                                clickNavigat(view, 0, vh.offNav.viewHandlers);
+                            }
                         }
                         break;
                     case YOUTUBE:

@@ -146,7 +146,7 @@ public class PagerFComponent extends BaseComponent {
             if (model == null) {
                 iBase.log("1008 не описан фрагмент " + nameF + " в " + multiComponent.nameComponent);
             }
-            BaseFragment fragment = new BaseFragment();
+            BaseFragment fragment = new BaseFragment(true);
             fragment.setModel(model);
             return fragment;
         }

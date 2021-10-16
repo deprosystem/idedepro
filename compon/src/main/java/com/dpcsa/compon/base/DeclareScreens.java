@@ -400,6 +400,11 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, ViewHandler.TYPE.EXIT);
     }
 
+    public ViewHandler checked(int viewId, ActionsAfterResponse onNav, ActionsAfterResponse offNav) {
+        ViewHandler vh = new ViewHandler(viewId, onNav, offNav);
+        return vh;
+    }
+
     public ViewHandler start(int viewId, String screen) {
         return new ViewHandler(viewId, screen);
     }

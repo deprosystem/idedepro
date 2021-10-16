@@ -3,7 +3,6 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 29
 
-
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 29
@@ -36,9 +35,9 @@ android {
     }
 */
     lintOptions {
+        checkReleaseBuilds false
         abortOnError false
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -63,8 +62,14 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:3.3.0'
     implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 
-    implementation 'com.github.bumptech.glide:okhttp3-integration:4.1.1@aar'
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.1.1@aar'
+//    implementation ('com.github.bumptech.glide:okhttp-integration:4.11.0') {
+//        exclude group:'com.squareup.okhttp3', module:'okhttp'
+////        transitive = false
+//    }
+
+
     implementation 'com.android.volley:volley:1.1.1'
 
     api 'org.apache.httpcomponents:httpcore:4.4.3'

@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">test_9</string>
-    <string name="main_menu_b_0">Новости</string>
-    <string name="main_menu_b_1">Мероприятия</string>
-    <string name="news_screen_title">Новости</string>
-    <string name="events_screen_title">Мероприятия</string>
-    <string name="bef_screen_title">Были</string>
-    <string name="aft_screen_title">Будут</string>
-    <string-array name="events_tab_layout">
-        <item>Были</item>
-        <item>Будут</item>
-    </string-array>
+    <string name="app_name">zz</string>
+
+    <string name="leave_request">Оставить заявку</string>
+    <string name="your_order">Ваш заказ</string>
+    <string name="your_name">Ваше имя</string>
+    <string name="your_phone">Ваш телефон</string>
+    <string name="add_comment">Добавить комментарий</string>
+    <string name="your_comment">Ваш комментарий</string>
+    <string name="edit">Править</string>
+    <string name="write_smth_here">Напишите что-нибудь…</string>
+    <string name="send">Отправить</string>
+    <string name="all_list">Весь список</string>
+    <string name="clear">Очистить</string>
+    <string name="comment">Комментарий</string>
+
+    <string name="type_repair">Тип ремонта</string>
+    <string name="count">Количество</string>
+    <string name="uah_item">грн/шт</string>
+    <string name="uah">\u0020грн</string>
+    <string name="sum_all">Общая сумма:</string>
+    <string name="service">Сервис</string>
+    <string name="source_photo">Выбери источник</string>
 </resources>

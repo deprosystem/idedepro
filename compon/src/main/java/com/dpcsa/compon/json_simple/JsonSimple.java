@@ -96,7 +96,7 @@ public class JsonSimple {
         if (in < 0) {
             in = 0;
         }
-        int ik = ind + 60;
+        int ik = ind + 150;
         if (ik > indMax) {
             ik = indMax;
         }

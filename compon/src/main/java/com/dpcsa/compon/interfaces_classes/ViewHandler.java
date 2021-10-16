@@ -13,7 +13,7 @@ public class ViewHandler {
         FIELD_WITH_NAME_SCREEN, SELECT, SET_PARAM, EXEC, UPDATE_DATA, RESULT_PARAM, NEXT_SCREEN_SEQUENCE,
         RESULT_RECORD, ASSIGN_VALUE, SET_VALUE, SET_VALUE_PARAM, SET_LOCALE, SET_GLOBAL, SET_MENU, //SET_MENU_DEF,
         EXIT, CLICK_VIEW, MAP_ROUTE, SHOW, HIDE, SHOW_HIDE, BROADCAST, RECEIVER, CLICK_CUSTOM, DEL_RECYCLER,
-        CLICK_SEND, SEND_UPDATE, SWITCH_ON, SWITCH_ON_STATUS, ANIMATE, YOUTUBE, SUBSCRIBE_PUSH,
+        CLICK_SEND, SEND_UPDATE, SWITCH_ON, SWITCH_ON_STATUS, ANIMATE, YOUTUBE, SUBSCRIBE_PUSH, CHECKED,
         SPR_SCALE, SPR_Y, AFTER, ADD_RECORD, DEL_RECORD, SAVE_PARAM, CLEAN_VAR, ADD_VAR, DEL_VAR, SET_VAR, DEL_VAR_FOLOW,
         ACTUAL, GET_DATA, CALL_UP, DIAL_UP, SET_PROFILE, CLEAN_COPY_VAR, RESTORE_VAR, NONE}
     public TYPE type;
@@ -33,7 +33,7 @@ public class ViewHandler {
     public boolean changeEnabled, switchValue;
     public boolean[] validArray;
     public String nameFieldWithValue, paramForSend;
-    public ActionsAfterResponse afterResponse;
+    public ActionsAfterResponse afterResponse, offNav;
     public ActionsAfterError afterError;
     public ExecMethod execMethod;
     public boolean onActivity;
@@ -68,6 +68,13 @@ public class ViewHandler {
         this.afterResponse = afterResponse;
         this.viewId = viewId;
         this.screen = screen;
+    }
+
+    public ViewHandler(int viewId, ActionsAfterResponse onNav, ActionsAfterResponse offNav) {
+        type = TYPE.CHECKED;
+        afterResponse = onNav;
+        this.offNav = offNav;
+        this.viewId = viewId;
     }
 
     public ViewHandler(int viewId, ExecMethod execMethod) {

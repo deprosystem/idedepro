@@ -66,6 +66,7 @@ public class MyDeclare extends DeclareScreens {
         activity(COUNTRY_CITY, R.layout.activity_country_city)
                 .startNavigator(cleanCopyVar("country_city"))
                 .navigator(restoreVar(R.id.back, "country_city"), backOk(R.id.back))
+                .navigator(restoreVar(R.id.back, "country_city"), backOk(R.id.back))
                 .list(model(API.COUNTRY),
                         view(R.id.recycler, "type", new int[] {R.layout.item_country_city, R.layout.item_city})
                                 .visibilityManager(visibility(R.id.visa, "visa")),

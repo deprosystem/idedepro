@@ -242,21 +242,27 @@ public class WorkWithRecordsAndViews {
                 if (v instanceof IBaseComponent) {
                     ((IBaseComponent) v).setData(baseComponent.iBase, field.value);
                 } else {
-                    ((IComponent) v).setData(field.value);
+                    if (v instanceof PlusMinus) {
+                        ((PlusMinus) v).setParam(view, model, baseComponent);
+                        ((PlusMinus) v).setData(field.value.toString());
+                    } else {
+                        ((IComponent) v).setData(field.value);
+                    }
                 }
                 return;
             }
             if (v instanceof TextView) {
                 if (field.value instanceof String) {
-                    if (v instanceof PlusMinus) {
-                        ((PlusMinus) v).setData(field.value.toString());
-                        ((PlusMinus) v).setParam(view, model, baseComponent);
-                    } else {
-                        ((TextView) v).setText((String )field.value);
-                    }
+                    ((TextView) v).setText((String )field.value);
+//                    if (v instanceof PlusMinus) {
+//                        ((PlusMinus) v).setParam(view, model, baseComponent);
+//                        ((PlusMinus) v).setData(field.value.toString());
+//                    } else {
+//                        ((TextView) v).setText((String )field.value);
+//                    }
                     return;
                 }
-                if (field.value instanceof Number) {
+                if (field.value instanceof Long) {
                     if (v instanceof ComponTextView) {
                         st = ((ComponTextView) v).getNumberFormat();
                         if (st != null) {
@@ -265,15 +271,17 @@ public class WorkWithRecordsAndViews {
                             ((ComponTextView) v).setText(field.value.toString());
                         }
                     } else {
-                        if (v instanceof PlusMinus) {
-                            ((PlusMinus) v).setData(field.value.toString());
-                        } else {
-                            ((TextView) v).setText(field.value.toString());
-                        }
+                        ((TextView) v).setText(field.value.toString());
+//                        if (v instanceof PlusMinus) {
+//                            ((PlusMinus) v).setParam(view, model, baseComponent);
+//                            ((PlusMinus) v).setData(field.value.toString());
+//                        } else {
+//                            ((TextView) v).setText(field.value.toString());
+//                        }
                     }
-                    if (v instanceof PlusMinus) {
-                        ((PlusMinus) v).setParam(view, model, baseComponent);
-                    }
+//                    if (v instanceof PlusMinus) {
+//                        ((PlusMinus) v).setParam(view, model, baseComponent);
+//                    }
                     return;
                 }
                 if(field.value instanceof Date) {

@@ -608,7 +608,10 @@ public abstract class BaseComponent {
 
     public void clickHandler(View v, int vId) {
 //Log.d("QWERT",componentTag +multiComponent.nameComponent + " clickHandler");
-        List<ViewHandler> viewHandlers = navigator.viewHandlers;
+        clickHandlerNav(v, vId, navigator.viewHandlers);
+    }
+
+    public void clickHandlerNav(View v, int vId, List<ViewHandler> viewHandlers) {
         View vv;
         boolean valid;
         Record rec;
@@ -694,6 +697,15 @@ public abstract class BaseComponent {
                         break;
                     case SET_PARAM:
                         componGlob.setParam(recordComponent);
+                        break;
+                    case CHECKED:
+                        if (v instanceof ISwitch) {
+                            if (v.getTag() != null && ((Boolean)v.getTag())) {
+                                clickHandlerNav(v, 0, vh.afterResponse.viewHandlers);
+                            } else {
+                                clickHandlerNav(v, 0, vh.offNav.viewHandlers);
+                            }
+                        }
                         break;
                     case SET_VALUE_PARAM:
                         setValueParam(vh.viewId);

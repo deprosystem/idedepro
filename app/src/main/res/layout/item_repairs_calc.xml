@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/pad_92">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/st_16_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/pad_18"
+        android:layout_marginLeft="@dimen/pad_25"
+        android:layout_toLeftOf="@+id/minus"
+        android:layout_marginRight="@dimen/pad_5"
+        android:fontFamily="sans-serif-medium"
+        android:lineSpacingExtra="2sp" />
+
+    <ImageView
+        android:id="@+id/plus"
+        android:layout_width="@dimen/pad_25"
+        android:layout_height="@dimen/pad_25"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/pad_20"
+        android:layout_marginTop="@dimen/pad_16"
+        android:scaleType="center"
+        android:clickable="true"
+        android:src="@drawable/plus_icon" />
+
+    <com.dpcsa.compon.custom_components.PlusMinus
+        android:id="@+id/total"
+        android:layout_width="@dimen/pad_40"
+        android:layout_height="wrap_content"
+        style="@style/st_18_text"
+        android:layout_marginTop="@dimen/pad_10"
+        android:layout_toLeftOf="@+id/plus"
+        android:gravity="center"
+        app:noEdit="true"
+        app:minValue="0"/>
+
+    <ImageView
+        android:id="@+id/minus"
+        android:layout_width="@dimen/pad_25"
+        android:layout_height="@dimen/pad_25"
+        android:layout_marginTop="@dimen/pad_16"
+        android:layout_toLeftOf="@+id/total"
+        android:clickable="true"
+        android:scaleType="center"
+        android:src="@drawable/minus_icon" />
+
+    <com.dpcsa.compon.custom_components.ComponTextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/st_14_text_50"
+        android:layout_marginLeft="@dimen/pad_25"
+        android:layout_marginTop="@dimen/pad_4"
+        android:layout_below="@+id/title"
+        app:moneyFormat="###,###,##0"/>
+
+    <TextView
+        style="@style/st_14_text_50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="@dimen/pad_4"
+        android:layout_marginLeft="@dimen/pad_5"
+        android:layout_toRightOf="@+id/price"
+        android:text="@string/uah_item" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pad_1"
+        android:layout_alignParentBottom="true"
+        android:background="#bbb" />
+</RelativeLayout>
