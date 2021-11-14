@@ -33,6 +33,7 @@ import java.util.Formatter;
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 import static com.bumptech.glide.request.RequestOptions.circleCropTransform;
 import static com.bumptech.glide.request.RequestOptions.placeholderOf;
+import static com.dpcsa.compon.json_simple.Field.TYPE_BOOLEAN;
 import static com.dpcsa.compon.json_simple.Field.TYPE_INTEGER;
 import static com.dpcsa.compon.json_simple.Field.TYPE_LIST_RECORD;
 import static com.dpcsa.compon.json_simple.Field.TYPE_LONG;
@@ -169,6 +170,9 @@ public class WorkWithRecordsAndViews {
                         } else if (obj instanceof String) {
                             f.type = TYPE_STRING;
                             f.value = obj;
+                        } else if (obj instanceof Boolean) {
+                            f.type = TYPE_BOOLEAN;
+                            f.value = obj;
                         }
                     } else {
                         f.value = ((IComponent) v).getString();
@@ -217,6 +221,9 @@ public class WorkWithRecordsAndViews {
                             case 1 :
                                 v.setEnabled(true);
                                 break;
+                            case 2 :
+                                v.setVisibility(View.GONE);
+                                break;
                         }
                     } else {
                         switch (vis.typeShow) {
@@ -225,6 +232,9 @@ public class WorkWithRecordsAndViews {
                                 break;
                             case 1 :
                                 v.setEnabled(false);
+                                break;
+                            case 2 :
+                                v.setVisibility(View.VISIBLE);
                                 break;
                         }
                     }

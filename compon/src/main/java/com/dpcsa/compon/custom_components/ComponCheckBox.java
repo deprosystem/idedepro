@@ -3,16 +3,19 @@ package com.dpcsa.compon.custom_components;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.CompoundButton;
 
 import com.dpcsa.compon.R;
 import com.dpcsa.compon.interfaces_classes.IAlias;
+import com.dpcsa.compon.interfaces_classes.IComponent;
 import com.dpcsa.compon.interfaces_classes.ISwitch;
+import com.dpcsa.compon.interfaces_classes.OnChangeStatusListener;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatCheckBox;
 
-public class ComponCheckBox extends AppCompatCheckBox implements ISwitch, IAlias {
+public class ComponCheckBox extends AppCompatCheckBox implements ISwitch, IComponent, IAlias {
 
     private OnCheckedChangeListener checListener;
     private boolean callListener;
@@ -98,5 +101,30 @@ public class ComponCheckBox extends AppCompatCheckBox implements ISwitch, IAlias
     @Override
     public String getAlias() {
         return alias;
+    }
+
+    @Override
+    public void setData(Object data) {
+//Log.d("QWERT", String.valueOf(data.getClass()));
+        if (data == null) return;
+    }
+
+    @Override
+    public Object getData() {
+        return isChecked();
+    }
+
+    @Override
+    public void setOnChangeStatusListener(OnChangeStatusListener statusListener) {
+
+    }
+
+    @Override
+    public String getString() {
+        if (isChecked()) {
+            return "true";
+        } else {
+            return "false";
+        }
     }
 }

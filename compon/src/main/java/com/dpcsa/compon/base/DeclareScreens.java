@@ -276,6 +276,10 @@ public abstract class DeclareScreens<T>{
         return new Visibility(1, viewId, nameField);
     }
 
+    public static Visibility gone(int viewId, String nameField) {
+        return new Visibility(2, viewId, nameField);
+    }
+
     public ParamModel model() {
         return new ParamModel();
     }

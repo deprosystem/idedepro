@@ -61,6 +61,7 @@
         <attr name="dateFormat"/>
         <attr name="dateMilisec" format="boolean"/>
         <attr name="onlyLetters" format="boolean"/>
+        <attr name="isPassword" format="boolean"/>
         <attr name="placeholder" format="reference"/>
         <attr name="blur" format="integer"/>
         <attr name="oval" format="boolean"/>
@@ -96,6 +97,7 @@
         <attr name="android:layout_height"/>
         <attr name="alias" />
         <attr name="KEY" format="string"/>
+        <attr name="listItems" format="string"/>
         <attr name="textError" format="string"/>
         <attr name="minValue" format="string"/>
         <attr name="maxValue" format="integer"/>
@@ -125,6 +127,11 @@
         <attr name="showMinMaxValue" format="reference"/>
         <attr name="sendNotif"/>
         <attr name="minValueSeek" format="integer"/>
+        <attr name="corners" format="dimension"/>
+        <attr name="corner_lt" format="dimension"/>
+        <attr name="corner_rt" format="dimension"/>
+        <attr name="corner_lb" format="dimension"/>
+        <attr name="corner_rb" format="dimension"/>
         <attr name="maxValueSeek" format="integer"/>
         <attr name="minStartValue" format="integer"/>
         <attr name="maxStartValue" format="integer"/>

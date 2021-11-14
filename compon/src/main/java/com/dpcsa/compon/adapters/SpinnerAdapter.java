@@ -60,7 +60,9 @@ public class SpinnerAdapter extends BaseAdapter {
         if (typeRec >= mSpinner.paramView.layoutFurtherTypeId.length) {
             typeRec = mSpinner.paramView.layoutFurtherTypeId.length - 1;
         }
-        if (view == null) view = LayoutInflater.from(context).inflate(mSpinner.paramView.layoutFurtherTypeId[typeRec], parent, false);
+        if (view == null) {
+            view = LayoutInflater.from(context).inflate(mSpinner.paramView.layoutFurtherTypeId[typeRec], parent, false);
+        }
         modelToView.RecordToView(rec, view);
         return view;
     }

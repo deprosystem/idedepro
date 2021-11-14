@@ -39,7 +39,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
     private long minValueLong, maxValueLong;
     private boolean typeClassNumber;
     private boolean isValid, isVerify;
-    private boolean onlyLetters;
+    private boolean onlyLetters, isPassword;
     private OnFocusChangeListener focusChangeListenerInheritor = null;
     private String filter = "[a-zA-ZёЁїЇіІ а-яА-Я-]+";
     private int selectPos, idShow, idHide, idClean, idEquals, idError;
@@ -76,6 +76,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
             }
             idError = a.getResourceId(R.styleable.Simple_idError, 0);
             onlyLetters = a.getBoolean(R.styleable.Simple_onlyLetters, false);
+            isPassword = a.getBoolean(R.styleable.Simple_isPassword, false);
             minValueText = a.getString(R.styleable.Simple_minValue);
             maxLength = a.getInt(R.styleable.Simple_maxLength, Integer.MAX_VALUE);
             maxValueText = a.getString(R.styleable.Simple_maxValue);
@@ -165,6 +166,9 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
         super.onAttachedToWindow();
         int i = getId();
         parent = getParenView();
+        if (isPassword) {
+            setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        }
         if (idHide != 0 && idShow != 0 || idClean != 0) {
             if (idHide != 0 && idHide != idShow) {
                 viewHide = parent.findViewById(idHide);
@@ -173,8 +177,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                 viewShow.setOnClickListener(listener);
                 viewShow.setVisibility(VISIBLE);
                 viewHide.setVisibility(GONE);
-                setInputType(InputType.TYPE_CLASS_TEXT |
-                        InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             }
             if (idClean != 0) {
                 viewClean = parent.findViewById(idClean);
