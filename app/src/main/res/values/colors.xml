@@ -23,4 +23,5 @@
     <color name="white_20">#32ffffff</color>
     <color name="color_100">#0051aeff</color>
     <color name="blue">#2e6faf</color>
+    <color name="defoult_text">#808080</color>
 </resources>

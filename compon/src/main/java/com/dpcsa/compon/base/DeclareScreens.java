@@ -578,6 +578,13 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, CLICK_SEND, paramModel, afterResponse, afterError, changeEnabled, mustValid);
     }
 
+    public ViewHandler send(int viewId, int recordId, ParamModel paramModel,
+                            ActionsAfterResponse afterResponse, boolean changeEnabled, int... mustValid) {
+        ViewHandler vh = new ViewHandler(viewId, CLICK_SEND, paramModel, afterResponse, changeEnabled, mustValid);
+        vh.setRecordId(recordId);
+        return vh;
+    }
+
     public ViewHandler handler(int viewId, ParamModel paramModel, ActionsAfterResponse afterResponse) {
         return new ViewHandler(viewId, ViewHandler.TYPE.MODEL_PARAM, paramModel, afterResponse, false, null);
     }

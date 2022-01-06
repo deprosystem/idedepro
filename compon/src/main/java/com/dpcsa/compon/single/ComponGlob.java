@@ -255,7 +255,6 @@ public class ComponGlob {
         if (paramQuery != null && paramQuery.length() > 0) {
             param += sep + paramQuery;
         }
-
         if (param != null && param.length() > 0) {
             if (url.contains("?")) {
                 st = "&";

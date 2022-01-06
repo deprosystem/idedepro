@@ -42,6 +42,7 @@ import com.dpcsa.compon.interfaces_classes.Param;
 import com.dpcsa.compon.interfaces_classes.PushHandler;
 import com.dpcsa.compon.interfaces_classes.SpringScale;
 import com.dpcsa.compon.interfaces_classes.SpringY;
+import com.dpcsa.compon.json_simple.ListRecords;
 import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.json_simple.WorkWithRecordsAndViews;
 import com.dpcsa.compon.single.Injector;
@@ -743,22 +744,91 @@ public class BaseFragment extends Fragment implements IBase {
                         break;
                     case CLICK_SEND:
                         Record rec = null;
-                        if (paramScreen != null && paramScreen.value != null) {
-                            rec = (Record) paramScreen.value;
+                        Record param;
+                        if (vh.recordId != 0) {
+                            View viewForRecord = parentLayout.findViewById(vh.recordId);
+                            bc = mComponent.getComponent(vh.recordId);
+                            if (vh.mustValid != null && ! bc.isValid(vh.mustValid)) {
+                                break;
+                            }
+                            selectViewHandler = vh;
+Log.d("QWERT","vh.recordId="+vh.recordId+" viewForRecord="+viewForRecord);
+                            param = workWithRecordsAndViews.ViewToRecord(viewForRecord, vh.paramModel.param);
+                            rec = bc.setRecord(param);
+                            for (Field f : rec) {
+                                if (f.type == Field.TYPE_LIST_RECORD) {
+                                    Field glob = componGlob.globalData.getField(f.name);
+                                    if (glob != null) {
+                                        componGlob.setParamsFromGlob(rec, "String) f.value", f.name);
+                                    } else {
+                                        View vL = componGlob.findViewByName(viewForRecord, f.name);
+                                        if (vL != null) {
+                                            BaseComponent bcList = bc.getComponent(vL.getId());
+                                            if (bcList != null) {
+                                                String[] stParam = ((String) f.value).split(";");
+                                                if (stParam.length > 0) {
+                                                    if (bcList instanceof RecyclerComponent) {
+                                                        ListRecords listRecParam = new ListRecords();
+                                                        for (Record recList : ((RecyclerComponent) bcList).listData) {
+                                                            Record recParamSend = new Record();
+                                                            for (String nameParam : stParam) {
+                                                                Field fParam = recList.getField(nameParam);
+                                                                if (fParam != null) {
+                                                                    recParamSend.add(fParam);
+                                                                }
+                                                            }
+                                                            listRecParam.add(recParamSend);
+                                                        }
+                                                        f.value = listRecParam;
+                                                    }
+                                                } else {
+                                                    if (bcList instanceof RecyclerComponent) {
+                                                        f.type = Field.TYPE_INTEGER;
+                                                        f.value = ((RecyclerComponent) bcList).listData.size();
+                                                    } else {
+                                                        log("1001 No data for parameter " + f.name + " in " + mComponent.nameComponent);
+                                                        rec.remove(f);
+                                                    }
+                                                }
+                                            } else {
+                                                log("0010 Component " + f.name + " not found in " + mComponent.nameComponent);
+                                                rec.remove(f);
+                                            }
+                                        } else {
+                                            log("0009 No item " + f.name + " in " + mComponent.nameComponent);
+                                            rec.remove(f);
+                                        }
+                                    }
+                                }
+                            }
+                            if (mComponent.moreWork != null) {
+                                mComponent.moreWork.setPostParam(vh.viewId, rec);
+                            }
                             componGlob.setParam(rec);
-                        }
-                        selectViewHandler = vh;
-                        switch (vh.paramModel.method) {
-                            case POST_DB:
+                            if (vh.paramModel.method == POST_DB) {
                                 BaseDB baseDB = Injector.getBaseDB();
                                 baseDB.insertRecord(vh.paramModel.url, rec, listener_send_back_screen);
-                                break;
-                            case GET:
-                                new BasePresenter(BaseFragment.this, vh.paramModel, null, rec, listener_send_back_screen);
-                                break;
-                            case POST:
-                                new BasePresenter(BaseFragment.this, vh.paramModel, null, rec, listener_send_back_screen);
-                                break;
+                            } else {
+                                new BasePresenter(this, vh.paramModel, null, rec, listener_send_back_screen);
+                            }
+                        } else {
+                            if (paramScreen != null && paramScreen.value != null) {
+                                rec = (Record) paramScreen.value;
+                                componGlob.setParam(rec);
+                            }
+                            selectViewHandler = vh;
+                            switch (vh.paramModel.method) {
+                                case POST_DB:
+                                    BaseDB baseDB = Injector.getBaseDB();
+                                    baseDB.insertRecord(vh.paramModel.url, rec, listener_send_back_screen);
+                                    break;
+                                case GET:
+                                    new BasePresenter(BaseFragment.this, vh.paramModel, null, rec, listener_send_back_screen);
+                                    break;
+                                case POST:
+                                    new BasePresenter(BaseFragment.this, vh.paramModel, null, rec, listener_send_back_screen);
+                                    break;
+                            }
                         }
                         break;
                     case CLICK_VIEW:

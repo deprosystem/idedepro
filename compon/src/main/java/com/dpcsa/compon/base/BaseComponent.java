@@ -199,7 +199,6 @@ public abstract class BaseComponent {
     }
 
     private void actualModel(ParamModel paramModel) {
-//Log.d("QWERT",componentTag + multiComponent.nameComponent + " actualModel");
         isChangeData = false;
         if (paramModel != null) {
             switch (paramModel.method) {
@@ -288,7 +287,6 @@ public abstract class BaseComponent {
                 case ParamModel.PARAMETERS:
                     if (paramMV.paramModel.param != null && paramMV.paramModel.param.length() > 0) {
                         Record rr = componGlob.paramSetRecord(paramMV.paramModel.param);
-//Log.d("QWERT","RRR="+rr.toString()+"<<");
                         View vv = parentLayout.findViewById(paramMV.paramView.viewId);
                         workWithRecordsAndViews.RecordToView(rr, vv, this, clickView);
                     } else {
@@ -607,7 +605,6 @@ public abstract class BaseComponent {
     };
 
     public void clickHandler(View v, int vId) {
-//Log.d("QWERT",componentTag +multiComponent.nameComponent + " clickHandler");
         clickHandlerNav(v, vId, navigator.viewHandlers);
     }
 
@@ -860,7 +857,14 @@ public abstract class BaseComponent {
                             break;
                         }
                         selectViewHandler = vh;
-                        param = workWithRecordsAndViews.ViewToRecord(viewComponent, vh.paramModel.param);
+                        View viewForRecord;
+                        if (vh.recordId != 0) {
+                            viewForRecord = parentLayout.findViewById(vh.recordId);
+                        } else {
+                            viewForRecord = viewComponent;
+                        }
+//Log.d("QWERT","vh.recordId="+vh.recordId+" viewForRecord="+viewForRecord);
+                        param = workWithRecordsAndViews.ViewToRecord(viewForRecord, vh.paramModel.param);
                         rec = setRecord(param);
                         for (Field f : rec) {
                             if (f.type == Field.TYPE_LIST_RECORD) {
@@ -868,7 +872,7 @@ public abstract class BaseComponent {
                                 if (glob != null) {
                                     componGlob.setParamsFromGlob(rec, "String) f.value", f.name);
                                 } else {
-                                    View vL = componGlob.findViewByName(viewComponent, f.name);
+                                    View vL = componGlob.findViewByName(viewForRecord, f.name);
                                     if (vL != null) {
                                         BaseComponent bc = getComponent(vL.getId());
                                         if (bc != null) {
@@ -976,7 +980,6 @@ public abstract class BaseComponent {
     }
 
     public void setValueParam(int id) {
-//Log.d("QWERT",componentTag +multiComponent.nameComponent + " setValueParam");
         ViewGroup vg = null;
         if (id == 0) {
             vg = (ViewGroup) viewComponent;
@@ -1006,9 +1009,7 @@ public abstract class BaseComponent {
         }
         if (name == null) return;
         String value = componGlob.getParamValueIfIs(name);
-//        Log.d("QWERT",componentTag+multiComponent.nameComponent + " name="+name+"<< value="+value+"<< getParam="+componGlob.getParam(name));
         if (value == null || value.length() == 0) return;
-//        Log.d("QWERT",componentTag+multiComponent.nameComponent + " name="+name+"???????????????? value.length()="+value.length());
         if (view instanceof TextView) {
             if (view instanceof IComponent) {
                 ((IComponent) view).setData(value);
@@ -1056,7 +1057,7 @@ public abstract class BaseComponent {
         }
     }
 
-    private boolean isValid(int[] mustValid) {
+    public boolean isValid(int[] mustValid) {
         boolean valid = true;
         for (int i : mustValid) {
             View vv = viewComponent.findViewById(i);

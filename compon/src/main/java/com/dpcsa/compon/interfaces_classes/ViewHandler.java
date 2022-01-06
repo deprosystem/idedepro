@@ -41,8 +41,13 @@ public class ViewHandler {
     public int textShowId, textHideId;
     public Animate animate;
     public int repeatTime;
+    public int recordId;
     public float velocity;
     public ItemSetValue[] itemSetValues;
+
+    public void setRecordId(int recId) {
+        recordId = recId;
+    }
 
     public ViewHandler(String nameField) {
         type = TYPE.FIELD_WITH_NAME_SCREEN;

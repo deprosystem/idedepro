@@ -2,7 +2,6 @@ package com.dpcsa.compon.custom_components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-
 import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.Record;
 import com.google.android.material.textfield.TextInputLayout;
@@ -15,7 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewParent;
 import android.widget.TextView;
-
 import com.dpcsa.compon.R;
 import com.dpcsa.compon.interfaces_classes.IAlias;
 import com.dpcsa.compon.interfaces_classes.IComponent;
@@ -26,7 +24,7 @@ import com.dpcsa.compon.param.AppParams;
 public class ComponEditText extends AppCompatEditText implements IComponent, IValidate, IAlias {
 
     protected int typeValidate;
-    protected final int FILLED = 0, EMAIL = 1, LENGTH = 2, DIAPASON = 3, MIN_LENGTH = 4;
+    protected final int FILLED = 0, EMAIL = 1, LENGTH = 2, DIAPASON = 3, MIN_LENGTH = 4, PASSWORD = 5;
     private int fieldLength;
     private int minLength = -1;
     private int maxLength = Integer.MAX_VALUE;
@@ -88,14 +86,14 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
             idEquals = a.getResourceId(R.styleable.Simple_equalsId, 0);
             validPassword = a.getString(R.styleable.Simple_validPassword);  // aA0@
             alias = a.getString(R.styleable.Simple_alias);
-            if (validPassword == null) {
-                validPassword = "";
-            }
         } finally {
             a.recycle();
         }
         isValid = false;
         isVerify = false;
+        if (validPassword == null) {
+            validPassword = "";
+        }
         if (minLength > -1) {
             typeValidate = MIN_LENGTH;
         } else {
@@ -154,6 +152,12 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                 isVerify = true;
             }
         }
+        if (validPassword.length() > 0 && typeValidate < 1) {
+            typeValidate = PASSWORD;
+        }
+        if (typeValidate == 1) {
+            setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        }
         oldString = "";
         selectPos = 0;
         addTextChangedListener(new EditTextWatcher());
@@ -183,14 +187,14 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                 viewClean = parent.findViewById(idClean);
                 viewClean.setOnClickListener(listener);
             }
-            if (idEquals != 0) {
-                View vv = parent.findViewById(idEquals);
-                if (vv != null && vv instanceof ComponEditText) {
-                    viewEquals = (ComponEditText) vv;
-                    viewEquals.setEqualsGeneral(this);
-                } else {
-                    errorLog("0004 не правильная ссылка на проверку совпадения паролей ");
-                }
+        }
+        if (idEquals != 0) {
+            View vv = parent.findViewById(idEquals);
+            if (vv != null && vv instanceof ComponEditText) {
+                viewEquals = (ComponEditText) vv;
+                viewEquals.setEqualsGeneral(this);
+            } else {
+                errorLog("0004 не правильная ссылка на проверку совпадения паролей ");
             }
         }
         if (idError != 0) {
@@ -301,7 +305,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
     }
 
     public boolean isValidRes() {
-        boolean result = isValid();
+        boolean result = isValidFoc(true);
         if (result) {
             setErrorValid(null);
         } else {
@@ -312,6 +316,10 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
 
     @Override
     public boolean isValid() {
+        return isValidFoc(false);
+    }
+
+    public boolean isValidFoc(boolean foc) {
         String st = getText().toString().trim();
         boolean result = false;
         switch (typeValidate) {
@@ -342,42 +350,40 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                 break;
         }
         int ik = validPassword.length(); // Хочаб один символ з validPassword
-        if (result && ik > 0) {
+        if (ik > 0) {
             if (ik > getString().length()) {
                 return false;
             } else {
                 boolean b = true;
+                String stVal = getText().toString();
                 for (int i = 0; i < ik; i++) {
                     char c = validPassword.charAt(i);
                     switch (c) {
                         case 'a':
-                            b = inDiapason(97, 122);
+                            b = inDiapason(stVal, 97, 122);
                             break;
                         case 'A':
-                            b = inDiapason(65, 90);
+                            b = inDiapason(stVal, 65, 90);
                             break;
                         case '0':
-                            b = inDiapason(48, 57);
+                            b = inDiapason(stVal, 48, 57);
                             break;
                         case '@':
-                            b = inDiapason(32, 47);
+                            b = inDiapason(stVal, 32, 47);
                             break;
                     }
                     if ( ! b) return false;
                 }
             }
         }
-        if (result && viewEquals != null) {
+        if (viewEquals != null && ! foc) {
             String stEq = viewEquals.getText().toString();
             if (! st.equals(stEq)) {
                 viewEquals.setErrorValid(viewEquals.textError);
                 return false;
-            }
-            else {
-//                viewEquals.checkValid();
+            } else {
                 setErrorValid(null);
                 viewEquals.setErrorValid(null);
-                result = true;
             }
         }
         if (equalsGeneral != null) {
@@ -390,16 +396,11 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                 equalsGeneral.setErrorValid(null);
             }
         }
-        if ( ! result) {
-            setErrorValid(textError);
-        } else {
-            setErrorValid("");
-        }
         return result;
     }
 
-    private boolean inDiapason(int min, int max) {
-        String st = getString();
+    private boolean inDiapason(String st, int min, int max) {
+//        String st = getString();
         int ik = st.length();
         for (int i = 0; i <ik; i++) {
             int c = st.charAt(i);
@@ -464,7 +465,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
     }
 
     public void checkValid() {
-        if (isValid()) {
+        if (isValidFoc(true)) {
             if ( ! isValid) {
                 isValid = true;
                 setEvent(3);

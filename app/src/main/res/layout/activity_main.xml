@@ -5,141 +5,32 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
->
-    <RelativeLayout
-        android:id="@+id/form"
+    >
+    <com.dpcsa.compon.custom_components.ComponToolBar
+        android:id="@+id/tool_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="230dp">
-
-            <com.dpcsa.compon.custom_components.ComponImageView
-                android:id="@+id/blur"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:alias="photo"
-                app:blur="30" />
-
-            <com.dpcsa.compon.custom_components.ComponImageView
-                android:id="@+id/photo"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_centerInParent="true"
-                app:oval="true"/>
-
-            <ImageView
-                android:id="@+id/cli"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_centerInParent="true"
-                android:src="@android:drawable/ic_menu_camera" />
-        </RelativeLayout>
-
-        <EditText
-            android:id="@+id/aa"
-            android:layout_width="195dp"
-            android:layout_height="@dimen/dim_40"
-            android:layout_marginLeft="@dimen/dim_20"
-            android:layout_marginTop="240dp"
-            android:textSize="@dimen/dim_14"
-            />
-        <EditText
-            android:id="@+id/ss"
-            android:layout_width="225dp"
-            android:layout_height="46dp"
-            android:layout_marginLeft="@dimen/dim_16"
-            android:layout_marginTop="280dp"
-            android:textSize="@dimen/dim_14"
-            />
-        <EditText
-            android:id="@+id/dd"
-            android:layout_width="206dp"
-            android:layout_height="41dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="340dp"
-            android:textSize="@dimen/dim_14"
-            />
-
-        <com.dpcsa.compon.custom_components.ComponSpinner
-            android:id="@+id/spin"
-            android:layout_width="206dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="400dp"
-            android:layout_marginLeft="15dp"
-            app:listItems="asdf,ghjkl"
-            />
-        <TextView
-            android:id="@+id/send"
-            android:layout_width="170dp"
-            android:layout_height="@dimen/dim_40"
-            android:background="@drawable/shape_1000"
-            android:gravity="center"
-            android:layout_marginLeft="85dp"
-            android:layout_marginTop="480dp"
-            android:text="Send"
-            android:textSize="22dp"
-            android:textColor="@color/primary"
-            />
-    </RelativeLayout>
-    <TextView
-        android:id="@+id/err"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="253dp"
-        android:textSize="@dimen/dim_12"
-        android:textColor="@color/errorDark"
+        android:layout_height="@dimen/dim_56"
+        android:background="@color/primary"
+        app:titleSize="@dimen/dim_20"
+        app:titleColor="@color/white"
+        app:imgBack="@drawable/icon_menu"
         />
 
+    <com.dpcsa.compon.custom_components.ComponMenuB
+        android:id="@+id/menu_b"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_56"
+        android:background="@color/primary"
+        app:selectColor="@color/accentDark"
+        />
 
+    <FrameLayout
+        android:id="@+id/container_fragm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/menu_b"
+        android:layout_below="@id/tool_bar"
+        />
 
-<!--    <TextView-->
-<!--        android:id="@+id/sss"-->
-<!--        android:layout_width="300dp"-->
-<!--        android:layout_height="56dp"-->
-<!--        android:layout_marginTop="40dp"-->
-<!--        android:text="Asdffgg"/>-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/aft"-->
-<!--        android:layout_width="300dp"-->
-<!--        android:layout_height="56dp"-->
-<!--        android:layout_marginTop="100dp"-->
-<!--        android:background="@color/accent"-->
-<!--        android:text="AFT AFT"/>-->
-
-
-
-
-
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/list"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_above="@id/total"-->
-<!--        android:layout_marginLeft="@dimen/dim_12"-->
-<!--        android:layout_marginRight="@dimen/dim_12"-->
-<!--        android:layout_marginBottom="@dimen/dim_20"-->
-<!--    />-->
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/total"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_marginLeft="@dimen/dim_20"-->
-<!--        android:layout_marginRight="@dimen/dim_20"-->
-<!--        android:layout_marginBottom="@dimen/dim_20"-->
-<!--    >-->
-<!--        <TextView-->
-<!--            android:id="@+id/sum"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentRight="true"-->
-<!--            android:layout_marginRight="@dimen/dim_12"-->
-<!--            android:textSize="@dimen/dim_14"-->
-<!--        />-->
-<!--    </RelativeLayout>-->
 </RelativeLayout>
