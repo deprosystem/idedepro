@@ -110,4 +110,10 @@
     <style name="MyRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:colorPressedHighlight">@color/primary</item>
     </style>
+
+    <style name="editStyle_21_2">
+        <item name="colorControlNormal">@color/defoult_text</item>
+        <item name="colorControlActivated">@color/primaryLight</item>
+    </style>
+
 </resources>

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.dpcsa.compon.R;
@@ -29,7 +30,7 @@ import com.dpcsa.compon.single.Injector;
 public class Gallery extends ViewPager implements IComponent, IAlias {
 
     private Context context;
-    private List<Field> listData;
+    public List<Field> listData;
     private int INDICATOR, placeholder;
     private String alias, baseUrl;
     private PagerIndicator indicator;
@@ -54,10 +55,11 @@ public class Gallery extends ViewPager implements IComponent, IAlias {
         } finally {
             a.recycle();
         }
+        listData = new ArrayList<>();
         baseUrl = Injector.getComponGlob().appParams.baseUrl;
     }
 
-    PagerAdapter adapter = new PagerAdapter() {
+    public PagerAdapter adapter = new PagerAdapter() {
         WorkWithRecordsAndViews modelToView = new WorkWithRecordsAndViews();
         @Override
         public int getCount() {
@@ -101,12 +103,19 @@ public class Gallery extends ViewPager implements IComponent, IAlias {
         public void destroyItem(ViewGroup viewGroup, int position, Object view) {
             viewGroup.removeView((View) view);
         }
+
+        @Override
+        public void notifyDataSetChanged() {
+            super.notifyDataSetChanged();
+        }
     };
 
     @Override
     public void setData(Object data) {
         if (data instanceof List) {
-            listData = (List<Field>) data;
+//            listData = (List<Field>) data;
+            listData.clear();
+            listData.addAll((List<Field>) data);
             viewGallery();
         } else {
             if (data instanceof String) {
@@ -114,7 +123,9 @@ public class Gallery extends ViewPager implements IComponent, IAlias {
                 if (dSt.indexOf("[") == 0) {
                     try {
                         Field ff = Injector.getComponGlob().jsonSimple.jsonToModel(dSt);
-                        listData = (List<Field>) ff.value;
+//                        listData = (List<Field>) ff.value;
+                        listData.clear();
+                        listData.addAll((List<Field>) ff.value);
                     } catch (JsonSyntaxException e) {
                         e.printStackTrace();
                     }
@@ -126,7 +137,7 @@ public class Gallery extends ViewPager implements IComponent, IAlias {
         }
     }
 
-    private void viewGallery() {
+    public void viewGallery() {
         if (INDICATOR != 0) {
             View v = (View) getParent();
             indicator = (PagerIndicator) v.findViewById(INDICATOR);
@@ -159,7 +170,18 @@ public class Gallery extends ViewPager implements IComponent, IAlias {
 
     @Override
     public Object getData() {
-        return listData;
+        return getString();
+/*
+        String res = "[";
+        String sep = "";
+        for (Field f : listData) {
+            res += sep + "\"" + (String) f.value + "\"";
+            sep = ",";
+        }
+        return res;
+
+ */
+//        return listData;
     }
 
     @Override
@@ -169,6 +191,13 @@ public class Gallery extends ViewPager implements IComponent, IAlias {
 
     @Override
     public String getString() {
-        return null;
+        String res = "[";
+        String sep = "";
+        for (Field f : listData) {
+            res += sep + "\"" + (String) f.value + "\"";
+            sep = ",";
+        }
+        res += "]";
+        return res;
     }
 }

@@ -191,6 +191,7 @@ public class WorkWithRecordsAndViews {
         int id = v.getId();
         String st;
         String name = v.getContext().getResources().getResourceEntryName(id);
+Log.d("QWERT","setValue name="+name+"<<");
         if (setParam) {
             setRecordField(v, name);
             return;
@@ -246,7 +247,6 @@ public class WorkWithRecordsAndViews {
             return;
         }
         Field field = model.getField(name);
-
         if (field != null) {
             if (v instanceof IComponent) {
                 if (v instanceof IBaseComponent) {
@@ -262,8 +262,10 @@ public class WorkWithRecordsAndViews {
                 return;
             }
             if (v instanceof TextView) {
+Log.d("QWERT","  isTextView VVVV="+field.value);
                 if (field.value instanceof String) {
                     ((TextView) v).setText((String )field.value);
+Log.d("QWERT","    instanceof String TTT="+((TextView) v).getText()+"<<");
 //                    if (v instanceof PlusMinus) {
 //                        ((PlusMinus) v).setParam(view, model, baseComponent);
 //                        ((PlusMinus) v).setData(field.value.toString());

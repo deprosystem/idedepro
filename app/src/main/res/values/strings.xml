@@ -33,4 +33,30 @@
     <string name="main_menu_b_1">Акции</string>
     <string name="new_screen_title">Новости</string>
     <string name="share_screen_title">Акции</string>
+    <string name="sup_photo">Source photo</string>
+    <string name="sin_login_error">Больше 4 символов</string>
+    <string name="sin_password_error">Больше 4 больших и малых букв</string>
+    <string name="sup_login_error">Больше 4 символов</string>
+    <string name="sup_password_error">Password error</string>
+    <string name="sup_f_name_error">Не меньше 2</string>
+    <string name="sup_l_name_error">Не меньше 2</string>
+    <string name="sup_email_error">Email error</string>
+    <string name="sup_equ_error">Do not match</string>
+
+    <string name="start_screen_title">Акции</string>
+    <string name="detail_screen_title">%1$s</string>
+    <string name="drawer_menu_0">Новости</string>
+    <string name="drawer_menu_1">Акции</string>
+    <string name="drawer_menu_2">Профиль</string>
+    <string name="drawer_menu_3">Sall</string>
+    <string name="prof_screen_title">Профиль</string>
+    <string name="prof_photo">Source image</string>
+    <string name="sall_screen_title">Sall</string>
+    <string name="sall_gal">Source</string>
+    <string name="auth_screen_title">Авторизация</string>
+    <string-array name="auth_tab_layout">
+        <item>Sign in</item>
+        <item>Sign up</item>
+    </string-array>
+
 </resources>

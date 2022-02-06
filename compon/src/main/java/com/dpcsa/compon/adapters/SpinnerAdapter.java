@@ -1,12 +1,15 @@
 package com.dpcsa.compon.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
+import com.dpcsa.compon.R;
 import com.dpcsa.compon.base.BaseProvider;
 import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.Record;
@@ -47,7 +50,12 @@ public class SpinnerAdapter extends BaseAdapter {
         Context context = parent.getContext();
         Record rec = (Record) provider.get(position);
         int typeRec = getItemViewType(rec);
-        if (view == null) view = LayoutInflater.from(context).inflate(mSpinner.paramView.layoutTypeId[typeRec], parent, false);
+        if (view == null) {
+            view = LayoutInflater.from(context).inflate(mSpinner.paramView.layoutTypeId[typeRec], parent, false);
+            if (view.getVisibility() != View.VISIBLE) {
+                view.setVisibility(View.VISIBLE);
+            }
+        }
         modelToView.RecordToView(rec, view);
         return view;
     }
@@ -62,6 +70,9 @@ public class SpinnerAdapter extends BaseAdapter {
         }
         if (view == null) {
             view = LayoutInflater.from(context).inflate(mSpinner.paramView.layoutFurtherTypeId[typeRec], parent, false);
+            if (view.getVisibility() != View.VISIBLE) {
+                view.setVisibility(View.VISIBLE);
+            }
         }
         modelToView.RecordToView(rec, view);
         return view;

@@ -9,6 +9,7 @@ import com.dpcsa.compon.components.CalendarComponent;
 import com.dpcsa.compon.components.ContainerComponent;
 import com.dpcsa.compon.components.DateDiapasonComponent;
 import com.dpcsa.compon.components.DrawerComponent;
+import com.dpcsa.compon.components.EditGalleryComponent;
 import com.dpcsa.compon.components.EnabledComponent;
 import com.dpcsa.compon.components.IntroComponent;
 import com.dpcsa.compon.components.LoadDbComponent;
@@ -339,6 +340,17 @@ public class Screen<T>{
         paramComponent.minLen = minLen;
         paramComponent.delayMillis = delayMillis;
         paramComponent.hide = hideRecycler;
+        listComponents.add(paramComponent);
+        return this;
+    }
+
+    public Screen editGallery(int viewId, int addId, int delId, int moveId, int idTextPermits, String query) {
+        ParamComponent paramComponent = new ParamComponent();
+        paramComponent.type = ParamComponent.TC.EDIT_GALLERY;
+        paramComponent.paramView = new ParamView(viewId, new int[] {addId, delId, moveId});
+        paramComponent.paramForPathFoto = null;
+        paramComponent.paramView.idStringExtra = idTextPermits;
+        paramComponent.paramModel = new ParamModel(query);
         listComponents.add(paramComponent);
         return this;
     }
@@ -712,6 +724,9 @@ public class Screen<T>{
                     break;
                 case INTRO:
                     new IntroComponent(iBase, cMV, this);
+                    break;
+                case EDIT_GALLERY:
+                    new EditGalleryComponent(iBase, cMV, this);
                     break;
                 case DRAWER:
                     new DrawerComponent(iBase, cMV, this);

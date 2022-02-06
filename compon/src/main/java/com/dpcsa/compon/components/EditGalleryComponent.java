@@ -11,70 +11,139 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import jp.wasabeef.glide.transformations.BlurTransformation;
-
 import com.dpcsa.compon.base.BaseComponent;
+import com.dpcsa.compon.base.BasePresenter;
 import com.dpcsa.compon.base.Screen;
 import com.dpcsa.compon.custom_components.ComponImageView;
-//import com.dpcsa.compon.glide.GlideApp;
-//import com.dpcsa.compon.glide.GlideRequest;
+import com.dpcsa.compon.custom_components.Gallery;
 import com.dpcsa.compon.glide.GlideApp;
 import com.dpcsa.compon.glide.GlideRequest;
 import com.dpcsa.compon.interfaces_classes.ActionsAfterResponse;
 import com.dpcsa.compon.interfaces_classes.ActivityResult;
 import com.dpcsa.compon.interfaces_classes.IBase;
+import com.dpcsa.compon.interfaces_classes.IPresenterListener;
 import com.dpcsa.compon.interfaces_classes.PermissionsResult;
 import com.dpcsa.compon.json_simple.Field;
+import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.param.ParamComponent;
+import com.dpcsa.compon.param.ParamModel;
+import com.dpcsa.compon.single.Injector;
 import com.dpcsa.compon.tools.Constants;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 import static com.bumptech.glide.request.RequestOptions.circleCropTransform;
+import static com.dpcsa.compon.param.ParamModel.POST;
 
-public class PhotoComponent extends BaseComponent{
+public class EditGalleryComponent extends BaseComponent {
 
-    View view;
+    Gallery gallery;
     private Uri photoURI;
     private String photoPath;
     private String imgPath;
+    private View addView, delView, moveView;
+//    private List<Field> listData;
 
-    public PhotoComponent(IBase iBase, ParamComponent paramMV, Screen multiComponent) {
+    public EditGalleryComponent(IBase iBase, ParamComponent paramMV, Screen multiComponent) {
         super(iBase, paramMV, multiComponent);
     }
 
     @Override
     public void initView() {
-        view = parentLayout.findViewById(paramMV.paramView.viewId);
-        if (view == null) {
-            iBase.log( "Не найден View в " + multiComponent.nameComponent);
+        gallery = (Gallery) parentLayout.findViewById(paramMV.paramView.viewId);
+        if (gallery == null) {
+            iBase.log( "Не найден Gallery в " + multiComponent.nameComponent);
             return;
         }
         paramMV.startActual = false;
-        view.setOnClickListener(clickListener);
+        int addId = paramMV.paramView.layoutTypeId[0];
+        int delId = paramMV.paramView.layoutTypeId[1];
+        int moveId = paramMV.paramView.layoutTypeId[2];
+
+        addView = parentLayout.findViewById(addId);
+        addView.setOnClickListener(clicAddkListener);
+        delView = parentLayout.findViewById(delId);
+        delView.setOnClickListener(clickDelListener);
+        moveView = parentLayout.findViewById(moveId);
+        moveView.setOnClickListener(clickMoveListener);
+/*
+        if (gallery.getAdapter() == null) {
+            gallery.viewGallery();
+//Log.d("QWERT","aaaa="+gallery.getAdapter());
+        }
+
+ */
     }
 
     public String getFilePath() {
         return imgPath + "";
     }
 
-    View.OnClickListener clickListener = new View.OnClickListener() {
+    View.OnClickListener clicAddkListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             obtainingPermits();
+        }
+    };
+
+    View.OnClickListener clickDelListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String qu = paramMV.paramModel.url + "del_img";
+            ParamModel pm = new ParamModel(POST,qu);
+            int pos = gallery.getCurrentItem();
+            String nameF = (String) gallery.listData.get(pos).value;
+            Record rec = new Record();
+            rec.addField(new Field("name", Field.TYPE_STRING, nameF));
+            new BasePresenter(iBase, pm, null, rec, listener_del_img);
+        }
+    };
+
+    public IPresenterListener listener_del_img = new IPresenterListener() {
+
+        @Override
+        public void onResponse(Field response) {
+            int pos = gallery.getCurrentItem();
+//            Collections.swap(gallery.listData, pos - 1, pos);
+            gallery.listData.remove(pos);
+            gallery.setAdapter(gallery.adapter);
+            if (pos >= gallery.listData.size()) {
+                pos = gallery.listData.size();
+            }
+            gallery.setCurrentItem(pos);
+        }
+
+        @Override
+        public void onError(int statusCode, String message, View.OnClickListener click) {
+
+        }
+    };
+
+    View.OnClickListener clickMoveListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int pos = gallery.getCurrentItem();
+            if (pos > 0) {
+                Collections.swap(gallery.listData, pos - 1, pos);
+//            gallery.listData.add(pos, new Field("", Field.TYPE_STRING, rec.getString("photo")));
+                gallery.setAdapter(gallery.adapter);
+                gallery.setCurrentItem(pos - 1);
+            }
         }
     };
 
@@ -210,29 +279,28 @@ public class PhotoComponent extends BaseComponent{
     };
 
     private void showImg(String url) {
-        if (paramMV.paramView.layoutTypeId != null && paramMV.paramView.layoutTypeId.length > 0) {
-            ImageView img;
-            int ik = paramMV.paramView.layoutTypeId.length;
-            for (int i = 0; i < ik; i++) {
-                img = (ImageView) parentLayout.findViewById(paramMV.paramView.layoutTypeId[i]);
-                if (img != null) {
-                    GlideRequest gr = GlideApp.with(activity).load(url);
-                    if (img instanceof ComponImageView) {
-                        ComponImageView simg = (ComponImageView) img;
-                        if (simg.getBlur() > 0) {
-                            gr.apply(bitmapTransform(new BlurTransformation(simg.getBlur())));
-                        }
-                        if (simg.isOval()) {
-                            gr.apply(circleCropTransform());
-                        }
-                        simg.setPathImg(url);
-//                        gr.transform(new RoundedCornersTransformation(120, 0));
-                    }
-                    gr.into(img);
-                }
-            }
-        }
+        Record rec = new Record();
+        rec.addField(new Field("photo", Field.TYPE_FILE_PATH, url));
+        String qu = paramMV.paramModel.url + "save_img";
+        ParamModel pm = new ParamModel(POST, qu);
+        new BasePresenter(iBase, pm, null, rec, listener_save_img);
     }
+
+    public IPresenterListener listener_save_img = new IPresenterListener() {
+        @Override
+        public void onResponse(Field response) {
+            Record rec = (Record) response.value;
+            int pos = gallery.getCurrentItem();
+            gallery.listData.add(pos, new Field("", Field.TYPE_STRING, rec.getString("photo")));
+            gallery.setAdapter(gallery.adapter);
+            gallery.setCurrentItem(pos);
+        }
+
+        @Override
+        public void onError(int statusCode, String message, View.OnClickListener click) {
+            onErrorModel(statusCode, message, click);
+        }
+    };
 
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());

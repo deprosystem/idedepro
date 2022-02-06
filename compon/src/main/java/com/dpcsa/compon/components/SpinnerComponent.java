@@ -21,6 +21,7 @@ public class SpinnerComponent extends BaseComponent {
     @Override
     public void initView() {
         spinner = (Spinner) parentLayout.findViewById(paramMV.paramView.viewId);
+        spinner.setBackgroundColor(0x00000000);
     }
 
     @Override

@@ -17,6 +17,7 @@ public class ViewHandler {
         SPR_SCALE, SPR_Y, AFTER, ADD_RECORD, DEL_RECORD, SAVE_PARAM, CLEAN_VAR, ADD_VAR, DEL_VAR, SET_VAR, DEL_VAR_FOLOW,
         ACTUAL, GET_DATA, CALL_UP, DIAL_UP, SET_PROFILE, CLEAN_COPY_VAR, RESTORE_VAR, NONE}
     public TYPE type;
+    public static int evCLICK = 0, evDUBLE_CLICK = 1, evLONG_CLICK = 2, evSWIPE = 3, evCHANGE = 4;
     public String nameFieldScreen;
     public String screen;
     public ParamModel paramModel;
@@ -44,6 +45,7 @@ public class ViewHandler {
     public int recordId;
     public float velocity;
     public ItemSetValue[] itemSetValues;
+    public int typeEvent;
 
     public void setRecordId(int recId) {
         recordId = recId;
@@ -279,5 +281,10 @@ public class ViewHandler {
         this.animate = animate;
         this.viewId = viewId;
         type = TYPE.ANIMATE;
+    }
+
+    public ViewHandler setTypeEvent(int typeEvent) {
+        this.typeEvent = typeEvent;
+        return this;
     }
 }

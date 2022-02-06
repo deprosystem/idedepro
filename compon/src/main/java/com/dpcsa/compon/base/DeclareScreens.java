@@ -648,6 +648,10 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(viewId, ViewHandler.TYPE.BACK);
     }
 
+    public ViewHandler back() {
+        return new ViewHandler(0, ViewHandler.TYPE.BACK);
+    }
+
     public ViewHandler backOk() {
         return new ViewHandler(0, ViewHandler.TYPE.BACK_OK);
     }

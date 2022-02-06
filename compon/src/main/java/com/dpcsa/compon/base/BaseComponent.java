@@ -1567,7 +1567,7 @@ public abstract class BaseComponent {
         }
     };
 
-    private void onErrorModel(int statusCode, String message, View.OnClickListener click) {
+    public void onErrorModel(int statusCode, String message, View.OnClickListener click) {
         Record rec = componGlob.formErrorRecord(iBase, statusCode, message);
         if (selectViewHandler != null && selectViewHandler.afterError != null) {
             afterHandler(new Field("", Field.TYPE_RECORD, rec), selectViewHandler.afterError.viewHandlers);
@@ -1618,7 +1618,11 @@ public abstract class BaseComponent {
                 case SET_TOKEN:
                     if (response.value != null && response.type == Field.TYPE_RECORD) {
                         rec = ((Record) response.value);
-                        st = rec.getString(vh.nameFieldWithValue);
+                        String nameToken = vh.nameFieldWithValue;
+                        if (nameToken == null || nameToken.length() == 0) {
+                            nameToken = "token";
+                        }
+                        st = rec.getString(nameToken);
                     } else {
                         st = "";
                         iBase.log("1002 Invalid Token");

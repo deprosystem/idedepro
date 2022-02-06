@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    >
+        <RelativeLayout
+            android:id="@+id/scroll_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+        >
+            <com.dpcsa.compon.custom_components.ComponImageView
+                android:id="@+id/photo"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:scaleType="centerCrop"
+                app:blur="30"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/_txt_inp_f_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/photo"
+                android:layout_marginLeft="@dimen/dim_12"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="@dimen/dim_12"
+                app:hintTextAppearance="@style/txtInpt_12_21">
+                <com.dpcsa.compon.custom_components.ComponEditText
+                    android:id="@+id/f_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="First name"
+                    android:imeOptions="actionNext"
+                    app:minLength="2"
+                    android:inputType="text"
+                    android:maxLines="1"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/_txt_inp_l_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/_txt_inp_f_name"
+                android:layout_marginLeft="@dimen/dim_12"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="@dimen/dim_12"
+                app:hintTextAppearance="@style/txtInpt_12_21">
+                <com.dpcsa.compon.custom_components.ComponEditText
+                    android:id="@+id/l_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Last name"
+                    android:imeOptions="actionNext"
+                    app:minLength="2"
+                    android:inputType="text"
+                    android:maxLines="1"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/_txt_inp_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/_txt_inp_l_name"
+                android:layout_marginLeft="@dimen/dim_12"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="@dimen/dim_12"
+                app:hintTextAppearance="@style/txtInpt_12_21">
+                <com.dpcsa.compon.custom_components.ComponEditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:imeOptions="actionNext"
+                    app:typeValidate="email"
+                    android:maxLines="1"
+                    android:inputType="text"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/_txt_inp_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/_txt_inp_email"
+                android:layout_marginLeft="@dimen/dim_12"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="@dimen/dim_12"
+                app:hintTextAppearance="@style/txtInpt_12_21">
+                <com.dpcsa.compon.custom_components.EditTextMask
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone"
+                    android:imeOptions="actionNext"
+                    app:mask="+380 __ ___ ____"
+                    android:maxLines="1"
+                    android:inputType="phone"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/send"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/_txt_inp_phone"
+                android:layout_marginTop="@dimen/dim_40"
+                android:layout_width="200dp"
+                android:layout_height="35dp"
+                android:background="@drawable/shape_1000"
+                android:gravity="center"
+                android:text="Send"
+                android:textSize="@dimen/dim_24"
+                android:textColor="@color/white"
+                />
+
+            <com.dpcsa.compon.custom_components.ComponImageView
+                android:id="@+id/ph_oval"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="73dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                app:oval="true"
+                />
+
+            <com.dpcsa.compon.custom_components.ComponImageView
+                android:id="@+id/click_ph"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="110dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/camera"
+                android:scaleType="centerCrop"
+                />
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

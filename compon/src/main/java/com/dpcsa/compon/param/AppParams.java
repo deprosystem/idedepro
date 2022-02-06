@@ -35,8 +35,8 @@ public abstract class AppParams<T> {
             errorDialogNegativeId = 0;  // id элемента разметки, который соответствует кнопке Negative
     public int progressLayoutId = R.layout.smpl_dialog_progress;
 
-    public String nameTokenInHeader = "";
-    public String nameTokenPush = "";
+    public String nameTokenInHeader = "Auth-token";
+    public String nameTokenPush = "push_token";
     public String nameTokenPushInHeader = "";
 
     public String nameLanguageInHeader = "",

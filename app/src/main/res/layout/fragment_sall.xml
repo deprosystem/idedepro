@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <TextView
+        android:id="@+id/add"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="321dp"
+        android:layout_width="76dp"
+        android:layout_height="51dp"
+        android:gravity="center"
+        android:text="ADD"
+        android:textSize="@dimen/dim_24"
+        />
+
+    <TextView
+        android:id="@+id/del"
+        android:layout_marginLeft="116dp"
+        android:layout_marginTop="318dp"
+        android:layout_width="71dp"
+        android:layout_height="55dp"
+        android:gravity="center"
+        android:text="DEL"
+        android:textSize="@dimen/dim_24"
+        />
+
+    <TextView
+        android:id="@+id/move"
+        android:layout_marginLeft="221dp"
+        android:layout_marginTop="321dp"
+        android:layout_width="75dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="MOVE"
+        android:textSize="@dimen/dim_24"
+        />
+
+    <com.dpcsa.compon.custom_components.Gallery
+        android:id="@+id/gal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="245dp"
+        />
+    <com.dpcsa.compon.custom_components.ComponSpinner
+        android:id="@+id/spinner"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="24dp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        />
+</RelativeLayout>
