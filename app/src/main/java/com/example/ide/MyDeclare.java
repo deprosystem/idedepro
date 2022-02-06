@@ -14,7 +14,7 @@ public class MyDeclare extends DeclareScreens {
             DETAIL = "DETAIL", INTRO = "INTRO", AUTH = "AUTH",
             SHARE = "SHARE", SIN = "SIN", SUP = "SUP",
             DRAWER = "DRAWER", PROF = "PROF", SALL = "SALL";
-
+// *******************
     @Override
     public void declare() {
 
