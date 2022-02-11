@@ -748,7 +748,7 @@ public class BaseFragment extends Fragment implements IBase {
                         if (vh.recordId != 0) {
                             View viewForRecord = parentLayout.findViewById(vh.recordId);
                             bc = mComponent.getComponent(vh.recordId);
-                            if (vh.mustValid != null && ! bc.isValid(vh.mustValid)) {
+                            if (vh.mustValid != null && ! bc.isValid(viewForRecord, vh.mustValid)) {
                                 break;
                             }
                             selectViewHandler = vh;

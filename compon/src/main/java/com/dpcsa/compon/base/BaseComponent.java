@@ -617,7 +617,7 @@ public abstract class BaseComponent {
             if (vId == vh.viewId || (vh.viewId == 0 && v == viewComponent)) {
                 switch (vh.type) {
                     case NAME_SCREEN:
-                        if (vh.mustValid != null && ! isValid(vh.mustValid)) {
+                        if (vh.mustValid != null && ! isValid(viewComponent, vh.mustValid)) {
                             break;
                         }
                         if (recordComponent != null) {
@@ -853,16 +853,24 @@ public abstract class BaseComponent {
                         }
                         break;
                     case CLICK_SEND :
-                        if (vh.mustValid != null && ! isValid(vh.mustValid)) {
-                            break;
-                        }
-                        selectViewHandler = vh;
                         View viewForRecord;
                         if (vh.recordId != 0) {
                             viewForRecord = parentLayout.findViewById(vh.recordId);
                         } else {
                             viewForRecord = viewComponent;
                         }
+
+//**************
+                        if (vh.mustValid != null && ! isValid(viewForRecord, vh.mustValid)) {
+                            break;
+                        }
+                        selectViewHandler = vh;
+//                        View viewForRecord;
+//                        if (vh.recordId != 0) {
+//                            viewForRecord = parentLayout.findViewById(vh.recordId);
+//                        } else {
+//                            viewForRecord = viewComponent;
+//                        }
 //Log.d("QWERT","vh.recordId="+vh.recordId+" viewForRecord="+viewForRecord);
                         param = workWithRecordsAndViews.ViewToRecord(viewForRecord, vh.paramModel.param);
                         rec = setRecord(param);
@@ -1057,10 +1065,10 @@ public abstract class BaseComponent {
         }
     }
 
-    public boolean isValid(int[] mustValid) {
+    public boolean isValid(View viewData, int[] mustValid) {
         boolean valid = true;
         for (int i : mustValid) {
-            View vv = viewComponent.findViewById(i);
+            View vv = viewData.findViewById(i);
             if (vv instanceof IValidate) {
                 boolean validI = ((IValidate) vv).isValid();
                 if (!validI) {
