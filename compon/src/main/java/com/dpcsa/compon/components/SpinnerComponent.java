@@ -35,6 +35,9 @@ public class SpinnerComponent extends BaseComponent {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Record record = listData.get(position);
                 componGlob.setParam(record);
+                if (paramMV.navigator != null) {
+                    clickHandler(spinner, 0);
+                }
                 iBase.sendEvent(paramMV.paramView.viewId);
             }
 

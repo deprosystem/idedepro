@@ -860,8 +860,7 @@ public abstract class BaseComponent {
                             viewForRecord = viewComponent;
                         }
 
-//**************
-                        if (vh.mustValid != null && ! isValid(viewForRecord, vh.mustValid)) {
+                       if (vh.mustValid != null && ! isValid(viewForRecord, vh.mustValid)) {
                             break;
                         }
                         selectViewHandler = vh;
@@ -928,6 +927,19 @@ public abstract class BaseComponent {
                             baseDB.insertRecord(vh.paramModel.url, rec, listener_send_back_screen);
                         } else {
                             new BasePresenter(iBase, vh.paramModel, null, rec, listener_send_back_screen);
+                        }
+                        break;
+                    case ACTUAL:
+                        if (vh.componId == 0) {
+                            actual();
+                        } else {
+                            BaseComponent bc = getComponent(vh.componId);
+                            if (bc != null) {
+                                bc.actual();
+                            } else {
+                                String stN = activity.getResources().getResourceEntryName(vh.componId);
+                                iBase.log("0004 Нет компонента с id " + stN + " для актуализации в " + multiComponent.nameComponent);
+                            }
                         }
                         break;
                     case GET_DATA:
@@ -1354,7 +1366,17 @@ public abstract class BaseComponent {
                             }
                             break;
                         case ACTUAL:
-                            actual();
+                            if (vh.showViewId == 0) {
+                                actual();
+                            } else {
+                                bc = getComponent(vh.showViewId);
+                                if (bc != null) {
+                                    bc.actual();
+                                } else {
+                                    String stN = activity.getResources().getResourceEntryName(vh.showViewId);
+                                    iBase.log("0004 Нет компонента с id " + stN + " для актуализации в " + multiComponent.nameComponent);
+                                }
+                            }
                             break;
                         case DEL_RECYCLER:
                             listData.remove(position);

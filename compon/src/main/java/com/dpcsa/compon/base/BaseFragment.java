@@ -7,8 +7,6 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -16,18 +14,22 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dpcsa.compon.components.MenuBottomComponent;
 import com.dpcsa.compon.components.MenuComponent;
 import com.dpcsa.compon.components.PagerFComponent;
 import com.dpcsa.compon.components.RecyclerComponent;
+//import com.dpcsa.compon.components.ToolBarCopy;
 import com.dpcsa.compon.components.ToolBarComponent;
+import com.dpcsa.compon.components.ToolMenu;
 import com.dpcsa.compon.custom_components.ComponImageView;
 import com.dpcsa.compon.glide.GlideApp;
 import com.dpcsa.compon.glide.GlideRequest;
@@ -38,7 +40,6 @@ import com.dpcsa.compon.interfaces_classes.IComponent;
 import com.dpcsa.compon.interfaces_classes.IPresenterListener;
 import com.dpcsa.compon.interfaces_classes.ISwitch;
 import com.dpcsa.compon.interfaces_classes.ItemSetValue;
-import com.dpcsa.compon.interfaces_classes.Param;
 import com.dpcsa.compon.interfaces_classes.PushHandler;
 import com.dpcsa.compon.interfaces_classes.SpringScale;
 import com.dpcsa.compon.interfaces_classes.SpringY;
@@ -100,6 +101,7 @@ public class BaseFragment extends Fragment implements IBase {
     private String previousTitle;
     public ViewHandler selectViewHandler;
     private boolean inPager;
+    public ToolMenu toolMenu;
 
     public BaseFragment() {
         this(false);
@@ -118,6 +120,12 @@ public class BaseFragment extends Fragment implements IBase {
 
     public BaseFragment getThis() {
         return this;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -209,6 +217,9 @@ public class BaseFragment extends Fragment implements IBase {
         }
         initView(savedInstanceState);
         setValue();
+        if (toolMenu != null) {
+
+        }
         return parentLayout;
     }
 
@@ -231,16 +242,40 @@ public class BaseFragment extends Fragment implements IBase {
 
     private void setTitleFact(String txtTit) {
         if (inPager) return;
-        if (toolBar != null) {
-            toolBar.setTitle(txtTit);
-        } else {
-            activity.setTitle(txtTit);
-        }
+        activity.setTitle(txtTit);
+//        if (toolBar != null) {
+//            toolBar.setTitle(txtTit);
+//        } else {
+//            activity.setTitle(txtTit);
+//        }
     }
 
     @Override
     public void setToolBar(ToolBarComponent toolBar) {
-        this.toolBar = toolBar;
+//        this.toolBar = toolBar;
+    }
+
+    public void setToolMenu(ToolMenu tm) {
+        toolMenu = tm;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (toolMenu != null) {
+            toolMenu.setMenu(menu);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (toolMenu != null && toolMenu.navigator != null) {
+            int id = item.getItemId();
+            if (id < 100) {
+                toolMenu.clickHandler(null, id);
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void setValue() {

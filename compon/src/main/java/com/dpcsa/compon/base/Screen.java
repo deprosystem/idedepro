@@ -1,6 +1,5 @@
 package com.dpcsa.compon.base;
 
-import android.util.Log;
 import android.view.View;
 
 import com.dpcsa.compon.components.AutoAutch;
@@ -34,23 +33,22 @@ import com.dpcsa.compon.components.StaticListComponent;
 import com.dpcsa.compon.components.SubscribeComponent;
 import com.dpcsa.compon.components.SwitchComponent;
 import com.dpcsa.compon.components.TagsComponent;
+//import com.dpcsa.compon.components.ToolBarCopy;
 import com.dpcsa.compon.components.ToolBarComponent;
-import com.dpcsa.compon.components.ToolBarModify;
+import com.dpcsa.compon.components.ToolMenu;
+//import com.dpcsa.compon.components.ToolMenu;
 import com.dpcsa.compon.components.TotalComponent;
 import com.dpcsa.compon.components.YouTubePlayerComponent;
 import com.dpcsa.compon.interfaces_classes.ActionsAfterResponse;
 import com.dpcsa.compon.interfaces_classes.IBase;
 import com.dpcsa.compon.interfaces_classes.ICustom;
 import com.dpcsa.compon.interfaces_classes.ItemSetValue;
-import com.dpcsa.compon.interfaces_classes.Menu;
-import com.dpcsa.compon.interfaces_classes.ModifierTool;
 import com.dpcsa.compon.interfaces_classes.MoreWork;
 import com.dpcsa.compon.interfaces_classes.Multiply;
 import com.dpcsa.compon.interfaces_classes.Navigator;
 import com.dpcsa.compon.interfaces_classes.PushHandler;
 import com.dpcsa.compon.interfaces_classes.PushNavigator;
 import com.dpcsa.compon.interfaces_classes.SetData;
-import com.dpcsa.compon.interfaces_classes.ToolMenu;
 import com.dpcsa.compon.interfaces_classes.ViewHandler;
 import com.dpcsa.compon.interfaces_classes.Visibility;
 import com.dpcsa.compon.json_simple.Record;
@@ -203,6 +201,12 @@ public class Screen<T>{
     public Screen eventFrom(int eventComponent) {
         ParamComponent paramComponent = listComponents.get(listComponents.size() - 1);
         paramComponent.eventComponent = eventComponent;
+        return this;
+    }
+
+    public Screen noActualStart() {
+        ParamComponent paramComponent = listComponents.get(listComponents.size() - 1);
+        paramComponent.startActual = false;
         return this;
     }
 
@@ -495,27 +499,37 @@ public class Screen<T>{
         listComponents.add(paramComponent);
         return this;
     }
-
+/*
     public Screen toolBar(int viewId) {
         ParamComponent paramComponent = new ParamComponent();
         paramComponent.type = ParamComponent.TC.TOOL;
         paramComponent.paramModel = null;
         paramComponent.paramView = new ParamView(viewId);
-        paramComponent.toolMenu = null;
+//        paramComponent.toolMenu = null;
         listComponents.add(paramComponent);
         return this;
     }
 
-    public Screen toolBar(int viewId, ToolMenu menu) {
+    public Screen toolBar(int viewId, com.dpcsa.compon.interfaces_classes.ToolMenu menu) {
         ParamComponent paramComponent = new ParamComponent();
         paramComponent.type = ParamComponent.TC.TOOL;
         paramComponent.paramModel = null;
         paramComponent.paramView = new ParamView(viewId);
-        paramComponent.toolMenu = menu;
+//        paramComponent.toolMenu = menu;
         listComponents.add(paramComponent);
         return this;
     }
 
+    public Screen toolBar(int viewId, int viewBack, int viewHamb, int viewLogo, int overImg, com.dpcsa.compon.interfaces_classes.ToolMenu menu) {
+        ParamComponent paramComponent = new ParamComponent();
+        paramComponent.type = ParamComponent.TC.TOOL;
+        paramComponent.paramModel = null;
+        paramComponent.paramView = new ParamView(viewId, new int[] {viewBack, viewHamb, viewLogo, overImg});
+//        paramComponent.toolMenu = menu;
+        listComponents.add(paramComponent);
+        return this;
+    }
+/*
     public Screen toolBarModify(ModifierTool... args) {
         ParamComponent paramComponent = new ParamComponent();
         paramComponent.type = ParamComponent.TC.MODIFY_TOOL;
@@ -525,7 +539,7 @@ public class Screen<T>{
         listComponents.add(paramComponent);
         return this;
     }
-
+*/
     public Screen componentEditPhone(int viewId) {
         ParamComponent paramComponent = new ParamComponent();
         paramComponent.type = ParamComponent.TC.PHONE;
@@ -768,8 +782,8 @@ public class Screen<T>{
                     ToolBarComponent toolBar = new ToolBarComponent(iBase, cMV, this);
                     iBase.setToolBar(toolBar);
                     break;
-                case MODIFY_TOOL:
-                    new ToolBarModify(iBase, cMV, this);
+                case TOOL_MENU:
+                    ToolMenu toolMenu = new ToolMenu(iBase, cMV, this);
                     break;
                 case CALENDAR:
                     new CalendarComponent(iBase, cMV, this);

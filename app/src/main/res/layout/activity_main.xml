@@ -13,16 +13,39 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.dpcsa.compon.custom_components.ComponToolBar
+
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dim_56"
+            app:titleTextColor="@color/white"
             android:background="@color/primary"
-            app:titleSize="@dimen/dim_20"
-            app:titleColor="@color/white"
-            app:imgBack="@drawable/icon_menu"
-            app:imgHamburger="@drawable/_menu_ffffffff"
             />
+
+<!--        <com.dpcsa.compon.custom_components.ComponToolBar-->
+<!--            android:id="@+id/tool_bar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/dim_56"-->
+<!--            android:background="@color/primary"-->
+<!--            app:titleSize="@dimen/dim_20"-->
+<!--            app:titleColor="@color/white"-->
+<!--            app:imgBack="@drawable/icon_menu"-->
+<!--            app:imgHamburger="@drawable/_menu_ffffffff"-->
+<!--            />-->
+        <RelativeLayout
+            android:id="@+id/vvv"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            android:background="@color/accent"/>
+        <RelativeLayout
+            android:id="@+id/zzz"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            android:background="@color/errorDark"/>
         <com.dpcsa.compon.custom_components.ComponMenuB
             android:id="@+id/menu_b"
             android:layout_alignParentBottom="true"
@@ -31,6 +54,7 @@
             android:background="@color/primary"
             app:selectColor="@color/accentDark"
             />
+
         <FrameLayout
             android:id="@+id/container_fragm"
             android:layout_width="match_parent"

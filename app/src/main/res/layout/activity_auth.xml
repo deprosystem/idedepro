@@ -25,14 +25,21 @@
         android:layout_height="match_parent"
         />
 
-    <com.dpcsa.compon.custom_components.ComponToolBar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_56"
         android:background="@color/primary"
-        app:titleSize="@dimen/dim_20"
-        app:titleColor="@color/white"
-        app:imgBack="@drawable/_west_ffffffff"
         />
+
+<!--    <com.dpcsa.compon.custom_components.ComponToolBar-->
+<!--        android:id="@+id/tool_bar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/dim_56"-->
+<!--        android:background="@color/primary"-->
+<!--        app:titleSize="@dimen/dim_20"-->
+<!--        app:titleColor="@color/white"-->
+<!--        app:imgBack="@drawable/_west_ffffffff"-->
+<!--        />-->
 
 </RelativeLayout>

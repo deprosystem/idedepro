@@ -1,15 +1,18 @@
 <component name="libraryTable">
   <library name="Gradle: jp.wasabeef:glide-transformations:3.3.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0c18b593aa45a76957e206af08634d86/jetified-glide-transformations-3.3.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0c18b593aa45a76957e206af08634d86/jetified-glide-transformations-3.3.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0c18b593aa45a76957e206af08634d86/jetified-glide-transformations-3.3.0/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/b35fc3c1211580aa32811deed1fd5077/jetified-glide-transformations-3.3.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/b35fc3c1211580aa32811deed1fd5077/jetified-glide-transformations-3.3.0/res" />
+      <root url="file://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/b35fc3c1211580aa32811deed1fd5077/jetified-glide-transformations-3.3.0/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/86c9f87a8445c189b78e343b4dad2049/jetified-glide-transformations-3.3.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/86c9f87a8445c189b78e343b4dad2049/jetified-glide-transformations-3.3.0/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/86c9f87a8445c189b78e343b4dad2049/jetified-glide-transformations-3.3.0/res" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/jp.wasabeef/glide-transformations/3.3.0/a01318f662dc7a6cb61f6fac04600ffd60733d30/glide-transformations-3.3.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/modules-2/files-2.1/jp.wasabeef/glide-transformations/3.3.0/a01318f662dc7a6cb61f6fac04600ffd60733d30/glide-transformations-3.3.0-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/jp.wasabeef/glide-transformations/3.3.0/2a7171f8219e9fbae4d79a086d96b5b2005d6292/glide-transformations-3.3.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/modules-2/files-2.1/jp.wasabeef/glide-transformations/3.3.0/2a7171f8219e9fbae4d79a086d96b5b2005d6292/glide-transformations-3.3.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

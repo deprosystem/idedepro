@@ -1,39 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">autch_4</string>
-    <string name="up_photo">Source images</string>
-    <string-array name="main_tab_layout">
-        <item>Sign in</item>
-        <item>Sign up</item>
-    </string-array>
-
-    <string name="leave_request">Оставить заявку</string>
-    <string name="your_order">Ваш заказ</string>
-    <string name="your_name">Ваше имя</string>
-    <string name="your_phone">Ваш телефон</string>
-    <string name="add_comment">Добавить комментарий</string>
-    <string name="your_comment">Ваш комментарий</string>
-    <string name="edit">Править</string>
-    <string name="write_smth_here">Напишите что-нибудь…</string>
-    <string name="send">Отправить</string>
-    <string name="all_list">Весь список</string>
-    <string name="clear">Очистить</string>
-    <string name="comment">Комментарий</string>
-
-    <string name="type_repair">Тип ремонта</string>
-    <string name="count">Количество</string>
-    <string name="uah_item">грн/шт</string>
-    <string name="uah">\u0020грн</string>
-    <string name="sum_all">Общая сумма:</string>
-    <string name="service">Сервис</string>
-    <string name="source_photo">Выбери источник</string>
-    <string name="Main_login_error">Заполнить</string>
-    <string name="Main_password_error">Хотябы одна маленькая и одна большая</string>
+    <string name="app_name">auto</string>
     <string name="main_menu_b_0">Новости</string>
     <string name="main_menu_b_1">Акции</string>
+    <string name="main_menu_b_2">Products</string>
     <string name="new_screen_title">Новости</string>
+    <string name="start_screen_title">Акции</string>
+    <string name="detail_screen_title">%1$s</string>
+    <string name="auth_screen_title">Авторизация</string>
     <string name="share_screen_title">Акции</string>
     <string name="sup_photo">Source photo</string>
+    <string name="drawer_menu_0">Новости</string>
+    <string name="drawer_menu_1">Акции</string>
+    <string name="drawer_menu_2">Профиль</string>
+    <string name="drawer_menu_3">Sall</string>
+    <string name="prof_screen_title">Профиль</string>
+    <string name="prof_photo">Source image</string>
+    <string name="sall_screen_title">Sall</string>
+    <string name="sall_gal">Source img</string>
+    <string name="sall_photo">Source img</string>
+    <string name="prod_screen_title">Products</string>
     <string name="sin_login_error">Больше 4 символов</string>
     <string name="sin_password_error">Больше 4 больших и малых букв</string>
     <string name="sup_login_error">Больше 4 символов</string>
@@ -42,18 +28,6 @@
     <string name="sup_l_name_error">Не меньше 2</string>
     <string name="sup_email_error">Email error</string>
     <string name="sup_equ_error">Do not match</string>
-
-    <string name="start_screen_title">Акции</string>
-    <string name="detail_screen_title">%1$s</string>
-    <string name="drawer_menu_0">Новости</string>
-    <string name="drawer_menu_1">Акции</string>
-    <string name="drawer_menu_2">Профиль</string>
-    <string name="drawer_menu_3">Sall</string>
-    <string name="prof_screen_title">Профиль</string>
-    <string name="prof_photo">Source image</string>
-    <string name="sall_screen_title">Sall</string>
-    <string name="sall_gal">Source</string>
-    <string name="auth_screen_title">Авторизация</string>
     <string-array name="auth_tab_layout">
         <item>Sign in</item>
         <item>Sign up</item>

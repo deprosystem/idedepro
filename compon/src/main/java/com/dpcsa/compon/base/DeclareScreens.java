@@ -1,10 +1,8 @@
 package com.dpcsa.compon.base;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.util.Log;
 //import android.graphics.Color;
 
 import androidx.annotation.NonNull;
@@ -16,12 +14,10 @@ import com.dpcsa.compon.interfaces_classes.DataFieldGet;
 import com.dpcsa.compon.interfaces_classes.ExecMethod;
 import com.dpcsa.compon.interfaces_classes.FilterParam;
 import com.dpcsa.compon.interfaces_classes.ItemSetValue;
-import com.dpcsa.compon.interfaces_classes.ModifierTool;
 import com.dpcsa.compon.interfaces_classes.Navigator;
 import com.dpcsa.compon.interfaces_classes.Notice;
 import com.dpcsa.compon.interfaces_classes.PushHandler;
 import com.dpcsa.compon.interfaces_classes.SendAndUpdate;
-import com.dpcsa.compon.interfaces_classes.ToolMenu;
 import com.dpcsa.compon.param.ParamView;
 import com.dpcsa.compon.single.ComponGlob;
 import com.dpcsa.compon.interfaces_classes.ActionsAfterResponse;
@@ -44,7 +40,6 @@ import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_MENU;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_PAGER;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_RECYCLER;
 import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.CLICK_SEND;
-import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.NONE;
 import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.SET_VALUE;
 import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.SET_VALUE_PARAM;
 
@@ -918,7 +913,7 @@ public abstract class DeclareScreens<T>{
     public PushHandler nullifyCountPush(String pushType) {
         return new PushHandler(0, NULLIFY, pushType, "", 0, false);
     }
-
+/*
     public ModifierTool visible(int ... args) {
         return new ModifierTool(ModifierTool.TYPE_MODIF.VISIBLE, args);
     }
@@ -930,4 +925,6 @@ public abstract class DeclareScreens<T>{
     public ModifierTool addMenu(ToolMenu toolMenu) {
         return new ModifierTool(toolMenu);
     }
+
+ */
 }

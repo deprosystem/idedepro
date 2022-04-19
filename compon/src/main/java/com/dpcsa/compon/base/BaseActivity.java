@@ -15,6 +15,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.dynamicanimation.animation.DynamicAnimation;
 import androidx.dynamicanimation.animation.FloatPropertyCompat;
@@ -30,6 +32,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +43,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dpcsa.compon.components.MenuBComponent;
 import com.dpcsa.compon.components.MenuBottomComponent;
@@ -46,6 +51,7 @@ import com.dpcsa.compon.components.MenuComponent;
 import com.dpcsa.compon.components.PagerFComponent;
 import com.dpcsa.compon.components.RecyclerComponent;
 import com.dpcsa.compon.components.ToolBarComponent;
+//import com.dpcsa.compon.components.ToolBarCopy;
 import com.dpcsa.compon.custom_components.ComponImageView;
 import com.dpcsa.compon.dialogs.ErrorDialog;
 import com.dpcsa.compon.dialogs.ProgressDialog;
@@ -91,6 +97,7 @@ import com.dpcsa.compon.json_simple.WorkWithRecordsAndViews;
 import com.dpcsa.compon.single.ComponPrefTool;
 import com.dpcsa.compon.tools.Constants;
 
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -106,7 +113,7 @@ import static com.bumptech.glide.request.RequestOptions.placeholderOf;
 import static com.dpcsa.compon.interfaces_classes.ItemSetValue.TYPE_SOURCE.GROUPP_PARAM;
 import static com.dpcsa.compon.interfaces_classes.ItemSetValue.TYPE_SOURCE.PARAM;
 
-public abstract class BaseActivity extends FragmentActivity implements IBase {
+public abstract class BaseActivity extends AppCompatActivity implements IBase {
 
     public Map<String, Screen> mapFragment;
     public List<BaseInternetProvider> listInternetProvider;
@@ -127,7 +134,8 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     public List<OnResumePause> resumePauseList;
     public MenuComponent menuDraw;
     public MenuBComponent menuBottom;
-    public ToolBarComponent toolBar;
+    public Toolbar toolBar;
+    public ToolBarComponent toolBarC;
 
     private DialogFragment progressDialog;
     private int countProgressStart;
@@ -277,9 +285,11 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
             }
 
             if (toolBar != null) {
-//                stackChanged.onBackStackChanged();
+                toolBar.setTitle("");
+                setSupportActionBar(toolBar);
                 getSupportFragmentManager().addOnBackStackChangedListener(stackChanged);
-                toolBar.showView(getSupportFragmentManager().getBackStackEntryCount() <= 1);
+                toolBarC.setParamToolbar();
+                toolBarC.showView(getSupportFragmentManager().getBackStackEntryCount() <= 1);
             }
             isActive = true;
             initView();
@@ -290,6 +300,42 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
             ifPush(intent);
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        if (toolBarC != null) {
+            return toolBarC.setMenu(menu);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id >= 100) {
+            toolBarC.clickHandler(null, (id - 100) / 10);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+// Показ значков в меню переполнения
+
+        if (toolBarC != null && toolBarC.paramMV.paramView.booleanParams[0]
+                && (featureId & Window.FEATURE_ACTION_BAR) > 0 && menu != null) {
+            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
+                try {
+                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+                } catch (Exception e) {
+                }
+            }
+        }
+        return super.onMenuOpened(featureId, menu);
     }
 
     @Override
@@ -374,7 +420,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
 
     public String getTitleC() {
         if (toolBar != null) {
-            return toolBar.getTitle();
+            return toolBar.getTitle().toString();
         } else {
             return null;
         }
@@ -531,7 +577,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
     FragmentManager.OnBackStackChangedListener stackChanged = new FragmentManager.OnBackStackChangedListener() {
         @Override
         public void onBackStackChanged() {
-            toolBar.showView(getSupportFragmentManager().getBackStackEntryCount() <= 1);
+            toolBarC.showView(getSupportFragmentManager().getBackStackEntryCount() <= 1);
         }
     };
 
@@ -615,7 +661,8 @@ public abstract class BaseActivity extends FragmentActivity implements IBase {
 
     @Override
     public void setToolBar(ToolBarComponent toolBar) {
-        this.toolBar = toolBar;
+        this.toolBarC = toolBar;
+        this.toolBar = toolBar.tool;
     }
 
     @Override

@@ -191,7 +191,7 @@ public class WorkWithRecordsAndViews {
         int id = v.getId();
         String st;
         String name = v.getContext().getResources().getResourceEntryName(id);
-Log.d("QWERT","setValue name="+name+"<<");
+//Log.d("QWERT","setValue name="+name+"<<");
         if (setParam) {
             setRecordField(v, name);
             return;
@@ -262,10 +262,8 @@ Log.d("QWERT","setValue name="+name+"<<");
                 return;
             }
             if (v instanceof TextView) {
-Log.d("QWERT","  isTextView VVVV="+field.value);
                 if (field.value instanceof String) {
                     ((TextView) v).setText((String )field.value);
-Log.d("QWERT","    instanceof String TTT="+((TextView) v).getText()+"<<");
 //                    if (v instanceof PlusMinus) {
 //                        ((PlusMinus) v).setParam(view, model, baseComponent);
 //                        ((PlusMinus) v).setData(field.value.toString());
@@ -349,12 +347,17 @@ Log.d("QWERT","    instanceof String TTT="+((TextView) v).getText()+"<<");
                     }
                     gr.into((ImageView) v);
                 } else {
+                    int adrDrawable;
                     if (v instanceof ComponImageView) {
-                        ((ImageView) v).setImageDrawable(context
-                                .getResources().getDrawable(((ComponImageView) v).getPlaceholder()));
+                       adrDrawable = ((ComponImageView) v).getPlaceholder();
+                       if (adrDrawable != 0) {
+                           ((ImageView) v).setImageDrawable(context.getResources().getDrawable(adrDrawable));
+                       }
                     } else {
-                        ((ImageView) v).setImageResource(context.getResources()
-                                .getIdentifier(st, "drawable", context.getPackageName()));
+                        adrDrawable = context.getResources().getIdentifier(st, "drawable", context.getPackageName());
+                        if (adrDrawable != 0) {
+                            ((ImageView) v).setImageResource(adrDrawable);
+                        }
                     }
                 }
             } else {

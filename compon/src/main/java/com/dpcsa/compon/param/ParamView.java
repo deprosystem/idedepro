@@ -36,6 +36,7 @@ public class ParamView {
     public List<Expanded> expandedList;
     public boolean horizontal;
     public boolean[] noSwipePages;
+    public boolean[] booleanParams;
     public int spanCount;
 
     public ParamView(int viewId) {
@@ -155,6 +156,11 @@ public class ParamView {
 
     public ParamView spanCount(int count) {
         spanCount = count;
+        return this;
+    }
+
+    public ParamView setBooleanParam(boolean ... boolParam) {
+        booleanParams = boolParam;
         return this;
     }
 
