@@ -113,6 +113,11 @@ public class ComponSpinner extends androidx.appcompat.widget.AppCompatSpinner
         }
     }
 
+    @Override
+    public void clearData() {
+        setSelection(0);
+    }
+
     private class AdapterSp extends BaseAdapter {
         private String[] data;
         public AdapterSp (String[] dat) {

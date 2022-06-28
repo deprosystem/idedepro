@@ -60,4 +60,9 @@ public class ComponWeb extends WebView implements IComponent, IAlias {
     public String getString() {
         return null;
     }
+
+    @Override
+    public void clearData() {
+
+    }
 }

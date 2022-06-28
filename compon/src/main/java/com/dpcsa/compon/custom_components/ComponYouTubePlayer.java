@@ -73,4 +73,9 @@ public class ComponYouTubePlayer extends FrameLayout implements IComponent, IAli
     public String getString() {
         return null;
     }
+
+    @Override
+    public void clearData() {
+
+    }
 }

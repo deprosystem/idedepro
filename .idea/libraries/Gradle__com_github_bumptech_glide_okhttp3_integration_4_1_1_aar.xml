@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.bumptech.glide:okhttp3-integration:4.1.1@aar">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/6211b42af10e21193ef9bb6c50442de7/jetified-okhttp3-integration-4.1.1/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/6211b42af10e21193ef9bb6c50442de7/jetified-okhttp3-integration-4.1.1/res" />
-      <root url="file://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/6211b42af10e21193ef9bb6c50442de7/jetified-okhttp3-integration-4.1.1/AndroidManifest.xml" />
-      <root url="file://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/ca279fe472c445cbff4caf299d477148/jetified-okhttp3-integration-4.1.1/AndroidManifest.xml" />
-      <root url="jar://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/ca279fe472c445cbff4caf299d477148/jetified-okhttp3-integration-4.1.1/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/ca279fe472c445cbff4caf299d477148/jetified-okhttp3-integration-4.1.1/res" />
+      <root url="jar://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/2899bae40391a535031fc1b68731acab/jetified-okhttp3-integration-4.1.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/2899bae40391a535031fc1b68731acab/jetified-okhttp3-integration-4.1.1/res" />
+      <root url="file://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/2899bae40391a535031fc1b68731acab/jetified-okhttp3-integration-4.1.1/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/47210285863988ee096edf55c7a3ba4a/jetified-okhttp3-integration-4.1.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/47210285863988ee096edf55c7a3ba4a/jetified-okhttp3-integration-4.1.1/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/transforms-2/files-2.1/47210285863988ee096edf55c7a3ba4a/jetified-okhttp3-integration-4.1.1/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/../../../../Progr/Gradle/gradle-5.5/caches/modules-2/files-2.1/com.github.bumptech.glide/okhttp3-integration/4.1.1/556e8b71ab311d8f847315f7ff61989b0e24e325/okhttp3-integration-4.1.1-javadoc.jar!/" />

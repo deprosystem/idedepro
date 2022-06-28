@@ -96,4 +96,9 @@ public class TextViewGrammar extends androidx.appcompat.widget.AppCompatTextView
     public String getString() {
         return getText().toString();
     }
+
+    @Override
+    public void clearData() {
+
+    }
 }

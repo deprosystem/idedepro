@@ -21,7 +21,6 @@
     <color name="white_50">#88ffffff</color>
     <color name="white">#ffffff</color>
     <color name="white_20">#32ffffff</color>
-    <color name="blue">#2e6faf</color>
     <color name="defoult_text">#808080</color>
     <color name="color_100">#00ff90</color>
     <color name="color_101">#00ff19</color>
@@ -29,4 +28,5 @@
     <color name="color_103">#00d824</color>
     <color name="color_104">#e5c910</color>
     <color name="color_105">#ccfffb</color>
+    <color name="color_106">#b3000000</color>
 </resources>

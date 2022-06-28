@@ -136,4 +136,9 @@ public class BadgeTextView extends AppCompatTextView implements IComponent {
         return null;
     }
 
+    @Override
+    public void clearData() {
+
+    }
+
 }

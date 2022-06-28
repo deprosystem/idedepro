@@ -111,6 +111,8 @@
         <attr name="selectColor"/>
         <attr name="normColor"/>
         <attr name="saveParam"/>
+        <attr name="saveParamMin" format="string"/>
+        <attr name="saveParamMax" format="string"/>
         <attr name="noSelImgChangeColor" format="boolean"/>
         <attr name="toAnimate" format="boolean"/>
         <attr name="thumbImg" format="reference"/>

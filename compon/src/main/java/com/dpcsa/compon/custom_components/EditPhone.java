@@ -110,4 +110,9 @@ public class EditPhone extends RelativeLayout implements IComponent, IAlias {
         return editTextMask.getString();
     }
 
+    @Override
+    public void clearData() {
+       setData("");
+    }
+
 }

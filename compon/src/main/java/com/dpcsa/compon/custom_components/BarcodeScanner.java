@@ -44,4 +44,9 @@ public class BarcodeScanner extends ZXingScannerView implements IComponent, IAli
     public String getString() {
         return result;
     }
+
+    @Override
+    public void clearData() {
+
+    }
 }

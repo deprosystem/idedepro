@@ -191,7 +191,6 @@ public class WorkWithRecordsAndViews {
         int id = v.getId();
         String st;
         String name = v.getContext().getResources().getResourceEntryName(id);
-//Log.d("QWERT","setValue name="+name+"<<");
         if (setParam) {
             setRecordField(v, name);
             return;

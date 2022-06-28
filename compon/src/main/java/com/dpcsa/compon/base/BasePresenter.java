@@ -98,12 +98,15 @@ public class BasePresenter implements BaseInternetProvider.InternetProviderListe
                     String.valueOf(paramModel.pagination.paginationNumberPage));
         }
 
-        this.method = paramModel.method;
+        method = paramModel.method;
+        if (method == ParamModel.FILTER) {
+            method = ParamModel.POST;
+        }
         long duration = paramModel.duration;
         String baseUrl = componGlob.appParams.baseUrl;
         if (componGlob.appParams.nameLanguageInURL) {
             String loc = Injector.getPreferences().getLocale();
-            if (this.method == ParamModel.GET) {
+            if (method == ParamModel.GET) {
                 urlFull = baseUrl + loc + paramModel.url;
             } else {
                 urlFull = baseUrl + paramModel.url;
@@ -176,7 +179,7 @@ public class BasePresenter implements BaseInternetProvider.InternetProviderListe
 
         if (paramModel.internetProvider == null) {
             internetProvider = new VolleyInternetProvider();
-            internetProvider.setParam(paramModel.method,
+            internetProvider.setParam(method,
                     url, headers, jsonSimple.ModelToJson(data), file, this);
         } else {
             BaseInternetProvider bip = null;
@@ -189,7 +192,7 @@ public class BasePresenter implements BaseInternetProvider.InternetProviderListe
             }
             if (bip != null) {
                 internetProvider = bip.getThis();
-                internetProvider.setParam(paramModel.method,
+                internetProvider.setParam(method,
                         url, headers, jsonSimple.ModelToJson(data), file, this);
             } else {
                 iBase.log("Ошибка создания internetProvider");

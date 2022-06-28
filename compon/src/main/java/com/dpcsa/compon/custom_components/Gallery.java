@@ -200,4 +200,9 @@ public class Gallery extends ViewPager implements IComponent, IAlias {
         res += "]";
         return res;
     }
+
+    @Override
+    public void clearData() {
+
+    }
 }

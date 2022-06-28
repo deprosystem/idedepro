@@ -539,6 +539,7 @@ public class BaseFragment extends Fragment implements IBase {
 
     public void clickNavigat(View view, int id, List<ViewHandler> viewHandlers) {
         for (ViewHandler vh : viewHandlers) {
+Log.d("QWERT","vh.type="+vh.type+"<<");
             if (vh.viewId == id) {
                 switch (vh.type) {
                     case NAME_SCREEN:
@@ -662,6 +663,18 @@ public class BaseFragment extends Fragment implements IBase {
                             }
                         }
                         break;
+                    case HIDE:
+                        if (vh.onActivity) {
+                            activity.showSheetBottom(vh.showViewId, null, null, null);
+                        } else {
+                            View showView = parentLayout.findViewById(vh.showViewId);
+                            if (showView instanceof AnimatePanel) {
+                                ((AnimatePanel) showView).hide();
+                            } else {
+                                showView.setVisibility(View.GONE);
+                            }
+                        }
+                        break;
                     case SHOW_HIDE:
                         if (view == null) break;
                         View vv = parentLayout.findViewById(vh.showViewId);
@@ -684,6 +697,19 @@ public class BaseFragment extends Fragment implements IBase {
                                     vv.setVisibility(View.VISIBLE);
                                     tv.setText(activity.getString(vh.textShowId));
                                 }
+                            }
+                        }
+                        break;
+                    case ACTUAL:
+//Log.d("QWERT","ACTUAL vh.componId="+vh.componId);
+                        if (vh.componId != 0) {
+                            BaseComponent bc = mComponent.getComponent(vh.componId);
+//Log.d("QWERT","ACTUAL BC="+bc);
+                            if (bc != null) {
+                                bc.actual();
+                            } else {
+                                String stN = activity.getResources().getResourceEntryName(vh.componId);
+                                log("0004 Нет компонента с id " + stN + " для актуализации в " + mComponent.nameComponent);
                             }
                         }
                         break;
@@ -777,17 +803,25 @@ public class BaseFragment extends Fragment implements IBase {
                     case SET_MENU:
                         activity.setMenu();
                         break;
+                    case CLEAR_DATA:
+                        View viewForRecord;
+                        if (vh.componId == 0) {
+                            viewForRecord = parentLayout;
+                        } else {
+                            viewForRecord = parentLayout.findViewById(vh.componId);
+                        }
+                        clearView(viewForRecord);
+                        break;
                     case CLICK_SEND:
                         Record rec = null;
                         Record param;
                         if (vh.recordId != 0) {
-                            View viewForRecord = parentLayout.findViewById(vh.recordId);
+                            viewForRecord = parentLayout.findViewById(vh.recordId);
                             bc = mComponent.getComponent(vh.recordId);
                             if (vh.mustValid != null && ! bc.isValid(viewForRecord, vh.mustValid)) {
                                 break;
                             }
                             selectViewHandler = vh;
-Log.d("QWERT","vh.recordId="+vh.recordId+" viewForRecord="+viewForRecord);
                             param = workWithRecordsAndViews.ViewToRecord(viewForRecord, vh.paramModel.param);
                             rec = bc.setRecord(param);
                             for (Field f : rec) {
@@ -897,6 +931,27 @@ Log.d("QWERT","vh.recordId="+vh.recordId+" viewForRecord="+viewForRecord);
                         SpringY y = new SpringY(parentLayout.findViewById(vh.showViewId), vh.velocity, vh.repeatTime);
                         y.startAnim();
                         break;
+                }
+            }
+        }
+    }
+
+    public void clearView(View v) {
+        ViewGroup vg;
+        int id;
+        if (v instanceof ViewGroup) {
+            vg = (ViewGroup) v;
+            int countChild = vg.getChildCount();
+            if (v instanceof IComponent) {
+                ((IComponent)v).clearData();
+            }
+            for (int i = 0; i < countChild; i++) {
+                clearView(vg.getChildAt(i));
+            }
+        } else {
+            if (v != null) {
+                if (v instanceof IComponent) {
+                    ((IComponent)v).clearData();
                 }
             }
         }

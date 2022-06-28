@@ -91,6 +91,11 @@ public class ComponPager extends ViewPager implements IComponent, IAlias {
         return null;
     }
 
+    @Override
+    public void clearData() {
+
+    }
+
     PagerAdapter adapter = new PagerAdapter() {
         WorkWithRecordsAndViews modelToView = new WorkWithRecordsAndViews();
         @Override

@@ -241,6 +241,20 @@ public abstract class BaseComponent {
                     }
                     new BasePresenter(iBase, paramModel, null, recParam, listener);
                     break;
+                case ParamModel.FILTER:
+                    Record rec = setRecordParam(parentLayout, paramModel.param);
+                    if (rec != null && rec.size() > 0) {
+                        int jk = rec.size() - 1;
+                        for (int j = jk; j >=0; j--) {
+                            String val;
+                            Object obj = rec.get(j).value;
+                            if (obj == null || ((String) obj).length() == 0) {
+                                rec.remove(j);
+                            }
+                        }
+                    }
+                    new BasePresenter(iBase, paramModel, null, rec, listener);
+                    break;
                 case ParamModel.FIELD:
                     changeDataBase(paramModel.field);
                     break;
@@ -341,6 +355,59 @@ public abstract class BaseComponent {
 //            workWithRecordsAndViews.setCompon(iBase);
             changeDataBase(null);
         }
+    }
+
+    private Record setRecordParam(View viewForRecord, String paramModel) {
+        Record param = workWithRecordsAndViews.ViewToRecord(viewForRecord, paramModel);
+        Record rec = setRecord(param);
+        for (Field f : rec) {
+            if (f.type == Field.TYPE_LIST_RECORD) {
+                Field glob = componGlob.globalData.getField(f.name);
+                if (glob != null) {
+                    componGlob.setParamsFromGlob(rec, "String) f.value", f.name);
+                } else {
+                    View vL = componGlob.findViewByName(viewForRecord, f.name);
+                    if (vL != null) {
+                        BaseComponent bc = getComponent(vL.getId());
+                        if (bc != null) {
+                            String[] stParam = ((String) f.value).split(";");
+                            if (stParam.length > 0) {
+                                if (bc instanceof RecyclerComponent) {
+                                    ListRecords listRecParam = new ListRecords();
+                                    for (Record recList : ((RecyclerComponent) bc).listData) {
+                                        Record recParam = new Record();
+                                        for (String nameParam : stParam) {
+                                            Field fParam = recList.getField(nameParam);
+                                            if (fParam != null) {
+                                                recParam.add(fParam);
+                                            }
+                                        }
+                                        listRecParam.add(recParam);
+                                    }
+                                    f.value = listRecParam;
+                                }
+                            } else {
+                                if (bc instanceof RecyclerComponent) {
+                                    f.type = Field.TYPE_INTEGER;
+                                    f.value = ((RecyclerComponent) bc).listData.size();
+                                } else {
+                                    iBase.log("1001 No data for parameter " + f.name + " in " + multiComponent.nameComponent);
+                                    rec.remove(f);
+                                }
+                            }
+                        } else {
+                            iBase.log("0010 Component " + f.name + " not found in " + multiComponent.nameComponent);
+                            rec.remove(f);
+                        }
+                    } else {
+                        iBase.log("0009 No item " + f.name + " in " + multiComponent.nameComponent);
+                        rec.remove(f);
+                    }
+                }
+            }
+        }
+        componGlob.setParam(rec);
+        return rec;
     }
 
     OnResumePause resumePause = new OnResumePause() {
@@ -864,13 +931,6 @@ public abstract class BaseComponent {
                             break;
                         }
                         selectViewHandler = vh;
-//                        View viewForRecord;
-//                        if (vh.recordId != 0) {
-//                            viewForRecord = parentLayout.findViewById(vh.recordId);
-//                        } else {
-//                            viewForRecord = viewComponent;
-//                        }
-//Log.d("QWERT","vh.recordId="+vh.recordId+" viewForRecord="+viewForRecord);
                         param = workWithRecordsAndViews.ViewToRecord(viewForRecord, vh.paramModel.param);
                         rec = setRecord(param);
                         for (Field f : rec) {

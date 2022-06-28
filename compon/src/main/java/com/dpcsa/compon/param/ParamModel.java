@@ -21,7 +21,7 @@ public class ParamModel <T> {
     public long duration;
     public static String PARENT_MODEL = "PARENT_MODEL";
     public static final int GET = 0;
-    public static final int POST = 1;
+    public static final int POST = 1, FILTER = 2;
     public static final int GET_DB = 10;
     public static final int POST_DB = 11;
     public static int INSERT_DB = 12;

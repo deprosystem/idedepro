@@ -170,6 +170,11 @@ public class TextViewNumberGrammar extends androidx.appcompat.widget.AppCompatTe
     }
 
     @Override
+    public void clearData() {
+
+    }
+
+    @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         if (setAcceptNotif != null) {

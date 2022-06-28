@@ -177,6 +177,11 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
         return getText().toString();
     }
 
+    @Override
+    public void clearData() {
+        setText("");
+    }
+
     public Calendar stringToDate(String st) {
         Calendar c;
         String dd = "";

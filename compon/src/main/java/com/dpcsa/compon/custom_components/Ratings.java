@@ -93,4 +93,9 @@ public class Ratings extends LinearLayout implements IComponent {
     public String getString() {
         return null;
     }
+
+    @Override
+    public void clearData() {
+
+    }
 }

@@ -5,115 +5,20 @@
     <item name="colorPrimaryDark">@color/primaryDark</item>
     <item name="colorAccent">@color/accent</item>
     </style>
-
-    <style name="st_12_text_50">
-        <item name="android:textColor">@color/text</item>
-        <item name="android:textSize">12sp</item>
+<style name="st_title">
+    <item name="android:textSize">24sp</item>
+    <item name="android:textColor">@color/title</item>
     </style>
-
-    <style name="st_12_blue">
-        <item name="android:textColor">@color/blue</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="st_14_black">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="st_14_text">
-        <item name="android:textColor">@color/text</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="st_14_text_50">
-        <item name="android:textColor">@color/text</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="st_14_text_70">
-        <item name="android:textColor">@color/text</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="st_14_blue">
-        <item name="android:textColor">@color/blue</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="st_14_white">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="st_16_text">
-        <item name="android:textColor">@color/text</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="st_16_blue">
-        <item name="android:textColor">@color/primary</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="txtInpt_12_21">
-        <item name="android:textSize">10sp</item>
-        <item name="android:textColor">@color/defoult_text</item>
-    </style>
-
-    <style name="st_18_text">
-        <item name="android:textColor">@color/text</item>
-        <item name="android:textSize">18sp</item>
-    </style>
-
-    <style name="st_18_text_50">
-        <item name="android:textColor">@color/text</item>
-        <item name="android:textSize">18sp</item>
-    </style>
-
-    <style name="st_title">
-        <item name="android:textColor">@color/text</item>
-        <item name="android:textSize">25sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-    <style name="editStyle_21_0">
-        <item name="colorControlNormal">@color/defoult_text</item>
-        <item name="colorControlActivated">@color/primary</item>
-    </style>
-
-    <style name="st_sub_title">
-        <item name="android:textColor">@color/text</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="st_text">
-        <item name="android:textColor">@color/text</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="st_error_title">
-        <item name="android:textColor">@color/text</item>
-        <item name="android:textSize">24sp</item>
-    </style>
-
-    <style name="st_error_text">
-        <item name="android:textColor">@color/text</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="st_button">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="MyRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
-        <item name="android:colorPressedHighlight">@color/primary</item>
-    </style>
-
     <style name="editStyle_21_2">
         <item name="colorControlNormal">@color/defoult_text</item>
         <item name="colorControlActivated">@color/primaryLight</item>
     </style>
-
+    <style name="toolStyle_20_19">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="txtInpt_12_21">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/defoult_text</item>
+    </style>
 </resources>

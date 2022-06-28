@@ -351,6 +351,14 @@ public class DrumPicker extends View  implements IComponent, IAlias {
         return null;
     }
 
+    @Override
+    public void clearData() {
+        scroll = 0;
+        currentScroll = scroll;
+        selectedvalueId = 0;
+        invalidate();
+    }
+
     private class Enderer implements Runnable {
         private int endY, time, stepT;
         private int beginY, stepY;

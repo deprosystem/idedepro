@@ -344,6 +344,12 @@ public class DrumPickerRecycler extends RecyclerView implements IComponent, IAli
     public String getString() {
         return null;
     }
+
+    @Override
+    public void clearData() {
+
+    }
+
     public void setValues(List<String> l, Integer startPosition) {
         values.clear();
         values.addAll(l);

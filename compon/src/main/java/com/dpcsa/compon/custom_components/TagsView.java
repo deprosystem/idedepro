@@ -69,6 +69,11 @@ public class TagsView extends BaseComponList implements IComponent, IAlias {
         return null;
     }
 
+    @Override
+    public void clearData() {
+
+    }
+
     BaseStaticListAdapter adapter = new BaseStaticListAdapter() {
         WorkWithRecordsAndViews modelToView = new WorkWithRecordsAndViews();
 

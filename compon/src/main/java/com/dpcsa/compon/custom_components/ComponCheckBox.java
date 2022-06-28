@@ -127,4 +127,9 @@ public class ComponCheckBox extends AppCompatCheckBox implements ISwitch, ICompo
             return "false";
         }
     }
+
+    @Override
+    public void clearData() {
+
+    }
 }

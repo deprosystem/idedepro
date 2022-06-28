@@ -58,7 +58,7 @@ public class SeekBarRange extends RelativeLayout
     private ViewPager pager;
     private int intX;
     private boolean mustParamSeekBar;
-    private String saveParam;
+    private String saveParam, saveParamMin, saveParamMax;
     private String sendNotif;
 
     public SeekBarRange(Context context) {
@@ -103,6 +103,8 @@ public class SeekBarRange extends RelativeLayout
                 showMinMaxId = a.getResourceId(R.styleable.Simple_showMinMaxValue, 0);
                 sendNotif = a.getString(R.styleable.Simple_sendNotif);
                 saveParam = a.getString(R.styleable.Simple_saveParam);
+                saveParamMin = a.getString(R.styleable.Simple_saveParamMin);
+                saveParamMax = a.getString(R.styleable.Simple_saveParamMax);
                 validMinMax(minV, maxV);
                 validStartMinMax(minStart, maxStart);
             } finally {
@@ -420,6 +422,12 @@ public class SeekBarRange extends RelativeLayout
             }
             Injector.getComponGlob().setParamValue(saveParam, str);
         }
+        if (saveParamMin != null && saveParamMin.length() > 0) {
+            Injector.getComponGlob().setParamValue(saveParamMin, String.valueOf(minV));
+        }
+        if (saveParamMax != null && saveParamMax.length() > 0) {
+            Injector.getComponGlob().setParamValue(saveParamMax, String.valueOf(maxV));
+        }
         if (singleThumb) {
             str = String.valueOf(minV);
         } else {
@@ -563,5 +571,12 @@ public class SeekBarRange extends RelativeLayout
     @Override
     public String getString() {
         return null;
+    }
+
+    @Override
+    public void clearData() {
+        validStartMinMax(minV, maxV);
+        setStartValue();
+        showValue();
     }
 }

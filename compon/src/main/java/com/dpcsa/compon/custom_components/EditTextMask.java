@@ -443,6 +443,11 @@ public class EditTextMask extends AppCompatEditText implements IComponent, IVali
         return st;
     }
 
+    @Override
+    public void clearData() {
+       setData("");
+    }
+
     private class MaskElem {
         int begin, end, count, beginMask, endMask;
         String value;

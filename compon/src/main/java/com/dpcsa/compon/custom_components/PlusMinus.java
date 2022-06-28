@@ -332,4 +332,9 @@ public class PlusMinus extends AppCompatEditText implements IComponent{
     public String getString() {
         return null;
     }
+
+    @Override
+    public void clearData() {
+        setValue(minValueInt);
+    }
 }

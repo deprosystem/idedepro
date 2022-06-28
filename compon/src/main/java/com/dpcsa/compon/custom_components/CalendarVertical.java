@@ -391,6 +391,11 @@ public class CalendarVertical extends RecyclerView implements ICalendar, ICompon
     }
 
     @Override
+    public void clearData() {
+
+    }
+
+    @Override
     public String getAlias() {
         return alias;
     }

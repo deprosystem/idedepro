@@ -5,4 +5,5 @@ public interface IComponent {
     Object getData();
     void setOnChangeStatusListener(OnChangeStatusListener statusListener);
     String getString();
+    void clearData();
 }

@@ -55,7 +55,7 @@ public abstract class DeclareScreens<T>{
     protected int IS_PUSH_TOKEN = IS_TOKEN - 1;
 
     public abstract void declare();
-    protected int GET = ParamModel.GET, POST = ParamModel.POST, JSON = ParamModel.JSON, PROFILE = ParamModel.PROFILE,
+    protected int GET = ParamModel.GET, POST = ParamModel.POST, FILTER = ParamModel.FILTER, JSON = ParamModel.JSON, PROFILE = ParamModel.PROFILE,
             GET_DB = ParamModel.GET_DB, POST_DB = ParamModel.POST_DB, UPDATE_DB = ParamModel.UPDATE_DB,
             INSERT_DB = ParamModel.INSERT_DB, DEL_DB = ParamModel.DEL_DB, PARENT = ParamModel.PARENT,
             PARAMETERS = ParamModel.PARAMETERS,

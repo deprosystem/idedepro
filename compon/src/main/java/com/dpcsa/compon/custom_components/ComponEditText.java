@@ -304,6 +304,11 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
         return getText().toString();
     }
 
+    @Override
+    public void clearData() {
+        setText("");
+    }
+
     public boolean isValidRes() {
         boolean result = isValidFoc(true);
         if (result) {
