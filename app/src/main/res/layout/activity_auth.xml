@@ -8,7 +8,6 @@
 >
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
-        android:layout_below="@id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_56"
         android:background="@color/primary"
@@ -23,14 +22,6 @@
         android:layout_below="@id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dim_56"
-        android:background="@color/primary"
-        app:titleTextAppearance="@style/toolStyle_20_19"
         />
 
 </RelativeLayout>

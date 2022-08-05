@@ -843,6 +843,23 @@ public abstract class BaseComponent {
                             }
                         }
                         break;
+                    case SET_MENU_ITEM:
+                        String screen = vh.nameFieldWithValue;
+                        boolean isMenu = false;
+                        if (screen.length() > 0) {
+                            if (activity.menuDraw != null) {
+                                activity.menuDraw.syncMenu(screen);
+                                isMenu = true;
+                            }
+                            if (activity.menuBottom != null) {
+                                activity.menuBottom.syncMenu(screen);
+                                isMenu = true;
+                            }
+                            if (isMenu) {
+                                activity.startScreen(screen, true);
+                            }
+                        }
+                        break;
                     case MODEL_PARAM:
                         selectViewHandler = vh;
                         ParamModel pm = vh.paramModel;
@@ -926,12 +943,15 @@ public abstract class BaseComponent {
                         } else {
                             viewForRecord = viewComponent;
                         }
-
-                       if (vh.mustValid != null && ! isValid(viewForRecord, vh.mustValid)) {
+                        if (vh.mustValid != null && ! isValid(viewForRecord, vh.mustValid)) {
                             break;
                         }
                         selectViewHandler = vh;
                         param = workWithRecordsAndViews.ViewToRecord(viewForRecord, vh.paramModel.param);
+                        if (param.size() > 0 && param.get(0).name.equals("error")) {
+                            iBase.showDialog("Caution!", (String) param.get(0).value, null);
+                            break;
+                        }
                         rec = setRecord(param);
                         for (Field f : rec) {
                             if (f.type == Field.TYPE_LIST_RECORD) {

@@ -7,6 +7,6 @@ public class MyParams extends AppParams {
     @Override
     public void setParams() {
 
-        baseUrl = "https://apps.deprosystem.com/";
+        baseUrl = "https://apps.dp-ide.com/";
     }
 }

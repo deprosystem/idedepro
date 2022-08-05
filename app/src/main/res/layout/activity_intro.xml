@@ -6,69 +6,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 >
-    <RelativeLayout
-        android:id="@+id/control"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-    >
-        <TextView
-            android:id="@+id/contin"
-            android:layout_marginLeft="@dimen/dim_28"
-            android:layout_marginTop="@dimen/dim_28"
-            android:layout_marginRight="@dimen/dim_28"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:background="@drawable/shape_1001"
-            android:gravity="center"
-            android:text="Продолжить"
-            android:textSize="22dp"
-            android:textColor="@color/white"
-            />
-
-        <TextView
-            android:id="@+id/skip"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="90dp"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dim_40"
-            android:gravity="center_vertical"
-            android:text="Skip into"
-            android:textSize="22dp"
-            android:textColor="@color/color_101"
-            />
-
-        <TextView
-            android:id="@+id/proceed"
-            android:layout_marginLeft="@dimen/dim_28"
-            android:layout_marginTop="@dimen/dim_28"
-            android:layout_marginRight="@dimen/dim_28"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:background="@drawable/shape_1002"
-            android:gravity="center"
-            android:text="Continue"
-            android:textSize="22dp"
-            android:textColor="@color/white"
-            />
-
-    </RelativeLayout>
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/intro"
-        android:layout_above="@id/control"
+        android:layout_marginTop="150dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="400dp"
     />
-    <com.dpcsa.compon.custom_components.PagerIndicator
-        android:id="@+id/indi"
+    <TextView
+        android:id="@+id/skip"
         android:layout_centerHorizontal="true"
-        android:layout_above="@id/control"
+        android:layout_above="@id/cont"
+        android:layout_marginBottom="@dimen/dim_32"
+        android:layout_width="181dp"
+        android:layout_height="45dp"
+        android:gravity="center_horizontal"
+        android:text="Skip"
+        android:textSize="@dimen/dim_24"
+        android:textColor="@color/color_100"
+        />
+
+    <TextView
+        android:id="@+id/cont"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dim_40"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:diametrItem="7dp"
-        app:colorNorm="@color/accent"
-        app:colorSelect="@color/accentDark"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_1001"
+        android:gravity="center_horizontal"
+        android:text="Next"
+        android:textSize="22dp"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:id="@+id/proc"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dim_40"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_1001"
+        android:gravity="center"
+        android:text="Proceed"
+        android:textSize="22dp"
+        android:textColor="@color/white"
         />
 
 </RelativeLayout>

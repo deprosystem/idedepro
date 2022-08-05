@@ -2,6 +2,8 @@ package com.dpcsa.compon.custom_components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+
+import com.dpcsa.compon.interfaces_classes.IClear;
 import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.Record;
 import com.google.android.material.textfield.TextInputLayout;
@@ -21,7 +23,7 @@ import com.dpcsa.compon.interfaces_classes.IValidate;
 import com.dpcsa.compon.interfaces_classes.OnChangeStatusListener;
 import com.dpcsa.compon.param.AppParams;
 
-public class ComponEditText extends AppCompatEditText implements IComponent, IValidate, IAlias {
+public class ComponEditText extends AppCompatEditText implements IComponent, IValidate, IAlias, IClear {
 
     protected int typeValidate;
     protected final int FILLED = 0, EMAIL = 1, LENGTH = 2, DIAPASON = 3, MIN_LENGTH = 4, PASSWORD = 5;
@@ -101,7 +103,6 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                 typeValidate = LENGTH;
             }
         }
-
         if (getInputType() == InputType.TYPE_CLASS_NUMBER) {
             typeClassNumber = true;
             maxValueLong = Long.MAX_VALUE;
@@ -353,6 +354,9 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                 }
                 result = maxValue > val && val > minValue;
                 break;
+            case PASSWORD:
+                result = true;
+                break;
         }
         int ik = validPassword.length(); // Хочаб один символ з validPassword
         if (ik > 0) {
@@ -414,6 +418,11 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
             }
         }
         return false;
+    }
+
+    @Override
+    public void clearValue() {
+        setText("");
     }
 
     private class EditTextWatcher implements TextWatcher {

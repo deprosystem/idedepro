@@ -11,8 +11,9 @@ import android.util.AttributeSet;
 
 import com.dpcsa.compon.R;
 import com.dpcsa.compon.interfaces_classes.IAlias;
+import com.dpcsa.compon.interfaces_classes.IClear;
 
-public class ComponImageView extends androidx.appcompat.widget.AppCompatImageView implements IAlias {
+public class ComponImageView extends androidx.appcompat.widget.AppCompatImageView implements IAlias, IClear {
     private Context context;
     private int placeholder, blur;
     private boolean oval;
@@ -117,5 +118,11 @@ public class ComponImageView extends androidx.appcompat.widget.AppCompatImageVie
     @Override
     public String getAlias() {
         return alias;
+    }
+
+    @Override
+    public void clearValue() {
+        setImageDrawable(null);
+        pathImg = "";
     }
 }

@@ -26,6 +26,7 @@ import com.dpcsa.compon.base.BaseProviderAdapter;
 import com.dpcsa.compon.base.Screen;
 import com.dpcsa.compon.custom_components.ElementMenu;
 import com.dpcsa.compon.interfaces_classes.IBase;
+import com.dpcsa.compon.interfaces_classes.IsetMenu;
 import com.dpcsa.compon.interfaces_classes.Menu;
 import com.dpcsa.compon.interfaces_classes.OnResumePause;
 import com.dpcsa.compon.interfaces_classes.PushHandler;
@@ -39,7 +40,7 @@ import com.dpcsa.compon.tools.Constants;
 
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_MENU;
 
-public class MenuComponent extends BaseComponent {
+public class MenuComponent extends BaseComponent implements IsetMenu {
     ElementMenu recycler;
     ListRecords listData;
     BaseProviderAdapter adapter;
@@ -390,5 +391,12 @@ public class MenuComponent extends BaseComponent {
         TypedValue value = new TypedValue ();
         activity.getTheme ().resolveAttribute (colorAttr, value, true);
         return value.data;
+    }
+
+    @Override
+    public void setMenu(int itemNew, int itemOld) {
+        if (itemOld < 0 || itemOld != selectStart) {
+
+        }
     }
 }

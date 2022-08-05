@@ -9,9 +9,9 @@
     <item name="android:textSize">24sp</item>
     <item name="android:textColor">@color/title</item>
     </style>
-    <style name="editStyle_21_2">
+    <style name="editStyle_21_0">
         <item name="colorControlNormal">@color/defoult_text</item>
-        <item name="colorControlActivated">@color/primaryLight</item>
+        <item name="colorControlActivated">@color/primary</item>
     </style>
     <style name="toolStyle_20_19">
         <item name="android:textSize">20sp</item>

@@ -9,7 +9,7 @@
         android:name=".MyApp"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StartActivity"
+        <activity android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>

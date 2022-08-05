@@ -59,6 +59,7 @@ import com.dpcsa.compon.glide.GlideApp;
 import com.dpcsa.compon.glide.GlideRequest;
 import com.dpcsa.compon.interfaces_classes.Animate;
 import com.dpcsa.compon.interfaces_classes.IComponent;
+import com.dpcsa.compon.interfaces_classes.IPresenterListener;
 import com.dpcsa.compon.interfaces_classes.ISwitch;
 import com.dpcsa.compon.interfaces_classes.ItemSetValue;
 import com.dpcsa.compon.interfaces_classes.PushHandler;
@@ -112,6 +113,9 @@ import static com.bumptech.glide.request.RequestOptions.circleCropTransform;
 import static com.bumptech.glide.request.RequestOptions.placeholderOf;
 import static com.dpcsa.compon.interfaces_classes.ItemSetValue.TYPE_SOURCE.GROUPP_PARAM;
 import static com.dpcsa.compon.interfaces_classes.ItemSetValue.TYPE_SOURCE.PARAM;
+import static com.dpcsa.compon.param.ParamModel.GET;
+import static com.dpcsa.compon.param.ParamModel.POST;
+import static com.dpcsa.compon.param.ParamModel.POST_DB;
 
 public abstract class BaseActivity extends AppCompatActivity implements IBase {
 
@@ -869,6 +873,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
     };
 
     public void clickNavigat(View view, int id, List<ViewHandler> viewHandlers) {
+        View viewForRecord;
+        BaseComponent bc;
         for (ViewHandler vh : viewHandlers) {
             if (vh.viewId == id) {
                 switch (vh.type) {
@@ -887,7 +893,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
                                 startScreen(vh.screen, false, paramScreenRecord, requestCode);
                                 break;
                             case RECORD_COMPONENT:
-                                BaseComponent bc = mComponent.getComponent(vh.componId);
+                                bc = mComponent.getComponent(vh.componId);
                                 if (bc != null) {
                                     componGlob.setParam(bc.recordComponent);
                                     startScreen(vh.screen, false, bc.recordComponent, requestCode);
@@ -1046,6 +1052,96 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
                             }
                         }
                         break;
+                    case CLICK_SEND:
+                        Record rec = null;
+                        Record param;
+                        if (vh.recordId != 0) {
+                            viewForRecord = parentLayout.findViewById(vh.recordId);
+                            bc = mComponent.getComponent(vh.recordId);
+                            if (vh.mustValid != null && ! bc.isValid(viewForRecord, vh.mustValid)) {
+                                break;
+                            }
+                            param = workWithRecordsAndViews.ViewToRecord(viewForRecord, vh.paramModel.param);
+                            if (param.size() > 0 && param.get(0).name.equals("error")) {
+                                showDialog("Caution!", (String) param.get(0).value, null);
+                                break;
+                            }
+                            rec = bc.setRecord(param);
+                            for (Field f : rec) {
+                                if (f.type == Field.TYPE_LIST_RECORD) {
+                                    Field glob = componGlob.globalData.getField(f.name);
+                                    if (glob != null) {
+                                        componGlob.setParamsFromGlob(rec, "String) f.value", f.name);
+                                    } else {
+                                        View vL = componGlob.findViewByName(viewForRecord, f.name);
+                                        if (vL != null) {
+                                            BaseComponent bcList = bc.getComponent(vL.getId());
+                                            if (bcList != null) {
+                                                String[] stParam = ((String) f.value).split(";");
+                                                if (stParam.length > 0) {
+                                                    if (bcList instanceof RecyclerComponent) {
+                                                        ListRecords listRecParam = new ListRecords();
+                                                        for (Record recList : ((RecyclerComponent) bcList).listData) {
+                                                            Record recParamSend = new Record();
+                                                            for (String nameParam : stParam) {
+                                                                Field fParam = recList.getField(nameParam);
+                                                                if (fParam != null) {
+                                                                    recParamSend.add(fParam);
+                                                                }
+                                                            }
+                                                            listRecParam.add(recParamSend);
+                                                        }
+                                                        f.value = listRecParam;
+                                                    }
+                                                } else {
+                                                    if (bcList instanceof RecyclerComponent) {
+                                                        f.type = Field.TYPE_INTEGER;
+                                                        f.value = ((RecyclerComponent) bcList).listData.size();
+                                                    } else {
+                                                        log("1001 No data for parameter " + f.name + " in " + mComponent.nameComponent);
+                                                        rec.remove(f);
+                                                    }
+                                                }
+                                            } else {
+                                                log("0010 Component " + f.name + " not found in " + mComponent.nameComponent);
+                                                rec.remove(f);
+                                            }
+                                        } else {
+                                            log("0009 No item " + f.name + " in " + mComponent.nameComponent);
+                                            rec.remove(f);
+                                        }
+                                    }
+                                }
+                            }
+                            if (mComponent.moreWork != null) {
+                                mComponent.moreWork.setPostParam(vh.viewId, rec);
+                            }
+                            componGlob.setParam(rec);
+                            if (vh.paramModel.method == POST_DB) {
+                                BaseDB baseDB = Injector.getBaseDB();
+                                baseDB.insertRecord(vh.paramModel.url, rec, listener_send_back_screen);
+                            } else {
+                                new BasePresenter(this, vh.paramModel, null, rec, listener_send_back_screen);
+                            }
+                        } else {
+                            if (paramScreen != null && paramScreen.value != null) {
+                                rec = (Record) paramScreen.value;
+                                componGlob.setParam(rec);
+                            }
+                            switch (vh.paramModel.method) {
+                                case POST_DB:
+                                    BaseDB baseDB = Injector.getBaseDB();
+                                    baseDB.insertRecord(vh.paramModel.url, rec, listener_send_back_screen);
+                                    break;
+                                case GET:
+                                    new BasePresenter(this, vh.paramModel, null, rec, listener_send_back_screen);
+                                    break;
+                                case POST:
+                                    new BasePresenter(this, vh.paramModel, null, rec, listener_send_back_screen);
+                                    break;
+                            }
+                        }
+                        break;
                     case OPEN_DRAWER:
                         openDrawer();
                         break;
@@ -1110,7 +1206,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
                         recreate();
                         break;
                     case SET_GLOBAL:
-                        BaseComponent bc = mComponent.getComponent(vh.componId);
+                        bc = mComponent.getComponent(vh.componId);
                         bc.setGlobalData(vh.nameFieldWithValue);
                         break;
                     case RECEIVER:
@@ -1162,6 +1258,20 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
         setResult(RESULT_OK, intent);
         finishActivity();
     }
+
+    IPresenterListener listener_send_back_screen = new IPresenterListener() {
+        @Override
+        public void onResponse(Field response) {
+//            if (selectViewHandler != null && selectViewHandler.afterResponse != null) {
+//                afterHandler(response, selectViewHandler.afterResponse.viewHandlers);
+//            }
+        }
+
+        @Override
+        public void onError(int statusCode, String message, View.OnClickListener click) {
+//            onErrorModel(statusCode, message, click);
+        }
+    };
 
     private void changeRecordGlob(String nn, String ns) {
         Field ff = componGlob.globalData.getField(ns);

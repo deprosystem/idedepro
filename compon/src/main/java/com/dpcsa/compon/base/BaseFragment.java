@@ -46,6 +46,7 @@ import com.dpcsa.compon.interfaces_classes.SpringY;
 import com.dpcsa.compon.json_simple.ListRecords;
 import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.json_simple.WorkWithRecordsAndViews;
+import com.dpcsa.compon.param.ParamComponent;
 import com.dpcsa.compon.single.Injector;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -539,7 +540,6 @@ public class BaseFragment extends Fragment implements IBase {
 
     public void clickNavigat(View view, int id, List<ViewHandler> viewHandlers) {
         for (ViewHandler vh : viewHandlers) {
-Log.d("QWERT","vh.type="+vh.type+"<<");
             if (vh.viewId == id) {
                 switch (vh.type) {
                     case NAME_SCREEN:
@@ -812,6 +812,29 @@ Log.d("QWERT","vh.type="+vh.type+"<<");
                         }
                         clearView(viewForRecord);
                         break;
+                    case CLEAR_FORM:
+                        viewForRecord = parentLayout.findViewById(vh.componId);
+                        if (viewForRecord != null) {
+                            workWithRecordsAndViews.clearForm(viewForRecord, "," + vh.nameFieldWithValue + ",");
+                        }
+                        break;
+                    case SET_MENU_ITEM:
+                        String screen = vh.nameFieldWithValue;
+                        boolean isMenu = false;
+                        if (screen.length() > 0) {
+                            if (activity.menuDraw != null) {
+                                activity.menuDraw.syncMenu(screen);
+                                isMenu = true;
+                            }
+                            if (activity.menuBottom != null) {
+                                activity.menuBottom.syncMenu(screen);
+                                isMenu = true;
+                            }
+                            if (isMenu) {
+                                startScreen(screen, true);
+                            }
+                        }
+                        break;
                     case CLICK_SEND:
                         Record rec = null;
                         Record param;
@@ -823,6 +846,10 @@ Log.d("QWERT","vh.type="+vh.type+"<<");
                             }
                             selectViewHandler = vh;
                             param = workWithRecordsAndViews.ViewToRecord(viewForRecord, vh.paramModel.param);
+                            if (param.size() > 0 && param.get(0).name.equals("error")) {
+                                showDialog("Caution!", (String) param.get(0).value, null);
+                                break;
+                            }
                             rec = bc.setRecord(param);
                             for (Field f : rec) {
                                 if (f.type == Field.TYPE_LIST_RECORD) {

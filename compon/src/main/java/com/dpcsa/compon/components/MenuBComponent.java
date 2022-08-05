@@ -10,6 +10,7 @@ import com.dpcsa.compon.base.Screen;
 import com.dpcsa.compon.custom_components.ComponMenuB;
 import com.dpcsa.compon.custom_components.ComponRadioButtonRL;
 import com.dpcsa.compon.interfaces_classes.IBase;
+import com.dpcsa.compon.interfaces_classes.IsetMenu;
 import com.dpcsa.compon.interfaces_classes.Menu;
 import com.dpcsa.compon.interfaces_classes.Navigator;
 import com.dpcsa.compon.json_simple.Field;
@@ -21,7 +22,7 @@ import com.dpcsa.compon.tools.Constants;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
-public class MenuBComponent extends BaseComponent {
+public class MenuBComponent extends BaseComponent implements IsetMenu {
     public ComponMenuB menuB;
     public int countButton;
     public int selectStart;
@@ -245,4 +246,8 @@ selectStart = -1;
         }
     }
 
+    @Override
+    public void setMenu(int itemNew, int itemOld) {
+
+    }
 }

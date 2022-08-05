@@ -18,6 +18,7 @@ import com.dpcsa.compon.glide.GlideApp;
 import com.dpcsa.compon.glide.GlideRequest;
 import com.dpcsa.compon.interfaces_classes.IAlias;
 import com.dpcsa.compon.interfaces_classes.IBaseComponent;
+import com.dpcsa.compon.interfaces_classes.IClear;
 import com.dpcsa.compon.interfaces_classes.IComponent;
 import com.dpcsa.compon.interfaces_classes.Navigator;
 import com.dpcsa.compon.interfaces_classes.Param;
@@ -52,7 +53,8 @@ public class WorkWithRecordsAndViews {
     private boolean setParam;
     private Visibility[] visibilityManager;
     private int swipeId, rightId, leftId;
-    private final String SYSTEM_TIME = "SYSTEM_TIME", SYSTEM_TIME_SEC = "SYSTEM_TIME_SEC";
+    private final String SYSTEM_TIME = "SYSTEM TIME", SYSTEM_TIME_SEC = "SYSTEM TIME SEC",
+        PROFILE = "Profile";
 
     public void RecordToView(Record model, View view) {
         RecordToView(model, view, null, null);
@@ -84,6 +86,7 @@ public class WorkWithRecordsAndViews {
     public Record ViewToRecord(View view, String par) {
         recordResult = new Record();
         param = par.split(",");
+        ComponGlob componGlob = null;
         for (String st : param) {
             int i = st.indexOf("(");
             if (i > 0) {
@@ -104,6 +107,27 @@ public class WorkWithRecordsAndViews {
                     }
                     String stPar = st.substring(i + 1, ik);
                     switch (stPar) {
+                        case PROFILE:
+                            if (componGlob == null) {
+                                componGlob = Injector.getComponGlob();
+                            }
+                            String tok = (String) componGlob.token.value;
+                            if (tok != null && tok.length() > 0) {
+                                if (stN.equals("id_user")) {
+                                    recordResult.add(new Field(stN, TYPE_STRING, "\u0000id"));
+                                } else {
+                                    Record rPr = (Record)componGlob.profile.value;
+                                    Field fPr = rPr.getField(stN);
+                                    if (fPr != null) {
+                                        recordResult.add(new Field(stN, fPr.type, fPr.value));
+                                    }
+                                }
+                            } else {
+                                recordResult.clear();
+                                recordResult.add(new Field("error", TYPE_STRING, "Need to log in"));
+                                return recordResult;
+                            }
+                            break;
                         case SYSTEM_TIME:
                             recordResult.add(new Field(stN, TYPE_STRING, String.valueOf(new Date().getTime())));
                             break;
@@ -122,6 +146,40 @@ public class WorkWithRecordsAndViews {
         setParam = true;
         enumViewChild(view);
         return recordResult;
+    }
+
+    public void clearForm(View v, String listField) {
+        ViewGroup vg;
+        int id;
+        String name;
+        if (v instanceof ViewGroup) {
+            vg = (ViewGroup) v;
+            int countChild = vg.getChildCount();
+            id = v.getId();
+            if (id > -1) {
+                if (v instanceof IClear) {
+                    name = v.getContext().getResources().getResourceEntryName(id);
+                    if (listField.indexOf("," + name + ",") > -1) {
+                        ((IClear) v).clearValue();
+                    }
+                }
+            }
+            for (int i = 0; i < countChild; i++) {
+                clearForm(vg.getChildAt(i), listField);
+            }
+        } else {
+            if (v != null) {
+                id = v.getId();
+                if (id != -1) {
+                    if (v instanceof IClear) {
+                        name = v.getContext().getResources().getResourceEntryName(id);
+                        if (listField.indexOf("," + name + ",") > -1) {
+                            ((IClear) v).clearValue();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void enumViewChild(View v) {
@@ -323,8 +381,16 @@ public class WorkWithRecordsAndViews {
                 if (st == null || st.equals("null")) {
                     st = "";
                 }
+                int adrDrawable;
                 if (st.length() == 0) {
-                    ((ImageView) v).setImageDrawable(null);
+                    if (v instanceof ComponImageView) {
+                        adrDrawable = ((ComponImageView) v).getPlaceholder();
+                        if (adrDrawable != 0) {
+                            ((ImageView) v).setImageDrawable(context.getResources().getDrawable(adrDrawable));
+                        }
+                    } else {
+                        ((ImageView) v).setImageDrawable(null);
+                    }
                     return;
                 }
                 if (st.contains("/") || st.contains(".")) {
@@ -346,7 +412,6 @@ public class WorkWithRecordsAndViews {
                     }
                     gr.into((ImageView) v);
                 } else {
-                    int adrDrawable;
                     if (v instanceof ComponImageView) {
                        adrDrawable = ((ComponImageView) v).getPlaceholder();
                        if (adrDrawable != 0) {
