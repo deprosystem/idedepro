@@ -18,6 +18,7 @@ import com.dpcsa.compon.param.ParamModel;
 import com.dpcsa.compon.providers.VolleyInternetProvider;
 import com.dpcsa.compon.single.ComponPrefTool;
 import com.dpcsa.compon.single.Injector;
+import com.dpcsa.compon.tools.Constants;
 
 import java.io.File;
 import java.util.HashMap;
@@ -120,6 +121,11 @@ public class BasePresenter implements BaseInternetProvider.InternetProviderListe
         }
         if (method == ParamModel.GET) {
             String st = componGlob.installParam(paramModel.param, urlFull);
+            if (st.equals(Constants.errorInstallParam)) {
+                error(BaseInternetProvider.NO_AUTH, Constants.NEED_LOGIN);
+                return;
+            }
+//Log.d("QWERT","NNNNN_PARAM="+st+"<<");
             url = urlFull + st;
         } else {
             url = urlFull;

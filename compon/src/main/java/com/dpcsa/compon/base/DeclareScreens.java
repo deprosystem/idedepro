@@ -40,6 +40,7 @@ import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_MENU;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_PAGER;
 import static com.dpcsa.compon.interfaces_classes.PushHandler.TYPE.SELECT_RECYCLER;
 import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.CLICK_SEND;
+import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.DELETE;
 import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.SET_VALUE;
 import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.SET_VALUE_PARAM;
 
@@ -577,6 +578,12 @@ public abstract class DeclareScreens<T>{
                             ActionsAfterResponse afterResponse, boolean changeEnabled, int... mustValid) {
         ViewHandler vh = new ViewHandler(viewId, CLICK_SEND, paramModel, afterResponse, changeEnabled, mustValid);
         vh.setRecordId(recordId);
+        return vh;
+    }
+
+    public ViewHandler delete(int viewId, ParamModel paramModel,
+                            ActionsAfterResponse afterResponse) {
+        ViewHandler vh = new ViewHandler(viewId, DELETE, paramModel, afterResponse);
         return vh;
     }
 

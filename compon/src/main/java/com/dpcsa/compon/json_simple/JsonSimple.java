@@ -92,6 +92,9 @@ public class JsonSimple {
     }
 
     private String textForException() {
+        if (json.startsWith("<!doctype")) {
+            return "HTML txt: " + json;
+        }
         int in = ind - 200;
         if (in < 0) {
             in = 0;

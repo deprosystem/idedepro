@@ -1,5 +1,6 @@
 package com.dpcsa.compon.base;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -47,6 +48,7 @@ import com.dpcsa.compon.json_simple.ListRecords;
 import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.json_simple.WorkWithRecordsAndViews;
 import com.dpcsa.compon.param.ParamComponent;
+import com.dpcsa.compon.param.ParamModel;
 import com.dpcsa.compon.single.Injector;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -75,6 +77,7 @@ import static com.bumptech.glide.request.RequestOptions.circleCropTransform;
 import static com.bumptech.glide.request.RequestOptions.placeholderOf;
 import static com.dpcsa.compon.interfaces_classes.ItemSetValue.TYPE_SOURCE.GROUPP_PARAM;
 import static com.dpcsa.compon.interfaces_classes.ItemSetValue.TYPE_SOURCE.PARAM;
+import static com.dpcsa.compon.param.ParamModel.DEL_DB;
 import static com.dpcsa.compon.param.ParamModel.GET;
 import static com.dpcsa.compon.param.ParamModel.POST;
 import static com.dpcsa.compon.param.ParamModel.POST_DB;
@@ -1080,16 +1083,203 @@ public class BaseFragment extends Fragment implements IBase {
     IPresenterListener listener_send_back_screen = new IPresenterListener() {
         @Override
         public void onResponse(Field response) {
-//            if (selectViewHandler != null && selectViewHandler.afterResponse != null) {
-//                afterHandler(response, selectViewHandler.afterResponse.viewHandlers);
-//            }
+            if (selectViewHandler != null && selectViewHandler.afterResponse != null) {
+                afterHandler(response, selectViewHandler.afterResponse.viewHandlers);
+            }
         }
 
         @Override
         public void onError(int statusCode, String message, View.OnClickListener click) {
-//            onErrorModel(statusCode, message, click);
+            onErrorModel(statusCode, message, click);
         }
     };
+
+    public void onErrorModel(int statusCode, String message, View.OnClickListener click) {
+        Record rec = componGlob.formErrorRecord(this, statusCode, message);
+        if (selectViewHandler != null && selectViewHandler.afterError != null) {
+            afterHandler(new Field("", Field.TYPE_RECORD, rec), selectViewHandler.afterError.viewHandlers);
+        }
+    }
+
+    public void afterHandler(Field response, List<ViewHandler> viewHandlers) {
+        Record rec;
+        String st;
+        View vv;
+        for (ViewHandler vh : viewHandlers) {
+            switch (vh.type) {
+                case NAME_SCREEN:
+                    startScreen(vh.screen, false);
+                    break;
+                case SET_TOKEN:
+                    if (response.value != null && response.type == Field.TYPE_RECORD) {
+                        rec = ((Record) response.value);
+                        String nameToken = vh.nameFieldWithValue;
+                        if (nameToken == null || nameToken.length() == 0) {
+                            nameToken = "token";
+                        }
+                        st = rec.getString(nameToken);
+                    } else {
+                        st = "";
+                        log("1002 Invalid Token");
+                    }
+                    if (st != null) {
+                        componGlob.token.setValue(new String(st), 0, activity);
+                        preferences.setSessionToken(st);
+                    }
+                    break;
+                case SET_VALUE_PARAM:
+                    setValueParam(vh.viewId, null);
+                    break;
+                case SET_PROFILE:
+                    if (response.value != null) {
+                        rec = ((Record) response.value);
+                        if (vh.nameFieldWithValue == null || vh.nameFieldWithValue.length() == 0) {
+                            ((Record) componGlob.profile.value).clear();
+                            componGlob.profile.setValue(rec, 0, activity);
+                            preferences.setProfile(rec.toString());
+                        } else {
+                            Record prof = (Record) rec.getValue(vh.nameFieldWithValue);
+                            if (prof != null) {
+//                                componGlob.profile = new FieldBroadcast("profile", Field.TYPE_RECORD, prof);
+                                ((Record) componGlob.profile.value).clear();
+                                componGlob.profile.setValue(prof, 0, activity);
+                                preferences.setProfile(prof.toString());
+                            }
+                        }
+                    }
+                    break;
+                case RESULT_RECORD :
+                    Intent intent = new Intent();
+                    if (response.value != null) {
+                        componGlob.setParam((Record) response.value);
+                        intent.putExtra(Constants.RECORD, ((Record) response.value).toString());
+                    } else {
+                        log("Запись с возвращаемыми параметрами не сформирована в " + mComponent.nameComponent);
+                        intent.putExtra(Constants.RECORD, "{}");
+                    }
+                    activity.setResult(Activity.RESULT_OK, intent);
+                    activity.finishActivity();
+                    break;
+                case PREFERENCE_SET_NAME:
+                    if (response.value != null) {
+                        rec = ((Record) response.value);
+                        st = rec.getString(vh.nameFieldWithValue);
+                        if (st != null) {
+                            preferences.setNameString(vh.nameFieldWithValue, st);
+                        }
+                    }
+                    break;
+                case SHOW:
+                    vv = parentLayout.findViewById(vh.showViewId);
+                    if (vv != null) {
+                        if (vv instanceof AnimatePanel) {
+                            ((AnimatePanel) vv).show(this);
+                        } else {
+                            vv.setVisibility(View.VISIBLE);
+                        }
+                        if (vh.nameFieldWithValue != null && vh.nameFieldWithValue.length() > 0) {
+                            workWithRecordsAndViews.RecordToView(paramToRecord(vh.nameFieldWithValue), vv);
+                        }
+                    }
+                    break;
+                case BACK_OK:
+                    backOk();
+                    break;
+                case HIDE:
+                    vv = parentLayout.findViewById(vh.showViewId);
+                    if (vv != null) {
+                        if (vv instanceof AnimatePanel) {
+                            ((AnimatePanel) vv).hide();
+                        } else {
+                            vv.setVisibility(View.GONE);
+                        }
+                    }
+                    break;
+//                case MODEL_PARAM:
+//                    selectViewHandler = vh;
+//                    ParamModel pm = vh.paramModel;
+//                    if (pm.method == DEL_DB) {
+//                        BaseComponent.WhereParam wp = setWhere(pm.param, null);
+//                        if (wp != null) {
+//                            baseDB.deleteRecord(iBase, pm, wp.where, wp.param, listener_send_back_screen);
+//                        } else {
+//                            iBase.logDB("2001 deleteRecord failed in " + multiComponent.nameComponent);
+//                        }
+////                        baseDB.deleteRecord(iBase, pm, setParam(pm.param, null), null);
+//                    }
+//                    break;
+                case ACTUAL:
+                    if (vh.showViewId == 0) {
+                        log("0004 в фрагменте id омпонента не может быть равен 0");
+                    } else {
+                        BaseComponent bc = mComponent.getComponent(vh.showViewId);
+                        if (bc != null) {
+                            bc.actual();
+                        } else {
+                            String stN = activity.getResources().getResourceEntryName(vh.showViewId);
+                            log("0004 Нет компонента с id " + stN + " для актуализации в " + mComponent.nameComponent);
+                        }
+                    }
+                    break;
+                case BACK:
+                    backPressed();
+                    break;
+                case NEXT_SCREEN_SEQUENCE:
+                    int isc = preferences.getSplashScreen();
+                    if (isc < 2) {
+                        isc ++;
+                        preferences.setSplashScreen(isc);
+                        String stSc = preferences.getSplashNameScreen();
+                        if (stSc.length() > 0) {
+                            String[] stAr = stSc.split(",");
+                            startScreen(stAr[isc], false);
+                            activity.finish();
+                        }
+                    } else {
+                        activity.finish();
+                    }
+                    break;
+                case UPDATE_DATA:
+                    mComponent.getComponent(vh.viewId).updateData(vh.paramModel);
+                    break;
+                case SET_GLOBAL:
+                    if (response.value != null) {
+                        activity.setGlobalData(vh.nameFieldWithValue, response.type, response.value);
+                    }
+                    break;
+//                case ASSIGN_VALUE:
+//                    vv = parentLayout.findViewById(vh.viewId);
+//                    if (vv != null) {
+//                        if (response != null) {
+//                            workWithRecordsAndViews.RecordToView((Record) response.value, vv, this, clickView);
+//                        }
+//                    }
+//                    break;
+                case SWITCH_ON:
+                    vv = parentLayout.findViewById(vh.viewId);
+                    ((ISwitch) vv).setOn(vh.switchValue);
+                    break;
+                case SWITCH_ON_STATUS:
+                    vv = parentLayout.findViewById(vh.viewId);
+                    ((ISwitch) vv).setOnStatus(vh.switchValue);
+                    break;
+            }
+        }
+    }
+
+    private Record paramToRecord(String param) {
+        Record rec = new Record();
+        String[] par = param.split(",");
+        if (par.length > 0) {
+            for (String nameField : par) {
+                String value = componGlob.getParamValue(nameField);
+                if (value.length() > 0) {
+                    rec.add(new Field(nameField, Field.TYPE_STRING, value));
+                }
+            }
+        }
+        return rec;
+    }
 
     public void procesAnimate(Animate animate) {
         if (animate.type == Animate.TYPE.SET) {

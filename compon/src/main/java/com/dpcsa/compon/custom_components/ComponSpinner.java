@@ -15,13 +15,15 @@ import android.widget.TextView;
 
 import com.dpcsa.compon.R;
 import com.dpcsa.compon.interfaces_classes.IAlias;
+import com.dpcsa.compon.interfaces_classes.IClear;
 import com.dpcsa.compon.interfaces_classes.IComponent;
 import com.dpcsa.compon.interfaces_classes.OnChangeStatusListener;
 
 
 public class ComponSpinner extends androidx.appcompat.widget.AppCompatSpinner
-        implements IComponent, IAlias {
+        implements IComponent, IAlias, IClear {
 
+    public boolean isActual = true;
     private Context context;
     private String alias;
     private String listItems;
@@ -116,6 +118,13 @@ public class ComponSpinner extends androidx.appcompat.widget.AppCompatSpinner
     @Override
     public void clearData() {
         setSelection(0);
+    }
+
+    @Override
+    public void clearValue() {
+        if (isActual) {
+            setSelection(0);
+        }
     }
 
     private class AdapterSp extends BaseAdapter {

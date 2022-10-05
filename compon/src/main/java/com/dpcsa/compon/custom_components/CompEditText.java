@@ -24,7 +24,7 @@ import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.param.AppParams;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class ComponEditText extends AppCompatEditText implements IComponent, IValidate, IAlias, IClear {
+public class CompEditText extends AppCompatEditText implements IComponent, IValidate, IAlias, IClear {
     protected int typeValidate;
     protected final int FILLED = 0, EMAIL = 1, LENGTH = 2, DIAPASON = 3, MIN_LENGTH = 4, PASSWORD = 5;
     private int fieldLength;
@@ -45,22 +45,22 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
     private int selectPos, idShow, idHide, idClean, idEquals, idError;
     private View viewShow, viewHide, viewClean;
     private TextView viewError;
-    private ComponEditText viewEquals, equalsGeneral;
+    private CompEditText viewEquals, equalsGeneral;
     private String oldString;
     private View parent;
     private String validPassword;
 
-    public ComponEditText(Context context) {
+    public CompEditText(Context context) {
         super(context);
         init(context, null);
     }
 
-    public ComponEditText(Context context, AttributeSet attrs) {
+    public CompEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public ComponEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CompEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
@@ -191,8 +191,8 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
         }
         if (idEquals != 0) {
             View vv = parent.findViewById(idEquals);
-            if (vv != null && vv instanceof ComponEditText) {
-                viewEquals = (ComponEditText) vv;
+            if (vv != null && vv instanceof CompEditText) {
+                viewEquals = (CompEditText) vv;
                 viewEquals.setEqualsGeneral(this);
             } else {
                 errorLog("0004 не правильная ссылка на проверку совпадения паролей ");
@@ -225,7 +225,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
         }
     };
 
-    public void setEqualsGeneral(ComponEditText equalsGeneral) {
+    public void setEqualsGeneral(CompEditText equalsGeneral) {
         this.equalsGeneral = equalsGeneral;
     }
 

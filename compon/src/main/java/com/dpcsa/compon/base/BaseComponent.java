@@ -855,9 +855,10 @@ public abstract class BaseComponent {
                                 activity.menuBottom.syncMenu(screen);
                                 isMenu = true;
                             }
-                            if (isMenu) {
-                                activity.startScreen(screen, true);
-                            }
+
+//                            if (isMenu) {
+//                                activity.startScreen(screen, true);
+//                            }
                         }
                         break;
                     case MODEL_PARAM:
@@ -1366,6 +1367,29 @@ public abstract class BaseComponent {
                                 activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(stParYou)));
                             }
                             break;
+                        case DELETE:
+                            String parDel = vh.paramModel.param;
+                            if (parDel != null && parDel.length() > 0) {
+                                String[] arPar = parDel.split(",");
+                                int ik = arPar.length;
+                                Record recDel = new Record();
+                                for (int i = 0; i < ik; i++) {
+                                    Field fDEl = record.getField(arPar[i]);
+                                    if (fDEl != null) {
+                                        recDel.add(fDEl);
+                                    } else {
+                                        String fDelPar = componGlob.getParamValue(arPar[i]);
+                                        if (fDelPar != null && fDelPar.length() > 0) {
+                                            recDel.add(new Field(arPar[i], TYPE_STRING, fDelPar));
+                                        }
+                                    }
+                                }
+                                if (recDel.size() > 0) {
+                                    selectViewHandler = vh;
+                                    new BasePresenter(iBase, vh.paramModel, null, recDel, listener_send_back_screen);
+                                }
+                            }
+                            break;
                         case FIELD_WITH_NAME_SCREEN:
                             if (listPresenter != null) {
                                 listPresenter.ranCommand(ListPresenter.Command.SELECT,
@@ -1375,13 +1399,13 @@ public abstract class BaseComponent {
                                 iBase.startScreen((String) record.getValue(vh.nameFieldScreen), false);
                             }
                             break;
-                        case ADD_RECORD:
+                        case ADD_ITEM_LIST:
                             BaseComponent bc = getComponent(vh.componId);
                             if (bc != null) {
                                 bc.addRecord(record);
                             }
                             break;
-                        case DEL_RECORD:
+                        case DEL_ITEM_LIST:
                             delRecord(position);
                             break;
                         case RESULT_RECORD :
@@ -1774,6 +1798,21 @@ public abstract class BaseComponent {
                     }
                     activity.setResult(Activity.RESULT_OK, intent);
                     activity.finishActivity();
+                    break;
+                case DEL_ITEM_LIST:
+                    if (this instanceof RecyclerComponent) {
+                        rec = (Record) response.value;
+                        int row = rec.getInt("row");
+                        if (row == 0) {
+                            break;
+                        }
+                        if (row == 1) {
+                            int pos = ((RecyclerComponent) this).adapter.clickItemPosition;
+                            delRecord(pos);
+                        } else {
+                            actual();
+                        }
+                    }
                     break;
                 case PREFERENCE_SET_NAME:
                     if (response.value != null) {

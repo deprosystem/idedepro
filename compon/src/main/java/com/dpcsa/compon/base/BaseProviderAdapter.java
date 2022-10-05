@@ -57,6 +57,7 @@ public class BaseProviderAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private boolean isExpandedAdapt;
     public  boolean isPaginationStart;
     private int paginationStart;
+    public int clickItemPosition;
 
     public BaseProviderAdapter(BaseComponent baseComponent) {
         context = baseComponent.activity;
@@ -171,6 +172,7 @@ public class BaseProviderAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     @Override
                     public void onClick(View view) {
                         int pos = holder.getAdapterPosition();
+                        clickItemPosition = pos;
                         Record rec = (Record) provider.get(pos);
                         if (isExpandedAdapt) {
                             Field fExp = rec.getField("expandedLevel");
@@ -194,6 +196,7 @@ public class BaseProviderAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                             rec.add(new Field("expandedLevel", Field.TYPE_INTEGER, 0));
                         }
                     }
+                    clickItemPosition = pos;
                     baseComponent.clickItem.onClick(holder, null, pos, (Record) rec);
                 }
             });

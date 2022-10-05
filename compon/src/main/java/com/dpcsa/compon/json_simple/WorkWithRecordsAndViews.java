@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -152,7 +153,7 @@ public class WorkWithRecordsAndViews {
         ViewGroup vg;
         int id;
         String name;
-        if (v instanceof ViewGroup) {
+        if (v instanceof ViewGroup && ! (v instanceof Spinner)) {
             vg = (ViewGroup) v;
             int countChild = vg.getChildCount();
             id = v.getId();

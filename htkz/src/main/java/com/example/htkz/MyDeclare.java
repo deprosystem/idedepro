@@ -5,7 +5,7 @@ import com.dpcsa.compon.interfaces_classes.Menu;
 import com.example.htkz.custom.WorkWhoFlying;
 
 //import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.ADD_RECORD;
-//import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.DEL_RECORD;
+//import static com.dpcsa.compon.interfaces_classes.ViewHandler.TYPE.DEL_ITEM_LIST;
 import static com.dpcsa.compon.param.ParamComponent.TC.PAGER_V;
 import static com.dpcsa.compon.param.ParamComponent.TC.TAGS;
 //import static com.dpcsa.compon.param.ParamView.TYPE_VALUE_SELECTED.PARAM;
@@ -91,10 +91,10 @@ public class MyDeclare extends DeclareScreens {
                         back(R.id.back), backOk(R.id.ok, "kids,adults"))
                 .plusMinus(R.id.amount, R.id.plus, R.id.minus, null, null)
                 .list(model(GLOBAL, "kids_gl"), view(R.id.recycler, R.layout.item_kind),
-                        navigator(handler(R.id.del_kind, VH.DEL_RECORD)))
+                        navigator(handler(R.id.del_kind, VH.DEL_ITEM_LIST)))
                 .component(TAGS, model(JSON, getString(R.string.age)),
                         view(R.id.age, R.layout.item_age),
-                        navigator(handler(0, VH.ADD_RECORD, R.id.recycler), hide(R.id.kid_age)));
+                        navigator(handler(0, VH.ADD_ITEM_LIST, R.id.recycler), hide(R.id.kid_age)));
 
         activity(SEARCH_D_D, R.layout.activity_search_d_d)
                 .navigator(back(R.id.back), backOk(R.id.ok, "depart_date,night"),

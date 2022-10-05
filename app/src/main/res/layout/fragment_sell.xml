@@ -5,17 +5,17 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
->
+    >
     <ScrollView
         android:layout_above="@id/ss"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-    >
+        >
         <RelativeLayout
             android:id="@+id/scroll_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-        >
+            >
             <com.dpcsa.compon.custom_components.ComponImageView
                 android:id="@+id/img"
                 android:layout_width="match_parent"
@@ -36,10 +36,11 @@
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Title"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:maxLines="1"/>
-                </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/_txt_inp_mileage"
@@ -54,10 +55,11 @@
                     android:id="@+id/mileage"
                     android:layout_width="164dp"
                     android:layout_height="wrap_content"
+                    android:hint="Mileage"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:maxLines="1"/>
-                </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/_txt_inp_praice"
@@ -72,10 +74,11 @@
                     android:id="@+id/praice"
                     android:layout_width="164dp"
                     android:layout_height="wrap_content"
+                    android:hint="Price"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:maxLines="1"/>
-                </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.dpcsa.compon.custom_components.Gallery
                 android:id="@+id/gal"
@@ -107,7 +110,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-            />
+                />
             <com.dpcsa.compon.custom_components.ComponSpinner
                 android:id="@+id/model"
                 android:layout_toRightOf="@id/marka"
@@ -116,7 +119,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-            />
+                />
             <com.dpcsa.compon.custom_components.ComponSpinner
                 android:id="@+id/marka"
                 android:layout_below="@id/_txt_inp_title"
@@ -124,7 +127,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-            />
+                />
             <com.dpcsa.compon.custom_components.ComponImageView
                 android:id="@+id/photo"
                 android:layout_centerHorizontal="true"
@@ -177,10 +180,11 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_56"
-    >
+        >
         <TextView
             android:id="@+id/send"
-            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dim_40"
             android:layout_width="200dp"
             android:layout_height="@dimen/dim_40"
             android:background="@drawable/shape_1000"
@@ -194,6 +198,19 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/greyDark"
+            />
+
+        <TextView
+            android:id="@+id/clear"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dim_24"
+            android:layout_width="80dp"
+            android:layout_height="@dimen/dim_40"
+            android:background="@drawable/shape_1002"
+            android:gravity="center"
+            android:text="Clear"
+            android:textSize="@dimen/dim_20"
             />
 
     </RelativeLayout>

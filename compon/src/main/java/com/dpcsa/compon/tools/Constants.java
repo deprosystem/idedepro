@@ -26,5 +26,6 @@ public class Constants {
     public static String NAME_FUNC = "nameFunc";
     public static String TAG_SUBSCRIBE = "SUBSCRIBE_";
     public static String DATA_STR = "DATA_STR";
-
+    public static String prefixProfileParam = "!!__!!",
+            errorInstallParam = "ErrorInstallParam", NEED_LOGIN = "Need to log in";
 }

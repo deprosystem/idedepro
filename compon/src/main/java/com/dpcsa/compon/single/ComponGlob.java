@@ -37,6 +37,7 @@ import java.util.Map;
 
 import static com.dpcsa.compon.json_simple.Field.TYPE_LIST_RECORD;
 import static com.dpcsa.compon.json_simple.Field.TYPE_RECORD;
+import static com.dpcsa.compon.json_simple.Field.TYPE_STRING;
 
 public class ComponGlob {
     public static String NAME_TOKEN = "token";
@@ -255,6 +256,7 @@ public class ComponGlob {
         if (paramQuery != null && paramQuery.length() > 0) {
             param += sep + paramQuery;
         }
+//Log.d("QWERT","installParamName param="+param+"<< paramQuery="+paramQuery+"<<");
         if (param != null && param.length() > 0) {
             if (url.contains("?")) {
                 st = "&";
@@ -263,25 +265,52 @@ public class ComponGlob {
             }
             String[] paramArray = param.split(Constants.SEPARATOR_LIST);
             sep = "";
+            String valuePar;
             for (String paramOne : paramArray) {
                 String par1 = paramOne;
                 int i = paramOne.indexOf("=");
                 if (i > 0) {
                     par1 = paramOne.substring(0, i);
                 }
-                for (Param paramV : paramValues) {
-                    if (par1.equals(paramV.name)) {
-                        String valuePar = paramV.value;
-                        if (valuePar != null && valuePar.length() > 0) {
-                            st = st + sep + par1 + "=" + valuePar;
+                int i_1 = paramOne.indexOf(Constants.prefixProfileParam);
+                if (i_1 > -1) {
+                    valuePar = paramOne.substring(i_1 + Constants.prefixProfileParam.length());
+//                    Log.d("QWERT", "valuePar=" + valuePar + "<<");
+                    String tok = (String) token.value;
+                    if (tok != null && tok.length() > 0) {
+                        if (valuePar.equals("id_user")) {
+                            st += sep + paramOne;
                             sep = "&";
+                            continue;
                         } else {
-                            if (i > 0) {
-                                st += sep + paramOne;
+                            Record rPr = (Record) profile.value;
+                            Field fPr = rPr.getField(valuePar);
+                            if (fPr != null) {
+                                st += sep + par1 + "=" + (String) fPr.value;
                                 sep = "&";
+                                continue;
                             }
                         }
-                        break;
+                    } else {
+                        return Constants.errorInstallParam;
+                    }
+                } else {
+                    for (Param paramV : paramValues) {
+                        if (par1.equals(paramV.name)) {
+                            valuePar = paramV.value;
+                            if (valuePar != null && valuePar.length() > 0) {
+                                st = st + sep + par1 + "=" + valuePar;
+                                sep = "&";
+                            } else {
+                                if (i > 0) {
+
+                                } else {
+                                    st += sep + paramOne;
+                                    sep = "&";
+                                }
+                            }
+                            break;
+                        }
                     }
                 }
             }

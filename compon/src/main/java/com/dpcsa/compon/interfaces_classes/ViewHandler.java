@@ -14,9 +14,9 @@ public class ViewHandler {
         RESULT_RECORD, ASSIGN_VALUE, SET_VALUE, SET_VALUE_PARAM, SET_LOCALE, SET_GLOBAL, SET_MENU, //SET_MENU_DEF,
         EXIT, CLICK_VIEW, MAP_ROUTE, SHOW, HIDE, SHOW_HIDE, BROADCAST, RECEIVER, CLICK_CUSTOM, DEL_RECYCLER,
         CLICK_SEND, SEND_UPDATE, SWITCH_ON, SWITCH_ON_STATUS, ANIMATE, YOUTUBE, SUBSCRIBE_PUSH, CHECKED,
-        SPR_SCALE, SPR_Y, AFTER, ADD_RECORD, DEL_RECORD, SAVE_PARAM, CLEAN_VAR, ADD_VAR, DEL_VAR, SET_VAR, DEL_VAR_FOLOW,
+        SPR_SCALE, SPR_Y, AFTER, ADD_ITEM_LIST, DEL_ITEM_LIST, SAVE_PARAM, CLEAN_VAR, ADD_VAR, DEL_VAR, SET_VAR, DEL_VAR_FOLOW,
         ACTUAL, GET_DATA, CALL_UP, DIAL_UP, SET_PROFILE, CLEAN_COPY_VAR, RESTORE_VAR, NONE,
-        CLEAR_DATA, CLEAR_FORM, SET_MENU_ITEM
+        CLEAR_DATA, CLEAR_FORM, SET_MENU_ITEM, DELETE
     }
     public TYPE type;
     public static int evCLICK = 0, evDUBLE_CLICK = 1, evLONG_CLICK = 2, evSWIPE = 3, evCHANGE = 4;
@@ -219,6 +219,14 @@ public class ViewHandler {
         this.afterResponse = afterResponse;
         this.mustValid = mustValid;
         this.changeEnabled = changeEnabled;
+        this.paramModel = paramModel;
+    }
+
+    public ViewHandler(int viewId, TYPE type, ParamModel paramModel,
+                       ActionsAfterResponse afterResponse) {
+        this.type = type;
+        this.viewId = viewId;
+        this.afterResponse = afterResponse;
         this.paramModel = paramModel;
     }
 

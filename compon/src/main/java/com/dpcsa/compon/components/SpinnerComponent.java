@@ -9,6 +9,7 @@ import com.dpcsa.compon.adapters.SpinnerAdapter;
 import com.dpcsa.compon.base.BaseComponent;
 import com.dpcsa.compon.base.BaseProvider;
 import com.dpcsa.compon.base.Screen;
+import com.dpcsa.compon.custom_components.ComponSpinner;
 import com.dpcsa.compon.interfaces_classes.IBase;
 import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.ListRecords;
@@ -21,6 +22,13 @@ public class SpinnerComponent extends BaseComponent {
     @Override
     public void initView() {
         spinner = (Spinner) parentLayout.findViewById(paramMV.paramView.viewId);
+        if (spinner == null) {
+            iBase.log("0009 Не найден Spinner в " + multiComponent.nameComponent);
+            return;
+        }
+        if (spinner instanceof ComponSpinner) {
+            ((ComponSpinner) spinner).isActual = paramMV.startActual;
+        }
         spinner.setBackgroundColor(0x00000000);
     }
 

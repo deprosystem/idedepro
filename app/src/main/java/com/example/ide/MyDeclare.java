@@ -9,7 +9,9 @@ public class MyDeclare extends DeclareScreens {
             MAIN_1 = "MAIN_1", NEWS = "NEWS", PROMOT = "PROMOT",
             DETAIL = "DETAIL", DRAWER = "DRAWER", SELL = "SELL",
             MAIN = "MAIN", INTRO = "INTRO", AUTH = "AUTH",
-            SIGNIN = "SIGNIN", SIGNUP = "SIGNUP", PROFILE = "PROFILE";
+            SIGNIN = "SIGNIN", SIGNUP = "SIGNUP", PROFILE = "PROFILE",
+            BUY = "BUY", DETAIL_PROD = "DETAIL_PROD", DETAIL_USER = "DETAIL_USER",
+            MYADS = "MYADS", DETAIL_MY = "DETAIL_MY";
 
     @Override
     public void declare() {
@@ -25,7 +27,7 @@ public class MyDeclare extends DeclareScreens {
                         navigator(start(DETAIL)));
 
         fragment(PROMOT, R.layout.fragment_promot, R.string.promot_screen_title);
-        activity(DETAIL, R.layout.activity_detail)
+        fragment(DETAIL, R.layout.activity_detail)
                 .component(TC.PANEL, model("query/czeux6pkp1l73gb/5", "id_news"),
                         view(R.id.scroll_panel));
 
@@ -34,15 +36,17 @@ public class MyDeclare extends DeclareScreens {
                 .menu(model(menu_Drawer_Menu), view(R.id.menu))
                 .component(TC.PANEL, model(PROFILE),
                         view(R.id.panel).noDataView(R.id.no_v),
-                        navigator(exit(R.id.ex), handler(R.id.ex, VH.SET_MENU_ITEM, NEWS)));
+                        navigator(exit(R.id.ex),
+                                handler(R.id.ex, VH.SET_MENU_ITEM, NEWS)));
 
         fragment(SELL, R.layout.fragment_sell, R.string.sell_screen_title)
-                .navigator(send(R.id.send, R.id.scroll_form, model(POST, "query/czeux6pkp1l73gb/7", "img,title,id_user=Profile,marka,model,year=System date,mileage,praice,gal")
-                        , after(),
-                        false, R.id.title, R.id.praice))
+                .navigator(handler(R.id.clear, VH.CLEAR_FORM, R.id.scroll_form, "img,title,mileage,praice,year,model,marka"),
+                        send(R.id.send, R.id.scroll_form, model(POST, "query/czeux6pkp1l73gb/20", "img,title,id_user=Profile,name_marka,name_model,year,mileage,praice,gal")
+                                , after(),
+                                false, R.id.title))
                 .component(TC.PANEL_ENTER, null,
                         view(R.id.scroll_form))
-                .component(TC.SPINNER, model("query/czeux6pkp1l73gb/8"),
+                .component(TC.SPINNER, model("query/czeux6pkp1l73gb/8", 90000000),
                         view(R.id.marka, R.layout.item_sell_marka_drop, R.layout.item_sell_marka_header),
                         navigator(handler(0, VH.ACTUAL, R.id.model).setTypeEvent(ViewHandler.evCHANGE)))
                 .component(TC.SPINNER, model("query/czeux6pkp1l73gb/9", "id_marka"),
@@ -69,7 +73,7 @@ public class MyDeclare extends DeclareScreens {
                         view(R.id.form),
                         navigator(send(R.id.send, model(POST, "autch/czeux6pkp1l73gb/1", "login,password")
                                 , after(setToken(), setProfile("profile"), handler(0, VH.NEXT_SCREEN_SEQUENCE)),
-                                false, R.id.login, R.id.password)));
+                                false, R.id.login)));
 
         fragment(SIGNUP, R.layout.fragment_signup)
                 .component(TC.PANEL_ENTER, null,
@@ -79,22 +83,49 @@ public class MyDeclare extends DeclareScreens {
                                 false, R.id.login, R.id.password, R.id.name, R.id.last_name, R.id.photo, R.id.email, R.id.phone)));
 
         fragment(PROFILE, R.layout.fragment_profile, R.string.profile_screen_title)
-                .navigator(handler(R.id.clear, VH.CLEAR_FORM, R.id.scroll_form, "photo,name,last_name,email,ph"))
+                .navigator(send(R.id.send, R.id.scroll_form, model(POST, "autch/czeux6pkp1l73gb/3", "name,last_name,email,phone,photo")
+                        , after(setProfile("profile")),
+                        false, R.id.name, R.id.last_name, R.id.email, R.id.phone))
                 .component(TC.PANEL_ENTER, model(PROFILE),
-                        view(R.id.scroll_form),
-                        navigator(send(R.id.send, model(POST, "autch/czeux6pkp1l73gb/3", "name,last_name,photo,email,phone")
-                                , after(setProfile("profile")),
-                                false, R.id.name, R.id.last_name, R.id.email, R.id.phone)))
+                        view(R.id.scroll_form))
                 .componentPhoto(R.id.ph_cl, new int[] {R.id.photo, R.id.ph}, R.string.profile_photo);
+
+        fragment(BUY, R.layout.fragment_buy, R.string.buy_screen_title)
+                .list(model("query/czeux6pkp1l73gb/19"),
+                        view(R.id.list, R.layout.item_buy_list_0),
+                        navigator(start(DETAIL_PROD)));
+
+        fragment(DETAIL_PROD, R.layout.fragment_detail_prod, R.string.detail_prod_screen_title, "name_marka,name_model")
+                .component(TC.PANEL, model("query/czeux6pkp1l73gb/21", "id_product"),
+                        view(R.id.scroll_panel),
+                        navigator(start(R.id.seller,DETAIL_USER)));
+
+        fragment(DETAIL_USER, R.layout.fragment_detail_user, R.string.detail_user_screen_title, "name")
+                .component(TC.PANEL, model("query/czeux6pkp1l73gb/22", "id_user"),
+                        view(R.id.scroll_panel));
+
+        fragment(MYADS, R.layout.fragment_myads, R.string.myads_screen_title)
+                .list(model("query/czeux6pkp1l73gb/30", "id_user=!!__!!id_user"),
+                        view(R.id.list, R.layout.item_myads_list_0),
+                        navigator(start(R.id.T_0,DETAIL_MY),
+                                delete(R.id.del, model(POST, "query/czeux6pkp1l73gb/34", "id_product")
+                                        , after(handler(0, VH.DEL_ITEM_LIST)))));
+
+        activity(DETAIL_MY, R.layout.activity_detail_my)
+                .component(TC.PANEL, model("query/czeux6pkp1l73gb/31", "id_product"),
+                        view(R.id.scroll_panel));
+
 
     }
 
     Menu menuMain_1Menu_b = new Menu()
             .item(R.drawable.news, R.string.main_1_menu_b_0, NEWS, true)
-            .item(R.drawable.promotion, R.string.main_1_menu_b_1, PROMOT);
+            .item(R.drawable.promotion, R.string.main_1_menu_b_1, PROMOT)
+            .item(R.drawable.shoppingcard, R.string.main_1_menu_b_2, BUY);
     Menu menu_Drawer_Menu = new Menu()
             .item(R.drawable.news, R.string.drawer_menu_0, NEWS, true)
             .item(R.drawable.even, R.string.drawer_menu_1, PROMOT)
-            .item(R.drawable.shoppingcard, R.string.drawer_menu_2, SELL)
-            .item(R.drawable.icon_profile, R.string.drawer_menu_3, PROFILE);
+            .item(R.drawable.shoppingcard, R.string.drawer_menu_2, SELL).enabled(1)
+            .item(R.drawable.icon_profile, R.string.drawer_menu_3, PROFILE).enabled(1)
+            .item(R.drawable._commute_ff000000, R.string.drawer_menu_4, MYADS).enabled(1);
 }
