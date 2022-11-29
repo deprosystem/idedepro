@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <com.dpcsa.compon.custom_components.ComponMapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        />
+
+    <com.dpcsa.compon.custom_components.SheetBottom
+        android:id="@+id/mark_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:viewId="@layout/view_map_mark_map"
+    />
+</RelativeLayout>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <com.dpcsa.compon.custom_components.SeekBarRange
+        android:id="@+id/seek"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dim_20"
+        android:layout_marginRight="@dimen/dim_20"
+        android:layout_marginBottom="240dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:barHeight="12dp"
+        app:betweenColor="@color/primaryDark"
+        app:thumbImg="@drawable/slider_pin"
+        app:barDrawable="@drawable/shape_1015"
+        app:minValueSeek="5"
+        app:maxValueSeek="15"
+        app:minStartValue="7"
+        app:maxStartValue="9"
+        app:sliderViewInfo="@id/inf"
+        app:sendNotif="date_night"
+        />
+
+    <TextView
+        android:id="@+id/inf"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="72dp"
+        android:layout_marginBottom="240dp"
+        android:layout_width="86dp"
+        android:layout_height="106dp"
+        android:background="@drawable/slider_pin_pressed"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/dim_24"
+        android:textSize="22dp"
+        />
+
+    <TextView
+        android:layout_above="@id/seek"
+        android:layout_marginLeft="@dimen/dim_20"
+        android:layout_marginBottom="@dimen/dim_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dim_12"
+        />
+
+    <TextView
+        android:layout_alignParentRight="true"
+        android:layout_above="@id/seek"
+        android:layout_marginRight="@dimen/dim_20"
+        android:layout_marginBottom="@dimen/dim_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="15 ночей"
+        android:textSize="@dimen/dim_12"
+        />
+
+    <TextView
+        android:id="@+id/select"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dim_20"
+        android:layout_marginRight="@dimen/dim_20"
+        android:layout_marginBottom="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_1016"
+        android:gravity="center"
+        android:text="Выбрать"
+        android:textSize="@dimen/dim_20"
+        android:textColor="@color/white"
+        />
+
+</RelativeLayout>

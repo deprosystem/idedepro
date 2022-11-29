@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <com.dpcsa.compon.custom_components.ComponImageView
+        android:id="@+id/img_r"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/repair_main"
+        android:scaleType="centerCrop"
+        />
+
+    <TextView
+        android:id="@+id/t_1"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/img_r"
+        android:layout_marginTop="@dimen/dim_40"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ремонтные площадки"
+        android:textSize="@dimen/dim_28"
+        android:textColor="@color/title"
+        />
+
+    <TextView
+        android:id="@+id/t_2"
+        android:layout_below="@id/t_1"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="@dimen/dim_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Быстро - до 3х дней + подменный фонд"
+        android:textSize="@dimen/dim_14"
+        />
+
+    <TextView
+        android:id="@+id/t_3"
+        android:layout_below="@id/t_2"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Качественно - гарантия 6 месяцев!"
+        android:textSize="@dimen/dim_14"
+        />
+
+    <TextView
+        android:id="@+id/t_4"
+        android:layout_below="@id/t_3"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Удобно - площадки по всей Украине"
+        android:textSize="@dimen/dim_14"
+        />
+
+    <TextView
+        android:id="@+id/t_5"
+        android:layout_below="@id/t_4"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Бесплатный забор техники!"
+        android:textSize="@dimen/dim_14"
+        />
+
+    <TextView
+        android:id="@+id/sel"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dim_24"
+        android:layout_marginRight="@dimen/dim_24"
+        android:layout_marginBottom="@dimen/dim_32"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@drawable/shape_1029"
+        android:gravity="center"
+        android:text="Выбрать площадку"
+        android:textSize="@dimen/dim_24"
+        android:textColor="@color/white"
+        />
+
+</RelativeLayout>

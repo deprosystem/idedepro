@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/T_0"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:padding="5dp"
+>
+    <com.dpcsa.compon.custom_components.ComponImageView
+        android:id="@+id/photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:corners="12dp"
+        />
+
+    <TextView
+        android:id="@+id/country_name"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="@dimen/dim_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        />
+
+    <RelativeLayout
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_1005"
+        android:paddingLeft="6dp"
+        android:paddingTop="3dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="3dp"
+    >
+        <TextView
+            android:id="@+id/qq"
+            android:layout_marginLeft="@dimen/dim_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="от"
+            android:textSize="@dimen/dim_12"
+            />
+
+        <TextView
+            android:id="@+id/min_cost"
+            android:layout_marginLeft="@dimen/dim_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dim_12"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -1209,10 +1209,10 @@ public class BaseFragment extends Fragment implements IBase {
 //                    }
 //                    break;
                 case ACTUAL:
-                    if (vh.showViewId == 0) {
+                    if (vh.componId == 0) {
                         log("0004 в фрагменте id омпонента не может быть равен 0");
                     } else {
-                        BaseComponent bc = mComponent.getComponent(vh.showViewId);
+                        BaseComponent bc = mComponent.getComponent(vh.componId);
                         if (bc != null) {
                             bc.actual();
                         } else {
@@ -1353,7 +1353,7 @@ public class BaseFragment extends Fragment implements IBase {
                             }
                             break;
                         case ACTUAL:
-                            BaseComponent bc = mComponent.getComponent(vh.showViewId);
+                            BaseComponent bc = mComponent.getComponent(vh.componId);
                             if (bc != null) {
                                 bc.actual();
                             } else {

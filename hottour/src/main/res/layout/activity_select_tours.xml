@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <RelativeLayout
+        android:id="@+id/tool"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/primary"
+    >
+        <com.dpcsa.compon.custom_components.ComponImageView
+            android:id="@+id/back"
+            android:layout_alignParentBottom="true"
+            android:layout_width="@dimen/dim_56"
+            android:layout_height="@dimen/dim_56"
+            android:padding="@dimen/dim_16"
+            android:src="@drawable/arrow_back"
+            android:scaleType="centerCrop"
+            />
+
+        <RelativeLayout
+            android:id="@+id/marsh"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dim_40"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        >
+            <TextView
+                android:id="@+id/depart_city_name"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="@dimen/dim_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dim_18"
+                android:textColor="@color/white"
+                />
+
+            <com.dpcsa.compon.custom_components.ComponImageView
+                android:id="@+id/fl"
+                android:layout_toRightOf="@id/depart_city_name"
+                android:layout_marginLeft="@dimen/dim_4"
+                android:layout_width="@dimen/dim_24"
+                android:layout_height="@dimen/dim_24"
+                android:src="@drawable/plane"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:id="@+id/country_name"
+                android:layout_toRightOf="@id/depart_city_name"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="@dimen/dim_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dim_18"
+                android:textColor="@color/white"
+                />
+
+        </RelativeLayout>
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_below="@id/tool"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    />
+</RelativeLayout>

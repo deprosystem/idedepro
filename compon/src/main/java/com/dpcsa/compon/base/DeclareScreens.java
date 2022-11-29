@@ -800,11 +800,11 @@ public abstract class DeclareScreens<T>{
     }
 
     public ViewHandler actual(int showViewId) {
-        return new ViewHandler(0, ViewHandler.TYPE.ACTUAL, showViewId, false);
+        return new ViewHandler(0, ViewHandler.TYPE.ACTUAL, showViewId, "");
     }
 
     public ViewHandler actual(int viewId, int showViewId) {
-        return new ViewHandler(viewId, ViewHandler.TYPE.ACTUAL, showViewId, false);
+        return new ViewHandler(viewId, ViewHandler.TYPE.ACTUAL, showViewId, "");
     }
 
     public ViewHandler switchOn(int viewId, boolean value) {

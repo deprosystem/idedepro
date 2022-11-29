@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/T_0"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dim_56"
+>
+    <TextView
+        android:id="@+id/city_name"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dim_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/title"
+        />
+
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dim_20"
+        android:layout_marginRight="@dimen/dim_20"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        />
+
+</RelativeLayout>

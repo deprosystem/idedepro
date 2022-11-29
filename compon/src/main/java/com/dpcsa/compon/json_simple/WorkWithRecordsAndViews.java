@@ -28,6 +28,7 @@ import com.dpcsa.compon.interfaces_classes.Visibility;
 import com.dpcsa.compon.single.ComponGlob;
 import com.dpcsa.compon.single.Injector;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Formatter;
@@ -322,6 +323,15 @@ public class WorkWithRecordsAndViews {
             if (v instanceof TextView) {
                 if (field.value instanceof String) {
                     ((TextView) v).setText((String )field.value);
+
+                    SimpleDateFormat format;
+                    if (v instanceof ComponTextView) {
+                        st = ((ComponTextView) v).getDateFormat();
+                        if (st != null) {
+                            ((ComponTextView) v).setText(new Formatter().format(st, field.value).toString());
+                        }
+                    }
+
 //                    if (v instanceof PlusMinus) {
 //                        ((PlusMinus) v).setParam(view, model, baseComponent);
 //                        ((PlusMinus) v).setData(field.value.toString());

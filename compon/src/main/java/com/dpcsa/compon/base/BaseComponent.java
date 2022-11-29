@@ -1470,10 +1470,10 @@ public abstract class BaseComponent {
                             }
                             break;
                         case ACTUAL:
-                            if (vh.showViewId == 0) {
+                            if (vh.componId == 0) {
                                 actual();
                             } else {
-                                bc = getComponent(vh.showViewId);
+                                bc = getComponent(vh.componId);
                                 if (bc != null) {
                                     bc.actual();
                                 } else {
@@ -1863,10 +1863,10 @@ public abstract class BaseComponent {
                     }
                     break;
                 case ACTUAL:
-                    if (vh.showViewId == 0) {
+                    if (vh.componId == 0) {
                         actual();
                     } else {
-                        BaseComponent bc = getComponent(vh.showViewId);
+                        BaseComponent bc = getComponent(vh.componId);
                         if (bc != null) {
                             bc.actual();
                         } else {

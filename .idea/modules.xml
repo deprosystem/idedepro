@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/idedepro.iml" filepath="$PROJECT_DIR$/idedepro.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/idedepro.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/idedepro.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/compon/idedepro.compon.iml" filepath="$PROJECT_DIR$/.idea/modules/compon/idedepro.compon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hottour/idedepro.hottour.iml" filepath="$PROJECT_DIR$/.idea/modules/hottour/idedepro.hottour.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/htkz/idedepro.htkz.iml" filepath="$PROJECT_DIR$/.idea/modules/htkz/idedepro.htkz.iml" />
     </modules>
   </component>

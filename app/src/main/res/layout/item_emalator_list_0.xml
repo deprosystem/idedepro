@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.dpcsa.compon.custom_components.SwipeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/__sw_0"
+    android:layout_width="match_parent"
+    android:layout_height="122dp"
+    app:swipeViewId="@id/T_0"
+>
+    <RelativeLayout
+        android:id="@+id/T_0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    >
+        <com.dpcsa.compon.custom_components.ComponImageView
+            android:id="@+id/img"
+            android:layout_marginTop="1dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            app:corners="12dp"
+            />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_toRightOf="@id/img"
+            android:layout_marginLeft="@dimen/dim_12"
+            android:layout_marginTop="@dimen/dim_16"
+            android:layout_marginRight="@dimen/dim_12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            />
+
+    </RelativeLayout>
+</com.dpcsa.compon.custom_components.SwipeLayout>

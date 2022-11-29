@@ -11,7 +11,9 @@
     <string name="drawer_menu_2">Sell</string>
     <string name="drawer_menu_3">Profile</string>
     <string name="drawer_menu_4">My ads</string>
+    <string name="drawer_menu_5">Emulator</string>
     <string name="sell_screen_title">Sell</string>
+    <string name="emalator_screen_title">Emulator</string>
     <string name="profile_screen_title">Profile</string>
     <string name="profile_photo">Choose a source</string>
     <string name="buy_screen_title">Buy a car</string>

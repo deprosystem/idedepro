@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+>
+    <TextView
+        android:id="@+id/address"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/dim_12"
+        android:layout_marginTop="@dimen/dim_16"
+        android:layout_marginRight="@dimen/dim_12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dim_28"
+        android:textColor="@color/title"
+        />
+
+    <TextView
+        android:id="@+id/phones"
+        android:layout_below="@id/address"
+        android:layout_marginLeft="@dimen/dim_12"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="@dimen/dim_12"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dim_14"
+        android:textColor="@color/color_115"
+        />
+
+    <TextView
+        android:id="@+id/butt"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/phones"
+        android:layout_marginLeft="@dimen/dim_24"
+        android:layout_marginTop="@dimen/dim_24"
+        android:layout_marginRight="@dimen/dim_24"
+        android:layout_marginBottom="@dimen/dim_24"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/shape_1031"
+        android:gravity="center"
+        android:text="Сделать заказ"
+        android:textSize="@dimen/dim_24"
+        android:textColor="@color/white"
+        />
+
+</RelativeLayout>

@@ -11,7 +11,7 @@ public class MyDeclare extends DeclareScreens {
             MAIN = "MAIN", INTRO = "INTRO", AUTH = "AUTH",
             SIGNIN = "SIGNIN", SIGNUP = "SIGNUP", PROFILE = "PROFILE",
             BUY = "BUY", DETAIL_PROD = "DETAIL_PROD", DETAIL_USER = "DETAIL_USER",
-            MYADS = "MYADS", DETAIL_MY = "DETAIL_MY";
+            MYADS = "MYADS", DETAIL_MY = "DETAIL_MY", EMALATOR = "EMALATOR";
 
     @Override
     public void declare() {
@@ -26,7 +26,10 @@ public class MyDeclare extends DeclareScreens {
                         view(R.id.list, R.layout.item_news_list_0),
                         navigator(start(DETAIL)));
 
-        fragment(PROMOT, R.layout.fragment_promot, R.string.promot_screen_title);
+        fragment(PROMOT, R.layout.fragment_promot, R.string.promot_screen_title)
+                .list(model("query/czeux6pkp1l73gb/38"),
+                        view(R.id.list, R.layout.item_promot_list_0));
+
         fragment(DETAIL, R.layout.activity_detail)
                 .component(TC.PANEL, model("query/czeux6pkp1l73gb/5", "id_news"),
                         view(R.id.scroll_panel));
@@ -115,6 +118,11 @@ public class MyDeclare extends DeclareScreens {
                 .component(TC.PANEL, model("query/czeux6pkp1l73gb/31", "id_product"),
                         view(R.id.scroll_panel));
 
+        fragment(EMALATOR, R.layout.fragment_emalator, R.string.emalator_screen_title)
+                .component(TC.PANEL, model(JSON, "[{\"id_field\":1,\"aa\":\"aaaaa\",\"bb\":\"bbbbb\",\"cc\":\"ccccc\",\"dd\":\"https://deb-apps.dp-ide.com/img_app/czeux6pkp1l73gb/autosalon.jpg\"}]"),
+                        view(R.id.panel))
+                .list(model("query/czeux6pkp1l73gb/35"),
+                        view(R.id.list, R.layout.item_emalator_list_0));
 
     }
 
@@ -127,5 +135,6 @@ public class MyDeclare extends DeclareScreens {
             .item(R.drawable.even, R.string.drawer_menu_1, PROMOT)
             .item(R.drawable.shoppingcard, R.string.drawer_menu_2, SELL).enabled(1)
             .item(R.drawable.icon_profile, R.string.drawer_menu_3, PROFILE).enabled(1)
-            .item(R.drawable._commute_ff000000, R.string.drawer_menu_4, MYADS).enabled(1);
+            .item(R.drawable._commute_ff000000, R.string.drawer_menu_4, MYADS).enabled(1)
+            .divider()        .item(0, R.string.drawer_menu_5, EMALATOR);
 }

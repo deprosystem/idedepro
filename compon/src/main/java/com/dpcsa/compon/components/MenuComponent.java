@@ -258,7 +258,12 @@ public class MenuComponent extends BaseComponent implements IsetMenu {
         selectStart = -1;
         for (int i = 0; i < ik; i++) {
             Record record = listData.get(i);
-            String screen = (String) record.getField(selectViewHandler.nameFieldScreen).value;
+            ft = record.getField(selectViewHandler.nameFieldScreen);
+            if (ft == null) {
+                continue;
+            }
+//            String screen = (String) record.getField(selectViewHandler.nameFieldScreen).value;
+            String screen = (String) ft.value;
             if (scr.equals(screen)) {
                 selectStart = i;
                 preferences.setNameInt(componentTag + multiComponent.nameComponent, selectStart);

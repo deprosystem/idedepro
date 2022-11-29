@@ -311,6 +311,7 @@ public class BasePresenter implements BaseInternetProvider.InternetProviderListe
                 iBase.progressStop();
             }
         }
+Log.d("QWERT","ERROR: " + message);
         if (paramModel.errorShowView == 0) {
             if (paramModel.viewErrorDialog == null || paramModel.viewErrorDialog) {
                 iBase.showDialog(statusCode, message, null);

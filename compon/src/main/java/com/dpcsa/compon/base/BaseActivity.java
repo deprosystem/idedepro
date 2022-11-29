@@ -848,7 +848,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
                             }
                             break;
                         case ACTUAL:
-                            BaseComponent bc = mComponent.getComponent(vh.showViewId);
+                            BaseComponent bc = mComponent.getComponent(vh.componId);
                             if (bc != null) {
                                 bc.actual();
                             } else {
