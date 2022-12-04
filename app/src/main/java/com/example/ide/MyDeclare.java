@@ -12,7 +12,7 @@ public class MyDeclare extends DeclareScreens {
             SIGNIN = "SIGNIN", SIGNUP = "SIGNUP", PROFILE = "PROFILE",
             BUY = "BUY", DETAIL_PROD = "DETAIL_PROD", DETAIL_USER = "DETAIL_USER",
             MYADS = "MYADS", DETAIL_MY = "DETAIL_MY", EMALATOR = "EMALATOR";
-
+//***********************
     @Override
     public void declare() {
 
