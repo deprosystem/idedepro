@@ -628,6 +628,7 @@ public class ComponGlob {
                 } else {
                     if (p.value.length() == 0) {
                         value = vv;
+                        p.value = vv;
                     } else {
                         value = p.value;
                     }

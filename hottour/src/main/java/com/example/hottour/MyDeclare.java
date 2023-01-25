@@ -27,7 +27,7 @@ public class MyDeclare extends DeclareScreens {
                 .menuBottom(model(menuSearchMenu_b), view(R.id.menu_b),
                         navigator(hide(R.id.sheet_h),show(R.id.sheet_s)),
                         navigator(hide(R.id.sheet_s),show(R.id.sheet_h)))
-                .component(TC.PANEL, model(PARAMETERS, "id_depart_cities"),
+                .component(TC.PANEL, model(PARAMETERS, "id_depart_cities=2"),
                         view(R.id.panel),
                         navigator(start(HOT_DEPART_CITY, after(setValueParam(R.id.panel),
                                 actual(R.id.list)))))
