@@ -4,17 +4,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+>
     <RelativeLayout
         android:id="@+id/form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+    >
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/_txt_inp_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dim_12"
-            android:layout_marginTop="@dimen/dim_40"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="@dimen/dim_12"
             app:hintTextAppearance="@style/txtInpt_12_21">
             <com.dpcsa.compon.custom_components.ComponEditText
@@ -22,87 +24,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/title"
-                android:theme="@style/editStyle_21_0"
+                android:theme="@style/editStyle_21_1"
                 android:hint="Login"
                 android:imeOptions="actionNext"
-                app:textError="@string/signin_login_error"
                 app:minLength="5"
                 android:inputType="text"
                 android:maxLines="1"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-<!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--            android:id="@+id/_txt_inp_password"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/_txt_inp_login"-->
-<!--            android:layout_marginLeft="@dimen/dim_12"-->
-<!--            android:layout_marginTop="10dp"-->
-
-<!--            android:layout_marginRight="@dimen/dim_12"-->
-<!--            app:hintTextAppearance="@style/txtInpt_12_21">-->
-<!--            <com.dpcsa.compon.custom_components.MyEditText-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textColor="@color/title"-->
-<!--                android:theme="@style/editStyle_21_0"-->
-<!--                android:hint="Password 11"-->
-<!--                android:imeOptions="actionNext"-->
-<!--                app:textError="@string/signin_password_error"-->
-<!--                app:idHidePassword="@id/n_eye"-->
-<!--                app:idShowPassword="@id/eye"-->
-<!--                android:maxLines="1"-->
-<!--                android:inputType="textPassword"/>-->
-<!--&lt;!&ndash;            <com.dpcsa.compon.custom_components.CompEditText&ndash;&gt;-->
-<!--&lt;!&ndash;                android:id="@+id/password"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:textColor="@color/title"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:theme="@style/editStyle_21_0"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:hint="Password 11"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:imeOptions="actionNext"&ndash;&gt;-->
-<!--&lt;!&ndash;                app:textError="@string/signin_password_error"&ndash;&gt;-->
-<!--&lt;!&ndash;                app:idHidePassword="@id/n_eye"&ndash;&gt;-->
-<!--&lt;!&ndash;                app:validPassword="aA0"&ndash;&gt;-->
-<!--&lt;!&ndash;                app:idShowPassword="@id/eye"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:maxLines="1"&ndash;&gt;-->
-<!--&lt;!&ndash;                app:minLength="5"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:inputType="textPassword"/>&ndash;&gt;-->
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
-
-        <com.dpcsa.compon.custom_components.MyEditText
-            android:id="@+id/password"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/_txt_inp_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/_txt_inp_login"
             android:layout_marginLeft="@dimen/dim_12"
             android:layout_marginTop="10dp"
-            android:hint="Password"
-            android:imeOptions="actionNext"
-            android:inputType="textVisiblePassword|textPassword"
-            android:maxLines="1"
-            android:textColor="#f00"
-            android:theme="@style/editStyle_21_0"
-            app:idHidePassword="@id/n_eye"
-            app:idShowPassword="@id/eye" />
-
-        <com.dpcsa.compon.custom_components.ComponImageView
-            android:id="@+id/eye"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/_txt_inp_login"
-            android:layout_marginTop="@dimen/dim_20"
-            android:layout_marginRight="@dimen/dim_16"
-            android:layout_width="@dimen/dim_40"
-            android:layout_height="@dimen/dim_40"
-            android:src="@drawable/eye_open"
-            android:scaleType="centerCrop"
-            />
+            android:layout_marginRight="@dimen/dim_12"
+            app:hintTextAppearance="@style/txtInpt_12_21">
+            <com.dpcsa.compon.custom_components.ComponEditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/editStyle_21_1"
+                android:imeOptions="actionNext"
+                app:isPassword="true"
+                app:validPassword="aA0"
+                app:idShowPassword="@id/eye_op"
+                app:idHidePassword="@id/eye_cl"
+                android:maxLines="1"
+                android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/send"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/_txt_inp_login"
-            android:layout_marginTop="140dp"
+            android:layout_below="@id/_txt_inp_password"
+            android:layout_marginTop="@dimen/dim_40"
             android:layout_width="200dp"
             android:layout_height="35dp"
             android:background="@drawable/shape_1000"
@@ -113,14 +70,26 @@
             />
 
         <com.dpcsa.compon.custom_components.ComponImageView
-            android:id="@+id/n_eye"
+            android:id="@+id/eye_op"
             android:layout_alignParentRight="true"
             android:layout_below="@id/_txt_inp_login"
-            android:layout_marginTop="@dimen/dim_20"
-            android:layout_marginRight="@dimen/dim_16"
+            android:layout_marginTop="@dimen/dim_16"
+            android:layout_marginRight="@dimen/dim_12"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:src="@drawable/eye_open"
+            android:scaleType="centerCrop"
+            />
+
+        <com.dpcsa.compon.custom_components.ComponImageView
+            android:id="@+id/eye_cl"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/_txt_inp_login"
+            android:layout_marginTop="@dimen/dim_16"
+            android:layout_marginRight="@dimen/dim_12"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:src="@drawable/eye_close"
-            android:layout_width="@dimen/dim_40"
-            android:layout_height="@dimen/dim_40"
             android:scaleType="centerCrop"
             />
 

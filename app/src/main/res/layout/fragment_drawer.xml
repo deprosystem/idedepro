@@ -8,7 +8,7 @@
 >
     <com.dpcsa.compon.custom_components.ElementMenu
         android:id="@+id/menu"
-        android:layout_marginTop="172dp"
+        android:layout_marginTop="140dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
@@ -16,8 +16,7 @@
     <RelativeLayout
         android:id="@+id/no_v"
         android:layout_width="match_parent"
-        android:layout_height="156dp"
-        android:background="@color/white"
+        android:layout_height="140dp"
     >
         <TextView
             android:id="@+id/enter"
@@ -27,7 +26,7 @@
             android:layout_width="100dp"
             android:layout_height="55dp"
             android:text="Log in"
-            android:textSize="@dimen/dim_24"
+            android:textSize="@dimen/dim_28"
             android:textColor="@color/title"
             />
 
@@ -39,24 +38,23 @@
             android:layout_height="120dp"
             android:src="@drawable/icon_avatar_null"
             android:scaleType="centerCrop"
+            app:oval="true"
             />
 
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/panel"
         android:layout_width="match_parent"
-        android:layout_height="156dp"
-        android:background="@color/white"
+        android:layout_height="140dp"
     >
         <com.dpcsa.compon.custom_components.ComponImageView
             android:id="@+id/photo"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:scaleType="centerCrop"
             app:oval="true"
-            app:placeholder="@drawable/icon_avatar_null"
             />
 
         <TextView
@@ -67,8 +65,6 @@
             android:layout_marginRight="@dimen/dim_12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dim_24"
-            android:textColor="@color/title"
             />
 
         <TextView
@@ -80,20 +76,18 @@
             android:layout_marginRight="@dimen/dim_12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dim_18"
             />
 
         <TextView
-            android:id="@+id/ex"
+            android:id="@+id/exit"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/photo"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="@dimen/dim_14"
+            android:layout_marginLeft="@dimen/dim_12"
+            android:layout_marginBottom="@dimen/dim_20"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="Exit"
             android:textSize="@dimen/dim_24"
-            android:textColor="@color/title"
+            android:textColor="@color/primaryDark"
             />
 
     </RelativeLayout>

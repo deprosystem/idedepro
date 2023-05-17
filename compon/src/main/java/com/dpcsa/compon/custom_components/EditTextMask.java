@@ -90,7 +90,7 @@ public class EditTextMask extends AppCompatEditText implements IComponent, IVali
             if (!hasFocus) {
                 isValid();
             } else {
-                setErrorValid("");
+                setErrorValid(null);
                 if (getText().length() == 0) {
                     setMask();
                 }
@@ -304,7 +304,7 @@ public class EditTextMask extends AppCompatEditText implements IComponent, IVali
         String origin = stripText(getText().toString());
         result = origin.length() >= lenOriginText;
         if (result) {
-            setErrorValid("");
+            setErrorValid(null);
         } else {
             setErrorValid(textError);
         }
@@ -325,11 +325,15 @@ public class EditTextMask extends AppCompatEditText implements IComponent, IVali
     }
 
     public void setErrorValid(String textError) {
+        String errTxt = textError;
+        if (errTxt != null && errTxt.length() == 0) {
+            errTxt = "Error";
+        }
         if (textInputLayout == null) {
             getTextInputLayout();
         }
         if (textInputLayout != null) {
-            textInputLayout.setError(textError);
+            textInputLayout.setError(errTxt);
         }
     }
 

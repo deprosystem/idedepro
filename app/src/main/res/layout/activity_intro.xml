@@ -8,7 +8,7 @@
 >
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/intro"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="152dp"
         android:layout_width="match_parent"
         android:layout_height="400dp"
     />
@@ -17,11 +17,11 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@id/cont"
         android:layout_marginBottom="@dimen/dim_32"
-        android:layout_width="181dp"
-        android:layout_height="45dp"
-        android:gravity="center_horizontal"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:gravity="center"
         android:text="Skip"
-        android:textSize="@dimen/dim_24"
+        android:textSize="@dimen/dim_28"
         android:textColor="@color/color_100"
         />
 
@@ -29,13 +29,13 @@
         android:id="@+id/cont"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/dim_40"
-        android:layout_width="230dp"
-        android:layout_height="50dp"
+        android:layout_marginBottom="@dimen/dim_32"
+        android:layout_width="200dp"
+        android:layout_height="44dp"
         android:background="@drawable/shape_1001"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:text="Next"
-        android:textSize="22dp"
+        android:textSize="@dimen/dim_24"
         android:textColor="@color/white"
         />
 
@@ -43,13 +43,12 @@
         android:id="@+id/proc"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/dim_40"
-        android:layout_width="230dp"
-        android:layout_height="50dp"
+        android:layout_marginBottom="@dimen/dim_32"
+        android:layout_width="200dp"
+        android:layout_height="44dp"
         android:background="@drawable/shape_1001"
         android:gravity="center"
-        android:text="Proceed"
-        android:textSize="22dp"
+        android:textSize="@dimen/dim_24"
         android:textColor="@color/white"
         />
 

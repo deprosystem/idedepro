@@ -26,36 +26,23 @@
             android:layout_marginRight="@dimen/dim_12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/dim_20"
+            android:textColor="@color/title"
             />
 
         <com.dpcsa.compon.custom_components.ComponTextView
             android:id="@+id/dat"
             android:layout_alignParentRight="true"
             android:layout_below="@id/title"
-            android:layout_marginLeft="@dimen/dim_12"
             android:layout_marginTop="10dp"
             android:layout_marginRight="@dimen/dim_12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dim_20"
-            android:textColor="@color/title"
             app:dateFormat="dd.MM.yy"
             />
 
-        <com.dpcsa.compon.custom_components.ComponTextView
-            android:id="@+id/tim"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/dat"
-            android:layout_marginLeft="@dimen/dim_12"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="@dimen/dim_12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:dateFormat="dd.MMM.yy"
-            />
-
         <RelativeLayout
-            android:layout_below="@id/tim"
+            android:layout_below="@id/dat"
             android:layout_marginTop="@dimen/dim_12"
             android:layout_width="match_parent"
             android:layout_height="1dp"

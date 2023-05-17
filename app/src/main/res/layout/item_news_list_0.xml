@@ -2,32 +2,50 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/T_0"
+    android:id="@+id/__sw_0"
     android:layout_width="match_parent"
     android:layout_height="120dp"
 >
-    <com.dpcsa.compon.custom_components.ComponImageView
-        android:id="@+id/img"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:scaleType="centerCrop"
-        />
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_toRightOf="@id/img"
-        android:layout_marginLeft="@dimen/dim_12"
-        android:layout_marginTop="@dimen/dim_16"
-        android:layout_marginRight="@dimen/dim_12"
+    <RelativeLayout
+        android:id="@+id/T_0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+    >
+        <com.dpcsa.compon.custom_components.ComponImageView
+            android:id="@+id/img"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            />
 
-    <RelativeLayout
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/grey"
-        />
+        <TextView
+            android:id="@+id/title"
+            android:layout_toRightOf="@id/img"
+            android:layout_marginLeft="@dimen/dim_12"
+            android:layout_marginTop="@dimen/dim_16"
+            android:layout_marginRight="@dimen/dim_12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/title"
+            />
 
+        <com.dpcsa.compon.custom_components.ComponTextView
+            android:id="@+id/date"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/title"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/dim_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:dateFormat="dd.MM.yy"
+            />
+
+        <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            />
+
+    </RelativeLayout>
 </RelativeLayout>

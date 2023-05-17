@@ -50,6 +50,9 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
     private View parent;
     private String validPassword;
 
+
+//    private String nameEd;
+
     public ComponEditText(Context context) {
         super(context);
         init(context, null);
@@ -66,6 +69,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
     }
 
     public void init(Context context, AttributeSet attrs) {
+//        nameEd = context.getResources().getResourceEntryName(getId());
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Simple,
                 0, 0);
         try {
@@ -214,10 +218,13 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                 if (id == idHide) {
                     viewShow.setVisibility(VISIBLE);
                     viewHide.setVisibility(GONE);
+//                    setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     setInputType(129);
                 } else {
                     viewShow.setVisibility(GONE);
                     viewHide.setVisibility(VISIBLE);
+
+//                    setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     setInputType(128);
                 }
                 setSelection(sel);
@@ -320,7 +327,14 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
 
     @Override
     public boolean isValid() {
-        return isValidFoc(false);
+//        return isValidFoc(false);
+        boolean result = isValidFoc(false);
+        if (result) {
+            setErrorValid(null);
+        } else {
+            setErrorValid(textError);
+        }
+        return result;
     }
 
     public boolean isValidFoc(boolean foc) {
@@ -397,6 +411,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
             String stEq = equalsGeneral.getText().toString();
             equalsGeneral.checkValid();
             if (! st.equals(stEq)) {
+                setErrorValid(textError);
                 return false;
             } else {
                 setErrorValid(null);
@@ -509,14 +524,20 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
     }
 
     public void setErrorValid(String textError) {
+        String errTxt = textError;
+        if (errTxt != null && errTxt.length() == 0) {
+            errTxt = "Error";
+        }
         if (viewError != null) {
-            viewError.setText(textError);
+//            viewError.setText(textError);
+            viewError.setText(errTxt);
         } else {
             if (textInputLayout == null) {
                 getTextInputLayout();
             }
             if (textInputLayout != null) {
-                textInputLayout.setError(textError);
+//                textInputLayout.setError(textError);
+                textInputLayout.setError(errTxt);
             }
         }
     }
