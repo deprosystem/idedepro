@@ -39,6 +39,9 @@
         <attr name="idClean" format="reference"/>
         <attr name="idShowPassword" format="reference"/>
         <attr name="idHidePassword" format="reference"/>
+        <attr name="idShowImg" format="reference"/>
+        <attr name="idHideImg" format="reference"/>
+        <attr name="idCleanImg" format="reference"/>
         <attr name="countryView" format="reference"/>
         <attr name="mask" format="string"/>
         <attr name="listPushName" format="string"/>

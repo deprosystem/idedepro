@@ -7,8 +7,11 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewParent;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatEditText;
@@ -51,6 +54,11 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
     private String validPassword;
 
 
+    float DENSITY = getResources().getDisplayMetrics().density;
+    int imgH = (int) (44 * DENSITY);
+//    int dp46 = (int) (46 * DENSITY);
+    private Context context;
+    private int imgShow, imgHide, imgClean;
 //    private String nameEd;
 
     public ComponEditText(Context context) {
@@ -69,6 +77,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
     }
 
     public void init(Context context, AttributeSet attrs) {
+        this.context = context;
 //        nameEd = context.getResources().getResourceEntryName(getId());
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Simple,
                 0, 0);
@@ -89,6 +98,10 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
             idClean = a.getResourceId(R.styleable.Simple_idClean, 0);
             idShow = a.getResourceId(R.styleable.Simple_idShowPassword, 0);
             idHide = a.getResourceId(R.styleable.Simple_idHidePassword, 0);
+
+            imgShow = a.getResourceId(R.styleable.Simple_idShowImg, 0);
+            imgHide = a.getResourceId(R.styleable.Simple_idHideImg, 0);
+            imgClean = a.getResourceId(R.styleable.Simple_idCleanImg, 0);
             idEquals = a.getResourceId(R.styleable.Simple_equalsId, 0);
             validPassword = a.getString(R.styleable.Simple_validPassword);  // aA0@
             alias = a.getString(R.styleable.Simple_alias);
@@ -178,6 +191,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
         if (isPassword) {
             setInputType(129);
         }
+/*
         if (idHide != 0 && idShow != 0 || idClean != 0) {
             if (idHide != 0 && idHide != idShow) {
                 viewHide = parent.findViewById(idHide);
@@ -188,6 +202,68 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                 viewHide.setVisibility(GONE);
                 setInputType(129);
             }
+            if (idClean != 0) {
+                viewClean = parent.findViewById(idClean);
+                viewClean.setOnClickListener(listener);
+            }
+        }
+ */
+        FrameLayout vvP = (FrameLayout) getParent();
+        if (imgHide != 0 && imgShow != 0 && imgHide != imgShow) {
+            viewShow = new ComponImageView(context);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(imgH, imgH);
+            lp.gravity = Gravity.RIGHT;
+            if (imgClean != 0) {
+                lp.setMargins(0,0, imgH,0);
+            }
+            viewShow.setLayoutParams(lp);
+            viewShow.setBackgroundResource(imgShow);
+            idShow = generateViewId();
+            viewShow.setId(idShow);
+            ((ImageView)viewShow).setScaleType(ImageView.ScaleType.CENTER_CROP);
+            viewShow.setOnClickListener(listener);
+            vvP.addView(viewShow);
+
+            viewHide = new ComponImageView(context);
+            FrameLayout.LayoutParams lpH = new FrameLayout.LayoutParams(imgH, imgH);
+            lpH.gravity = Gravity.RIGHT;
+            if (imgClean != 0) {
+                lpH.setMargins(0,0, imgH,0);
+            }
+            viewHide.setLayoutParams(lpH);
+            viewHide.setBackgroundResource(imgHide);
+            idHide = generateViewId();
+            viewHide.setId(idHide);
+            ((ImageView)viewHide).setScaleType(ImageView.ScaleType.CENTER_CROP);
+            viewHide.setOnClickListener(listener);
+            vvP.addView(viewHide);
+
+            viewHide.setVisibility(GONE);
+            viewShow.setVisibility(VISIBLE);
+            setInputType(129);
+        } else {
+            if (idHide != 0 && idShow != 0 && idHide != idShow) {
+                viewHide = parent.findViewById(idHide);
+                viewShow = parent.findViewById(idShow);
+                viewHide.setOnClickListener(listener);
+                viewShow.setOnClickListener(listener);
+                viewShow.setVisibility(VISIBLE);
+                viewHide.setVisibility(GONE);
+                setInputType(129);
+            }
+        }
+        if (imgClean != 0) {
+            viewClean = new ComponImageView(context);
+            FrameLayout.LayoutParams lpC = new FrameLayout.LayoutParams(imgH, imgH);
+            lpC.gravity = Gravity.RIGHT;
+            viewClean.setLayoutParams(lpC);
+            viewClean.setBackgroundResource(imgClean);
+            idClean = generateViewId();
+            viewClean.setId(idClean);
+            ((ImageView)viewClean).setScaleType(ImageView.ScaleType.CENTER_CROP);
+            viewClean.setOnClickListener(listener);
+            vvP.addView(viewClean);
+        } else {
             if (idClean != 0) {
                 viewClean = parent.findViewById(idClean);
                 viewClean.setOnClickListener(listener);
@@ -218,13 +294,10 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                 if (id == idHide) {
                     viewShow.setVisibility(VISIBLE);
                     viewHide.setVisibility(GONE);
-//                    setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     setInputType(129);
                 } else {
                     viewShow.setVisibility(GONE);
                     viewHide.setVisibility(VISIBLE);
-
-//                    setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     setInputType(128);
                 }
                 setSelection(sel);
