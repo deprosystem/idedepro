@@ -191,23 +191,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
         if (isPassword) {
             setInputType(129);
         }
-/*
-        if (idHide != 0 && idShow != 0 || idClean != 0) {
-            if (idHide != 0 && idHide != idShow) {
-                viewHide = parent.findViewById(idHide);
-                viewShow = parent.findViewById(idShow);
-                viewHide.setOnClickListener(listener);
-                viewShow.setOnClickListener(listener);
-                viewShow.setVisibility(VISIBLE);
-                viewHide.setVisibility(GONE);
-                setInputType(129);
-            }
-            if (idClean != 0) {
-                viewClean = parent.findViewById(idClean);
-                viewClean.setOnClickListener(listener);
-            }
-        }
- */
+
         FrameLayout vvP = (FrameLayout) getParent();
         if (imgHide != 0 && imgShow != 0 && imgHide != imgShow) {
             viewShow = new ComponImageView(context);
@@ -233,6 +217,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
             viewHide.setLayoutParams(lpH);
             viewHide.setBackgroundResource(imgHide);
             idHide = generateViewId();
+
             viewHide.setId(idHide);
             ((ImageView)viewHide).setScaleType(ImageView.ScaleType.CENTER_CROP);
             viewHide.setOnClickListener(listener);

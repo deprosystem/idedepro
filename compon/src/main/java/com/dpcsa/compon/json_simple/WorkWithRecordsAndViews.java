@@ -1,6 +1,7 @@
 package com.dpcsa.compon.json_simple;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -160,7 +161,11 @@ public class WorkWithRecordsAndViews {
             id = v.getId();
             if (id > -1) {
                 if (v instanceof IClear) {
-                    name = v.getContext().getResources().getResourceEntryName(id);
+                    name = "";
+//                    name = v.getContext().getResources().getResourceEntryName(id);
+                    try {
+                        name = v.getContext().getResources().getResourceEntryName(id);
+                    } catch (Resources.NotFoundException e) {}
                     if (listField.indexOf("," + name + ",") > -1) {
                         ((IClear) v).clearValue();
                     }
@@ -174,7 +179,11 @@ public class WorkWithRecordsAndViews {
                 id = v.getId();
                 if (id != -1) {
                     if (v instanceof IClear) {
-                        name = v.getContext().getResources().getResourceEntryName(id);
+                        name = "";
+//                        name = v.getContext().getResources().getResourceEntryName(id);
+                        try {
+                            name = v.getContext().getResources().getResourceEntryName(id);
+                        } catch (Resources.NotFoundException e) {}
                         if (listField.indexOf("," + name + ",") > -1) {
                             ((IClear) v).clearValue();
                         }
@@ -250,9 +259,14 @@ public class WorkWithRecordsAndViews {
     private void setValue(View v) {
         int id = v.getId();
         String st;
-        String name = v.getContext().getResources().getResourceEntryName(id);
+        String name = "";
+        try {
+            name = v.getContext().getResources().getResourceEntryName(id);
+        } catch (Resources.NotFoundException e) {}
         if (setParam) {
-            setRecordField(v, name);
+            if (name.length() > 0) {
+                setRecordField(v, name);
+            }
             return;
         }
         if (v instanceof IAlias) {
