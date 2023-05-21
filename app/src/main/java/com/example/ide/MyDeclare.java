@@ -34,13 +34,19 @@ public class MyDeclare extends DeclareScreens {
                         view(R.id.scroll_panel));
 
         fragment(DRAWER, R.layout.fragment_drawer)
-                .component(TC.PANEL, model("query/w3auhtqt_bemqtc/7"),
-                        view(R.id.panel).noDataView(R.id.no_v))
+                .navigator(start(R.id.enter,AUTH))
+                .component(TC.PANEL, model(PROFILE),
+                        view(R.id.panel).noDataView(R.id.no_v),
+                        navigator(exit(R.id.exit),
+                                handler(R.id.exit, VH.SET_MENU_ITEM, AUTH)))
                 .menu(model(menu_Drawer_Menu), view(R.id.menu));
 
         fragment(SELL, R.layout.fragment_sell, R.string.sell_screen_title);
         fragment(M_ADS, R.layout.fragment_m_ads, R.string.m_ads_screen_title);
         fragment(PROF, R.layout.fragment_prof, R.string.prof_screen_title)
+                .navigator(send(R.id.send, R.id.scroll_form, model(POST, "autch/w3auhtqt_bemqtc/3", "name,last_name,photo,email,phone")
+                        , after(setProfile("profile")),
+                        false, R.id.name, R.id.last_name, R.id.email, R.id.phone))
                 .component(TC.PANEL_ENTER, model(PROFILE),
                         view(R.id.scroll_form))
                 .componentPhoto(R.id.phot_1, new int[] {R.id.photo, R.id.phot_1}, R.string.prof_photo);

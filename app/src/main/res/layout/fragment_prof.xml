@@ -5,17 +5,17 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+>
     <ScrollView
         android:layout_above="@id/fut"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+    >
         <RelativeLayout
             android:id="@+id/scroll_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
+        >
             <com.dpcsa.compon.custom_components.ComponImageView
                 android:id="@+id/photo"
                 android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                     app:minLength="3"
                     android:inputType="text"
                     android:maxLines="1"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/_txt_inp_last_name"
@@ -62,7 +62,7 @@
                     app:minLength="3"
                     android:inputType="text"
                     android:maxLines="1"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/_txt_inp_email"
@@ -83,7 +83,7 @@
                     app:typeValidate="email"
                     android:maxLines="1"
                     android:inputType="text"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/_txt_inp_phone"
@@ -103,7 +103,7 @@
                     app:mask="+380 __ ___ ____"
                     android:maxLines="1"
                     android:inputType="phone"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             <com.dpcsa.compon.custom_components.ComponImageView
                 android:id="@+id/phot_1"
@@ -131,12 +131,12 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_56"
-        >
+    >
         <TextView
             android:id="@+id/send"
             android:layout_centerInParent="true"
             android:layout_width="200dp"
-            android:layout_height="35dp"
+            android:layout_height="@dimen/dim_40"
             android:background="@drawable/shape_1000"
             android:gravity="center"
             android:text="Send"

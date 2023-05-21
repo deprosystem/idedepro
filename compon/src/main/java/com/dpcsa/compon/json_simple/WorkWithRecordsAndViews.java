@@ -345,13 +345,6 @@ public class WorkWithRecordsAndViews {
                             ((ComponTextView) v).setText(new Formatter().format(st, field.value).toString());
                         }
                     }
-
-//                    if (v instanceof PlusMinus) {
-//                        ((PlusMinus) v).setParam(view, model, baseComponent);
-//                        ((PlusMinus) v).setData(field.value.toString());
-//                    } else {
-//                        ((TextView) v).setText((String )field.value);
-//                    }
                     return;
                 }
                 if (field.value instanceof Long) {
@@ -412,6 +405,8 @@ public class WorkWithRecordsAndViews {
                         adrDrawable = ((ComponImageView) v).getPlaceholder();
                         if (adrDrawable != 0) {
                             ((ImageView) v).setImageDrawable(context.getResources().getDrawable(adrDrawable));
+                        } else {
+                            ((ImageView) v).setImageDrawable(null);
                         }
                     } else {
                         ((ImageView) v).setImageDrawable(null);

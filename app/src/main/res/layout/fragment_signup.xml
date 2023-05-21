@@ -5,16 +5,16 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+    >
         <RelativeLayout
             android:id="@+id/scroll_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
+        >
             <com.dpcsa.compon.custom_components.ComponImageView
                 android:id="@+id/photo"
                 android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                     app:minLength="5"
                     android:inputType="text"
                     android:maxLines="1"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/_txt_inp_name"
@@ -62,7 +62,7 @@
                     app:minLength="3"
                     android:inputType="text"
                     android:maxLines="1"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/_txt_inp_last_name"
@@ -82,7 +82,7 @@
                     app:minLength="3"
                     android:inputType="text"
                     android:maxLines="1"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/_txt_inp_email"
@@ -102,7 +102,7 @@
                     app:typeValidate="email"
                     android:maxLines="1"
                     android:inputType="text"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/_txt_inp_phone"
@@ -122,7 +122,7 @@
                     app:mask="+380 __ ___ ____"
                     android:maxLines="1"
                     android:inputType="phone"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/_txt_inp_password"
@@ -149,7 +149,7 @@
                     android:maxLines="1"
                     app:minLength="5"
                     android:inputType="textPassword"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/send"
@@ -186,7 +186,7 @@
                     app:idHideImg="@drawable/eye_close"
                     android:maxLines="1"
                     android:inputType="text"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             <com.dpcsa.compon.custom_components.ComponImageView
                 android:id="@+id/phot_btn"

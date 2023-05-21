@@ -3,8 +3,8 @@
     <color name="primary">#51aeff</color>
     <color name="primaryDark">#007eed</color>
     <color name="primaryLight">#a3d4ff</color>
-    <color name="accent">#ffffff</color>
-    <color name="accentDark">#edeaea</color>
+    <color name="accent">#ffe854</color>
+    <color name="accentDark">#ffc300</color>
     <color name="accentLight">#fff199</color>
     <color name="grey">#cccccc</color>
     <color name="greyDark">#bbbbbb</color>
@@ -22,5 +22,6 @@
     <color name="white">#ffffff</color>
     <color name="white_20">#32ffffff</color>
     <color name="defoult_text">#808080</color>
-    <color name="color_100">#00ff11</color>
+    <color name="color_100">#19ff00</color>
+    <color name="color_101">#eaffff</color>
 </resources>
