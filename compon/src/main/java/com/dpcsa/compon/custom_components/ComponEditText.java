@@ -1,5 +1,8 @@
 package com.dpcsa.compon.custom_components;
 
+import static android.text.InputType.TYPE_CLASS_NUMBER;
+import static android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.Editable;
@@ -35,12 +38,11 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
     private int maxLength = Integer.MAX_VALUE;
     private String alias;
     private OnChangeStatusListener statusListener;
-    public String textError = "";
+    public String textError = "", textSystemError = "";
     protected TextInputLayout textInputLayout;
     private String minValueText, maxValueText;
     private double minValue, maxValue;
     private long minValueLong, maxValueLong;
-    private boolean typeClassNumber;
     private boolean isValid, isVerify;
     private boolean onlyLetters, isPassword;
     private View.OnFocusChangeListener focusChangeListenerInheritor = null;
@@ -52,14 +54,12 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
     private String oldString;
     private View parent;
     private String validPassword;
-
-
     float DENSITY = getResources().getDisplayMetrics().density;
     int imgH = (int) (44 * DENSITY);
-//    int dp46 = (int) (46 * DENSITY);
     private Context context;
     private int imgShow, imgHide, imgClean;
 //    private String nameEd;
+    private int numbDec;    // 1 - number 2 - decimal
 
     public ComponEditText(Context context) {
         super(context);
@@ -120,55 +120,66 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                 typeValidate = LENGTH;
             }
         }
-        if (getInputType() == InputType.TYPE_CLASS_NUMBER) {
-            typeClassNumber = true;
-            maxValueLong = Long.MAX_VALUE;
-            minValueLong = Long.MIN_VALUE;
-            if (minValueText != null) {
-                try {
-                    minValueLong = Long.valueOf(minValueText);
-                } catch (NumberFormatException e) {
-                    minValueLong = Long.MIN_VALUE;
-                    errorParam("minValue");
-                }
-            }
-            if (maxValueText != null) {
-                try {
-                    maxValueLong = Long.valueOf(maxValueText);
-                } catch (NumberFormatException e) {
-                    maxValueLong = Long.MAX_VALUE;
-                    errorParam("maxValue");
-                }
-            }
-            if (minValueLong != Long.MIN_VALUE || maxValueLong != Long.MAX_VALUE) {
-                typeValidate = DIAPASON;
-                isVerify = true;
-//                addTextChangedListener(new EditTextWatcher());
-            }
+        int dd = TYPE_CLASS_NUMBER | TYPE_NUMBER_FLAG_DECIMAL;
+        int ii = getInputType();
+        if ((ii & dd) == dd) {
+            numbDec = 2;
         } else {
-            typeClassNumber = false;
-            maxValue = Double.MAX_VALUE;
-            minValue = Double.MIN_VALUE;
-            if (minValueText != null) {
-                try {
-                    minValue = Double.valueOf(minValueText);
-                } catch (NumberFormatException e) {
-                    minValue = Double.MIN_VALUE;
-                    errorParam("minValue");
+            if ((ii & TYPE_CLASS_NUMBER) == TYPE_CLASS_NUMBER) {
+                numbDec = 1;
+            }
+        }
+
+        switch (numbDec){
+            case 1:
+                maxValueLong = Long.MAX_VALUE;
+                minValueLong = Long.MIN_VALUE;
+                if (minValueText != null) {
+                    try {
+                        minValueLong = Long.valueOf(minValueText);
+                    } catch (NumberFormatException e) {
+                        minValueLong = Long.MIN_VALUE;
+                        errorParam("minValue");
+                    }
                 }
-            }
-            if (maxValueText != null) {
-                try {
-                    maxValue = Double.valueOf(maxValueText);
-                } catch (NumberFormatException e) {
-                    maxValue = Double.MAX_VALUE;
-                    errorParam("maxValue");
+                if (maxValueText != null) {
+                    try {
+                        maxValueLong = Long.valueOf(maxValueText);
+                    } catch (NumberFormatException e) {
+                        maxValueLong = Long.MAX_VALUE;
+                        errorParam("maxValue");
+                    }
                 }
-            }
-            if (minValue != Double.MIN_VALUE || maxValue != Double.MAX_VALUE) {
-                typeValidate = DIAPASON;
-                isVerify = true;
-            }
+                if (minValueLong != Long.MIN_VALUE || maxValueLong != Long.MAX_VALUE) {
+                    typeValidate = DIAPASON;
+                    isVerify = true;
+                }
+                break;
+            case 2:
+//                typeClassNumber = false;
+                maxValue = Double.MAX_VALUE;
+                minValue = Double.MIN_VALUE;
+                if (minValueText != null) {
+                    try {
+                        minValue = Double.valueOf(minValueText);
+                    } catch (NumberFormatException e) {
+                        minValue = Double.MIN_VALUE;
+                        errorParam("minValue");
+                    }
+                }
+                if (maxValueText != null) {
+                    try {
+                        maxValue = Double.valueOf(maxValueText);
+                    } catch (NumberFormatException e) {
+                        maxValue = Double.MAX_VALUE;
+                        errorParam("maxValue");
+                    }
+                }
+                if (minValue != Double.MIN_VALUE || maxValue != Double.MAX_VALUE) {
+                    typeValidate = DIAPASON;
+                    isVerify = true;
+                }
+                break;
         }
         if (validPassword.length() > 0 && typeValidate < 1) {
             typeValidate = PASSWORD;
@@ -374,23 +385,32 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
     }
 
     public boolean isValidRes() {
+        textSystemError = "";
         boolean result = isValidFoc(true);
         if (result) {
             setErrorValid(null);
         } else {
-            setErrorValid(textError);
+            if (textSystemError.length() > 0) {
+                setErrorValid(textSystemError);
+            } else {
+                setErrorValid(textError);
+            }
         }
         return result;
     }
 
     @Override
     public boolean isValid() {
-//        return isValidFoc(false);
+        textSystemError = "";
         boolean result = isValidFoc(false);
         if (result) {
             setErrorValid(null);
         } else {
-            setErrorValid(textError);
+            if (textSystemError.length() > 0) {
+                setErrorValid(textSystemError);
+            } else {
+                setErrorValid(textError);
+            }
         }
         return result;
     }
@@ -413,16 +433,40 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                 result = st.length() >= minLength;
                 break;
             case DIAPASON :
-                double val = 0d;
-                if (st != null) {
-                    try {
-                        val = Double.valueOf(st);
-                    } catch (NumberFormatException e) {
-                        result = false;
-                        errorParam("value");
-                    }
+                switch (numbDec) {
+                    case 1:
+                        long valL;
+                        if (st != null && st.length() > 0) {
+                            try {
+                                valL = Integer.valueOf(st);
+                                result = maxValueLong >= valL && valL >= minValueLong;
+                            } catch (NumberFormatException e) {
+                                result = false;
+                                textSystemError = "Invalid value";
+                                errorParam("Invalid value");
+                            }
+                        } else {
+                            textSystemError = "Invalid value";
+                            result = false;
+                        }
+                        break;
+                    case 2:
+                        double val;
+                        if (st != null && st.length() > 0) {
+                            try {
+                                val = Double.valueOf(st);
+                                result = maxValue >= val && val >= minValue;
+                            } catch (NumberFormatException e) {
+                                result = false;
+                                textSystemError = "Invalid value";
+                                errorParam("Invalid value");
+                            }
+                        } else {
+                            textSystemError = "Invalid value";
+                            result = false;
+                        }
+                        break;
                 }
-                result = maxValue > val && val > minValue;
                 break;
             case PASSWORD:
                 result = true;
@@ -511,6 +555,63 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                 return;
             }
             if (isVerify) {
+                switch (numbDec){
+                    case 1:
+                        if (st != null && st.length() > 0) {
+                            long v = Long.valueOf(st);
+                            if (v < minValueLong) {
+                                st = String.valueOf(minValueLong);
+                                setText(st);
+                                setSelection(st.length());
+                            }
+                            if (v > maxValueLong) {
+                                st = String.valueOf(maxValueLong);
+                                setText(st);
+                                setSelection(st.length());
+                            }
+                        }
+
+//                        long v = Long.MIN_VALUE;
+//                        if (st != null && st.length() > 0) {
+//                            v = Long.valueOf(st);
+//                        }
+//                        if (v < minValueLong) {
+//                            st = String.valueOf(minValueLong);
+//                            setText(st);
+//                            setSelection(st.length());
+//                        }
+//                        if (v > maxValueLong) {
+//                            st = String.valueOf(maxValueLong);
+//                            setText(st);
+//                            setSelection(st.length());
+//                        }
+                        break;
+                    case 2:
+//                        double vD = Double.MIN_VALUE;
+                        if (st != null && st.length() > 0) {
+                            double vD;
+                            st = st.replaceAll(",", ".");
+                            try {
+                                vD = Double.valueOf(st);
+                            } catch (NumberFormatException e) {
+                                setText(oldString);
+                                setSelection(selectPos);
+                                break;
+                            }
+                            if (vD < minValue) {
+                                st = String.valueOf(minValue);
+                                setText(st);
+                                setSelection(st.length());
+                            }
+                            if (vD > maxValue) {
+                                st = String.valueOf(maxValue);
+                                setText(st);
+                                setSelection(st.length());
+                            }
+                        }
+                        break;
+                }
+/*
                 if (typeClassNumber) {
                     long v = Long.valueOf(st);
                     if (v < minValueLong) {
@@ -536,6 +637,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
                         setSelection(st.length());
                     }
                 }
+*/
             }
             checkValid();
             selectPos = getSelectionEnd();

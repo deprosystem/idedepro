@@ -8,7 +8,11 @@
     <string name="drawer_menu_0">News</string>
     <string name="drawer_menu_1">Promotion</string>
     <string name="drawer_menu_2">Sell</string>
+    <string name="sell_gal">Choose a source</string>
+    <string name="sell_photo">Choose a source</string>
     <string name="drawer_menu_3">My ads</string>
+    <string name="buy_screen_title">Buy a car</string>
+    <string name="main_1_menu_b_2">Buy a car</string>
     <string name="drawer_menu_4">Profile</string>
     <string name="sell_screen_title">Sell</string>
     <string name="m_ads_screen_title">My ads</string>

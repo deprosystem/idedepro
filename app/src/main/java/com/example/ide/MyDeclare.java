@@ -10,7 +10,7 @@ public class MyDeclare extends DeclareScreens {
             DETAIL_NEWS = "DETAIL_NEWS", DRAWER = "DRAWER", SELL = "SELL",
             M_ADS = "M_ADS", PROF = "PROF", MAIN = "MAIN",
             INTRO = "INTRO", AUTH = "AUTH", SIGNIN = "SIGNIN",
-            SIGNUP = "SIGNUP";
+            SIGNUP = "SIGNUP", BUY = "BUY";
 
     @Override
     public void declare() {
@@ -41,7 +41,24 @@ public class MyDeclare extends DeclareScreens {
                                 handler(R.id.exit, VH.SET_MENU_ITEM, AUTH)))
                 .menu(model(menu_Drawer_Menu), view(R.id.menu));
 
-        fragment(SELL, R.layout.fragment_sell, R.string.sell_screen_title);
+        fragment(SELL, R.layout.fragment_sell, R.string.sell_screen_title)
+                .navigator(send(R.id.send, R.id.scroll_form, model(POST, "query/w3auhtqt_bemqtc/18", "img,itle,id_user,name_marka,name_model,year,mileage,price,gal")
+                                , after(),
+                                false, R.id.itle, R.id.mileage, R.id.price),
+                        handler(R.id.clear, VH.CLEAR_FORM, R.id.scroll_form, "img,itle,mileage,price,year,model,marka"))
+                .component(TC.PANEL_ENTER, null,
+                        view(R.id.scroll_form))
+                .component(TC.SPINNER, model("query/w3auhtqt_bemqtc/9"),
+                        view(R.id.marka, R.layout.item_sell_marka_drop, R.layout.item_sell_marka_header),
+                        navigator(actual(R.id.model).setTypeEvent(ViewHandler.evCHANGE)))
+                .component(TC.SPINNER, model("query/w3auhtqt_bemqtc/10", "id_marka"),
+                        view(R.id.model, R.layout.item_sell_model_drop, R.layout.item_sell_model_header)).noActualStart()
+                .component(TC.SPINNER, model("query/w3auhtqt_bemqtc/11"),
+                        view(R.id.year, R.layout.item_sell_year_drop, R.layout.item_sell_year_header))
+                .editGallery(R.id.gal, R.id.plus, R.id.del,
+                        R.id.mov, R.string.sell_gal, "query/w3auhtqt_bemqtc/")
+                .componentPhoto(R.id.cam, R.id.img, R.string.sell_photo);
+
         fragment(M_ADS, R.layout.fragment_m_ads, R.string.m_ads_screen_title);
         fragment(PROF, R.layout.fragment_prof, R.string.prof_screen_title)
                 .navigator(send(R.id.send, R.id.scroll_form, model(POST, "autch/w3auhtqt_bemqtc/3", "name,last_name,photo,email,phone")
@@ -77,11 +94,16 @@ public class MyDeclare extends DeclareScreens {
                                 false, R.id.login, R.id.password, R.id.name, R.id.last_name, R.id.email, R.id.phone)))
                 .componentPhoto(R.id.phot_btn, R.id.photo, R.string.signup_photo);
 
+        fragment(BUY, R.layout.fragment_buy, R.string.buy_screen_title)
+                .list(model("query/w3auhtqt_bemqtc/19"),
+                        view(R.id.list, R.layout.item_buy_list_0));
+
     }
 
     Menu menuMain_1Menu_b = new Menu()
             .item(R.drawable.news, R.string.main_1_menu_b_0, NEWS, true)
-            .item(R.drawable.promotion, R.string.main_1_menu_b_1, PROMOT);
+            .item(R.drawable.promotion, R.string.main_1_menu_b_1, PROMOT)
+            .item(R.drawable.list, R.string.main_1_menu_b_2, BUY);
     Menu menu_Drawer_Menu = new Menu()
             .item(R.drawable.news, R.string.drawer_menu_0, NEWS, true)
             .item(R.drawable.promotion, R.string.drawer_menu_1, PROMOT)
