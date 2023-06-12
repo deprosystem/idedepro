@@ -30,7 +30,7 @@ public class MyDeclare extends DeclareScreens {
                         view(R.id.list, R.layout.item_promot_list_0));
 
         fragment(DETAIL_NEWS, R.layout.fragment_detail_news)
-                .component(TC.PANEL, model("query/w3auhtqt_bemqtc/6"),
+                .component(TC.PANEL, model("query/w3auhtqt_bemqtc/6", "id_news"),
                         view(R.id.scroll_panel));
 
         fragment(DRAWER, R.layout.fragment_drawer)

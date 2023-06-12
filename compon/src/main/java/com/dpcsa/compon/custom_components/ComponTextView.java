@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -127,7 +128,11 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
                 if ( ! dateMilisec) {
                     d = d * 1000;
                 }
-                Date dd = new Date(d);
+                Calendar cc = new GregorianCalendar();
+                long off = new Date().getTimezoneOffset() * 60000;
+                cc.setTimeZone(TimeZone.getTimeZone("Etc/Greenwich"));
+                cc.setTimeInMillis(d + off);
+                Date dd = new Date(cc.get(Calendar.YEAR), cc.get(Calendar.MONTH)+1, cc.get(Calendar.DAY_OF_MONTH));
                 setText(df.format(dd));
             } else if (data instanceof Date) {
 
