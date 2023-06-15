@@ -106,6 +106,11 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
             return;
         }
         if (dateFormat != null && dateFormat.length() > 0) {
+            boolean isTZ = false;
+            if (dateFormat.startsWith("tz_")) {
+                dateFormat = dateFormat.substring(3);
+                isTZ = true;
+            }
             SimpleDateFormat df = new SimpleDateFormat(dateFormat);
             if (data instanceof String) {
                 String stt = new String((String) data);
@@ -128,12 +133,17 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
                 if ( ! dateMilisec) {
                     d = d * 1000;
                 }
-                Calendar cc = new GregorianCalendar();
-                long off = new Date().getTimezoneOffset() * 60000;
-                cc.setTimeZone(TimeZone.getTimeZone("Etc/Greenwich"));
-                cc.setTimeInMillis(d + off);
-                Date dd = new Date(cc.get(Calendar.YEAR), cc.get(Calendar.MONTH)+1, cc.get(Calendar.DAY_OF_MONTH));
-                setText(df.format(dd));
+                if (isTZ) {
+                    Date dd = new Date(d);
+                    setText(df.format(dd));
+                } else {
+                    Calendar cc = new GregorianCalendar();
+                    long off = new Date().getTimezoneOffset() * 60000;
+                    cc.setTimeZone(TimeZone.getTimeZone("Etc/Greenwich"));
+                    cc.setTimeInMillis(d + off);
+                    Date dd = new Date(cc.get(Calendar.YEAR), cc.get(Calendar.MONTH) + 1, cc.get(Calendar.DAY_OF_MONTH));
+                    setText(df.format(dd));
+                }
             } else if (data instanceof Date) {
 
             }
