@@ -141,7 +141,8 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
                     long off = new Date().getTimezoneOffset() * 60000;
                     cc.setTimeZone(TimeZone.getTimeZone("Etc/Greenwich"));
                     cc.setTimeInMillis(d + off);
-                    Date dd = new Date(cc.get(Calendar.YEAR), cc.get(Calendar.MONTH) + 1, cc.get(Calendar.DAY_OF_MONTH));
+//Log.d("QWERT","DDD="+cc.get(Calendar.DAY_OF_MONTH)+" mm="+(cc.get(Calendar.MONTH)));
+                    Date dd = new Date(cc.get(Calendar.YEAR), cc.get(Calendar.MONTH), cc.get(Calendar.DAY_OF_MONTH));
                     setText(df.format(dd));
                 }
             } else if (data instanceof Date) {
