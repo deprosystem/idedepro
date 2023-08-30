@@ -42,6 +42,7 @@ public class PushFMCService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+Log.d("QWERT","onMessageReceived");
         componGlob = Injector.getComponGlob();
         preferences = Injector.getPreferences();
         preferences.setPushData("");

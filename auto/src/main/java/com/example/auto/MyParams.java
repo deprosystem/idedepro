@@ -1,4 +1,4 @@
-package com.example.ide;
+package com.example.auto;
 
 import com.dpcsa.compon.param.AppParams;
 

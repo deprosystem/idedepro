@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_56"
+        android:background="@color/primary"
+        app:titleTextAppearance="@style/toolStyle_20_19"
+        />
+
+    <com.dpcsa.compon.custom_components.ComponMenuB
+        android:id="@+id/menu_b"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_56"
+        android:background="@color/primary"
+        app:selectColor="@color/accentDark"
+        />
+
+    <FrameLayout
+        android:id="@+id/container_fragm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/menu_b"
+        android:layout_below="@id/tool_bar"
+    />
+
+</RelativeLayout>

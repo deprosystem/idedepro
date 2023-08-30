@@ -62,7 +62,7 @@ public class SubscribePush extends SingleSetting{
 
     private boolean setReceivers() {
         boolean result = true;
-Log.d("QWERT","setReceivers componGlob.isOnline()="+componGlob.isOnline());
+//Log.d("QWERT","setReceivers componGlob.isOnline()="+componGlob.isOnline());
         if ( ! componGlob.isOnline()) {
             networkReceiver = new BroadcastReceiver() {
                 @Override

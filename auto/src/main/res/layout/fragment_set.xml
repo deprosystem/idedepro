@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+    <com.dpcsa.compon.custom_components.ComponSwitch
+        android:id="@+id/sub_news"
+        android:layout_marginLeft="@dimen/dim_40"
+        android:layout_marginTop="@dimen/dim_56"
+        android:layout_width="330dp"
+        android:layout_height="@dimen/dim_56"
+        android:text="Subscribe to push"
+        android:gravity="top"
+        android:thumb="@drawable/switch_thumb_0"
+        app:track="@drawable/switch_track_0"
+        />
+
+</RelativeLayout>

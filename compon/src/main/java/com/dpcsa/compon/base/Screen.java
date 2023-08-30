@@ -31,6 +31,7 @@ import com.dpcsa.compon.components.SpinnerComponent;
 import com.dpcsa.compon.components.SequenceComponent;
 import com.dpcsa.compon.components.StaticListComponent;
 import com.dpcsa.compon.components.SubscribeComponent;
+import com.dpcsa.compon.components.SubscribeFirebase;
 import com.dpcsa.compon.components.SwitchComponent;
 import com.dpcsa.compon.components.TagsComponent;
 //import com.dpcsa.compon.components.ToolBarCopy;
@@ -237,6 +238,15 @@ public class Screen<T>{
         paramComponent.paramView = new ParamView(viewId);
         paramComponent.st1 = urlSub;
         paramComponent.st2 = urlUnsub;
+        listComponents.add(paramComponent);
+        return this;
+    }
+
+    public Screen subscribeTopic(int viewId, @NonNull String nameTopic) {
+        ParamComponent paramComponent = new ParamComponent();
+        paramComponent.type = ParamComponent.TC.SUBSCRIBE_TOPIC;
+        paramComponent.paramView = new ParamView(viewId);
+        paramComponent.st1 = nameTopic;
         listComponents.add(paramComponent);
         return this;
     }
@@ -799,6 +809,9 @@ public class Screen<T>{
                     break;
                 case SUBSCRIBE:
                     new SubscribeComponent(iBase, cMV, this);
+                    break;
+                case SUBSCRIBE_TOPIC:
+                    new SubscribeFirebase(iBase, cMV, this);
                     break;
                 case CUSTOM:
                     BaseComponent bc = null;

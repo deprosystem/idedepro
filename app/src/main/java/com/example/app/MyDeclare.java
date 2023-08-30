@@ -1,4 +1,6 @@
-package com.example.ide;
+package com.example.app;
+
+import static android.app.NotificationManager.IMPORTANCE_HIGH;
 
 import com.dpcsa.compon.base.DeclareScreens;
 import com.dpcsa.compon.interfaces_classes.Menu;
@@ -22,7 +24,7 @@ public class MyDeclare extends DeclareScreens {
 
         fragment(NEWS, R.layout.fragment_news, R.string.news_screen_title)
                 .list(model("query/w3auhtqt_bemqtc/4"),
-                        view(R.id.list, R.layout.item_news_list_0),
+                        view(R.id.ListMm, R.layout.item_news_list_0),
                         navigator(start(DETAIL_NEWS)));
 
         fragment(PROMOT, R.layout.fragment_promot, R.string.promot_screen_title)
@@ -68,6 +70,9 @@ public class MyDeclare extends DeclareScreens {
                         view(R.id.scroll_form))
                 .componentPhoto(R.id.phot_1, new int[] {R.id.photo, R.id.phot_1}, R.string.prof_photo);
 
+//        activity(MAIN, R.layout.activity_main)
+//                .componentSequence(INTRO, AUTH, MAIN_1);
+
         activity(MAIN, R.layout.activity_main)
                 .componentSequence(INTRO, AUTH, MAIN_1);
 
@@ -97,6 +102,20 @@ public class MyDeclare extends DeclareScreens {
         fragment(BUY, R.layout.fragment_buy, R.string.buy_screen_title)
                 .list(model("query/w3auhtqt_bemqtc/19"),
                         view(R.id.list, R.layout.item_buy_list_0));
+
+//        channel("news_ev", "Новости и акции", IMPORTANCE_HIGH, MainActivity.class,
+//                notices(
+//                        notice("news")
+//                                .lotPushs("Новости", true)
+//                                .iconLarge(R.drawable.promotion)
+//                                .icon(R.drawable.even, getColor(R.color.color_100)),
+//                        notice("event")
+//                                .lotPushs("Акции", true)
+//                                .iconLarge(R.drawable.promotion)
+//                                .icon(R.drawable.even, getColor(R.color.accentDark))))
+//                .icon(R.drawable.promotion)
+//                .iconLarge(R.drawable.promotion)
+//                .iconColor(R.color.accentDark);
 
     }
 

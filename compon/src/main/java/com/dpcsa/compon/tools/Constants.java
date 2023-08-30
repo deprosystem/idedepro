@@ -24,7 +24,7 @@ public class Constants {
             IS_INTERNET = "IS_INTERNET";
     public static String MESSAGE = "message";
     public static String NAME_FUNC = "nameFunc";
-    public static String TAG_SUBSCRIBE = "SUBSCRIBE_";
+    public static String TAG_SUBSCRIBE = "SUBSCRIBE_", TAG_SUBSCRIBE_TOPIC = "SUBSCRIBE_TOPIC_";
     public static String DATA_STR = "DATA_STR";
     public static String prefixProfileParam = "!!__!!",
             errorInstallParam = "ErrorInstallParam", NEED_LOGIN = "Need to log in";

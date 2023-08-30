@@ -1,5 +1,4 @@
 include ':app', ':compon', ':htkz'
 rootProject.name='idedepro'
 include ':hottour'
-
-
+include ':auto'
