@@ -694,7 +694,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
     public void setLocale() {
         String loc = preferences.getLocale();
         if (loc.length() == 0) {
-            loc = "uk";
+            loc = "en";
         }
         if (loc.equals(Locale.getDefault().getLanguage())) return;
         Locale myLocale = new Locale(loc);

@@ -1071,7 +1071,10 @@ public abstract class BaseComponent {
                             ((PagerVComponent) getThis()).pagerPlusItem();
                         }
                         break;
-
+                    case SET_LOCALE:
+                        preferences.setLocale(componGlob.getParamValue(componGlob.appParams.nameLanguageInParam));
+                        activity.recreate();
+                        break;
                     default:
                         specificComponentClick(vh);
                         break;
