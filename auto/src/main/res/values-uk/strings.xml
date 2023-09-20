@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_menu_b_news">Новини</string>
+    <string name="main_menu_b_prom">Акції</string>
+    <string name="main_menu_b_set">Налаштування</string>
+    <string name="news_screen_title">Новини</string>
+    <string name="prom_screen_title">Акції</string>
+    <string name="set_screen_title">Налаштування</string>
+    <string name="set_txt_1_txt">Установить язык</string>
+</resources>

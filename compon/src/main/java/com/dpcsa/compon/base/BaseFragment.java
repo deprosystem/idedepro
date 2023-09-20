@@ -961,6 +961,10 @@ public class BaseFragment extends Fragment implements IBase {
                         SpringY y = new SpringY(parentLayout.findViewById(vh.showViewId), vh.velocity, vh.repeatTime);
                         y.startAnim();
                         break;
+                    case SET_LOCALE:
+                        preferences.setLocale(componGlob.getParamValue(componGlob.appParams.nameLanguageInParam));
+                        activity.recreate();
+                        break;
                 }
             }
         }

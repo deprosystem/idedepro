@@ -211,6 +211,12 @@ public class Screen<T>{
         return this;
     }
 
+    public Screen noHandlersStart() {
+        ParamComponent paramComponent = listComponents.get(listComponents.size() - 1);
+        paramComponent.startNoHandlers = true;
+        return this;
+    }
+
     public Screen menu(ParamModel paramModel, ParamView paramView) {
         ParamComponent paramComponent = new ParamComponent();
         paramComponent.type = ParamComponent.TC.MENU;

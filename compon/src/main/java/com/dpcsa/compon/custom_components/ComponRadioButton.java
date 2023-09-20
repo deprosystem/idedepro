@@ -23,6 +23,8 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.view.animation.Animation.RELATIVE_TO_SELF;
 
+import java.util.Locale;
+
 public class ComponRadioButton extends LinearLayout {
 
     public ImageView iv;

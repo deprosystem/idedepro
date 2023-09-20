@@ -2,6 +2,8 @@ package com.example.auto;
 
 import com.dpcsa.compon.base.DeclareScreens;
 import com.dpcsa.compon.interfaces_classes.Menu;
+import com.dpcsa.compon.interfaces_classes.ViewHandler;
+
 import static android.app.NotificationManager.IMPORTANCE_HIGH;
 
 public class MyDeclare extends DeclareScreens {
@@ -33,7 +35,10 @@ public class MyDeclare extends DeclareScreens {
                 view(R.id.scroll_panel));
 
         fragment(SET, R.layout.fragment_set, R.string.set_screen_title)
-                .subscribeTopic(R.id.sub_news, getString(R.string.set_subfirebase));
+                .navigator(handler(R.id.txt_1, VH.SET_LOCALE))
+                .subscribeTopic(R.id.sub_news, "news")
+                .component(TC.SPINNER, model(JSON, "[{\"id_field\":1,\"loc\":\"en\",\"name\":\"English\"},{\"id_field\":2,\"loc\":\"uk\",\"name\":\"Українська\"}]"),
+                        view(R.id.spinner, R.layout.item_set_spinner_drop, R.layout.item_set_spinner_header));
 
         channel("news_ev", "Новости и акции", IMPORTANCE_HIGH, MainActivity.class,
             notices(
@@ -51,8 +56,8 @@ public class MyDeclare extends DeclareScreens {
     }
 
     Menu menuMainMenu_b = new Menu()
-        .item(R.drawable.news, R.string.main_menu_b_0, NEWS, true)
-        .item(R.drawable.promotion, R.string.main_menu_b_1, PROM)
-        .item(R.drawable.icon_menu_settings, R.string.main_menu_b_2, SET);
+            .item(R.drawable.news, R.string.main_menu_b_news, NEWS, true)
+            .item(R.drawable.promotion, R.string.main_menu_b_prom, PROM)
+            .item(R.drawable.icon_menu_settings, R.string.main_menu_b_set, SET);
 
 }

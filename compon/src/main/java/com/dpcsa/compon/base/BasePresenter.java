@@ -273,7 +273,6 @@ public class BasePresenter implements BaseInternetProvider.InternetProviderListe
             if (response.length() == 0) {
                 listener.onResponse(new Field("", Field.TYPE_STRING, ""));
             } else {
-//Log.d("QWERT","response="+response+"<<");
                 Field f = null;
                 try {
                     jsonSimple.nameRecToList = paramModel.nameRecToList;

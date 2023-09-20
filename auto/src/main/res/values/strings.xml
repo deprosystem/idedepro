@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">auto</string>
-    <string name="main_menu_b_0">News</string>
-    <string name="main_menu_b_1">Promotion</string>
-    <string name="main_menu_b_2">Settings</string>
+    <string name="main_menu_b_news">News</string>
+    <string name="main_menu_b_prom">Promotion</string>
+    <string name="main_menu_b_set">Settings</string>
     <string name="news_screen_title">News</string>
     <string name="prom_screen_title">Promotion</string>
     <string name="set_screen_title">Settings</string>
     <string name="set_subfirebase">news</string>
+    <string name="set_txt_1_txt">Set langua</string>
 </resources>

@@ -84,7 +84,7 @@ public class MenuBComponent extends BaseComponent implements IsetMenu {
         viewMenu = new ComponRadioButtonRL[countButton];
         selectStart = preferences.getNameInt(componentTag + multiComponent.nameComponent, -1);
 
-selectStart = -1;
+//selectStart = -1;
 
         int selectRadio = -1;
         for (int i = 0; i < countButton; i++) {

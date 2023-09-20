@@ -38,7 +38,7 @@ public class ParamComponent <T>{
     public int viewSearchId, titleId;
 //    public ToolMenu toolMenu;
     public int delayMillis, minLen;
-    public boolean startActual = true;
+    public boolean startActual = true, startNoHandlers;
     public boolean hide = false;
     public String st1, st2;     // ля всіляких потреб для кожного типу своя сутність цих рядків
     public String nameReceiver;
