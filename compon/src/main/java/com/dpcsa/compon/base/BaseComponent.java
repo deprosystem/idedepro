@@ -1551,6 +1551,11 @@ public abstract class BaseComponent {
                                 ((PagerVComponent) getThis()).pagerPlusItem();
                             }
                             break;
+                        case SET_LOCALE:
+                            componGlob.setParam(record);
+                            preferences.setLocale(componGlob.getParamValue(componGlob.appParams.nameLanguageInParam));
+                            activity.recreate();
+                            break;
                     }
                 }
             }

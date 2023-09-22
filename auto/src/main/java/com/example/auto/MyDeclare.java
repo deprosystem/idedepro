@@ -38,7 +38,11 @@ public class MyDeclare extends DeclareScreens {
                 .navigator(handler(R.id.txt_1, VH.SET_LOCALE))
                 .subscribeTopic(R.id.sub_news, "news")
                 .component(TC.SPINNER, model(JSON, "[{\"id_field\":1,\"loc\":\"en\",\"name\":\"English\"},{\"id_field\":2,\"loc\":\"uk\",\"name\":\"Українська\"}]"),
-                        view(R.id.spinner, R.layout.item_set_spinner_drop, R.layout.item_set_spinner_header));
+                        view(R.id.spinner, R.layout.item_set_spinner_drop, R.layout.item_set_spinner_header))
+                .list(model(JSON, "[{\"id_field\":1,\"loc\":\"en\",\"name\":\"English\"},{\"id_field\":2,\"loc\":\"uk\",\"name\":\"Українська\"}]"),
+                        view(R.id.list, "sel", new int[]{R.layout.item_set_list_0,
+                                R.layout.item_set_list_1}).selected(),
+                        navigator(handler(0, VH.SET_LOCALE)));
 
         channel("news_ev", "Новости и акции", IMPORTANCE_HIGH, MainActivity.class,
             notices(
