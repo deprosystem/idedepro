@@ -248,6 +248,17 @@ public class Screen<T>{
         return this;
     }
 
+    public Screen componentSubscribe(int viewId, @NonNull String namePush) {
+        ParamComponent paramComponent = new ParamComponent();
+        paramComponent.type = ParamComponent.TC.SUBSCRIBE;
+        paramComponent.paramView = new ParamView(viewId);
+        paramComponent.paramForPathFoto = namePush;
+        paramComponent.st1 = "push/subscribe";
+        paramComponent.st2 = "push/unsubscribe";
+        listComponents.add(paramComponent);
+        return this;
+    }
+
     public Screen subscribeTopic(int viewId, @NonNull String nameTopic) {
         ParamComponent paramComponent = new ParamComponent();
         paramComponent.type = ParamComponent.TC.SUBSCRIBE_TOPIC;

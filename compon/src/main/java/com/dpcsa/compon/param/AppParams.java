@@ -36,8 +36,8 @@ public abstract class AppParams<T> {
     public int progressLayoutId = R.layout.smpl_dialog_progress;
 
     public String nameTokenInHeader = "Auth-token";
-    public String nameTokenPush = "push_token";
-    public String nameTokenPushInHeader = "";
+    public String nameTokenPush = "push-token";
+    public String nameTokenPushInHeader = "push-token";
 
     public String nameLanguageInHeader = "",
             nameLanguageInParam = "",

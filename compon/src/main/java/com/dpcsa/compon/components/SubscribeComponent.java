@@ -9,6 +9,7 @@ import com.dpcsa.compon.interfaces_classes.IBase;
 import com.dpcsa.compon.interfaces_classes.IPresenterListener;
 import com.dpcsa.compon.interfaces_classes.ISwitch;
 import com.dpcsa.compon.json_simple.Field;
+import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.param.ParamComponent;
 import com.dpcsa.compon.param.ParamModel;
 import com.dpcsa.compon.tools.Constants;
@@ -21,6 +22,7 @@ public class SubscribeComponent extends BaseComponent {
     private int viewId;
     private String namePref;
     private ParamModel mSub, mUnsub;
+    private Record pushN;
 
     public SubscribeComponent(IBase iBase, ParamComponent paramMV, Screen multiComponent) {
         super(iBase, paramMV, multiComponent);
@@ -37,6 +39,11 @@ public class SubscribeComponent extends BaseComponent {
         if (iSwitch == null) {
             iBase.log("0009 Не найден Switch в " + multiComponent.nameComponent);
             return;
+        }
+        pushN = null;
+        if (paramMV.paramForPathFoto != null && paramMV.paramForPathFoto.length() > 0) {
+            pushN = new Record();
+            pushN.addField(new Field("name", 2, paramMV.paramForPathFoto));
         }
         mSub = new ParamModel(POST, paramMV.st1);
         mUnsub = new ParamModel(POST, paramMV.st2);
@@ -66,9 +73,9 @@ public class SubscribeComponent extends BaseComponent {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (isChecked) { // ON
-                new BasePresenter(iBase, mSub, null, null, listener_sub);
+                new BasePresenter(iBase, mSub, null, pushN, listener_sub);
             } else {    // OFF
-                new BasePresenter(iBase, mUnsub, null, null, listener_unsub);
+                new BasePresenter(iBase, mUnsub, null, pushN, listener_unsub);
             }
             preferences.setNameBoolean(namePref, isChecked);
         }
