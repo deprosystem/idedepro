@@ -38,7 +38,7 @@ public abstract class AppParams<T> {
 
     public String nameTokenInHeader = "Auth-token";
     public String nameTokenPush = "push-token";
-    public String nameTokenPushInHeader = "";
+    public String nameTokenPushInHeader = "push-token";
 
     public String nameLanguageInHeader = "",
             nameLanguageInParam = "",
