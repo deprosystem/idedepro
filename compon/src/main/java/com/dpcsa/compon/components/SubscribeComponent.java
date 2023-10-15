@@ -44,6 +44,7 @@ public class SubscribeComponent extends BaseComponent {
         if (paramMV.paramForPathFoto != null && paramMV.paramForPathFoto.length() > 0) {
             pushN = new Record();
             pushN.addField(new Field("name", 2, paramMV.paramForPathFoto));
+            pushN.addField(new Field("schema", 2, componGlob.appParams.schema));
         }
         mSub = new ParamModel(POST, paramMV.st1);
         mUnsub = new ParamModel(POST, paramMV.st2);

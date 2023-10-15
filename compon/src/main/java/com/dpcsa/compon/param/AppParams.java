@@ -8,6 +8,7 @@ public abstract class AppParams<T> {
     public int youtubeApiKey = 0;   // id строкового ресурса с youtube Api Key
 
     public String baseUrl;  // Базовый Url
+    public String schema = "";
     public int defaultMethod = ParamModel.GET;
         // Если в модели не будет указан явно метод, то будет использоваться метод заданный в этом параметре
     public int NETWORK_TIMEOUT_LIMIT = 30000; // milliseconds
@@ -37,7 +38,7 @@ public abstract class AppParams<T> {
 
     public String nameTokenInHeader = "Auth-token";
     public String nameTokenPush = "push-token";
-    public String nameTokenPushInHeader = "push-token";
+    public String nameTokenPushInHeader = "";
 
     public String nameLanguageInHeader = "",
             nameLanguageInParam = "",
