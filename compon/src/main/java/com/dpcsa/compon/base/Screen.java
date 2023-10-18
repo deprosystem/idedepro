@@ -668,7 +668,7 @@ public class Screen<T>{
 
     public BaseComponent getComponent(int viewId) {
         for (ParamComponent cMV : listComponents) {
-            if (cMV.paramView.viewId == viewId) {
+            if (cMV.paramView != null && cMV.paramView.viewId == viewId) {
                 return cMV.baseComponent;
             }
         }
