@@ -1,11 +1,13 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
 
 android {
-    namespace 'com.example.auto'
+    namespace 'ide.depro.auto'
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.example.auto"
+        applicationId "ide.depro.auto"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -27,6 +29,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
@@ -35,7 +38,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':compon')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
@@ -45,6 +47,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:okhttp3-integration:4.1.1@aar'
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     implementation 'com.android.volley:volley:1.1.1'
-    implementation 'com.google.firebase:firebase-messaging:20.0.0'
+    implementation project(':compon')
+    implementation 'com.google.firebase:firebase-messaging:20.0.1'
 }
 apply plugin: 'com.google.gms.google-services'

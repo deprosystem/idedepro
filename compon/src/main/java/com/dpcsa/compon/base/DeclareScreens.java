@@ -920,18 +920,5 @@ public abstract class DeclareScreens<T>{
     public PushHandler nullifyCountPush(String pushType) {
         return new PushHandler(0, NULLIFY, pushType, "", 0, false);
     }
-/*
-    public ModifierTool visible(int ... args) {
-        return new ModifierTool(ModifierTool.TYPE_MODIF.VISIBLE, args);
-    }
 
-    public ModifierTool unVisible(int ... args) {
-        return new ModifierTool(ModifierTool.TYPE_MODIF.UN_VISIBLE, args);
-    }
-
-    public ModifierTool addMenu(ToolMenu toolMenu) {
-        return new ModifierTool(toolMenu);
-    }
-
- */
 }

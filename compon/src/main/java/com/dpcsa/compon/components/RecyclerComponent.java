@@ -18,6 +18,8 @@ import com.dpcsa.compon.interfaces_classes.OnResumePause;
 import com.dpcsa.compon.interfaces_classes.PushHandler;
 import com.dpcsa.compon.interfaces_classes.ViewHandler;
 import com.dpcsa.compon.json_simple.Field;
+import com.dpcsa.compon.json_simple.JsonSimple;
+import com.dpcsa.compon.json_simple.JsonSyntaxException;
 import com.dpcsa.compon.json_simple.ListRecords;
 import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.param.ParamComponent;
@@ -279,9 +281,20 @@ public class RecyclerComponent extends BaseComponent {
         if (ik > 0 && pushValue.length() > 0) {
             Record record = null;
             int pos = -1;
+            JsonSimple jsonSimple = new JsonSimple();
+            Record rec;
+            try {
+                rec = (Record) jsonSimple.jsonToModel(pushValue).value;
+            } catch (JsonSyntaxException e) {
+                rec = null;
+            }
+            String value = "";
+            if (rec != null) {
+                value = rec.getString(nameField);
+            }
             for (int i = 0; i < ik; i++) {
                 record = listData.get(i);
-                if (pushValue.equals(record.getString((nameField)))) {
+                if (value.equals(record.getString(nameField))) {
                     pos = i;
                     break;
                 }
@@ -289,19 +302,9 @@ public class RecyclerComponent extends BaseComponent {
             if (pos > -1) {
                 recycler.smoothScrollToPosition(pos);
                 clickAdapter1(null, null, handlerId, pos, record);
-//                RecyclerView.ViewHolder vh = recycler.findViewHolderForAdapterPosition(pos);
             }
         }
     }
-
-
-//    public void selectItem(String nameField) {
-//        if (listData != null && listData.size() > 0) {
-//
-//        } else {
-//
-//        }
-//    }
 
     @Override
     public void setGlobalData(String name) {

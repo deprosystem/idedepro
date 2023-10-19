@@ -12,7 +12,6 @@ import com.dpcsa.compon.custom_components.ComponRadioButtonRL;
 import com.dpcsa.compon.interfaces_classes.IBase;
 import com.dpcsa.compon.interfaces_classes.IsetMenu;
 import com.dpcsa.compon.interfaces_classes.Menu;
-import com.dpcsa.compon.interfaces_classes.Navigator;
 import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.ListRecords;
 import com.dpcsa.compon.json_simple.Record;
@@ -64,6 +63,7 @@ public class MenuBComponent extends BaseComponent implements IsetMenu {
         }
         imageLocale = menuB.imageLocale;
         listData = new ListRecords();
+        listPresenter = new ListPresenter(this);
         menuB.setOrientation(LinearLayout.HORIZONTAL);
         menuB.setGravity(Gravity.CENTER);
     }
@@ -126,10 +126,10 @@ public class MenuBComponent extends BaseComponent implements IsetMenu {
                 startScreen(selectStart);
             }
         } else {
-
             viewMenu[selectStart].setSelected(true);
             startScreen(selectStart);
         }
+        listPresenter.changeData(listData, selectStart);
     }
 
     public void syncMenu(String scr) {
@@ -186,9 +186,10 @@ public class MenuBComponent extends BaseComponent implements IsetMenu {
     }
 
     public int getSelectPush(String screen) {
-        int ik = paramMV.paramView.screens.length;
+        int ik = listData.size();
         for (int i = 0; i < ik; i++) {
-            if (paramMV.paramView.screens[i].equals(screen)) {
+            String scr = listData.get(i).getString(Constants.NAME_FUNC);
+            if (scr != null && scr.equals(screen)) {
                 return i;
             }
         }

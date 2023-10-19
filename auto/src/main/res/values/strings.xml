@@ -7,6 +7,5 @@
     <string name="news_screen_title">News</string>
     <string name="prom_screen_title">Promotion</string>
     <string name="set_screen_title">Settings</string>
-    <string name="set_subfirebase">news</string>
     <string name="set_txt_1_txt">Set langua</string>
 </resources>

@@ -49,6 +49,7 @@ public class PushFMCService extends FirebaseMessagingService {
         type = data.get(Constants.PUSH_TYPE);
         if (type != null && type.length() != 0) {
             dataPush = data.get(Constants.PUSH_DATA);
+//Log.d("QWERT","onMessageReceived dataPush="+dataPush+"<<");
             for (Notice not : componGlob.notices) {
                 if (not.type.equals(type)) {
                     formNotif(not, remoteMessage);

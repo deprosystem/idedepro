@@ -24,11 +24,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.dpcsa.compon.components.MenuBottomComponent;
+import com.dpcsa.compon.components.MenuBComponent;
 import com.dpcsa.compon.components.MenuComponent;
 import com.dpcsa.compon.components.PagerFComponent;
 import com.dpcsa.compon.components.RecyclerComponent;
-//import com.dpcsa.compon.components.ToolBarCopy;
 import com.dpcsa.compon.components.ToolBarComponent;
 import com.dpcsa.compon.components.ToolMenu;
 import com.dpcsa.compon.custom_components.ComponImageView;
@@ -467,8 +466,8 @@ public class BaseFragment extends Fragment implements IBase {
                                 }
                                 mc.selectPunct(push.screen);
                             } else {
-                                if (bc != null && bc instanceof MenuBottomComponent) {
-                                    MenuBottomComponent mbc = (MenuBottomComponent) bc;
+                                if (bc != null && bc instanceof MenuBComponent) {
+                                    MenuBComponent mbc = (MenuBComponent) bc;
                                     if (!push.continuePush) {
                                         preferences.setPushType("");
                                     }
