@@ -2143,7 +2143,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
         resetProgress();
         transaction.addToBackStack(nameMVP);
         transaction.commit();
-//        addFragmentStack(nameMVP);
     }
 
     public void clearBackStack(String nameF, boolean thisClear) {
@@ -2156,16 +2155,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
                 if (nameF.equals(bse.getName())) {
                     if (thisClear) {
                         manager.popBackStack();
-//                        if (i < stackFragments.size()) {
-//                            stackFragments.remove(i);
-//                        }
                     }
                     break;
                 } else {
                     manager.popBackStack();
-//                    if (i < stackFragments.size()) {
-//                        stackFragments.remove(i);
-//                    }
                 }
             }
         }

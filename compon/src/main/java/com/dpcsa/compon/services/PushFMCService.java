@@ -1,5 +1,7 @@
 package com.dpcsa.compon.services;
 
+import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -84,11 +86,13 @@ public class PushFMCService extends FirebaseMessagingService {
         notificationIntent.putExtra(Constants.SMPL_PUSH_TYPE, type);
         notificationIntent.putExtra(Constants.SMPL_PUSH_DATA, dataPush);
         notificationIntent.setAction(type);
+        notificationIntent.setFlags(FLAG_ACTIVITY_SINGLE_TOP);
 
         formCustomNotification(notificationIntent, not, remoteMessage);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
-                notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+//                notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Channel chan = componGlob.channels.get(not.idChannelInt);
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

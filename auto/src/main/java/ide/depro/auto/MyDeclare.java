@@ -46,18 +46,20 @@ public class MyDeclare extends DeclareScreens {
 
 
         channel("news_ev", "Новости и акции", IMPORTANCE_HIGH, MainActivity.class,
-            notices(
-            notice("news")
-                .lotPushs("Новости", true)
-                .iconLarge(R.drawable.promotion)
-                .icon(R.drawable.even, getColor(R.color.color_100)),
-            notice("event")
-                .lotPushs("Акции", true)
-                .iconLarge(R.drawable.promotion)
-                .icon(R.drawable.news, getColor(R.color.accentDark))))
-            .icon(R.drawable.promotion)
-            .iconLarge(R.drawable.promotion)
-            .iconColor(R.color.accentDark);
+                notices(
+                        notice("event")
+                                .lotPushs("Акции", true)
+                                .iconLarge(R.drawable.even)
+                                .icon(R.drawable.even, getColor(R.color.color_100)),
+                        notice("news")
+                                .lotPushs("Новости", true)
+                                .iconLarge(R.drawable.news)
+                                .icon(R.drawable.news, getColor(R.color.accentDark))))
+                .iconLarge(R.drawable.camera)
+                .iconColor(getColor(R.color.color_100))
+                .enableVibration(true)
+                .enableLights(true)
+        ;
     }
 
     Menu menuMainMenu_b = new Menu()
