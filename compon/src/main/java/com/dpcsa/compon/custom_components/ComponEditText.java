@@ -203,8 +203,9 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
             setInputType(129);
         }
 
-        FrameLayout vvP = (FrameLayout) getParent();
+        FrameLayout vvP;
         if (imgHide != 0 && imgShow != 0 && imgHide != imgShow) {
+            vvP = (FrameLayout) getParent();
             viewShow = new ComponImageView(context);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(imgH, imgH);
             lp.gravity = Gravity.RIGHT;
@@ -249,6 +250,7 @@ public class ComponEditText extends AppCompatEditText implements IComponent, IVa
             }
         }
         if (imgClean != 0) {
+            vvP = (FrameLayout) getParent();
             viewClean = new ComponImageView(context);
             FrameLayout.LayoutParams lpC = new FrameLayout.LayoutParams(imgH, imgH);
             lpC.gravity = Gravity.RIGHT;

@@ -227,7 +227,7 @@ public class MenuBComponent extends BaseComponent implements IsetMenu {
             if (isActivity && activity.menuDraw != null) {
                 activity.menuDraw.syncMenu(screen);
             }
-Log.d("QWERT","Menu startScreen screen="+screen+"<<");
+//Log.d("QWERT","Menu startScreen screen="+screen+"<<");
             iBase.startScreen(screen, true);
         } else {
             if (paramMV.arrNavigator != null) {
