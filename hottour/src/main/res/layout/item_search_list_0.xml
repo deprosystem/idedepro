@@ -16,7 +16,7 @@
         />
 
     <TextView
-        android:id="@+id/country_name"
+        android:id="@+id/contry_name"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="@dimen/dim_4"
@@ -41,13 +41,22 @@
             android:layout_marginLeft="@dimen/dim_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="от"
+            android:text="@string/Search_qq_txt"
             android:textSize="@dimen/dim_12"
             />
 
         <TextView
             android:id="@+id/min_cost"
             android:layout_marginLeft="@dimen/dim_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dim_12"
+            />
+
+        <TextView
+            android:id="@+id/currency"
+            android:layout_toRightOf="@id/min_cost"
+            android:layout_marginLeft="@dimen/dim_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dim_12"

@@ -28,7 +28,7 @@
             android:layout_marginBottom="@dimen/dim_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Дата вылета и длительность"
+            android:text="@string/SEARCH_D_D_0_txt"
             android:textSize="@dimen/dim_20"
             android:textColor="@color/white"
             />
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/dim_18"
             app:acceptNotif="date_night"
-            app:stringArray="@string/SEARCH_D_Dnightgrammar"
+            app:stringArray="@string/Searchnight_grammar"
             />
 
     </RelativeLayout>

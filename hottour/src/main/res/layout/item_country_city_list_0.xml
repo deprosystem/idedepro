@@ -35,7 +35,7 @@
             android:layout_below="@id/country_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Нужна виза"
+            android:text="@string/COUNTRY_CITY_visa_txt"
             android:textSize="@dimen/dim_12"
             />
 

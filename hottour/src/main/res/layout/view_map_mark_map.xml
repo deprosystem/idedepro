@@ -43,7 +43,7 @@
         android:layout_height="48dp"
         android:background="@drawable/shape_1031"
         android:gravity="center"
-        android:text="Сделать заказ"
+        android:text="@string/MAP_butt_txt"
         android:textSize="@dimen/dim_24"
         android:textColor="@color/white"
         />

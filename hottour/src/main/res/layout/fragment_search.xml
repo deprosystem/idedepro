@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/image"
-    >
+>
     <com.dpcsa.compon.custom_components.SheetBottom
         android:id="@+id/sheet_h"
         android:layout_width="match_parent"
@@ -15,8 +15,7 @@
         app:noSwipeHide="true"
         app:noBackPressedHide="true"
         app:viewId="@layout/view_search_sheet_h"
-        />
-
+    />
     <com.dpcsa.compon.custom_components.SheetBottom
         android:id="@+id/sheet_s"
         android:visibility="gone"
@@ -25,7 +24,7 @@
         app:noSwipeHide="true"
         app:noBackPressedHide="true"
         app:viewId="@layout/view_search_sheet_s"
-        />
+    />
     <com.dpcsa.compon.custom_components.ComponMenuB
         android:id="@+id/menu_b"
         android:layout_marginLeft="@dimen/dim_16"

@@ -23,7 +23,7 @@
         android:layout_marginTop="@dimen/dim_40"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ремонтные площадки"
+        android:text="@string/Service_t_1_txt"
         android:textSize="@dimen/dim_28"
         android:textColor="@color/title"
         />
@@ -35,7 +35,7 @@
         android:layout_marginTop="@dimen/dim_20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Быстро - до 3х дней + подменный фонд"
+        android:text="@string/Service_t_2_txt"
         android:textSize="@dimen/dim_14"
         />
 
@@ -46,7 +46,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Качественно - гарантия 6 месяцев!"
+        android:text="@string/Service_t_3_txt"
         android:textSize="@dimen/dim_14"
         />
 
@@ -57,7 +57,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Удобно - площадки по всей Украине"
+        android:text="@string/Service_t_4_txt"
         android:textSize="@dimen/dim_14"
         />
 
@@ -68,7 +68,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Бесплатный забор техники!"
+        android:text="@string/Service_t_5_txt"
         android:textSize="@dimen/dim_14"
         />
 
@@ -82,7 +82,7 @@
         android:layout_height="55dp"
         android:background="@drawable/shape_1029"
         android:gravity="center"
-        android:text="Выбрать площадку"
+        android:text="@string/Service_sel_txt"
         android:textSize="@dimen/dim_24"
         android:textColor="@color/white"
         />

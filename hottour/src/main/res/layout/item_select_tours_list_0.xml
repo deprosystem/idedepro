@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dim_12"
                 android:textColor="@color/primaryDark"
-                app:stringArray="@string/SELECT_TOURSadultsgrammar"
+                app:stringArray="@string/Searchadults_grammar"
                 />
 
             <com.dpcsa.compon.custom_components.TextViewNumberGrammar
@@ -127,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dim_12"
                 android:textColor="@color/primaryDark"
-                app:stringArray="@string/SELECT_TOURSkidsgrammar"
+                app:stringArray="@string/SELECT_TOURSkids_grammar"
                 app:zeroNotView="true"
                 />
 
@@ -188,7 +188,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/dim_12"
-                    app:stringArray="@string/SELECT_TOURSnightgrammar"
+                    app:stringArray="@string/Searchnight_grammar"
                     />
 
                 <com.dpcsa.compon.custom_components.ComponImageView
@@ -221,7 +221,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Цена за"
+                android:text="@string/SELECT_TOURS_za_txt"
                 android:textSize="@dimen/dim_12"
                 android:textColor="@color/primaryDark"
                 />
@@ -257,7 +257,7 @@
                 android:layout_marginRight="@dimen/dim_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="от"
+                android:text="@string/Search_qq_txt"
                 android:textSize="22dp"
                 />
 

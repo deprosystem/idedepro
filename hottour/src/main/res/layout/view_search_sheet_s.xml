@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="400dp"
     android:background="@drawable/shape_1001"
-    >
+>
     <RelativeLayout
         android:id="@+id/form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+    >
         <RelativeLayout
             android:id="@+id/depart"
             android:layout_width="match_parent"
             android:layout_height="72dp"
-            >
+        >
             <com.dpcsa.compon.custom_components.ComponImageView
                 android:id="@+id/flag_country"
                 android:layout_below="@id/qwe"
@@ -76,7 +76,7 @@
             android:layout_below="@id/country"
             android:layout_width="match_parent"
             android:layout_height="72dp"
-            >
+        >
             <TextView
                 android:id="@+id/depart_date"
                 android:layout_below="@id/dt"
@@ -135,7 +135,7 @@
             android:layout_below="@id/depart"
             android:layout_width="match_parent"
             android:layout_height="72dp"
-            >
+        >
             <com.dpcsa.compon.custom_components.ComponTextValid
                 android:id="@+id/country_city"
                 android:layout_alignParentBottom="true"
@@ -195,7 +195,7 @@
             android:layout_below="@id/date"
             android:layout_width="match_parent"
             android:layout_height="72dp"
-            >
+        >
             <com.dpcsa.compon.custom_components.TextViewNumberGrammar
                 android:id="@+id/adults"
                 android:layout_marginLeft="@dimen/dim_20"

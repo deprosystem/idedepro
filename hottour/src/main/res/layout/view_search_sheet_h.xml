@@ -6,12 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shape_1002"
-    >
+>
     <RelativeLayout
         android:id="@+id/panel"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        >
+    >
         <com.dpcsa.compon.custom_components.ComponImageView
             android:id="@+id/flag_country"
             android:layout_marginLeft="@dimen/dim_20"
@@ -50,5 +50,5 @@
         android:layout_marginRight="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+    />
 </RelativeLayout>

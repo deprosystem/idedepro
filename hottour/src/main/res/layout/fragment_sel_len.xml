@@ -55,7 +55,7 @@
         android:layout_marginBottom="@dimen/dim_8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="15 ночей"
+        android:text="@string/sel_len_0_txt"
         android:textSize="@dimen/dim_12"
         />
 
@@ -69,7 +69,7 @@
         android:layout_height="50dp"
         android:background="@drawable/shape_1016"
         android:gravity="center"
-        android:text="Выбрать"
+        android:text="@string/HOT_DEPART_CITY_0_txt"
         android:textSize="@dimen/dim_20"
         android:textColor="@color/white"
         />

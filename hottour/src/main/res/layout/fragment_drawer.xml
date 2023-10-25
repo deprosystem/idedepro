@@ -32,7 +32,7 @@
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Войти"
+            android:text="@string/DRAWER_enter_txt"
             android:textSize="@dimen/dim_24"
             android:textColor="@color/title"
             />

@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/dim_14"
-        app:stringArray="@string/WHO_FLYINGtitlegrammar"
+        app:stringArray="@string/WHO_FLYINGtitle_grammar"
         />
 
     <RelativeLayout
@@ -32,7 +32,7 @@
         android:layout_marginLeft="@dimen/dim_20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ребенок,"
+        android:text="@string/WHO_FLYING_rr_txt"
         android:textSize="@dimen/dim_14"
         />
 
