@@ -25,6 +25,14 @@
     <string name="WHO_FLYINGtitlegrammar">год,года,лет</string>
     <string name="WHO_FLYINGadultsgrammar">взрослый,взрослых,взрослых</string>
     <string name="WHO_FLYINGkidsgrammar">ребенок,ребенка,детей</string>
+    <string name="Search_depart_city_name_txt">Алматы</string>
+    <string name="Search_0_txt">Город вылета</string>
+    <string name="Searchnight_grammar">ночь,ночи,ночей</string>
+    <string name="Search_dt_txt">Дата вылета</string>
+    <string name="Search_cc_txt">Страна, курорт</string>
+    <string name="Searchadults_grammar">взрослый,взрослых,взрослых</string>
+    <string name="Searchkids_grammar">ребенок,ребенка,детей</string>
+    <string name="Search_select_txt">Найти туры</string>
     <string-array name="search_d_d_tab_layout">
         <item> </item>
         <item> </item>

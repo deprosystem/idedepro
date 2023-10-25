@@ -2,30 +2,30 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/image"
->
-
+    >
     <com.dpcsa.compon.custom_components.SheetBottom
         android:id="@+id/sheet_h"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:noBackPressedHide="true"
+        app:viewMatch="true"
         app:noSwipeHide="true"
+        app:noBackPressedHide="true"
         app:viewId="@layout/view_search_sheet_h"
-        app:viewMatch="true" />
+        />
 
     <com.dpcsa.compon.custom_components.SheetBottom
         android:id="@+id/sheet_s"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
-        app:noBackPressedHide="true"
         app:noSwipeHide="true"
-        app:viewId="@layout/view_search_sheet_s" />
+        app:noBackPressedHide="true"
+        app:viewId="@layout/view_search_sheet_s"
+        />
     <com.dpcsa.compon.custom_components.ComponMenuB
         android:id="@+id/menu_b"
         android:layout_marginLeft="@dimen/dim_16"

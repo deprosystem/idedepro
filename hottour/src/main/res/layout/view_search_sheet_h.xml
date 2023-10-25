@@ -6,16 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shape_1002"
->
+    >
     <RelativeLayout
         android:id="@+id/panel"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-    >
+        >
         <com.dpcsa.compon.custom_components.ComponImageView
             android:id="@+id/flag_country"
             android:layout_marginLeft="@dimen/dim_20"
-            android:layout_marginTop="38dp"
+            android:layout_marginTop="34dp"
             android:layout_width="@dimen/dim_24"
             android:layout_height="@dimen/dim_16"
             android:src="@drawable/flag_kaz"
@@ -25,10 +25,10 @@
         <TextView
             android:id="@+id/depart_city_name"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="34dp"
+            android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Алматы"
+            android:text="@string/Search_depart_city_name_txt"
             android:textSize="@dimen/dim_18"
             />
 
@@ -37,7 +37,7 @@
             android:layout_marginTop="@dimen/dim_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Город вылета"
+            android:text="@string/Search_0_txt"
             android:textSize="@dimen/dim_12"
             android:textColor="@color/black_50"
             />
@@ -50,5 +50,5 @@
         android:layout_marginRight="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-    />
+        />
 </RelativeLayout>

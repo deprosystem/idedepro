@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="400dp"
     android:background="@drawable/shape_1001"
->
+    >
     <RelativeLayout
         android:id="@+id/form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-    >
+        >
         <RelativeLayout
             android:id="@+id/depart"
             android:layout_width="match_parent"
             android:layout_height="72dp"
-        >
+            >
             <com.dpcsa.compon.custom_components.ComponImageView
                 android:id="@+id/flag_country"
                 android:layout_below="@id/qwe"
@@ -35,7 +35,7 @@
                 android:layout_marginTop="@dimen/dim_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Алматы"
+                android:text="@string/Search_depart_city_name_txt"
                 android:textSize="@dimen/dim_18"
                 android:textColor="@color/title"
                 />
@@ -46,7 +46,7 @@
                 android:layout_marginTop="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Город вылета"
+                android:text="@string/Search_0_txt"
                 android:textSize="@dimen/dim_12"
                 android:textColor="@color/black_50"
                 />
@@ -76,7 +76,7 @@
             android:layout_below="@id/country"
             android:layout_width="match_parent"
             android:layout_height="72dp"
-        >
+            >
             <TextView
                 android:id="@+id/depart_date"
                 android:layout_below="@id/dt"
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dim_18"
                 android:textColor="@color/title"
-                app:stringArray="@string/Searchnightgrammar"
+                app:stringArray="@string/Searchnight_grammar"
                 />
 
             <RelativeLayout
@@ -115,7 +115,7 @@
                 android:layout_marginTop="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Дата вылета"
+                android:text="@string/Search_dt_txt"
                 android:textSize="10dp"
                 android:textColor="@color/grey"
                 />
@@ -125,7 +125,7 @@
                 android:layout_marginTop="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="На сколько"
+                android:text="@string/Search_0_txt"
                 android:textSize="10dp"
                 />
 
@@ -135,7 +135,7 @@
             android:layout_below="@id/depart"
             android:layout_width="match_parent"
             android:layout_height="72dp"
-        >
+            >
             <com.dpcsa.compon.custom_components.ComponTextValid
                 android:id="@+id/country_city"
                 android:layout_alignParentBottom="true"
@@ -155,7 +155,7 @@
                 android:layout_marginTop="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Страна, курорт"
+                android:text="@string/Search_cc_txt"
                 android:textSize="@dimen/dim_12"
                 />
 
@@ -195,7 +195,7 @@
             android:layout_below="@id/date"
             android:layout_width="match_parent"
             android:layout_height="72dp"
-        >
+            >
             <com.dpcsa.compon.custom_components.TextViewNumberGrammar
                 android:id="@+id/adults"
                 android:layout_marginLeft="@dimen/dim_20"
@@ -203,7 +203,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dim_18"
-                app:stringArray="@string/Searchadultsgrammar"
+                app:stringArray="@string/Searchadults_grammar"
                 />
 
             <RelativeLayout
@@ -221,7 +221,7 @@
                 android:layout_marginTop="@dimen/dim_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Кто летит"
+                android:text="@string/Search_0_txt"
                 android:textSize="@dimen/dim_12"
                 />
 
@@ -233,7 +233,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dim_18"
-                app:stringArray="@string/Searchkidsgrammar"
+                app:stringArray="@string/Searchkids_grammar"
                 app:zeroNotView="true"
                 />
 
@@ -260,7 +260,7 @@
             android:layout_height="@dimen/dim_56"
             android:background="@drawable/shape_1012"
             android:gravity="center"
-            android:text="Найти туры"
+            android:text="@string/Search_select_txt"
             android:textSize="@dimen/dim_20"
             android:textColor="@color/white"
             />
