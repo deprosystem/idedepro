@@ -66,6 +66,7 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
     private void init(Context context, AttributeSet attrs) {
         this.context = context;
         thisSheet = this;
+Log.d("QWERT","init init init");
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Simple);
             viewId = a.getResourceId(R.styleable.Simple_viewId, 0);
@@ -87,6 +88,7 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
             fadedScreen.setBackgroundColor(fadedScreenColor);
         }
         addView(fadedScreen);
+        Log.d("QWERT","1111111111111");
         panel = new SwipeY(context);
         LinearLayout.LayoutParams lpPanel = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -102,7 +104,9 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
         LayoutParams lpContainer = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, hh);
         sheetContainer.setLayoutParams(lpContainer);
         panel.addView(sheetContainer);
+Log.d("QWERT","22222222222222 viewId="+getResources().getResourceEntryName(viewId)+"<< sheetContainer="+sheetContainer);
         LayoutInflater.from(context).inflate(viewId, sheetContainer);
+Log.d("QWERT","33333333333");
         super.setVisibility(GONE);
     }
 
