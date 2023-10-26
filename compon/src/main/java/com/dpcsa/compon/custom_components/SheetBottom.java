@@ -269,6 +269,7 @@ Log.d("QWERT","33333333333");
 
         public SwipeY(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
             super(context, attrs, defStyleAttr);
+Log.d("QWERT","SwipeY SwipeY");
             mVelocityTracker = VelocityTracker.obtain();
             maxV = 0;
             startMove = false;
@@ -276,6 +277,7 @@ Log.d("QWERT","33333333333");
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
+Log.d("QWERT","SwipeY onTouchEvent event.getAction()="+event.getAction());
             if (noSwipeHide) return true;
             float tY;
             switch (event.getAction()) {
@@ -329,6 +331,7 @@ Log.d("QWERT","33333333333");
                     mVelocityTracker.clear();
                     return true;
             }
+Log.d("QWERT","SwipeY onTouchEvent ++++++++++++");
             return false;
         }
 
