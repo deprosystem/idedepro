@@ -66,7 +66,7 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
     private void init(Context context, AttributeSet attrs) {
         this.context = context;
         thisSheet = this;
-Log.d("QWERT","init init init");
+Log.d("QWERT","init init init 0000000000");
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Simple);
             viewId = a.getResourceId(R.styleable.Simple_viewId, 0);
