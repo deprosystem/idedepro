@@ -1,7 +1,7 @@
 package com.dpcsa.compon.custom_components;
 
-import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.Animator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -90,6 +90,7 @@ Log.d("QWERT","init init init 0000000000");
         addView(fadedScreen);
         Log.d("QWERT","1111111111111");
         panel = new SwipeY(context);
+Log.d("QWERT","aaaaaaaaaa panel="+panel);
         LinearLayout.LayoutParams lpPanel = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         panel.setLayoutParams(lpPanel);
