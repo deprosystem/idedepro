@@ -94,6 +94,7 @@ Log.d("QWERT","init init init");
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         panel.setLayoutParams(lpPanel);
         fadedScreen.addView(panel);
+Log.d("QWERT","444444444444");
         sheetContainer = new FrameLayout(context);
         int hh;
         if (viewMatch) {
@@ -102,9 +103,11 @@ Log.d("QWERT","init init init");
             hh = ViewGroup.LayoutParams.WRAP_CONTENT;
         }
         LayoutParams lpContainer = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, hh);
+Log.d("QWERT","5555555555");
         sheetContainer.setLayoutParams(lpContainer);
         panel.addView(sheetContainer);
-Log.d("QWERT","22222222222222 viewId="+getResources().getResourceEntryName(viewId)+"<< sheetContainer="+sheetContainer);
+Log.d("QWERT","22222222222222");
+Log.d("QWERT","66666666666 viewId="+getResources().getResourceEntryName(viewId)+"<< ");
         LayoutInflater.from(context).inflate(viewId, sheetContainer);
 Log.d("QWERT","33333333333");
         super.setVisibility(GONE);
