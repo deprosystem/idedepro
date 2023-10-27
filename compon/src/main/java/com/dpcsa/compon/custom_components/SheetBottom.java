@@ -258,6 +258,7 @@ Log.d("QWERT","VVVVVVVVV");
         public SwipeY(@NonNull Context context) {
             super(context);
             init (context);
+            Log.d("QWERT","SwipeY SwipeY SwipeY SwipeY");
         }
 
         private void init(Context context) {
@@ -273,45 +274,45 @@ Log.d("QWERT","VVVVVVVVV");
             if (noSwipeHide) return true;
             float tY;
 
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    mDownY = event.getY();
-                    if (animY != null) {
-                        animY.cancel();
-                    }
-                    if (mFlingYAnimation != null) {
-                        mFlingYAnimation.cancel();
-                    }
-                    mOffsetY = mSwipeView.getTranslationY();
-                    mVelocityTracker.addMovement(event);
-                    startMove = true;
-                    return true;
-                case MotionEvent.ACTION_MOVE:
-                    tY = (event.getY() - mDownY + mOffsetY);
-                    if (startMove && Math.abs(tY) < 20) return true;
-                    startMove = false;
-                    if (tY > maxV) {
-                        tY = maxV;
-                    }
-                    if (tY < minV ) {
-                        tY = minV;
-                    }
-                    mSwipeView.setTranslationY(tY);
-                    mVelocityTracker.addMovement(event);
-                    return true;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    mVelocityTracker.computeCurrentVelocity(1000);
-                    tY = mSwipeView.getTranslationY();
-                    float minS, maxS;
-                    if (tY <= maxV && tY >= minV) {
-                        if (tY < 0) {
-                            minS = minV;
-                            maxS = 0f;
-                        } else {
-                            minS = 0f;
-                            maxS = maxV;
-                        }
+//            switch (event.getAction()) {
+//                case MotionEvent.ACTION_DOWN:
+//                    mDownY = event.getY();
+//                    if (animY != null) {
+//                        animY.cancel();
+//                    }
+//                    if (mFlingYAnimation != null) {
+//                        mFlingYAnimation.cancel();
+//                    }
+//                    mOffsetY = mSwipeView.getTranslationY();
+//                    mVelocityTracker.addMovement(event);
+//                    startMove = true;
+//                    return true;
+//                case MotionEvent.ACTION_MOVE:
+//                    tY = (event.getY() - mDownY + mOffsetY);
+//                    if (startMove && Math.abs(tY) < 20) return true;
+//                    startMove = false;
+//                    if (tY > maxV) {
+//                        tY = maxV;
+//                    }
+//                    if (tY < minV ) {
+//                        tY = minV;
+//                    }
+//                    mSwipeView.setTranslationY(tY);
+//                    mVelocityTracker.addMovement(event);
+//                    return true;
+//                case MotionEvent.ACTION_UP:
+//                case MotionEvent.ACTION_CANCEL:
+//                    mVelocityTracker.computeCurrentVelocity(1000);
+//                    tY = mSwipeView.getTranslationY();
+//                    float minS, maxS;
+//                    if (tY <= maxV && tY >= minV) {
+//                        if (tY < 0) {
+//                            minS = minV;
+//                            maxS = 0f;
+//                        } else {
+//                            minS = 0f;
+//                            maxS = maxV;
+//                        }
 //                        mFlingYAnimation = new FlingAnimation(mSwipeView,
 //                                DynamicAnimation.TRANSLATION_Y)
 //                                .setFriction(0.5f)
@@ -320,10 +321,10 @@ Log.d("QWERT","VVVVVVVVV");
 //                                .setStartVelocity(mVelocityTracker.getYVelocity())
 //                                .addEndListener(endListener);
 //                        mFlingYAnimation.start();
-                    }
-                    mVelocityTracker.clear();
-                    return true;
-            }
+//                    }
+//                    mVelocityTracker.clear();
+//                    return true;
+//            }
 
 
             Log.d("QWERT","SwipeY onTouchEvent ++++++++++++++");
@@ -353,13 +354,13 @@ Log.d("QWERT","VVVVVVVVV");
 
         public void setSwipeView(View view, SheetBottomListener listener) {
 Log.d("QWERT","setSwipeView setSwipeView");
-            this.listener = listener;
-            mSwipeView = view;
-            if (mSwipeView.getTranslationY() != 0) {
-                mSwipeView.setTranslationY(0);
-            }
-            maxV = view.getHeight();
-            halfMax = maxV / 2;
+//            this.listener = listener;
+//            mSwipeView = view;
+//            if (mSwipeView.getTranslationY() != 0) {
+//                mSwipeView.setTranslationY(0);
+//            }
+//            maxV = view.getHeight();
+//            halfMax = maxV / 2;
 Log.d("QWERT","setSwipeView setSwipeView +++++++");
         }
 //
