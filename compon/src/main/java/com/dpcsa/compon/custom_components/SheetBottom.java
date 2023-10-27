@@ -310,14 +310,14 @@ Log.d("QWERT","init ++++++++++++");
                             minS = 0f;
                             maxS = maxV;
                         }
-//                        mFlingYAnimation = new FlingAnimation(mSwipeView,
-//                                DynamicAnimation.TRANSLATION_Y)
-//                                .setFriction(0.5f)
-//                                .setMinValue(minS)
-//                                .setMaxValue(maxS)
-//                                .setStartVelocity(mVelocityTracker.getYVelocity())
-//                                .addEndListener(endListener);
-//                        mFlingYAnimation.start();
+                        mFlingYAnimation = new FlingAnimation(mSwipeView,
+                                DynamicAnimation.TRANSLATION_Y)
+                                .setFriction(0.5f)
+                                .setMinValue(minS)
+                                .setMaxValue(maxS)
+                                .setStartVelocity(mVelocityTracker.getYVelocity())
+                                .addEndListener(endListener);
+                        mFlingYAnimation.start();
                     }
                     mVelocityTracker.clear();
                     return true;
@@ -328,25 +328,25 @@ Log.d("QWERT","init ++++++++++++");
             return false;
         }
 
-//        DynamicAnimation.OnAnimationEndListener endListener = new DynamicAnimation.OnAnimationEndListener() {
-//            @Override
-//            public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
-//                if (velocity == 0 ) {
-//                    if (value > 0) {
+        DynamicAnimation.OnAnimationEndListener endListener = new DynamicAnimation.OnAnimationEndListener() {
+            @Override
+            public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
+                if (velocity == 0 ) {
+                    if (value > 0) {
 //                        if (value < halfMax) {
 //                            closer(0f);
 //                        } else {
 //                            closer(maxV);
 //                        }
-//                    }
-//                } else {
-//                    if (value > 0 && listener != null) {
-//                        listener.negativeClose();
-//                    }
-//                }
-//            }
-//        };
-//
+                    }
+                } else {
+                    if (value > 0 && listener != null) {
+                        listener.negativeClose();
+                    }
+                }
+            }
+        };
+
         public void setSwipeView(View view, SheetBottomListener listener) {
             this.listener = listener;
             mSwipeView = view;
