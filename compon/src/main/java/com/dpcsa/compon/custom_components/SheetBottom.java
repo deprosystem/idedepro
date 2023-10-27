@@ -331,26 +331,26 @@ Log.d("QWERT","VVVVVVVVV");
             return false;
         }
 
-        DynamicAnimation.OnAnimationEndListener endListener = new DynamicAnimation.OnAnimationEndListener() {
-            @Override
-            public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
-                Log.d("QWERT","endListener endListener");
-                if (velocity == 0 ) {
-                    if (value > 0) {
-//                        if (value < halfMax) {
-//                            closer(0f);
-//                        } else {
-//                            closer(maxV);
-//                        }
-                    }
-                } else {
-                    if (value > 0 && listener != null) {
-//                        listener.negativeClose();
-                    }
-                }
-                Log.d("QWERT","endListener +++++++");
-            }
-        };
+//        DynamicAnimation.OnAnimationEndListener endListener = new DynamicAnimation.OnAnimationEndListener() {
+//            @Override
+//            public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
+//                Log.d("QWERT","endListener endListener");
+//                if (velocity == 0 ) {
+//                    if (value > 0) {
+////                        if (value < halfMax) {
+////                            closer(0f);
+////                        } else {
+////                            closer(maxV);
+////                        }
+//                    }
+//                } else {
+//                    if (value > 0 && listener != null) {
+////                        listener.negativeClose();
+//                    }
+//                }
+//                Log.d("QWERT","endListener +++++++");
+//            }
+//        };
 
         public void setSwipeView(View view, SheetBottomListener listener) {
 Log.d("QWERT","setSwipeView setSwipeView");
