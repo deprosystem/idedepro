@@ -87,7 +87,9 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
             fadedScreen.setBackgroundColor(fadedScreenColor);
         }
         addView(fadedScreen);
+Log.d("QWERT","init 00000000");
         panel = new SwipeY(context);
+Log.d("QWERT","init ++++++++++++");
         LinearLayout.LayoutParams lpPanel = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         panel.setLayoutParams(lpPanel);
@@ -219,7 +221,6 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
 
     @Override
     public void hide() {
-        Log.d("QWERT","hide iBase="+iBase);
         if (getVisibility() == VISIBLE && iBase != null) {
             fadedScreenClose(true, null);
             iBase.delAnimatePanel(this);
@@ -269,6 +270,7 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
             Log.d("QWERT", "SwipeY onTouchEvent  event.getAction()=" + event.getAction()+" noSwipeHide="+noSwipeHide);
             if (noSwipeHide) return true;
             float tY;
+/*
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     mDownY = event.getY();
@@ -320,65 +322,67 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
                     mVelocityTracker.clear();
                     return true;
             }
+
+ */
             Log.d("QWERT","SwipeY onTouchEvent ++++++++++++++");
             return false;
         }
 
-        DynamicAnimation.OnAnimationEndListener endListener = new DynamicAnimation.OnAnimationEndListener() {
-            @Override
-            public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
-                if (velocity == 0 ) {
-                    if (value > 0) {
-                        if (value < halfMax) {
-                            closer(0f);
-                        } else {
-                            closer(maxV);
-                        }
-                    }
-                } else {
-                    if (value > 0 && listener != null) {
-                        listener.negativeClose();
-                    }
-                }
-            }
-        };
-
+//        DynamicAnimation.OnAnimationEndListener endListener = new DynamicAnimation.OnAnimationEndListener() {
+//            @Override
+//            public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
+//                if (velocity == 0 ) {
+//                    if (value > 0) {
+//                        if (value < halfMax) {
+//                            closer(0f);
+//                        } else {
+//                            closer(maxV);
+//                        }
+//                    }
+//                } else {
+//                    if (value > 0 && listener != null) {
+//                        listener.negativeClose();
+//                    }
+//                }
+//            }
+//        };
+//
         public void setSwipeView(View view, SheetBottomListener listener) {
-            this.listener = listener;
-            mSwipeView = view;
-            if (mSwipeView.getTranslationY() != 0) {
-                mSwipeView.setTranslationY(0);
-            }
-            maxV = view.getHeight();
-            halfMax = maxV / 2;
+//            this.listener = listener;
+//            mSwipeView = view;
+//            if (mSwipeView.getTranslationY() != 0) {
+//                mSwipeView.setTranslationY(0);
+//            }
+//            maxV = view.getHeight();
+//            halfMax = maxV / 2;
         }
-
-        private void closer(final float finalPosition) {
-            animY = new SpringAnimation(mSwipeView,
-                    new FloatPropertyCompat<View>("TranslationY") {
-                        @Override
-                        public float getValue(View view) {
-                            return view.getTranslationY();
-                        }
-
-                        @Override
-                        public void setValue(View view, float value) {
-                            view.setTranslationY(value);
-                        }
-                    }, finalPosition);
-            animY.getSpring().setStiffness(1000f);
-            animY.getSpring().setDampingRatio(0.7f);
-            animY.setStartVelocity(0);
-            animY.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
-                @Override
-                public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
-                    if (finalPosition > 0 && listener != null) {
-                        listener.negativeClose();
-                    }
-                }
-            });
-            animY.start();
-        }
+//
+//        private void closer(final float finalPosition) {
+//            animY = new SpringAnimation(mSwipeView,
+//                    new FloatPropertyCompat<View>("TranslationY") {
+//                        @Override
+//                        public float getValue(View view) {
+//                            return view.getTranslationY();
+//                        }
+//
+//                        @Override
+//                        public void setValue(View view, float value) {
+//                            view.setTranslationY(value);
+//                        }
+//                    }, finalPosition);
+//            animY.getSpring().setStiffness(1000f);
+//            animY.getSpring().setDampingRatio(0.7f);
+//            animY.setStartVelocity(0);
+//            animY.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
+//                @Override
+//                public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
+//                    if (finalPosition > 0 && listener != null) {
+//                        listener.negativeClose();
+//                    }
+//                }
+//            });
+//            animY.start();
+//        }
     }
 /*
     private class SwipeY extends RelativeLayout {
