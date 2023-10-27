@@ -331,6 +331,7 @@ Log.d("QWERT","init ++++++++++++");
         DynamicAnimation.OnAnimationEndListener endListener = new DynamicAnimation.OnAnimationEndListener() {
             @Override
             public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
+                Log.d("QWERT","endListener endListener");
                 if (velocity == 0 ) {
                     if (value > 0) {
 //                        if (value < halfMax) {
@@ -341,13 +342,15 @@ Log.d("QWERT","init ++++++++++++");
                     }
                 } else {
                     if (value > 0 && listener != null) {
-                        listener.negativeClose();
+//                        listener.negativeClose();
                     }
                 }
+                Log.d("QWERT","endListener +++++++");
             }
         };
 
         public void setSwipeView(View view, SheetBottomListener listener) {
+Log.d("QWERT","setSwipeView setSwipeView");
             this.listener = listener;
             mSwipeView = view;
             if (mSwipeView.getTranslationY() != 0) {
@@ -355,6 +358,7 @@ Log.d("QWERT","init ++++++++++++");
             }
             maxV = view.getHeight();
             halfMax = maxV / 2;
+Log.d("QWERT","setSwipeView setSwipeView +++++++");
         }
 //
 //        private void closer(final float finalPosition) {
