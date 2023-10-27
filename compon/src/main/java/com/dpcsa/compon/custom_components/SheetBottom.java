@@ -66,7 +66,6 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
     private void init(Context context, AttributeSet attrs) {
         this.context = context;
         thisSheet = this;
-Log.d("QWERT","init init init 0000000000");
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Simple);
             viewId = a.getResourceId(R.styleable.Simple_viewId, 0);
@@ -88,14 +87,11 @@ Log.d("QWERT","init init init 0000000000");
             fadedScreen.setBackgroundColor(fadedScreenColor);
         }
         addView(fadedScreen);
-        Log.d("QWERT","1111111111111");
         panel = new SwipeY(context);
-Log.d("QWERT","aaaaaaaaaa panel="+panel);
         LinearLayout.LayoutParams lpPanel = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         panel.setLayoutParams(lpPanel);
         fadedScreen.addView(panel);
-Log.d("QWERT","444444444444");
         sheetContainer = new FrameLayout(context);
         int hh;
         if (viewMatch) {
@@ -104,13 +100,9 @@ Log.d("QWERT","444444444444");
             hh = ViewGroup.LayoutParams.WRAP_CONTENT;
         }
         LayoutParams lpContainer = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, hh);
-Log.d("QWERT","5555555555");
         sheetContainer.setLayoutParams(lpContainer);
         panel.addView(sheetContainer);
-Log.d("QWERT","22222222222222");
-Log.d("QWERT","66666666666 viewId="+getResources().getResourceEntryName(viewId)+"<< ");
         LayoutInflater.from(context).inflate(viewId, sheetContainer);
-Log.d("QWERT","33333333333");
         super.setVisibility(GONE);
     }
 
@@ -171,7 +163,6 @@ Log.d("QWERT","33333333333");
 
 
     private void fadedScreenClose(final boolean negative, final Bundle data) {
-
         fadedScreen.animate()
                 .alpha(0f)
                 .setDuration(duration)
@@ -228,6 +219,7 @@ Log.d("QWERT","33333333333");
 
     @Override
     public void hide() {
+        Log.d("QWERT","hide iBase="+iBase);
         if (getVisibility() == VISIBLE && iBase != null) {
             fadedScreenClose(true, null);
             iBase.delAnimatePanel(this);
@@ -250,8 +242,15 @@ Log.d("QWERT","33333333333");
 
     private class SwipeY extends RelativeLayout {
         private VelocityTracker mVelocityTracker;
+        private FlingAnimation mFlingYAnimation;
+        private SpringAnimation animY;
+        private View mSwipeView;
+        private float mDownY;
+        private float mOffsetY;
+        private float minV = 0f;
         private float maxV, halfMax;
         private boolean startMove;
+        private SheetBottomListener listener;
 
         public SwipeY(@NonNull Context context) {
             super(context);
@@ -259,7 +258,6 @@ Log.d("QWERT","33333333333");
         }
 
         private void init(Context context) {
-            Log.d("QWERT","init init init");
             mVelocityTracker = VelocityTracker.obtain();
             maxV = 0;
             startMove = false;
@@ -272,23 +270,114 @@ Log.d("QWERT","33333333333");
             if (noSwipeHide) return true;
             float tY;
             switch (event.getAction()) {
-
+                case MotionEvent.ACTION_DOWN:
+                    mDownY = event.getY();
+                    if (animY != null) {
+                        animY.cancel();
+                    }
+                    if (mFlingYAnimation != null) {
+                        mFlingYAnimation.cancel();
+                    }
+                    mOffsetY = mSwipeView.getTranslationY();
+                    mVelocityTracker.addMovement(event);
+                    startMove = true;
+                    return true;
+                case MotionEvent.ACTION_MOVE:
+                    tY = (event.getY() - mDownY + mOffsetY);
+                    if (startMove && Math.abs(tY) < 20) return true;
+                    startMove = false;
+                    if (tY > maxV) {
+                        tY = maxV;
+                    }
+                    if (tY < minV ) {
+                        tY = minV;
+                    }
+                    mSwipeView.setTranslationY(tY);
+                    mVelocityTracker.addMovement(event);
+                    return true;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    mVelocityTracker.computeCurrentVelocity(1000);
+                    tY = mSwipeView.getTranslationY();
+                    float minS, maxS;
+                    if (tY <= maxV && tY >= minV) {
+                        if (tY < 0) {
+                            minS = minV;
+                            maxS = 0f;
+                        } else {
+                            minS = 0f;
+                            maxS = maxV;
+                        }
+                        mFlingYAnimation = new FlingAnimation(mSwipeView,
+                                DynamicAnimation.TRANSLATION_Y)
+                                .setFriction(0.5f)
+                                .setMinValue(minS)
+                                .setMaxValue(maxS)
+                                .setStartVelocity(mVelocityTracker.getYVelocity())
+                                .addEndListener(endListener);
+                        mFlingYAnimation.start();
+                    }
+                    mVelocityTracker.clear();
+                    return true;
             }
             Log.d("QWERT","SwipeY onTouchEvent ++++++++++++++");
             return false;
         }
-/*
-        public SwipeY(@NonNull Context context, @Nullable AttributeSet attrs) {
-            this(context, attrs, 0);
-        }
 
-        public SwipeY(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-            super(context, attrs, defStyleAttr);
-            Log.d("QWERT","SwipeY SwipeY VVV");
-        }
-*/
+        DynamicAnimation.OnAnimationEndListener endListener = new DynamicAnimation.OnAnimationEndListener() {
+            @Override
+            public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
+                if (velocity == 0 ) {
+                    if (value > 0) {
+                        if (value < halfMax) {
+                            closer(0f);
+                        } else {
+                            closer(maxV);
+                        }
+                    }
+                } else {
+                    if (value > 0 && listener != null) {
+                        listener.negativeClose();
+                    }
+                }
+            }
+        };
+
         public void setSwipeView(View view, SheetBottomListener listener) {
+            this.listener = listener;
+            mSwipeView = view;
+            if (mSwipeView.getTranslationY() != 0) {
+                mSwipeView.setTranslationY(0);
+            }
+            maxV = view.getHeight();
+            halfMax = maxV / 2;
+        }
 
+        private void closer(final float finalPosition) {
+            animY = new SpringAnimation(mSwipeView,
+                    new FloatPropertyCompat<View>("TranslationY") {
+                        @Override
+                        public float getValue(View view) {
+                            return view.getTranslationY();
+                        }
+
+                        @Override
+                        public void setValue(View view, float value) {
+                            view.setTranslationY(value);
+                        }
+                    }, finalPosition);
+            animY.getSpring().setStiffness(1000f);
+            animY.getSpring().setDampingRatio(0.7f);
+            animY.setStartVelocity(0);
+            animY.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
+                @Override
+                public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
+                    if (finalPosition > 0 && listener != null) {
+                        listener.negativeClose();
+                    }
+                }
+            });
+            animY.start();
         }
     }
 /*
