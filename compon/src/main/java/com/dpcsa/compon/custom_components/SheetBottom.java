@@ -249,6 +249,10 @@ Log.d("QWERT","33333333333");
     }
 
     private class SwipeY extends RelativeLayout {
+        private VelocityTracker mVelocityTracker;
+        private float maxV, halfMax;
+        private boolean startMove;
+
         public SwipeY(@NonNull Context context) {
             super(context);
             init (context);
@@ -256,6 +260,10 @@ Log.d("QWERT","33333333333");
 
         private void init(Context context) {
             Log.d("QWERT","init init init");
+            mVelocityTracker = VelocityTracker.obtain();
+            maxV = 0;
+            startMove = false;
+            Log.d("QWERT","init init +++++++++");
         }
 /*
         public SwipeY(@NonNull Context context, @Nullable AttributeSet attrs) {
