@@ -249,6 +249,25 @@ Log.d("QWERT","33333333333");
     }
 
     private class SwipeY extends RelativeLayout {
+        public SwipeY(@NonNull Context context) {
+            this(context, null);
+        }
+
+        public SwipeY(@NonNull Context context, @Nullable AttributeSet attrs) {
+            this(context, attrs, 0);
+        }
+
+        public SwipeY(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+            super(context, attrs, defStyleAttr);
+            Log.d("QWERT","SwipeY SwipeY VVV");
+        }
+
+        public void setSwipeView(View view, SheetBottomListener listener) {
+
+        }
+    }
+/*
+    private class SwipeY extends RelativeLayout {
         private VelocityTracker mVelocityTracker;
         private FlingAnimation mFlingYAnimation;
         private SpringAnimation animY;
@@ -392,4 +411,6 @@ Log.d("QWERT","SwipeY onTouchEvent ++++++++++++++");
             animY.start();
         }
     }
+
+ */
 }

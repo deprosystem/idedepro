@@ -8,7 +8,7 @@ public class MyDeclare extends DeclareScreens {
 
     public final static String
         MAIN = "MAIN", NEWS = "NEWS", PROM = "PROM", 
-        DETAIL = "DETAIL", SET = "SET";
+        DETAIL = "DETAIL", SET = "SET", SHEET = "SHEET";
 
     @Override
     public void declare() {
@@ -43,7 +43,7 @@ public class MyDeclare extends DeclareScreens {
                     R.layout.item_set_list_1}).selected(),
                 navigator(handler(0, VH.SET_LOCALE)))
             .componentSubscribe(R.id.sub_news, "news");
-
+        fragment(SHEET, R.layout.fragment_sheet, R.string.main_menu_b_sheet);
 
         channel("news_ev", "Новости и акции", IMPORTANCE_HIGH, MainActivity.class,
                 notices(
@@ -65,6 +65,7 @@ public class MyDeclare extends DeclareScreens {
     Menu menuMainMenu_b = new Menu()
         .item(R.drawable.news, R.string.main_menu_b_news, NEWS, true)
         .item(R.drawable.promotion, R.string.main_menu_b_prom, PROM)
-        .item(R.drawable.icon_menu_settings, R.string.main_menu_b_set, SET);
+        .item(R.drawable.icon_menu_settings, R.string.main_menu_b_set, SET)
+        .item(R.drawable._inbox_ffffe854, R.string.main_menu_b_sheet, SHEET);
 
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+    <com.dpcsa.compon.custom_components.SheetBottom
+        android:id="@+id/sw_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:viewId="@layout/view_sheet_sw_1"
+        />
+</RelativeLayout>
