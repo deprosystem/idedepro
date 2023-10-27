@@ -262,7 +262,7 @@ Log.d("QWERT","init ++++++++++++");
             mVelocityTracker = VelocityTracker.obtain();
             maxV = 0;
             startMove = false;
-            Log.d("QWERT","init init +++++++++");
+            Log.d("QWERT","SwipeY SwipeY init");
         }
 
         @Override
@@ -270,7 +270,7 @@ Log.d("QWERT","init ++++++++++++");
             Log.d("QWERT", "SwipeY onTouchEvent  event.getAction()=" + event.getAction()+" noSwipeHide="+noSwipeHide);
             if (noSwipeHide) return true;
             float tY;
-/*
+
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     mDownY = event.getY();
@@ -310,20 +310,20 @@ Log.d("QWERT","init ++++++++++++");
                             minS = 0f;
                             maxS = maxV;
                         }
-                        mFlingYAnimation = new FlingAnimation(mSwipeView,
-                                DynamicAnimation.TRANSLATION_Y)
-                                .setFriction(0.5f)
-                                .setMinValue(minS)
-                                .setMaxValue(maxS)
-                                .setStartVelocity(mVelocityTracker.getYVelocity())
-                                .addEndListener(endListener);
-                        mFlingYAnimation.start();
+//                        mFlingYAnimation = new FlingAnimation(mSwipeView,
+//                                DynamicAnimation.TRANSLATION_Y)
+//                                .setFriction(0.5f)
+//                                .setMinValue(minS)
+//                                .setMaxValue(maxS)
+//                                .setStartVelocity(mVelocityTracker.getYVelocity())
+//                                .addEndListener(endListener);
+//                        mFlingYAnimation.start();
                     }
                     mVelocityTracker.clear();
                     return true;
             }
 
- */
+
             Log.d("QWERT","SwipeY onTouchEvent ++++++++++++++");
             return false;
         }
@@ -348,13 +348,13 @@ Log.d("QWERT","init ++++++++++++");
 //        };
 //
         public void setSwipeView(View view, SheetBottomListener listener) {
-//            this.listener = listener;
-//            mSwipeView = view;
-//            if (mSwipeView.getTranslationY() != 0) {
-//                mSwipeView.setTranslationY(0);
-//            }
-//            maxV = view.getHeight();
-//            halfMax = maxV / 2;
+            this.listener = listener;
+            mSwipeView = view;
+            if (mSwipeView.getTranslationY() != 0) {
+                mSwipeView.setTranslationY(0);
+            }
+            maxV = view.getHeight();
+            halfMax = maxV / 2;
         }
 //
 //        private void closer(final float finalPosition) {
