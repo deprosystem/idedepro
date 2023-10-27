@@ -265,6 +265,18 @@ Log.d("QWERT","33333333333");
             startMove = false;
             Log.d("QWERT","init init +++++++++");
         }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            Log.d("QWERT", "SwipeY onTouchEvent  event.getAction()=" + event.getAction()+" noSwipeHide="+noSwipeHide);
+            if (noSwipeHide) return true;
+            float tY;
+            switch (event.getAction()) {
+
+            }
+            Log.d("QWERT","SwipeY onTouchEvent ++++++++++++++");
+            return false;
+        }
 /*
         public SwipeY(@NonNull Context context, @Nullable AttributeSet attrs) {
             this(context, attrs, 0);
