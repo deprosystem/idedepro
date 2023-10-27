@@ -254,6 +254,7 @@ Log.d("QWERT","VVVVVVVVV");
         private float maxV, halfMax;
         private boolean startMove;
         private SheetBottomListener listener;
+        DynamicAnimation.OnAnimationEndListener endListener;
 
         public SwipeY(@NonNull Context context) {
             super(context);
@@ -265,6 +266,8 @@ Log.d("QWERT","VVVVVVVVV");
             mVelocityTracker = VelocityTracker.obtain();
             maxV = 0;
             startMove = false;
+            Log.d("QWERT","SwipeY SwipeY endListener endListener endListener");
+            endListener = new dinListen();
             Log.d("QWERT","SwipeY SwipeY init");
         }
 
@@ -329,6 +332,14 @@ Log.d("QWERT","VVVVVVVVV");
 
             Log.d("QWERT","SwipeY onTouchEvent ++++++++++++++");
             return false;
+        }
+
+        public class dinListen implements DynamicAnimation.OnAnimationEndListener {
+
+            @Override
+            public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
+
+            }
         }
 
 //        DynamicAnimation.OnAnimationEndListener endListener = new DynamicAnimation.OnAnimationEndListener() {
