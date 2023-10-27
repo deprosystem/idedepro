@@ -250,9 +250,14 @@ Log.d("QWERT","33333333333");
 
     private class SwipeY extends RelativeLayout {
         public SwipeY(@NonNull Context context) {
-            this(context, null);
+            super(context);
+            init (context);
         }
 
+        private void init(Context context) {
+            Log.d("QWERT","init init init");
+        }
+/*
         public SwipeY(@NonNull Context context, @Nullable AttributeSet attrs) {
             this(context, attrs, 0);
         }
@@ -261,7 +266,7 @@ Log.d("QWERT","33333333333");
             super(context, attrs, defStyleAttr);
             Log.d("QWERT","SwipeY SwipeY VVV");
         }
-
+*/
         public void setSwipeView(View view, SheetBottomListener listener) {
 
         }
