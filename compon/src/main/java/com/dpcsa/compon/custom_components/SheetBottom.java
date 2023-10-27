@@ -64,6 +64,7 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
     }
 
     private void init(Context context, AttributeSet attrs) {
+Log.d("QWERT","^^^^^^^^^^^^");
         this.context = context;
         thisSheet = this;
         if (attrs != null) {
@@ -106,6 +107,7 @@ Log.d("QWERT","init ++++++++++++");
         panel.addView(sheetContainer);
         LayoutInflater.from(context).inflate(viewId, sheetContainer);
         super.setVisibility(GONE);
+Log.d("QWERT","VVVVVVVVV");
     }
 
     public void open() {
@@ -310,14 +312,14 @@ Log.d("QWERT","init ++++++++++++");
                             minS = 0f;
                             maxS = maxV;
                         }
-                        mFlingYAnimation = new FlingAnimation(mSwipeView,
-                                DynamicAnimation.TRANSLATION_Y)
-                                .setFriction(0.5f)
-                                .setMinValue(minS)
-                                .setMaxValue(maxS)
-                                .setStartVelocity(mVelocityTracker.getYVelocity())
-                                .addEndListener(endListener);
-                        mFlingYAnimation.start();
+//                        mFlingYAnimation = new FlingAnimation(mSwipeView,
+//                                DynamicAnimation.TRANSLATION_Y)
+//                                .setFriction(0.5f)
+//                                .setMinValue(minS)
+//                                .setMaxValue(maxS)
+//                                .setStartVelocity(mVelocityTracker.getYVelocity())
+//                                .addEndListener(endListener);
+//                        mFlingYAnimation.start();
                     }
                     mVelocityTracker.clear();
                     return true;
