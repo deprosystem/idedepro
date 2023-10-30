@@ -7,25 +7,18 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
 
-import androidx.core.view.NestedScrollingParent;
-import androidx.core.view.ViewCompat;
-import androidx.customview.widget.ViewDragHelper;
-import androidx.dynamicanimation.animation.DynamicAnimation;
 import androidx.dynamicanimation.animation.FlingAnimation;
 import androidx.dynamicanimation.animation.FloatPropertyCompat;
 import androidx.dynamicanimation.animation.SpringAnimation;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -34,9 +27,6 @@ import android.widget.RelativeLayout;
 import com.dpcsa.compon.R;
 import com.dpcsa.compon.interfaces_classes.AnimatePanel;
 import com.dpcsa.compon.interfaces_classes.IBase;
-
-import java.util.Map;
-import java.util.WeakHashMap;
 
 public class SheetBottom extends RelativeLayout implements AnimatePanel {
 
@@ -332,25 +322,6 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
             return false;
         }
 
-//        DynamicAnimation.OnAnimationEndListener endListener = new DynamicAnimation.OnAnimationEndListener() {
-//            @Override
-//            public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
-////                if (velocity == 0 ) {
-////                    if (value > 0) {
-////                        if (value < halfMax) {
-////                            closer(0f);
-////                        } else {
-////                            closer(maxV);
-////                        }
-////                    }
-////                } else {
-////                    if (value > 0 && listener != null) {
-////                        listener.negativeClose();
-////                    }
-////                }
-//            }
-//        };
-
         public void setSwipeView(View view, SheetBottomListener listener) {
             this.listener = listener;
             mSwipeView = view;
@@ -377,16 +348,19 @@ public class SheetBottom extends RelativeLayout implements AnimatePanel {
             animY.getSpring().setStiffness(1000f);
             animY.getSpring().setDampingRatio(0.7f);
             animY.setStartVelocity(veloc);
-//            animY.setStartVelocity(0);
-            animY.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
-                @Override
-                public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
-                    if (finalPosition > 0 && listener != null) {
-                        listener.negativeClose();
-                    }
-                }
-            });
             animY.start();
+            if (finalPosition > 0 && listener != null) {
+                handler.postDelayed(fin, 300);
+            }
         }
+
+        Handler handler = new Handler();
+
+        Runnable fin = new Runnable() {
+            @Override
+            public void run() {
+                listener.negativeClose();
+            }
+        };
     }
 }
