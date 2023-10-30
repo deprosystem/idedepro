@@ -12,7 +12,6 @@ import androidx.dynamicanimation.animation.SpringAnimation;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -28,7 +27,7 @@ import com.dpcsa.compon.R;
 import com.dpcsa.compon.interfaces_classes.AnimatePanel;
 import com.dpcsa.compon.interfaces_classes.IBase;
 
-public class SheetBottomSw extends RelativeLayout implements AnimatePanel {
+public class SheetBottomCopy extends RelativeLayout implements AnimatePanel {
 
     private LinearLayout fadedScreen;
     private SwipeY panel;
@@ -43,21 +42,21 @@ public class SheetBottomSw extends RelativeLayout implements AnimatePanel {
     private int fadedScreenColorDefault = 0xcc333333;
     private int fadedScreenColor = fadedScreenColorDefault;
     private IBase iBase;
-    private SheetBottomSw thisSheet;
+    private SheetBottomCopy thisSheet;
     private int showTime;
     private boolean noSwipeHide, viewMatch, noBackPressedHide;
 
-    public SheetBottomSw(Context context) {
+    public SheetBottomCopy(Context context) {
         super(context);
         init(context, null);
     }
 
-    public SheetBottomSw(Context context, AttributeSet attrs) {
+    public SheetBottomCopy(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public SheetBottomSw(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SheetBottomCopy(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
@@ -65,7 +64,6 @@ public class SheetBottomSw extends RelativeLayout implements AnimatePanel {
     private void init(Context context, AttributeSet attrs) {
         this.context = context;
         thisSheet = this;
-        Log.d("QWERT","init init init");
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Simple);
             viewId = a.getResourceId(R.styleable.Simple_viewId, 0);
@@ -87,13 +85,11 @@ public class SheetBottomSw extends RelativeLayout implements AnimatePanel {
             fadedScreen.setBackgroundColor(fadedScreenColor);
         }
         addView(fadedScreen);
-        Log.d("QWERT","1111111111111");
         panel = new SwipeY(context);
         LinearLayout.LayoutParams lpPanel = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         panel.setLayoutParams(lpPanel);
         fadedScreen.addView(panel);
-        Log.d("QWERT","444444444444");
         sheetContainer = new FrameLayout(context);
         int hh;
         if (viewMatch) {
@@ -102,13 +98,9 @@ public class SheetBottomSw extends RelativeLayout implements AnimatePanel {
             hh = ViewGroup.LayoutParams.WRAP_CONTENT;
         }
         LayoutParams lpContainer = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, hh);
-        Log.d("QWERT","5555555555");
         sheetContainer.setLayoutParams(lpContainer);
         panel.addView(sheetContainer);
-        Log.d("QWERT","22222222222222");
-        Log.d("QWERT","66666666666 viewId="+getResources().getResourceEntryName(viewId)+"<< ");
         LayoutInflater.from(context).inflate(viewId, sheetContainer);
-        Log.d("QWERT","33333333333");
         super.setVisibility(GONE);
     }
 
@@ -200,7 +192,7 @@ public class SheetBottomSw extends RelativeLayout implements AnimatePanel {
 
         @Override
         public void proceedChanges(Bundle data) {
-            iBase.delAnimatePanel(SheetBottomSw.this);
+            iBase.delAnimatePanel(SheetBottomCopy.this);
             fadedScreenClose(false, data);
         }
     };
@@ -268,7 +260,6 @@ public class SheetBottomSw extends RelativeLayout implements AnimatePanel {
 
         public SwipeY(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
             super(context, attrs, defStyleAttr);
-            Log.d("QWERT","SwipeY SwipeY VVV");
             mVelocityTracker = VelocityTracker.obtain();
             maxV = 0;
             startMove = false;
@@ -276,7 +267,6 @@ public class SheetBottomSw extends RelativeLayout implements AnimatePanel {
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
-            Log.d("QWERT","SwipeY onTouchEvent  event.getAction()="+event.getAction());
             if (noSwipeHide) return true;
             float tY;
             switch (event.getAction()) {
@@ -330,7 +320,6 @@ public class SheetBottomSw extends RelativeLayout implements AnimatePanel {
                     mVelocityTracker.clear();
                     return true;
             }
-            Log.d("QWERT","SwipeY onTouchEvent ++++++++++++++");
             return false;
         }
 
