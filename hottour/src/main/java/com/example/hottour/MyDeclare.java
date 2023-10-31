@@ -30,7 +30,7 @@ public class MyDeclare extends DeclareScreens {
                         view(R.id.panel),
                         navigator(start(HOT_DEPART_CITY, after(setValueParam(R.id.panel),
                                 actual(R.id.list)))))
-                .list(model("query/zyzdpi8g7csjov5/5", "id_depart_cities"),
+                .list(model("query/zyzdpi8g7csjov5/5", "id_depart_cities=2"),
                         view(R.id.list, R.layout.item_search_list_0).spanCount(2),
                         navigator(start(HOT_INSIDE)))
                 .component(TC.PANEL_ENTER, model(PARAMETERS, "depart_city_name=Алматы,depart_date=SysDate,adults=1,kids=0,country_name=Египет"),
