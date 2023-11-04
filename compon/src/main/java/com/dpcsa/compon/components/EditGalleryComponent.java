@@ -11,17 +11,12 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-
 import com.dpcsa.compon.base.BaseComponent;
 import com.dpcsa.compon.base.BasePresenter;
 import com.dpcsa.compon.base.Screen;
 import com.dpcsa.compon.custom_components.ComponImageView;
 import com.dpcsa.compon.custom_components.Gallery;
-import com.dpcsa.compon.glide.GlideApp;
-import com.dpcsa.compon.glide.GlideRequest;
 import com.dpcsa.compon.interfaces_classes.ActionsAfterResponse;
 import com.dpcsa.compon.interfaces_classes.ActivityResult;
 import com.dpcsa.compon.interfaces_classes.IBase;
@@ -31,7 +26,6 @@ import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.Record;
 import com.dpcsa.compon.param.ParamComponent;
 import com.dpcsa.compon.param.ParamModel;
-import com.dpcsa.compon.single.Injector;
 import com.dpcsa.compon.tools.Constants;
 
 import java.io.File;
@@ -57,7 +51,6 @@ public class EditGalleryComponent extends BaseComponent {
     private String photoPath;
     private String imgPath;
     private View addView, delView, moveView;
-//    private List<Field> listData;
 
     public EditGalleryComponent(IBase iBase, ParamComponent paramMV, Screen multiComponent) {
         super(iBase, paramMV, multiComponent);
@@ -81,13 +74,6 @@ public class EditGalleryComponent extends BaseComponent {
         delView.setOnClickListener(clickDelListener);
         moveView = parentLayout.findViewById(moveId);
         moveView.setOnClickListener(clickMoveListener);
-/*
-        if (gallery.getAdapter() == null) {
-            gallery.viewGallery();
-//Log.d("QWERT","aaaa="+gallery.getAdapter());
-        }
-
- */
     }
 
     public String getFilePath() {
@@ -107,6 +93,9 @@ public class EditGalleryComponent extends BaseComponent {
             String qu = paramMV.paramModel.url + "del_img";
             ParamModel pm = new ParamModel(POST,qu);
             int pos = gallery.getCurrentItem();
+            if (pos < 0) {
+                return;
+            }
             String nameF = (String) gallery.listData.get(pos).value;
             Record rec = new Record();
             rec.addField(new Field("name", Field.TYPE_STRING, nameF));
@@ -119,7 +108,6 @@ public class EditGalleryComponent extends BaseComponent {
         @Override
         public void onResponse(Field response) {
             int pos = gallery.getCurrentItem();
-//            Collections.swap(gallery.listData, pos - 1, pos);
             gallery.listData.remove(pos);
             gallery.setAdapter(gallery.adapter);
             if (pos >= gallery.listData.size()) {
