@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import com.dpcsa.compon.base.BaseComponent;
 import com.dpcsa.compon.base.BasePresenter;
@@ -92,10 +93,11 @@ public class EditGalleryComponent extends BaseComponent {
         public void onClick(View v) {
             String qu = paramMV.paramModel.url + "del_img";
             ParamModel pm = new ParamModel(POST,qu);
-            int pos = gallery.getCurrentItem();
-            if (pos < 0) {
+            int count = gallery.getChildCount();
+            if (count == 0) {
                 return;
             }
+            int pos = gallery.getCurrentItem();
             String nameF = (String) gallery.listData.get(pos).value;
             Record rec = new Record();
             rec.addField(new Field("name", Field.TYPE_STRING, nameF));

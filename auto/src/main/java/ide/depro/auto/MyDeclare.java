@@ -44,7 +44,9 @@ public class MyDeclare extends DeclareScreens {
                 navigator(handler(0, VH.SET_LOCALE)))
             .componentSubscribe(R.id.sub_news, "news");
         fragment(SHEET, R.layout.fragment_sheet, R.string.main_menu_b_sheet)
-                .navigator(show(R.id.show_s,R.id.sw_1));
+//                .navigator(show(R.id.show_s,R.id.sw_1))
+                .editGallery(R.id.gal, R.id.plus, R.id.del,
+                        R.id.mov, 0, "query/czeux6pkp1l73gb/");
 
         channel("news_ev", "Новости и акции", IMPORTANCE_HIGH, MainActivity.class,
                 notices(
