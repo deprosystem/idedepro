@@ -26,7 +26,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 public class BadgeTextView extends AppCompatTextView implements IComponent {
 
     public String[] arrayPush;
-    private int badgeColor;
+    public int badgeColor;
     private List<BroadcastReceiver> messageReceiver = new ArrayList<>();
     private String pushs;
     private int DEFAULT_badgeColor = 0xffF89A6C;
@@ -35,6 +35,7 @@ public class BadgeTextView extends AppCompatTextView implements IComponent {
 
     public BadgeTextView(Context context) {
         super(context);
+        init(context, null);
     }
 
     public BadgeTextView(Context context, AttributeSet attrs) {
@@ -48,10 +49,13 @@ public class BadgeTextView extends AppCompatTextView implements IComponent {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Simple);
-        pushs = a.getString(R.styleable.Simple_listPushName);
-        badgeColor = a.getColor(R.styleable.Simple_badgeColor, DEFAULT_badgeColor);
-        a.recycle();
+        badgeColor = DEFAULT_badgeColor;
+        if (attrs != null) {
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Simple);
+            pushs = a.getString(R.styleable.Simple_listPushName);
+            badgeColor = a.getColor(R.styleable.Simple_badgeColor, DEFAULT_badgeColor);
+            a.recycle();
+        }
         preferences = Injector.getPreferences();
         setVisibility(GONE);
         if (pushs != null && pushs.length() > 0) {
@@ -113,6 +117,7 @@ public class BadgeTextView extends AppCompatTextView implements IComponent {
         for (String st : arrayPush) {
             count += preferences.getNameInt(Notice.PREFIX_PUSH + st, 0);
         }
+        int iid = getId();
         if (count > 0) {
             setText(String.valueOf(count));
             setVisibility(VISIBLE);

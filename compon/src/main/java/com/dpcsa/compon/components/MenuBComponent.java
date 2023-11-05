@@ -155,6 +155,7 @@ public class MenuBComponent extends BaseComponent implements IsetMenu {
         ll.setColors(colorNorm, colorSelect, selBackgr, noSelImgChangeColor, toAnimate);
         ll.setImg(rr.getInt("icon"), imageLocale);
         ll.setText(rr.getInt("nameId"));
+        ll.setBadge(rr.getString("badge"), menuB.colorBadge);
         return ll;
     }
 
@@ -227,7 +228,6 @@ public class MenuBComponent extends BaseComponent implements IsetMenu {
             if (isActivity && activity.menuDraw != null) {
                 activity.menuDraw.syncMenu(screen);
             }
-//Log.d("QWERT","Menu startScreen screen="+screen+"<<");
             iBase.startScreen(screen, true);
         } else {
             if (paramMV.arrNavigator != null) {

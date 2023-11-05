@@ -93,7 +93,6 @@ public class Menu extends Field {
             Record rec = menuList.get(i);
             Field ff = rec.getField(BADGE);
             ff.value = value;
-//            menuList.get(i).add(new Field(BADGE, Field.TYPE_STRING, Notice.PREFIX_PUSH + value));
         }
         return this;
     }

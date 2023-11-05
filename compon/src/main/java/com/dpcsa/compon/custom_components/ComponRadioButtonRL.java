@@ -2,6 +2,7 @@ package com.dpcsa.compon.custom_components;
 
 import android.animation.Animator;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.util.AttributeSet;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.view.animation.Animation.RELATIVE_TO_SELF;
 
 public class ComponRadioButtonRL extends RelativeLayout {
@@ -21,8 +23,11 @@ public class ComponRadioButtonRL extends RelativeLayout {
     Context context;
     ComponRadioButton crb;
     LinearLayout ll;
+    BadgeTextView badge;
+    float txt_size = 10f;
     float DENSITY = getResources().getDisplayMetrics().density;
     float r = 50 * DENSITY;
+    int dp_6 = (int) (6 * DENSITY);
     float[] outR = new float[] {r, r, r, r, r, r, r, r };
 
     public ComponRadioButtonRL(Context context) {
@@ -55,10 +60,28 @@ public class ComponRadioButtonRL extends RelativeLayout {
         RelativeLayout.LayoutParams lpL = new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
         crb.setLayoutParams(lpL);
         addView(crb);
+        badge = newBadge();
+        addView(badge);
+    }
+
+    private BadgeTextView newBadge() {
+        BadgeTextView bg = new BadgeTextView(context);
+        RelativeLayout.LayoutParams lt = new RelativeLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+        lt.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+        bg.setLayoutParams(lt);
+        bg.setPadding(dp_6, 0, dp_6, 0);
+        bg.setTextSize(txt_size);
+        bg.setTextColor(0xff000000);
+        return bg;
     }
 
     public void setImg(int img, int il) {
         crb.setImg(img, il);
+    }
+
+    public void setBadge(String txt, int color) {
+        badge.badgeColor = color;
+        badge.setData(txt);
     }
 
     public void setText(int txt) {

@@ -16,8 +16,9 @@ public class ComponMenuB extends RadioGroup implements IAlias {
     public int imageLocale;
     public int colorNorm, colorSelect;
     public int colorNormDef, colorSelectDef;
-    public int selBackgr;
+    public int selBackgr, colorBadge;
     public boolean noSelImgChangeColor, toAnimate;
+    private int DEFAULT_badgeColor = 0xffF89A6C;
 
     public ComponMenuB(Context context) {
         super(context);
@@ -37,6 +38,7 @@ public class ComponMenuB extends RadioGroup implements IAlias {
         colorNorm = a.getColor(R.styleable.Simple_normColor, colorNormDef);
         colorSelect = a.getColor(R.styleable.Simple_selectColor, colorSelectDef);
         selBackgr = a.getResourceId(R.styleable.Simple_selectBackground, 0);
+        colorBadge = a.getColor(R.styleable.Simple_badgeColor, DEFAULT_badgeColor);
         noSelImgChangeColor = a.getBoolean(R.styleable.Simple_noSelImgChangeColor, false);
         toAnimate = a.getBoolean(R.styleable.Simple_toAnimate, true);
         alias = a.getString(R.styleable.Simple_alias);

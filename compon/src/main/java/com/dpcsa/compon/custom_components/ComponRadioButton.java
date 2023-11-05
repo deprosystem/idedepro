@@ -32,9 +32,8 @@ public class ComponRadioButton extends LinearLayout {
     private Context context;
     float DENSITY = getResources().getDisplayMetrics().density;
     float SP_DENSITY = getResources().getDisplayMetrics().scaledDensity;
-
-    int imageLocation;
     float tv_size = 12f;
+    int imageLocation;
     float sp_10 = SP_DENSITY * 10;
     float sp_txt = SP_DENSITY * 8;
     float sp_12 = SP_DENSITY * 12;

@@ -30,7 +30,6 @@ public class VolleyInternetProvider extends BaseInternetProvider {
             if (data != null) {
                 dataBytes = data.getBytes();
             }
-Log.d("QWERT","setParam URL="+url+"<< method="+method);
             request = new VolleyRequest(method, url, listenerVolley, headers, dataBytes);
         } else {
             request = new MultipartRequest(url, listenerVolley, headers, data, file);

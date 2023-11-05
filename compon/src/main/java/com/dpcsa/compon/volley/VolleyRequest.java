@@ -30,7 +30,6 @@ public class VolleyRequest <T> extends Request<T> {
     public VolleyRequest(int method, String url, IVolleyListener listener,
                          Map<String, String> headers, byte[] data) {
         super(method, url, listener);
-Log.d("QWERT","VolleyRequest URL="+url+"<< method="+method);
         appParams = Injector.getComponGlob().appParams;
         if (appParams.LOG_LEVEL > 1) Log.d(appParams.NAME_LOG_NET, "method=" + method + " url=" + url);
         this.headers = headers;

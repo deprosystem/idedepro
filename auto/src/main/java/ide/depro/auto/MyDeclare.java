@@ -8,7 +8,7 @@ public class MyDeclare extends DeclareScreens {
 
     public final static String
         MAIN = "MAIN", NEWS = "NEWS", PROM = "PROM", 
-        DETAIL = "DETAIL", SET = "SET", SHEET = "SHEET";
+        DETAIL = "DETAIL", SET = "SET", SHEET = "SHEET", DRAWER = "DRAWER";
 
     @Override
     public void declare() {
@@ -17,7 +17,8 @@ public class MyDeclare extends DeclareScreens {
             .pushNavigator(selectMenu(R.id.menu_b, "news", "NEWS", true))
             .component(TC.TOOL, null, view(R.id.tool_bar, new int[] {R.drawable.nar_light, 0, 0}))
             .fragmentsContainer(R.id.container_fragm)
-            .menuBottom(model(menuMainMenu_b), view(R.id.menu_b));
+            .menuBottom(model(menuMainMenu_b), view(R.id.menu_b))
+                .drawer(R.id.drawer, R.id.container_fragm, R.id.left_drawer, null, DRAWER);
 
         fragment(NEWS, R.layout.fragment_news, R.string.news_screen_title)
             .pushNavigator(selectRecycler(R.id.list, "news", "id_news", 0, false),
@@ -48,6 +49,10 @@ public class MyDeclare extends DeclareScreens {
                 .editGallery(R.id.gal, R.id.plus, R.id.del,
                         R.id.mov, 0, "query/czeux6pkp1l73gb/");
 
+        fragment(DRAWER, R.layout.fragment_drawer)
+                .pushNavigator(selectMenu(R.id.menu, "news", "NEWS", true))
+                .menu(model(menu_Drawer_Menu), view(R.id.menu));
+
         channel("news_ev", "Новости и акции", IMPORTANCE_HIGH, MainActivity.class,
                 notices(
                         notice("event")
@@ -66,9 +71,13 @@ public class MyDeclare extends DeclareScreens {
     }
 
     Menu menuMainMenu_b = new Menu()
-        .item(R.drawable.news, R.string.main_menu_b_news, NEWS, true)
+        .item(R.drawable.news, R.string.main_menu_b_news, NEWS, true).badge("news")
         .item(R.drawable.promotion, R.string.main_menu_b_prom, PROM)
         .item(R.drawable.icon_menu_settings, R.string.main_menu_b_set, SET)
         .item(R.drawable._inbox_ffffe854, R.string.main_menu_b_sheet, SHEET);
+
+    Menu menu_Drawer_Menu = new Menu()
+            .item(R.drawable.news, R.string.main_menu_b_news, NEWS, true).badge("news")
+            .item(R.drawable.even, R.string.main_menu_b_prom, PROM);
 
 }
