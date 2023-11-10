@@ -141,6 +141,15 @@
         <attr name="minStartValue" format="integer"/>
         <attr name="maxStartValue" format="integer"/>
         <attr name="singleThumb" format="boolean"/>
+        <attr name="colorUnknow" format="color"/>
+        <attr name="colorUnchecked" format="color"/>
+        <attr name="colorChecked" format="color"/>
+        <attr name="colorFlag" format="color"/>
+        <attr name="statusCheck">
+            <enum name="Unknow" value="-1" />
+            <enum name="Off" value="0" />
+            <enum name="On" value="1" />
+        </attr>
         <attr name="imageLocale">
             <enum name="left" value="0" />
             <enum name="top" value="1" />

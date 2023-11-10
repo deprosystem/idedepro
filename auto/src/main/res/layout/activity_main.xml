@@ -20,15 +20,15 @@
                 android:background="@color/primary"
                 app:titleTextAppearance="@style/toolStyle_20_19"
                 />
+
             <com.dpcsa.compon.custom_components.ComponMenuB
                 android:id="@+id/menu_b"
-                android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dim_56"
+                android:layout_alignParentBottom="true"
                 android:background="@color/primary"
-                app:selectColor="@color/accentDark"
                 app:badgeColor="#0f0"
-                />
+                app:selectColor="@color/accentDark" />
             <FrameLayout
                 android:id="@+id/container_fragm"
                 android:layout_width="match_parent"

@@ -18,7 +18,8 @@ public class MyDeclare extends DeclareScreens {
             .component(TC.TOOL, null, view(R.id.tool_bar, new int[] {R.drawable.nar_light, 0, 0}))
             .fragmentsContainer(R.id.container_fragm)
             .menuBottom(model(menuMainMenu_b), view(R.id.menu_b))
-                .drawer(R.id.drawer, R.id.container_fragm, R.id.left_drawer, null, DRAWER);
+                .drawer(R.id.drawer, R.id.container_fragm, R.id.left_drawer, null, DRAWER)
+        ;
 
         fragment(NEWS, R.layout.fragment_news, R.string.news_screen_title)
             .pushNavigator(selectRecycler(R.id.list, "news", "id_news", 0, false),
