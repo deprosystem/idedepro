@@ -21,12 +21,19 @@ public class MyDeclare extends DeclareScreens {
                 .drawer(R.id.drawer, R.id.container_fragm, R.id.left_drawer, null, DRAWER)
         ;
 
-        fragment(NEWS, R.layout.fragment_news, R.string.news_screen_title)
-            .pushNavigator(selectRecycler(R.id.list, "news", "id_news", 0, false),
-                    nullifyCountPush("news"))
-            .list(model("query/uyrz0xz0st6tek9/5"),
-                view(R.id.list, R.layout.item_news_list_0),
-                navigator(start(DETAIL)));
+//        fragment(NEWS, R.layout.fragment_news, R.string.news_screen_title)
+//            .pushNavigator(selectRecycler(R.id.list, "news", "id_news", 0, false),
+//                    nullifyCountPush("news"))
+//            .list(model("query/uyrz0xz0st6tek9/5"),
+//                view(R.id.list, R.layout.item_news_list_0),
+//                navigator(start(DETAIL)));
+
+        fragment(NEWS, R.layout.fragment_news, R.string.main_menu_b_news)
+                .pushNavigator(selectRecycler(R.id.list, "news", "id_news", 0, false),
+                        nullifyCountPush("news"))
+                .list(model("query/uyrz0xz0st6tek9/5"),
+                        view(R.id.list, R.layout.item_news_list_0),
+                        navigator(start(DETAIL)));
 
         fragment(PROM, R.layout.fragment_prom, R.string.prom_screen_title)
             .list(model("query/uyrz0xz0st6tek9/4"),
