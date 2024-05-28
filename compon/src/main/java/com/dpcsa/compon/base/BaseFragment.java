@@ -703,16 +703,29 @@ public class BaseFragment extends Fragment implements IBase {
                         }
                         break;
                     case ACTUAL:
-//Log.d("QWERT","ACTUAL vh.componId="+vh.componId);
                         if (vh.componId != 0) {
                             BaseComponent bc = mComponent.getComponent(vh.componId);
-//Log.d("QWERT","ACTUAL BC="+bc);
                             if (bc != null) {
                                 bc.actual();
                             } else {
                                 String stN = activity.getResources().getResourceEntryName(vh.componId);
                                 log("0004 Нет компонента с id " + stN + " для актуализации в " + mComponent.nameComponent);
                             }
+                        }
+                        break;
+                    case NEXT_SCREEN_SEQUENCE:
+                        int isc = preferences.getSplashScreen();
+                        if (isc < 2) {
+                            isc ++;
+                            preferences.setSplashScreen(isc);
+                            String stSc = preferences.getSplashNameScreen();
+                            if (stSc.length() > 0) {
+                                String[] stAr = stSc.split(",");
+                                startScreen(stAr[isc], false);
+                                activity.finish();
+                            }
+                        } else {
+                            activity.finish();
                         }
                         break;
                     case SAVE_PARAM:
