@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/intro"
+        android:layout_marginTop="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+    />
+    <TextView
+        android:id="@+id/skip"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/cont"
+        android:layout_marginBottom="@dimen/dim_32"
+        android:layout_width="181dp"
+        android:layout_height="45dp"
+        android:gravity="center_horizontal"
+        android:text="@string/Intro_skip_txt"
+        android:textSize="@dimen/dim_24"
+        android:textColor="@color/color_100"
+        />
+
+    <TextView
+        android:id="@+id/cont"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dim_40"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_1001"
+        android:gravity="center_horizontal"
+        android:text="@string/Intro_cont_txt"
+        android:textSize="22dp"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:id="@+id/proc"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dim_40"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_1001"
+        android:gravity="center"
+        android:text="@string/Intro_proc_txt"
+        android:textSize="22dp"
+        android:textColor="@color/white"
+        />
+
+</RelativeLayout>

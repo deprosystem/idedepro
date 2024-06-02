@@ -8,9 +8,6 @@ public class MyParams extends AppParams {
     public void setParams() {
 
         baseUrl = "https://apps.dp-ide.com/";
-        schema = "uyrz0xz0st6tek9";
-        nameLanguageInParam = "loc";
-        initialLanguage = "en";
-        nameLanguageInHeader = "Language";
+        schema = "czeux6pkp1l73gb";
     }
 }

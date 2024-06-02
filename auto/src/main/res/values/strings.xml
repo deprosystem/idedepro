@@ -1,13 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">auto</string>
-    <string name="main_menu_b_news">News</string>
-    <string name="main_menu_b_prom">Promotion</string>
-    <string name="main_menu_b_set">Settings</string>
-    <string name="news_screen_title">News</string>
-    <string name="prom_screen_title">Promotion</string>
-    <string name="set_screen_title">Settings</string>
-    <string name="set_txt_1_txt">Set langua</string>
-    <string name="main_menu_b_sheet">Sheet</string>
-    <string name="sheet_txt_1_txt">hjjjkhjjkjjj</string>
+    <string name="main_1_menu_b_news">News</string>
+    <string name="main_1_menu_b_promot">Promotions</string>
+    <string name="main_1_menu_b_buy">Buy a car</string>
+    <string name="drawer_menu_promot">Promotion</string>
+    <string name="drawer_menu_sell">Sell</string>
+    <string name="drawer_menu_profile">Profile</string>
+    <string name="drawer_menu_myads">My ads</string>
+    <string name="profile_photo">Choose a source</string>
+    <string name="detail_prod_screen_title">%1$s %2$s</string>
+    <string name="detail_user_screen_title">%1$s</string>
+    <string name="Drawer_enter_txt">Log in</string>
+    <string name="Drawer_ex_txt">Exit</string>
+    <string name="sell_title_hint">Title</string>
+    <string name="sell_mileage_hint">Mileage</string>
+    <string name="sell_praice_hint">Price</string>
+    <string name="sell_send_txt">Send</string>
+    <string name="sell_clear_txt">Clear</string>
+    <string name="Intro_skip_txt">Skip</string>
+    <string name="Intro_cont_txt">Next</string>
+    <string name="Intro_proc_txt">Proceed</string>
+    <string name="signin_login_hint">Login</string>
+    <string name="signin_login_error">More than 4</string>
+    <string name="signin_password_hint">Password</string>
+    <string name="signin_password_error">More than 4</string>
+    <string name="signup_name_hint">Name</string>
+    <string name="signup_name_error">More than 2</string>
+    <string name="signup_last_name_hint">Last name</string>
+    <string name="signup_last_name_error">More than 2</string>
+    <string name="signup_email_hint">Email</string>
+    <string name="signup_email_error">Wrong address</string>
+    <string name="signup_phone_hint">Phone</string>
+    <string name="signup_login_error">More than 4</string>
+    <string name="signup_pas_equ_hint">Repeat password</string>
+    <string name="profile_name_error">More than 2 characters</string>
+    <string name="profile_last_name_error">More than 2 characters</string>
+    <string name="detail_prod_yv_txt">Год выпуска </string>
+    <string name="detail_prod_sel_txt">Seller</string>
+    <string-array name="auth_tab_layout">
+        <item>Sign in</item>
+        <item>Sign up</item>
+    </string-array>
 </resources>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <RelativeLayout
+        android:id="@+id/form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    >
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/_txt_inp_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dim_12"
+            android:layout_marginTop="@dimen/dim_40"
+            android:layout_marginRight="@dimen/dim_12"
+            app:hintTextAppearance="@style/txtInpt_12_21">
+            <com.dpcsa.compon.custom_components.ComponEditText
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/title"
+                android:theme="@style/editStyle_21_0"
+                android:hint="@string/signin_login_hint"
+                android:imeOptions="actionNext"
+                app:textError="@string/signin_login_error"
+                app:minLength="5"
+                android:inputType="text"
+                android:maxLines="1"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/_txt_inp_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/_txt_inp_login"
+            android:layout_marginLeft="@dimen/dim_12"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/dim_12"
+            app:hintTextAppearance="@style/txtInpt_12_21">
+            <com.dpcsa.compon.custom_components.ComponEditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/title"
+                android:theme="@style/editStyle_21_0"
+                android:hint="@string/signin_password_hint"
+                android:imeOptions="actionNext"
+                app:textError="@string/signin_password_error"
+                app:isPassword="true"
+                app:validPassword="aA0"
+                app:idShowImg="@drawable/eye_open"
+                app:idHideImg="@drawable/eye_close"
+                android:maxLines="1"
+                app:minLength="5"
+                android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/send"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/_txt_inp_password"
+            android:layout_marginTop="@dimen/dim_40"
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:background="@drawable/shape_1000"
+            android:gravity="center"
+            android:text="@string/sell_send_txt"
+            android:textSize="@dimen/dim_24"
+            android:textColor="@color/white"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>
