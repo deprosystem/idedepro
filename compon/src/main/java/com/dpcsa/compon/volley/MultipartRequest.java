@@ -25,6 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class MultipartRequest extends Request<String> {
@@ -124,6 +125,14 @@ public class MultipartRequest extends Request<String> {
         listener.onErrorResponse(error);
     }
 
+//    @Override
+//    protected Map<String, String> getParams() {
+//Log.d("QWERT","getParams getParams getParams");
+//        Map<String, String> par = new HashMap<>();
+//        par.put("data", data);
+//Log.d("QWERT",par.toString()+"<<");
+//        return par;
+//    }
 
     @Override
     protected String getParamsEncoding() {
