@@ -23,7 +23,7 @@ android {
     allprojects {
         repositories {
             mavenCentral()
-            jcenter() }
+        }
         tasks.withType(Javadoc).all {
             enabled = false
         }
@@ -73,7 +73,7 @@ dependencies {
 //    }
     implementation 'com.android.volley:volley:1.1.1'
 //    implementation 'org.apache.httpcomponents:httpcore:4.4.3'
-    implementation 'org.apache.httpcomponents:httpmime:4.3.5'
+    implementation 'org.apache.httpcomponents:httpmime:4.5.6'
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
