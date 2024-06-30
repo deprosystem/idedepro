@@ -970,7 +970,7 @@ public class BaseFragment extends Fragment implements IBase {
                         scale.startAnim();
                         break;
                     case SPR_Y:
-                        SpringY y = new SpringY(parentLayout.findViewById(vh.showViewId), vh.velocity, vh.repeatTime);
+                        SpringY y = new SpringY(parentLayout.findViewById(vh.showViewId), vh.startValue, vh.velocity, vh.repeatTime);
                         y.startAnim();
                         break;
                     case SET_LOCALE:

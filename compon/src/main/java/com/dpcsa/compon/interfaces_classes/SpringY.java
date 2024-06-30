@@ -12,12 +12,22 @@ public class SpringY {
     private float velocity;
     private int repeatTime;
     private View v;
+    private float startPos, startValue;
     private SpringAnimation springAnimation;
     SpringForce springForce;
 
     public SpringY(View v, float velocity, int repeatTime){
         this.v = v;
         this.velocity = velocity;
+        this.startValue = - 150;
+        this.repeatTime = repeatTime;
+        init();
+    }
+
+    public SpringY(View v, float startValue, float velocity, int repeatTime){
+        this.v = v;
+        this.velocity = velocity;
+        this.startValue = startValue;
         this.repeatTime = repeatTime;
         init();
     }
@@ -25,10 +35,12 @@ public class SpringY {
     private void init() {
         springAnimation = new SpringAnimation(v, DynamicAnimation.Y);
         springForce = new SpringForce();
-        springForce.setFinalPosition(v.getY());
+        startPos = v.getY();
+        springForce.setFinalPosition(startPos);
         springForce.setDampingRatio(SpringForce.DAMPING_RATIO_HIGH_BOUNCY);
         springForce.setStiffness(SpringForce.STIFFNESS_LOW);
         springAnimation.setSpring(springForce);
+        repeatTime = 0;
         if (repeatTime > 0) {
             springAnimation.addEndListener(
                     new DynamicAnimation.OnAnimationEndListener() {
@@ -44,6 +56,7 @@ public class SpringY {
 
     public void startAnim() {
         springAnimation.setStartVelocity(velocity);
+        springAnimation.setStartValue(startPos + startValue);
         springAnimation.start();
     }
 

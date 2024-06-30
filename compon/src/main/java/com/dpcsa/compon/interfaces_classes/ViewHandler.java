@@ -45,7 +45,7 @@ public class ViewHandler {
     public Animate animate;
     public int repeatTime;
     public int recordId;
-    public float velocity;
+    public float velocity, startValue;
     public ItemSetValue[] itemSetValues;
     public int typeEvent;
 
@@ -178,6 +178,23 @@ public class ViewHandler {
     public ViewHandler(TYPE type, int animViewId, float velocity, int repeatTime) {   //  spring Animate
         this.type = type;
         this.velocity = velocity;
+        showViewId = animViewId;
+        this.repeatTime = repeatTime;
+    }
+
+    public ViewHandler(TYPE type, int animViewId, float velocity, int repeatTime, float startValue) {   //  spring Animate
+        this.type = type;
+        this.velocity = velocity;
+        this.startValue = startValue;
+        showViewId = animViewId;
+        this.repeatTime = repeatTime;
+    }
+
+    public ViewHandler(TYPE type, int viewId, int animViewId, float velocity, int repeatTime, float startValue) {   //  spring Animate
+        this.type = type;
+        this.viewId = viewId;
+        this.velocity = velocity;
+        this.startValue = startValue;
         showViewId = animViewId;
         this.repeatTime = repeatTime;
     }

@@ -40,7 +40,10 @@ public class MyDeclare extends DeclareScreens {
                                 start(R.id.date,SEARCH_D_D, after(assignValue(R.id.date))),
                                 start(R.id.who,WHO_FLYING, after(assignValue(R.id.who)))));
 
-        fragment(HANTER, R.layout.fragment_hanter, R.string.main_menu_b_Hanter);
+        fragment(HANTER, R.layout.fragment_hanter, R.string.main_menu_b_Hanter)
+                .navigator(springY(R.id.hhh, R.id.rrr, -150, 3, 0));
+
+
         fragment(MY_TOUR, R.layout.fragment_my_tour, R.string.main_menu_b_My_tour);
         fragment(HELP, R.layout.fragment_help, R.string.main_menu_b_Help);
         activity(HOT_INSIDE, R.layout.activity_hot_inside).animate(AS.RL)

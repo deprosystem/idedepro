@@ -5,4 +5,31 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    />
+    >
+    <RelativeLayout
+        android:id="@+id/hhh"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="100dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:background="@color/primary"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rrr"
+        android:layout_marginLeft="61dp"
+        android:layout_marginTop="195dp"
+        android:layout_width="166dp"
+        android:layout_height="165dp"
+        android:background="@color/accent"
+        >
+        <TextView
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="31dp"
+            android:layout_width="126dp"
+            android:layout_height="41dp"
+            android:text="XXXXXXXXX"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>

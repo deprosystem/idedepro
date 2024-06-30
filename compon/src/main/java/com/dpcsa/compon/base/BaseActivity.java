@@ -64,6 +64,7 @@ import com.dpcsa.compon.interfaces_classes.ItemSetValue;
 import com.dpcsa.compon.interfaces_classes.PushHandler;
 import com.dpcsa.compon.interfaces_classes.SingleSetting;
 import com.dpcsa.compon.interfaces_classes.SpringScale;
+import com.dpcsa.compon.interfaces_classes.SpringY;
 import com.dpcsa.compon.interfaces_classes.SubscribePush;
 import com.dpcsa.compon.param.AppParams;
 import com.dpcsa.compon.param.ParamComponent;
@@ -1227,7 +1228,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
                         SpringScale scale = new SpringScale(parentLayout.findViewById(vh.showViewId), vh.velocity, vh.repeatTime);
                         scale.startAnim();
                         break;
-
+                    case SPR_Y:
+                        SpringY y = new SpringY(parentLayout.findViewById(vh.showViewId), vh.startValue, vh.velocity, vh.repeatTime);
+                        y.startAnim();
+                        break;
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.dpcsa.compon.base;
 
+import android.util.Log;
 import android.view.View;
 
 import com.dpcsa.compon.components.AutoAutch;

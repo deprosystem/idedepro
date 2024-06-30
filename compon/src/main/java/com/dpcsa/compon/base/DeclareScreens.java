@@ -678,9 +678,25 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(ViewHandler.TYPE.SPR_SCALE, animViewId, velocity, repeatTime);
     }
 
-    public ViewHandler springY(int animViewId, int velocity, int repeatTime) {
-        return new ViewHandler(ViewHandler.TYPE.SPR_Y, animViewId, velocity, repeatTime);
+    public ViewHandler springScale(int viewId, int animViewId, int velocity, int repeatTime) {
+        return new ViewHandler(ViewHandler.TYPE.SPR_SCALE, viewId, animViewId, velocity, repeatTime);
     }
+
+    public ViewHandler springY(int animViewId, float startValue, int velocity, int repeatTime) {
+        return new ViewHandler(ViewHandler.TYPE.SPR_Y, animViewId, velocity, repeatTime, startValue);
+    }
+
+    public ViewHandler springY(int viewId, int animViewId, float startValue, int velocity, int repeatTime) {
+        return new ViewHandler(ViewHandler.TYPE.SPR_Y, viewId, animViewId, velocity, repeatTime, startValue);
+    }
+
+//    public ViewHandler springY(int animViewId, int velocity, int repeatTime) {
+//        return new ViewHandler(ViewHandler.TYPE.SPR_Y, animViewId, velocity, repeatTime);
+//    }
+//
+//    public ViewHandler springY(int viewId, int animViewId, int velocity, int repeatTime) {
+//        return new ViewHandler(ViewHandler.TYPE.SPR_Y, viewId, animViewId, velocity, repeatTime);
+//    }
 
     public ViewHandler finishDialog(@NonNull int titleId, @NonNull int messageId) {
         return new ViewHandler(0, ViewHandler.TYPE.FINISH, titleId, messageId);
