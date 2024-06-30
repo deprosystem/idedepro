@@ -16,6 +16,7 @@ public class SpringScale {
     private FloatPropertyCompat<View> scale;
     private SpringAnimation springAnimation;
     private SpringForce springForce;
+    private int count;
 
     public SpringScale(View v, float velocity, int repeatTime){
         this.v = v;
@@ -25,6 +26,7 @@ public class SpringScale {
     }
 
     private void init() {
+        count = 0;
         scale =
                 new FloatPropertyCompat<View>("scale") {
                     @Override
@@ -46,7 +48,7 @@ public class SpringScale {
         springForce.setDampingRatio(SpringForce.DAMPING_RATIO_HIGH_BOUNCY);
         springForce.setStiffness(SpringForce.STIFFNESS_LOW);
         springAnimation.setSpring(springForce);
-        if (repeatTime > 0) {
+        if (repeatTime > 1) {
             springAnimation.addEndListener(
                     new DynamicAnimation.OnAnimationEndListener() {
                         @Override
@@ -69,7 +71,10 @@ public class SpringScale {
     Runnable rr = new Runnable() {
         @Override
         public void run() {
-            startAnim();
+            if (count < repeatTime) {
+                count ++;
+                startAnim();
+            }
         }
     };
 }

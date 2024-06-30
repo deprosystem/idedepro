@@ -14,6 +14,7 @@ public class SpringY {
     private View v;
     private float startPos, startValue;
     private SpringAnimation springAnimation;
+    private int count;
     SpringForce springForce;
 
     public SpringY(View v, float velocity, int repeatTime){
@@ -33,6 +34,7 @@ public class SpringY {
     }
 
     private void init() {
+        count = 0;
         springAnimation = new SpringAnimation(v, DynamicAnimation.Y);
         springForce = new SpringForce();
         startPos = v.getY();
@@ -40,8 +42,7 @@ public class SpringY {
         springForce.setDampingRatio(SpringForce.DAMPING_RATIO_HIGH_BOUNCY);
         springForce.setStiffness(SpringForce.STIFFNESS_LOW);
         springAnimation.setSpring(springForce);
-        repeatTime = 0;
-        if (repeatTime > 0) {
+        if (repeatTime > 1) {
             springAnimation.addEndListener(
                     new DynamicAnimation.OnAnimationEndListener() {
                         @Override
@@ -65,7 +66,10 @@ public class SpringY {
     Runnable rr = new Runnable() {
         @Override
         public void run() {
-            startAnim();
+            if (count < repeatTime) {
+                count ++;
+                startAnim();
+            }
         }
     };
 }

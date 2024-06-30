@@ -223,6 +223,12 @@ public class BaseFragment extends Fragment implements IBase {
         if (toolMenu != null) {
 
         }
+        parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //обработка нажатия
+            }
+        });
         return parentLayout;
     }
 
