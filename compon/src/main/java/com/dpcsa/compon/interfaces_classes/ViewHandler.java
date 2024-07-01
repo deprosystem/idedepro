@@ -185,7 +185,15 @@ public class ViewHandler {
     public ViewHandler(TYPE type, int animViewId, float velocity, int repeatTime, float startValue) {   //  spring Animate
         this.type = type;
         this.velocity = velocity;
+        showViewId = animViewId;
         this.startValue = startValue;
+        this.repeatTime = repeatTime;
+    }
+
+    public ViewHandler(TYPE type, int viewId, int animViewId, float velocity, int repeatTime) {   //  spring Animate
+        this.type = type;
+        this.velocity = velocity;
+        this.viewId = viewId;
         showViewId = animViewId;
         this.repeatTime = repeatTime;
     }

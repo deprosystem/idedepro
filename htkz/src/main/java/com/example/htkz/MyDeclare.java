@@ -51,7 +51,7 @@ public class MyDeclare extends DeclareScreens {
         fragment(HANTER, R.layout.fragment_hanter).startNavigator(springScale(R.id.hant_img, 3, 1000));
 
         fragment(MY_TOUR, R.layout.fragment_my_tour)
-                .startNavigator(springY(R.id.hant_img, -1000, 1000));
+                .startNavigator(springY(R.id.hant_img, 25, -1000, 1000));
 
         fragment(HELP, R.layout.fragment_help)
                 .menuBottom(model(menuSearchMenu_b), view(R.id.menu_b),

@@ -3,6 +3,7 @@ package com.dpcsa.compon.base;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.util.Log;
 //import android.graphics.Color;
 
 import androidx.annotation.NonNull;
@@ -678,7 +679,7 @@ public abstract class DeclareScreens<T>{
         return new ViewHandler(ViewHandler.TYPE.SPR_SCALE, animViewId, velocity, repeatTime);
     }
 
-    public ViewHandler springScale(int viewId, int animViewId, int velocity, int repeatTime) {
+    public ViewHandler springScale(int viewId, int animViewId, float velocity, int repeatTime) {
         return new ViewHandler(ViewHandler.TYPE.SPR_SCALE, viewId, animViewId, velocity, repeatTime);
     }
 

@@ -41,7 +41,8 @@ public class MyDeclare extends DeclareScreens {
                                 start(R.id.who,WHO_FLYING, after(assignValue(R.id.who)))));
 
         fragment(HANTER, R.layout.fragment_hanter, R.string.main_menu_b_Hanter)
-                .navigator(springY(R.id.hhh, R.id.rrr, -150, 3, 0));
+                .navigator(springY(R.id.hhh, R.id.rrr, -150, 3, 0),
+                        springScale(R.id.sc, R.id.rrr, 3, 5));
 
 
         fragment(MY_TOUR, R.layout.fragment_my_tour, R.string.main_menu_b_My_tour);
