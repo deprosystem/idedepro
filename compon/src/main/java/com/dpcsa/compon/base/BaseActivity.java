@@ -156,6 +156,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
     private String nameScreen;
     private Intent intent;
     private List<SingleSetting> singleSettingList;
+    private boolean isFrameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,11 +290,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
             }
 
             if (toolBar != null) {
-                toolBar.setTitle("");
+                isFrameLayout = componGlob.findViewByName(parentLayout, "container_fragm") != null;
+                if (isFrameLayout) {
+                    toolBar.setTitle("");
+                }
                 setSupportActionBar(toolBar);
                 getSupportFragmentManager().addOnBackStackChangedListener(stackChanged);
                 toolBarC.setParamToolbar();
-                toolBarC.showView(getSupportFragmentManager().getBackStackEntryCount() <= 1);
+                toolBarC.showView(isFrameLayout && getSupportFragmentManager().getBackStackEntryCount() <= 1);
             }
             isActive = true;
             initView();
@@ -581,7 +585,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
     FragmentManager.OnBackStackChangedListener stackChanged = new FragmentManager.OnBackStackChangedListener() {
         @Override
         public void onBackStackChanged() {
-            toolBarC.showView(getSupportFragmentManager().getBackStackEntryCount() <= 1);
+            toolBarC.showView(isFrameLayout && getSupportFragmentManager().getBackStackEntryCount() <= 1);
         }
     };
 
@@ -1225,7 +1229,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
                         procesAnimate(vh.animate);
                         break;
                     case SPR_SCALE:
-Log.d("QWERT","SPR_SCALE SPR_SCALE");
                         SpringScale scale = new SpringScale(parentLayout.findViewById(vh.showViewId), vh.velocity, vh.repeatTime);
                         scale.startAnim();
                         break;

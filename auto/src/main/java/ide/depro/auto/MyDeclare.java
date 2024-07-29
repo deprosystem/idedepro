@@ -67,10 +67,16 @@ public class MyDeclare extends DeclareScreens {
         activity(INTRO, R.layout.activity_intro)
             .componentIntro(model("query/czeux6pkp1l73gb/11"), R.id.intro, R.layout.item_intro_intro_0, 0, R.id.skip, R.id.cont, R.id.proc);
 
-        activity(AUTH, R.layout.activity_auth)
-            .component(TC.PAGER_F, view(R.id.pager,
-                                    new String[] {SIGNIN,SIGNUP})
-                    .setTab(R.id.tab_layout, R.array.auth_tab_layout));
+        activity(AUTH, R.layout.activity_auth, R.string.autch_1_screen_title).animate(AS.RL)
+                .component(TC.TOOL, null, view(R.id.tool_bar, new int[] {R.drawable.nar_light, 0, 0}))
+                .component(TC.PAGER_F, view(R.id.pager,
+                        new String[] {SIGNIN,SIGNUP})
+                        .setTab(R.id.tab_layout, R.array.auth_tab_layout));
+
+//        activity(AUTH, R.layout.activity_auth)
+//            .component(TC.PAGER_F, view(R.id.pager,
+//                                    new String[] {SIGNIN,SIGNUP})
+//                    .setTab(R.id.tab_layout, R.array.auth_tab_layout));
 
         fragment(SIGNIN, R.layout.fragment_signin)
             .component(TC.PANEL_ENTER, null,

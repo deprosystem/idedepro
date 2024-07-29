@@ -972,7 +972,6 @@ public class BaseFragment extends Fragment implements IBase {
                         procesAnimate(vh.animate);
                         break;
                     case SPR_SCALE:
-Log.d("QWERT","SPR_SCALE SPR_SCALE SPR_SCALE");
                         SpringScale scale = new SpringScale(parentLayout.findViewById(vh.showViewId), vh.velocity, vh.repeatTime);
                         scale.startAnim();
                         break;

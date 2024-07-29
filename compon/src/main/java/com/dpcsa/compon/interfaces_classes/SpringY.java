@@ -34,7 +34,7 @@ public class SpringY {
     }
 
     private void init() {
-        count = 0;
+        count = 1;
         springAnimation = new SpringAnimation(v, DynamicAnimation.Y);
         springForce = new SpringForce();
         startPos = v.getY();

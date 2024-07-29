@@ -19,7 +19,6 @@ public class SpringScale {
     private int count;
 
     public SpringScale(View v, float velocity, int repeatTime){
-Log.d("QWERT","SpringScale SpringScale SpringScale");
         this.v = v;
         this.velocity = velocity;
         this.repeatTime = repeatTime;
@@ -27,7 +26,7 @@ Log.d("QWERT","SpringScale SpringScale SpringScale");
     }
 
     private void init() {
-        count = 0;
+        count = 1;
         scale =
                 new FloatPropertyCompat<View>("scale") {
                     @Override
@@ -63,7 +62,6 @@ Log.d("QWERT","SpringScale SpringScale SpringScale");
     }
 
     public void startAnim() {
-Log.d("QWERT","SpringScale startAnim startAnim");
         springAnimation.setStartVelocity(velocity);
         springAnimation.start();
     }

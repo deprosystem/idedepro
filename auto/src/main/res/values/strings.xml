@@ -38,6 +38,7 @@
     <string name="profile_last_name_error">More than 2 characters</string>
     <string name="detail_prod_yv_txt">Год выпуска </string>
     <string name="detail_prod_sel_txt">Seller</string>
+    <string name="autch_1_screen_title">Autch</string>
     <string-array name="auth_tab_layout">
         <item>Sign in</item>
         <item>Sign up</item>
