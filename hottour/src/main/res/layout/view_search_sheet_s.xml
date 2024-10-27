@@ -136,13 +136,13 @@
             android:layout_width="match_parent"
             android:layout_height="72dp"
         >
-            <com.dpcsa.compon.custom_components.ComponTextValid
+            <com.dpcsa.compon.custom_components.ComponTextView
                 android:id="@+id/country_city"
-                android:layout_alignParentBottom="true"
                 android:layout_marginLeft="@dimen/dim_20"
-                android:layout_marginBottom="@dimen/dim_14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/cc"
+                android:layout_marginTop="8dp"
                 android:textSize="@dimen/dim_18"
                 app:typeValidate="filled"
                 app:idError="@id/error"

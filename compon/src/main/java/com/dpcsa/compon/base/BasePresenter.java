@@ -123,7 +123,6 @@ public class BasePresenter implements BaseInternetProvider.InternetProviderListe
                 error(BaseInternetProvider.NO_AUTH, Constants.NEED_LOGIN);
                 return;
             }
-//Log.d("QWERT","NNNNN_PARAM="+st+"<<");
             url = urlFull + st;
         } else {
             url = urlFull;
@@ -308,7 +307,6 @@ public class BasePresenter implements BaseInternetProvider.InternetProviderListe
                 iBase.progressStop();
             }
         }
-Log.d("QWERT","ERROR: " + message);
         if (paramModel.errorShowView == 0) {
             if (paramModel.viewErrorDialog == null || paramModel.viewErrorDialog) {
                 iBase.showDialog(statusCode, message, null);

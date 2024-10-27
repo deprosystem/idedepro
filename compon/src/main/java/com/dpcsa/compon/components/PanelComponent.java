@@ -30,6 +30,7 @@ public class PanelComponent extends BaseComponent {
     private View[] v_splash;
     @Override
     public void initView() {
+Log.d("QWERT","PANEL initView");
         componentTag = "PANEL_";
         viewComponent = parentLayout.findViewById(paramMV.paramView.viewId);
         if (viewComponent == null) {
@@ -70,6 +71,7 @@ public class PanelComponent extends BaseComponent {
 
     @Override
     public void changeData(Field field) {
+Log.d("QWERT","PANEL changeData");
         if (field == null) {
             recordComponent = null;
             showView();
@@ -94,6 +96,7 @@ public class PanelComponent extends BaseComponent {
     }
 
     private void showView() {
+Log.d("QWERT","PANEL showView");
         if (v_splash != null && v_splash.length > 0) {
             for (int i = 0; i < v_splash.length; i++) {
                 if (v_splash[i] != null) {

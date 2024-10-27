@@ -74,7 +74,7 @@
                 android:text="@string/country_city"
                 style="@style/st_txt_12_40"/>
 
-            <com.dpcsa.compon.custom_components.ComponTextValid
+            <com.dpcsa.compon.custom_components.ComponTextValid_Delete
                 android:id="@+id/country_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

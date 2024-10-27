@@ -10,10 +10,10 @@ public class JsonSimple {
     private int ind, indMax;
     private String json;
     private String separators = " ,\n";
-    private final String quote = "\"";
-    private final String quoteComa = quote + ",";
-    private final String a = "\\";
-    private final String quoteEcran = a + quote;
+    final String quote = "\"";
+    String quoteComa = quote + ",";
+    private String a = "\\";
+    private String quoteEcran = a + quote;
     private String currentSymbol;
     private String digits = "1234567890.+-";
     int ii = 0;

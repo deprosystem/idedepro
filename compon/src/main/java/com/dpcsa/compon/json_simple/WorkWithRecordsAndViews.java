@@ -56,7 +56,7 @@ public class WorkWithRecordsAndViews {
     private boolean setParam;
     private Visibility[] visibilityManager;
     private int swipeId, rightId, leftId;
-    private final String SYSTEM_TIME = "SYSTEM TIME", SYSTEM_TIME_SEC = "SYSTEM TIME SEC",
+    final String SYSTEM_TIME = "SYSTEM TIME", SYSTEM_TIME_SEC = "SYSTEM TIME SEC",
         PROFILE = "Profile";
 
     public void RecordToView(Record model, View view) {

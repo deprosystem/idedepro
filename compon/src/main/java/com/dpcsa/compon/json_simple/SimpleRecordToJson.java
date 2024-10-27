@@ -4,7 +4,7 @@ import android.util.Log;
 
 public class SimpleRecordToJson {
     private String quote = "\"";
-    private final String a = "\\";
+    private String a = "\\";
     private String quoteEcran = a + quote;
     private String quoteColon = "\":";
     private StringBuffer sb;

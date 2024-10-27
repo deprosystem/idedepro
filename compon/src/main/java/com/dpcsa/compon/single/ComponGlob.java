@@ -256,7 +256,6 @@ public class ComponGlob {
         if (paramQuery != null && paramQuery.length() > 0) {
             param += sep + paramQuery;
         }
-//Log.d("QWERT","installParamName param="+param+"<< paramQuery="+paramQuery+"<<");
         if (param != null && param.length() > 0) {
             if (url.contains("?")) {
                 st = "&";
@@ -275,7 +274,6 @@ public class ComponGlob {
                 int i_1 = paramOne.indexOf(Constants.prefixProfileParam);
                 if (i_1 > -1) {
                     valuePar = paramOne.substring(i_1 + Constants.prefixProfileParam.length());
-//                    Log.d("QWERT", "valuePar=" + valuePar + "<<");
                     String tok = (String) token.value;
                     if (tok != null && tok.length() > 0) {
                         if (valuePar.equals("id_user")) {
@@ -303,7 +301,8 @@ public class ComponGlob {
                                 sep = "&";
                             } else {
                                 if (i > 0) {
-
+                                    st = st + sep + paramOne;
+                                    sep = "&";
                                 } else {
                                     st += sep + paramOne;
                                     sep = "&";
@@ -482,7 +481,6 @@ public class ComponGlob {
         String stMes = "";
         if (statusCode < 700) {
             if (message != null && message.length() > 0) {
-//Log.d("QWERT","formErrorRecord message="+message);
                 Field f = null;
                 try {
                     f = jsonSimple.jsonToModel(message);
@@ -513,7 +511,6 @@ public class ComponGlob {
                 }
             }
         } else {
-//            Log.d("QWERT","showDialog 111111 statusCode="+statusCode+" message="+message);
             String title = "";
             if (appParams.idStringDefaultErrorTitle == 0) {
                 title = "StatusCode=" + statusCode;

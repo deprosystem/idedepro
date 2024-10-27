@@ -7,11 +7,15 @@ import android.content.IntentFilter;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewParent;
+import android.widget.TextView;
 
 import com.dpcsa.compon.R;
 import com.dpcsa.compon.base.BaseActivity;
 import com.dpcsa.compon.interfaces_classes.IAlias;
 import com.dpcsa.compon.interfaces_classes.IComponent;
+import com.dpcsa.compon.interfaces_classes.IValidate;
 import com.dpcsa.compon.interfaces_classes.OnChangeStatusListener;
 import com.dpcsa.compon.json_simple.Field;
 import com.dpcsa.compon.json_simple.Record;
@@ -27,7 +31,7 @@ import java.util.TimeZone;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
-        implements IComponent, IAlias {
+        implements IComponent, IValidate, IAlias {
     private Context context;
     private String numberFormat, dateFormat, moneyFormat;
     private boolean dateMilisec;
@@ -35,6 +39,9 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
     private String alias;
     private String acceptNotif;
     private BroadcastReceiver setAcceptNotif;
+    protected int typeValidate, idError;
+    protected final int FILLED = 0, EMAIL = 1;
+    public String textError = "";
 
     public ComponTextView(Context context) {
         super(context);
@@ -55,14 +62,22 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
 
     private void setAttrs(AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Simple);
-        numberFormat = a.getString(R.styleable.Simple_numberFormat);
-        moneyFormat = a.getString(R.styleable.Simple_moneyFormat);
-        dateFormat = a.getString(R.styleable.Simple_dateFormat);
-        acceptNotif = a.getString(R.styleable.Simple_acceptNotif);
-        dateMilisec = a.getBoolean(R.styleable.Simple_dateMilisec, true);
-
-        alias = a.getString(R.styleable.Simple_alias);
-        a.recycle();
+        try {
+            numberFormat = a.getString(R.styleable.Simple_numberFormat);
+            moneyFormat = a.getString(R.styleable.Simple_moneyFormat);
+            dateFormat = a.getString(R.styleable.Simple_dateFormat);
+            acceptNotif = a.getString(R.styleable.Simple_acceptNotif);
+            dateMilisec = a.getBoolean(R.styleable.Simple_dateMilisec, true);
+            typeValidate = a.getInt(R.styleable.Simple_typeValidate, -1);
+            textError = a.getString(R.styleable.Simple_textError);
+            if (textError == null) {
+                textError = "";
+            }
+            idError = a.getResourceId(R.styleable.Simple_idError, 0);
+            alias = a.getString(R.styleable.Simple_alias);
+        } finally {
+            a.recycle();
+        }
         if (acceptNotif != null && acceptNotif.length() > 0) {
             setAcceptNotif = new BroadcastReceiver() {
                 @Override
@@ -141,7 +156,6 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
                     long off = new Date().getTimezoneOffset() * 60000;
                     cc.setTimeZone(TimeZone.getTimeZone("Etc/Greenwich"));
                     cc.setTimeInMillis(d + off);
-//Log.d("QWERT","DDD="+cc.get(Calendar.DAY_OF_MONTH)+" mm="+(cc.get(Calendar.MONTH)));
                     Date dd = new Date(cc.get(Calendar.YEAR), cc.get(Calendar.MONTH), cc.get(Calendar.DAY_OF_MONTH));
                     setText(df.format(dd));
                 }
@@ -242,5 +256,53 @@ public class ComponTextView extends androidx.appcompat.widget.AppCompatTextView
             LocalBroadcastManager.getInstance(context).unregisterReceiver(setAcceptNotif);
             setAcceptNotif = null;
         }
+    }
+
+    @Override
+    public boolean isValid() {
+        boolean result = isValidFoc();
+        if (result) {
+            setErrorValid("");
+        } else {
+            setErrorValid(textError);
+        }
+        return result;
+    }
+
+    private void setErrorValid(String txt) {
+        if (idError != 0) {
+            TextView viewError = (TextView) getParenView().findViewById(idError);
+            if (viewError != null) {
+                viewError.setText(txt);
+            }
+        }
+    }
+
+    public boolean isValidFoc() {
+        String st = getText().toString().trim();
+        boolean result = false;
+        switch (typeValidate) {
+            case -1: return true;
+            case FILLED :
+                result = st != null && st.length() > 0;
+                break;
+            case EMAIL :
+                result = android.util.Patterns.EMAIL_ADDRESS.matcher(st).matches();
+                break;
+        }
+        return result;
+    }
+
+    private View getParenView() {
+        ViewParent viewRoot = getParent();
+        ViewParent view2 = viewRoot;
+        ViewParent v = viewRoot.getParent();
+        while (v != null) {
+            view2 = viewRoot;
+            viewRoot = v;
+            v = viewRoot.getParent();
+        }
+        View vr = (View) view2;
+        return vr;
     }
 }

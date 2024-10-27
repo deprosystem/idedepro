@@ -6,19 +6,19 @@ import android.util.AttributeSet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class ComponTextValid extends ComponEditText {
+public class ComponTextValid_Delete extends ComponEditText {
 
-    public ComponTextValid(@NonNull Context context) {
+    public ComponTextValid_Delete(@NonNull Context context) {
         super(context);
         init(context, null);
     }
 
-    public ComponTextValid(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public ComponTextValid_Delete(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public ComponTextValid(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public ComponTextValid_Delete(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }

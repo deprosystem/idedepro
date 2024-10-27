@@ -26,10 +26,10 @@ public class MyDeclare extends DeclareScreens {
                 .menuBottom(model(menuSearchMenu_b), view(R.id.menu_b),
                         navigator(hide(R.id.sheet_h),show(R.id.sheet_s)),
                         navigator(hide(R.id.sheet_s),show(R.id.sheet_h)))
-                .component(TC.PANEL, model(PARAMETERS, "id_depart_cities=2"),
+                .component(TC.PANEL, model(PARAMETERS, "depart_city_name,flag_country"),
                         view(R.id.panel),
-                        navigator(start(HOT_DEPART_CITY, after(setValueParam(R.id.panel),
-                                actual(R.id.list)))))
+                        navigator(start(HOT_DEPART_CITY, after(actual(R.id.panel),
+                                actual(R.id.list))))).noActualStart()
                 .list(model("query/zyzdpi8g7csjov5/5", "id_depart_cities=2"),
                         view(R.id.list, R.layout.item_search_list_0).spanCount(2),
                         navigator(start(HOT_INSIDE)))
@@ -61,11 +61,12 @@ public class MyDeclare extends DeclareScreens {
                         navigator(show(R.id.selected)));
 
         activity(DEPART_CITY, R.layout.activity_depart_city).animate(AS.RL)
-                .navigator(backOk(R.id.selected))
-                .list(model("htkzhot/depart_city"),
-                        view(R.id.list, "sel", new int[]{R.layout.item_depart_city_list_0,
+                .navigator(backOk(R.id.selected, true))
+//                .list(model("htkzhot/depart_city"),
+                .list(model("query/zyzdpi8g7csjov5/9"),
+                        view(R.id.list, "type", new int[]{R.layout.item_depart_city_list_0,
                                 R.layout.item_depart_city_list_1,
-                                R.layout.item_depart_city_list_2}).selected("depart_city_id=2", TVS.PARAM),
+                                R.layout.item_depart_city_list_2}).selected("id_depart_cities=2", TVS.PARAM),
                         navigator(show(R.id.selected)));
 
         activity(COUNTRY_CITY, R.layout.activity_country_city).animate(AS.RL)

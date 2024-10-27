@@ -422,6 +422,13 @@ public abstract class DeclareScreens<T>{
         return vh;
     }
 
+    public ViewHandler start(int viewId, String screen, ActionsAfterResponse afterResponse, boolean changeEnabled, int... mustValid) {
+        ViewHandler vh = new ViewHandler(viewId, screen, afterResponse);
+        vh.changeEnabled = changeEnabled;
+        vh.mustValid = mustValid;
+        return vh;
+    }
+
     public ViewHandler start(String screen, ActionsAfterResponse afterResponse) {
         ViewHandler vh = new ViewHandler(0, screen, afterResponse);
         return vh;

@@ -146,6 +146,7 @@ public abstract class BaseComponent {
 
     public void init() {
         initView();
+Log.d("QWERT","init componentTag="+componentTag+"<<");
         if (paramMV.nameReceiver != null) {
             LocalBroadcastManager.getInstance(activity)
                     .registerReceiver(startActual, new IntentFilter(paramMV.nameReceiver));
@@ -160,8 +161,10 @@ public abstract class BaseComponent {
         if (paramMV.mustValid != null) {
             iBase.addEvent(paramMV.mustValid, this);
         }
+Log.d("QWERT","  111 init componentTag="+componentTag+"<< paramMV.eventComponent="+paramMV.eventComponent+" paramMV.startActual="+paramMV.startActual);
         if (paramMV.eventComponent == 0) {
             if (paramMV.startActual) {
+Log.d("QWERT","  222 init actual");
                 actual();
             }
         } else {
@@ -195,10 +198,12 @@ public abstract class BaseComponent {
     }
 
     public void actual() {
+Log.d("QWERT","     000 init actual actual actual");
         actualModel(paramMV.paramModel);
     }
 
     private void actualModel(ParamModel paramModel) {
+Log.d("QWERT","  actualModel componentTag="+componentTag+"<< paramModel="+paramModel);
         isChangeData = false;
         if (paramModel != null) {
             switch (paramModel.method) {
@@ -301,11 +306,13 @@ public abstract class BaseComponent {
                 case ParamModel.PARAMETERS:
                     if (paramMV.paramModel.param != null && paramMV.paramModel.param.length() > 0) {
                         Record rr = componGlob.paramSetRecord(paramMV.paramModel.param);
-                        View vv = parentLayout.findViewById(paramMV.paramView.viewId);
-                        workWithRecordsAndViews.RecordToView(rr, vv, this, clickView);
-                    } else {
-                        setValueParam(paramMV.paramView.viewId);
+                        changeDataBase(new Field("", TYPE_RECORD, rr));
+//                        View vv = parentLayout.findViewById(paramMV.paramView.viewId);
+//                        workWithRecordsAndViews.RecordToView(rr, vv, this, clickView);
                     }
+//                    else {
+//                        setValueParam(paramMV.paramView.viewId);
+//                    }
                     break;
                 case ParamModel.ARGUMENTS :
                     if (iBase.getBaseFragment() != null) {
@@ -352,7 +359,6 @@ public abstract class BaseComponent {
                 }
             }
         } else {
-//            workWithRecordsAndViews.setCompon(iBase);
             changeDataBase(null);
         }
     }
